@@ -157,20 +157,18 @@ export default function PostBoard() {
                                 ) : (
                                     <div>동아리 공지</div>
                                 )}
-                                <div>
-                                    <Button
-                                        type="primary"
-                                        size="small"
-                                        title="새 글 작성"
-                                        onClick={() => {
-                                            localStorage.setItem('postList', postList);
-                                            window.location = '/postAdd';
-                                        }}
-                                    />
-                                </div>
+
+                                <img
+                                    src="../../img/btn/edit_enabled.png"
+                                    style={{ width: '33px', cursor: 'pointer' }}
+                                    onClick={() => {
+                                        localStorage.setItem('postList', postList);
+                                        window.location = '/postAdd';
+                                    }}
+                                />
                             </div>
 
-                            <div style={{ margin: '35px 0' }}>
+                            <div style={{ margin: '40px 0' }}>
                                 {postsToDisplay.map((post) => (
                                     <div
                                         key={post.id}

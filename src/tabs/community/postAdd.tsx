@@ -187,6 +187,7 @@ export default function Post() {
                                             }}
                                             {...register('Category', {
                                                 required: '카테고리를 선택해주세요.',
+                                                validate: (value) => value !== '전체' || '카테고리를 선택해주세요.',
                                             })}
                                         >
                                             <option
