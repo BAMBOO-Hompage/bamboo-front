@@ -24,7 +24,7 @@ export default function JoinUs() {
                     <div
                         style={{
                             position: 'relative',
-                            width: '30%',
+                            width: '300px',
                             borderRight: '1px solid #444',
                             fontFamily: 'Pretendard-Bold',
                             fontSize: '28px',
@@ -38,7 +38,7 @@ export default function JoinUs() {
                     <div
                         style={{
                             position: 'relative',
-                            width: '70%',
+                            width: '80%',
                             fontFamily: 'Pretendard-Bold',
                             fontSize: '28px',
                             color: '#fff',

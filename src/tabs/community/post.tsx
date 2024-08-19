@@ -26,7 +26,7 @@ export default function Post() {
                         }}
                         style={{
                             position: 'relative',
-                            width: '30%',
+                            width: '300px',
                             borderRight: '1px solid #444',
                             fontFamily: 'Pretendard-Bold',
                             fontSize: '28px',
@@ -35,7 +35,7 @@ export default function Post() {
                         }}
                     >
                         <div style={{ position: 'absolute', right: '50px' }}>
-                            게시판
+                            공지사항
                             <div
                                 style={{
                                     marginTop: '40px',
@@ -49,7 +49,7 @@ export default function Post() {
                                         window.location = '/postBoard';
                                     }}
                                 >
-                                    {'<-'} 목록으로
+                                    목록으로
                                 </div>
                             </div>
                         </div>
@@ -66,12 +66,12 @@ export default function Post() {
                         }}
                         style={{
                             position: 'relative',
-                            width: '70%',
+                            width: '80%',
                             heidht: '100%',
                             textAlign: 'left',
                         }}
                     >
-                        <div style={{ width: '70%', position: 'absolute', left: '50px' }}>
+                        <div style={{ width: '70%', position: 'absolute', left: '60px' }}>
                             <div
                                 style={{
                                     marginBottom: '15px',

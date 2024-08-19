@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Button from '../components/button.tsx';
 import Nav from '../components/nav.tsx';
+import BottomInfo from '../components/bottomInfo.tsx';
 import '../App.css';
 
 export default function Main() {
@@ -17,21 +18,22 @@ export default function Main() {
                         left: '0',
                         width: '100vw',
                         height: '100vh',
-                        backgroundImage: 'url(/img/main_background.png)',
-                        backgroundSize: 'cover',
-                        opacity: '0.7',
+                        opacity: '0.4',
                         zIndex: '-1',
                     }}
-                ></div>
+                >
+                    <video autoPlay muted loop style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}>
+                        <source src="../../img/main_background.mp4" type="video/mp4" />
+                    </video>
+                </div>
 
                 <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1, rotateZ: 360 }}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: false }}
                     transition={{
+                        ease: 'easeInOut',
                         duration: 1,
-                        type: 'spring',
-                        stiffness: 160,
-                        damping: 20,
                     }}
                     style={{
                         width: '100vw',
@@ -42,14 +44,9 @@ export default function Main() {
                         alignItems: 'center',
                     }}
                 >
-                    {/*initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: false }}
-                    transition={{
-                        ease: 'easeInOut',
-                        duration: 1,
-                    }}*/}
                     <div>
+                        <img src="../../img/main_text.png" style={{ width: '780px' }} />
+                        {/** 
                         <div
                             style={{
                                 fontFamily: 'Pretendard-Bold',
@@ -66,7 +63,7 @@ export default function Main() {
                                 color: '#fff',
                             }}
                         >
-                            Data Analysis Club
+                            Data Study Club
                         </div>
                         <div
                             style={{
@@ -76,8 +73,9 @@ export default function Main() {
                                 marginTop: '15px',
                             }}
                         >
-                            상명대학교 서울캠퍼스 데이터 분석 동아리 '데나무'
+                            상명대학교 서울캠퍼스 데이터 스터디 동아리 '데나무'
                         </div>
+                        */}
                     </div>
                 </motion.div>
 
@@ -93,7 +91,6 @@ export default function Main() {
                     style={{
                         width: '100vw',
                         height: '100vh',
-                        borderBottom: '1px solid gray',
                     }}
                 >
                     <div
@@ -128,8 +125,8 @@ export default function Main() {
                         <br />
                         <br />
                         데나무에 가입하게 되면, 학년과 실력에 따라 학습할 교재를 선택하고, 함께 학습할 수 있는 스터디
-                        분반을 구성합니다. 정기적인 스터디, 데이터 분석 대회 참여, 멘토링 및 네트워킹을 통해
-                        동아리원들이 자발적으로 학습하고, 성장할 수 있도록 지원합니다.
+                        분반을 구성합니다. 정기적인 스터디, 멘토링 및 네트워킹을 통해 동아리원들이 자발적으로 학습하고,
+                        성장할 수 있도록 지원합니다.
                     </div>
                     <div
                         style={{
@@ -158,7 +155,6 @@ export default function Main() {
                     style={{
                         width: '100vw',
                         height: '100vh',
-                        borderBottom: '1px solid gray',
                     }}
                 >
                     <div>
@@ -184,9 +180,12 @@ export default function Main() {
                                 lineHeight: '30px',
                             }}
                         >
-                            정기적인 스터디 뿐만 아니라 논문 리뷰 발표회, 파이썬 새싹톤, 나무콘 등 다양한 활동을 통해서
-                            부원들의 흥미를 돋우고, 의욕을 일깨우고자 노력하고 있습니다. 또한, 방학간 진행하는 각 활동을
-                            통해서 학기 중 자신의 학습 정도를 검증할 수 있습니다.
+                            <span style={{ color: '#2CC295', fontFamily: 'Pretendard-SemiBold', fontSize: '20px' }}>
+                                '데나무'
+                            </span>
+                            는 정기적인 스터디 뿐만 아니라 논문 리뷰 발표회, 파이썬 새싹톤, 나무콘 등 다양한 활동을
+                            통해서 부원들의 흥미를 돋우고, 의욕을 일깨우고자 노력하고 있습니다. 동아리원들은 방학간
+                            진행하는 각 활동을 통해서 학기 중 자신의 학습 정도를 검증할 수 있습니다.
                         </div>
                         <div
                             style={{
@@ -381,18 +380,7 @@ export default function Main() {
                     </div>
                 </motion.div>
 
-                <div
-                    style={{
-                        width: '100vw',
-                        height: '150px',
-                        backgroundColor: '#2CC295',
-                        textAlign: 'center',
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <div></div>
-                </div>
+                <BottomInfo />
             </div>
         </div>
     );

@@ -24,7 +24,7 @@ export default function Alexandria() {
                     <div
                         style={{
                             position: 'relative',
-                            width: '30%',
+                            width: '20%',
                             borderRight: '1px solid #444',
                             fontFamily: 'Pretendard-Bold',
                             fontSize: '28px',
@@ -32,13 +32,17 @@ export default function Alexandria() {
                             textAlign: 'left',
                         }}
                     >
-                        <div style={{ position: 'absolute', right: '50px' }}>알렉산드리아 도서관</div>
+                        <div style={{ position: 'absolute', right: '50px' }}>
+                            알렉산드리아
+                            <br />
+                            도서관
+                        </div>
                     </div>
 
                     <div
                         style={{
                             position: 'relative',
-                            width: '70%',
+                            width: '80%',
                             fontFamily: 'Pretendard-Bold',
                             fontSize: '28px',
                             color: '#fff',

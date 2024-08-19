@@ -40,6 +40,44 @@ export default function Nav(props: NavType) {
                     <div
                         className="nav_text"
                         style={
+                            props.type === 'study'
+                                ? {
+                                      color: '#2CC295',
+                                      textShadow: '0 0 0.1em, 0 0 0.3em',
+                                      borderBottom: '2px solid #2cc295',
+                                  }
+                                : currentFocus === 'study'
+                                ? {
+                                      textShadow: '0 0 0.1em, 0 0 0.3em',
+                                      borderBottom: '2px solid #2cc295',
+                                  }
+                                : {}
+                        }
+                    >
+                        Study
+                    </div>
+                    <div
+                        className="nav_text"
+                        style={
+                            props.type === 'dataCenter'
+                                ? {
+                                      color: '#2CC295',
+                                      textShadow: '0 0 0.1em, 0 0 0.3em',
+                                      borderBottom: '2px solid #2cc295',
+                                  }
+                                : currentFocus === 'dataCenter'
+                                ? {
+                                      textShadow: '0 0 0.1em, 0 0 0.3em',
+                                      borderBottom: '2px solid #2cc295',
+                                  }
+                                : {}
+                        }
+                    >
+                        Data Center
+                    </div>
+                    <div
+                        className="nav_text"
+                        style={
                             props.type === 'community'
                                 ? {
                                       color: '#2CC295',
@@ -75,44 +113,6 @@ export default function Nav(props: NavType) {
                     >
                         Join Us
                     </div>
-                    <div
-                        className="nav_text"
-                        style={
-                            props.type === 'dataCenter'
-                                ? {
-                                      color: '#2CC295',
-                                      textShadow: '0 0 0.1em, 0 0 0.3em',
-                                      borderBottom: '2px solid #2cc295',
-                                  }
-                                : currentFocus === 'dataCenter'
-                                ? {
-                                      textShadow: '0 0 0.1em, 0 0 0.3em',
-                                      borderBottom: '2px solid #2cc295',
-                                  }
-                                : {}
-                        }
-                    >
-                        Data Center
-                    </div>
-                    <div
-                        className="nav_text"
-                        style={
-                            props.type === 'study'
-                                ? {
-                                      color: '#2CC295',
-                                      textShadow: '0 0 0.1em, 0 0 0.3em',
-                                      borderBottom: '2px solid #2cc295',
-                                  }
-                                : currentFocus === 'study'
-                                ? {
-                                      textShadow: '0 0 0.1em, 0 0 0.3em',
-                                      borderBottom: '2px solid #2cc295',
-                                  }
-                                : {}
-                        }
-                    >
-                        Study
-                    </div>
                 </div>
                 {type === 'logOut' ? (
                     <div style={{ position: 'absolute', right: '0' }}>
@@ -128,7 +128,20 @@ export default function Nav(props: NavType) {
                 ) : (
                     <div style={{ position: 'absolute', right: '0', display: 'flex', alignItems: 'center' }}>
                         <Link to="/myPage" style={{ textDecoration: 'none' }}>
-                            <div className="nav_text">MyPage</div>
+                            <div
+                                className="nav_text"
+                                style={
+                                    props.type === 'myPage'
+                                        ? {
+                                              color: '#2CC295',
+                                              textShadow: '0 0 0.1em, 0 0 0.3em',
+                                              borderBottom: '2px solid #2cc295',
+                                          }
+                                        : {}
+                                }
+                            >
+                                MyPage
+                            </div>
                         </Link>
                         <img
                             src="../img/btn/logout_disabled.png"
@@ -163,26 +176,17 @@ export default function Nav(props: NavType) {
                     <div
                         className="nav_list"
                         style={{ borderLeft: '1px solid #777' }}
-                        onMouseEnter={() => setCurrentFocus('community')}
+                        onMouseEnter={() => setCurrentFocus('study')}
                         onMouseLeave={() => setCurrentFocus('')}
                     >
-                        <Link to="/postBoard" style={{ textDecoration: 'none' }} onClick={() => sessionStorage.clear()}>
-                            <div className="nav_tabs">게시판</div>
+                        <Link to="/curriculumStudy" style={{ textDecoration: 'none' }}>
+                            <div className="nav_tabs">커리큘럼 스터디</div>
                         </Link>
-                        <Link to="/activity" style={{ textDecoration: 'none' }}>
-                            <div className="nav_tabs">주요 활동</div>
+                        <Link to="/selfStudy" style={{ textDecoration: 'none' }}>
+                            <div className="nav_tabs">자율 스터디</div>
                         </Link>
-                        <Link to="/discord" style={{ textDecoration: 'none' }}>
-                            <div className="nav_tabs">Discord</div>
-                        </Link>
-                    </div>
-                    <div
-                        className="nav_list"
-                        onMouseEnter={() => setCurrentFocus('joinUs')}
-                        onMouseLeave={() => setCurrentFocus('')}
-                    >
-                        <Link to="/joinUs" style={{ textDecoration: 'none' }}>
-                            <div className="nav_tabs">지원 방법</div>
+                        <Link to="/applyStudy" style={{ textDecoration: 'none' }}>
+                            <div className="nav_tabs">스터디 신청</div>
                         </Link>
                     </div>
                     <div
@@ -199,17 +203,26 @@ export default function Nav(props: NavType) {
                     </div>
                     <div
                         className="nav_list"
-                        onMouseEnter={() => setCurrentFocus('study')}
+                        onMouseEnter={() => setCurrentFocus('community')}
                         onMouseLeave={() => setCurrentFocus('')}
                     >
-                        <Link to="/curriculumStudy" style={{ textDecoration: 'none' }}>
-                            <div className="nav_tabs">커리큘럼 스터디</div>
+                        <Link to="/postBoard" style={{ textDecoration: 'none' }} onClick={() => sessionStorage.clear()}>
+                            <div className="nav_tabs">공지사항</div>
                         </Link>
-                        <Link to="/selfStudy" style={{ textDecoration: 'none' }}>
-                            <div className="nav_tabs">자율 스터디</div>
+                        <Link to="/activity" style={{ textDecoration: 'none' }}>
+                            <div className="nav_tabs">주요 활동</div>
                         </Link>
-                        <Link to="/applyStudy" style={{ textDecoration: 'none' }}>
-                            <div className="nav_tabs">스터디 신청</div>
+                        <Link to="/discord" style={{ textDecoration: 'none' }}>
+                            <div className="nav_tabs">Discord</div>
+                        </Link>
+                    </div>
+                    <div
+                        className="nav_list"
+                        onMouseEnter={() => setCurrentFocus('joinUs')}
+                        onMouseLeave={() => setCurrentFocus('')}
+                    >
+                        <Link to="/joinUs" style={{ textDecoration: 'none' }}>
+                            <div className="nav_tabs">지원 방법</div>
                         </Link>
                     </div>
                 </div>

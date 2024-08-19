@@ -43,12 +43,10 @@ export default function PostBoard() {
             document.getElementById('background').scrollTo({ top: scrollY, behavior: 'auto' });
             sessionStorage.removeItem('scrollY');
         }
-
         if (postList) {
             setPostList(postList);
             sessionStorage.removeItem('postList');
         }
-
         if (currentPage) {
             setCurrentPage(parseInt(currentPage, 10));
             sessionStorage.removeItem('currentPage');
@@ -71,7 +69,7 @@ export default function PostBoard() {
                         }}
                         style={{
                             position: 'relative',
-                            width: '30%',
+                            width: '300px',
                             borderRight: '1px solid #444',
                             fontFamily: 'Pretendard-Bold',
                             fontSize: '28px',
@@ -80,7 +78,7 @@ export default function PostBoard() {
                         }}
                     >
                         <div style={{ position: 'absolute', right: '50px' }}>
-                            게시판
+                            공지사항
                             <div
                                 style={{
                                     marginTop: '40px',
@@ -135,12 +133,12 @@ export default function PostBoard() {
                         key={postList}
                         style={{
                             position: 'relative',
-                            width: '70%',
+                            width: '80%',
                             heidht: '100%',
                             textAlign: 'left',
                         }}
                     >
-                        <div style={{ width: '70%', position: 'absolute', left: '50px' }}>
+                        <div style={{ width: '70%', position: 'absolute', left: '60px' }}>
                             <div
                                 style={{
                                     width: '100%',
@@ -165,6 +163,7 @@ export default function PostBoard() {
                                         size="small"
                                         title="새 글 작성"
                                         onClick={() => {
+                                            localStorage.setItem('postList', postList);
                                             window.location = '/postAdd';
                                         }}
                                     />
@@ -177,11 +176,11 @@ export default function PostBoard() {
                                         key={post.id}
                                         style={{
                                             width: '100%',
-                                            height: '120px',
+                                            height: '110px',
                                             backgroundColor: '#222',
                                             border: '0.5px solid #343434',
                                             borderRadius: '30px',
-                                            marginBottom: '20px',
+                                            marginBottom: '30px',
                                             display: 'flex',
                                             alignItems: 'center',
                                         }}

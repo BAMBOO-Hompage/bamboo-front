@@ -42,15 +42,24 @@ body {
 }
 
 input {
-    padding: 12px;
-    margin-bottom: 5px;
-    font-size: 14px;
+    box-sizing: border-box;
+    padding: 15px 20px;
     border: none;
-    background-color: #eee;
-    border-radius: 15px;
+    background-color: #111015;
+    box-shadow: inset -10px -10px 30px #242424, inset 15px 15px 30px #000;
+    border-radius: 20px;
+    color: #fff;
 }
 input::placeholder {
-    color: #bbb;
+    font-family: Pretendard-Light;
+    font-size: 16px;
+    color: #777;
+}
+
+textarea::placeholder {
+    font-family: Pretendard-Light;
+    font-size: 15px;
+    color: #777;
 }
 
 .background {
@@ -119,4 +128,22 @@ input::placeholder {
 .bottom_tabs:hover {
     text-shadow: 0 0 0.1em, 0 0 0.1em;
     cursor: pointer;
+}
+
+.custom-md-editor .w-md-editor-toolbar {
+    background-color: transparent !important;
+    border-radius: 20px 20px 0 0 !important;
+}
+
+.custom-md-editor .w-md-editor-toolbar ul {
+    background-color: transparent !important;
+}
+
+.custom-md-editor.w-md-editor {
+    background-color: transparent !important;
+    border-radius: 20px 20px 20px 20px !important;
+}
+
+.custom-md-editor .w-md-editor-bar {
+    display: none !important;
 }

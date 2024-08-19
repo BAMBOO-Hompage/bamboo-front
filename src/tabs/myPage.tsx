@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Button from '../components/button.tsx';
 import Nav from '../components/nav.tsx';
+import BottomInfo from '../components/bottomInfo.tsx';
 import '../App.css';
 
 export default function ApplyStudy() {
     return (
         <div>
-            <Nav type="logOut" />
+            <Nav type="myPage" />
             <div className="background">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
