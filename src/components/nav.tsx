@@ -40,6 +40,25 @@ export default function Nav(props: NavType) {
                     <div
                         className="nav_text"
                         style={
+                            props.type === 'joinUs'
+                                ? {
+                                      color: '#2CC295',
+                                      textShadow: '0 0 0.1em, 0 0 0.3em',
+                                      borderBottom: '2px solid #2cc295',
+                                  }
+                                : currentFocus === 'joinUs'
+                                ? {
+                                      textShadow: '0 0 0.1em, 0 0 0.3em',
+                                      borderBottom: '2px solid #2cc295',
+                                  }
+                                : {}
+                        }
+                    >
+                        About Us
+                    </div>
+                    <div
+                        className="nav_text"
+                        style={
                             props.type === 'study'
                                 ? {
                                       color: '#2CC295',
@@ -93,25 +112,6 @@ export default function Nav(props: NavType) {
                         }
                     >
                         Community
-                    </div>
-                    <div
-                        className="nav_text"
-                        style={
-                            props.type === 'joinUs'
-                                ? {
-                                      color: '#2CC295',
-                                      textShadow: '0 0 0.1em, 0 0 0.3em',
-                                      borderBottom: '2px solid #2cc295',
-                                  }
-                                : currentFocus === 'joinUs'
-                                ? {
-                                      textShadow: '0 0 0.1em, 0 0 0.3em',
-                                      borderBottom: '2px solid #2cc295',
-                                  }
-                                : {}
-                        }
-                    >
-                        Join Us
                     </div>
                 </div>
                 {type === 'logOut' ? (
@@ -176,6 +176,18 @@ export default function Nav(props: NavType) {
                     <div
                         className="nav_list"
                         style={{ borderLeft: '1px solid #777' }}
+                        onMouseEnter={() => setCurrentFocus('joinUs')}
+                        onMouseLeave={() => setCurrentFocus('')}
+                    >
+                        <Link to="/introduction" style={{ textDecoration: 'none' }}>
+                            <div className="nav_tabs">동아리 소개</div>
+                        </Link>
+                        <Link to="/joinUs" style={{ textDecoration: 'none' }}>
+                            <div className="nav_tabs">지원 안내</div>
+                        </Link>
+                    </div>
+                    <div
+                        className="nav_list"
                         onMouseEnter={() => setCurrentFocus('study')}
                         onMouseLeave={() => setCurrentFocus('')}
                     >
@@ -200,6 +212,9 @@ export default function Nav(props: NavType) {
                         <Link to="/hallOfFame" style={{ textDecoration: 'none' }}>
                             <div className="nav_tabs">명예의 전당</div>
                         </Link>
+                        <Link to="/knowledge" style={{ textDecoration: 'none' }}>
+                            <div className="nav_tabs">지식 공유 게시판</div>
+                        </Link>
                     </div>
                     <div
                         className="nav_list"
@@ -214,15 +229,6 @@ export default function Nav(props: NavType) {
                         </Link>
                         <Link to="/discord" style={{ textDecoration: 'none' }}>
                             <div className="nav_tabs">Discord</div>
-                        </Link>
-                    </div>
-                    <div
-                        className="nav_list"
-                        onMouseEnter={() => setCurrentFocus('joinUs')}
-                        onMouseLeave={() => setCurrentFocus('')}
-                    >
-                        <Link to="/joinUs" style={{ textDecoration: 'none' }}>
-                            <div className="nav_tabs">지원 방법</div>
                         </Link>
                     </div>
                 </div>

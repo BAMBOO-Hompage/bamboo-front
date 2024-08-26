@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Nav from '../../components/nav.tsx';
 import Button from '../../components/button.tsx';
+import BottomInfo from '../../components/bottomInfo.tsx';
 import PostData from '../../mockup_data/post_data.tsx';
 import '../../App.css';
 
@@ -68,16 +69,23 @@ export default function PostBoard() {
                             y: { duration: 0.5 },
                         }}
                         style={{
+                            boxSizing: 'border-box',
                             position: 'relative',
-                            width: '300px',
+                            width: '400px',
                             borderRight: '1px solid #444',
-                            fontFamily: 'Pretendard-Bold',
-                            fontSize: '28px',
-                            color: '#fff',
                             textAlign: 'left',
                         }}
                     >
-                        <div style={{ position: 'absolute', right: '50px' }}>
+                        <div
+                            style={{
+                                width: '110px',
+                                fontFamily: 'Pretendard-Bold',
+                                fontSize: '30px',
+                                color: '#fff',
+                                position: 'absolute',
+                                right: '50px',
+                            }}
+                        >
                             공지사항
                             <div
                                 style={{
@@ -132,18 +140,19 @@ export default function PostBoard() {
                         }}
                         key={postList}
                         style={{
+                            boxSizing: 'border-box',
                             position: 'relative',
-                            width: '80%',
-                            heidht: '100%',
+                            width: '1120px',
+                            height: '100%',
                             textAlign: 'left',
                         }}
                     >
-                        <div style={{ width: '70%', position: 'absolute', left: '60px' }}>
+                        <div style={{ width: '810px', position: 'absolute', left: '60px' }}>
                             <div
                                 style={{
                                     width: '100%',
                                     fontFamily: 'Pretendard-Bold',
-                                    fontSize: '28px',
+                                    fontSize: '30px',
                                     color: '#fff',
                                     display: 'flex',
                                     justifyContent: 'space-between',
@@ -160,7 +169,7 @@ export default function PostBoard() {
 
                                 <img
                                     src="../../img/btn/edit_enabled.png"
-                                    style={{ width: '33px', cursor: 'pointer' }}
+                                    style={{ width: '30px', cursor: 'pointer' }}
                                     onClick={() => {
                                         localStorage.setItem('postList', postList);
                                         window.location = '/postAdd';
@@ -235,9 +244,9 @@ export default function PostBoard() {
 
                         <div
                             style={{
-                                width: '70%',
+                                width: '810px',
                                 position: 'absolute',
-                                left: '50px',
+                                left: '60px',
                                 bottom: '10px',
                                 display: 'flex',
                                 justifyContent: 'center',
@@ -273,18 +282,7 @@ export default function PostBoard() {
                     </motion.div>
                 </div>
 
-                <div
-                    style={{
-                        width: '100vw',
-                        height: '150px',
-                        backgroundColor: '#2CC295',
-                        textAlign: 'center',
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <div></div>
-                </div>
+                <BottomInfo />
             </div>
         </div>
     );

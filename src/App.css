@@ -49,6 +49,7 @@ input {
     box-shadow: inset -10px -10px 30px #242424, inset 15px 15px 30px #000;
     border-radius: 20px;
     color: #fff;
+    outline: none;
 }
 input::placeholder {
     font-family: Pretendard-Light;
@@ -60,6 +61,10 @@ textarea::placeholder {
     font-family: Pretendard-Light;
     font-size: 15px;
     color: #777;
+}
+
+select {
+    outline: none;
 }
 
 .background {

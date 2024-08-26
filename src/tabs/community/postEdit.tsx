@@ -12,7 +12,7 @@ import BottomInfo from '../../components/bottomInfo.tsx';
 import PostData from '../../mockup_data/post_data.tsx';
 import '../../App.css';
 
-export default function PostAdd() {
+export default function PostEdit() {
     const {
         register,
         getValues,
@@ -116,7 +116,7 @@ export default function PostAdd() {
                                         }
                                     }}
                                 >
-                                    작성 취소
+                                    수정 취소
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@ export default function PostAdd() {
                                     color: '#fff',
                                 }}
                             >
-                                공지 작성
+                                공지 수정
                             </div>
 
                             <form style={{ width: '100%', margin: '35px 0' }}>

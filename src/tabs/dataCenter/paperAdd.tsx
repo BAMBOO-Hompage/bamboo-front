@@ -9,10 +9,10 @@ import Nav from '../../components/nav.tsx';
 import Button from '../../components/button.tsx';
 import MarkdownEditor from '../../components/MarkdownPost.tsx';
 import BottomInfo from '../../components/bottomInfo.tsx';
-import PostData from '../../mockup_data/post_data.tsx';
+import AlexandriaData from '../../mockup_data/alexandria_data.tsx';
 import '../../App.css';
 
-export default function PostAdd() {
+export default function PaperAdd() {
     const {
         register,
         getValues,
@@ -22,10 +22,10 @@ export default function PostAdd() {
     const [content, setContent] = useState('');
     const [showImages, setShowImages] = useState([]);
 
-    const data = PostData();
+    const data = AlexandriaData();
 
-    const postId = localStorage.getItem('postId');
-    const currentPost = data.filter((post) => postId == post.id)[0];
+    const paperId = localStorage.getItem('paperId');
+    const currentpaper = data.filter((paper) => paperId == paper.id)[0];
 
     const mdParser = new MarkdownIt();
 
@@ -55,7 +55,7 @@ export default function PostAdd() {
         alert(
             '카테고리 : ' + e.Category + '\n제목 : ' + e.Title + '\n내용 : \n' + content + '\n사진 : \n' + showImages
         );
-        window.location = '/postBoard';
+        window.location = '/alexandria';
     };
 
     const onInvalid = (e) => {
@@ -70,7 +70,7 @@ export default function PostAdd() {
 
     return (
         <div>
-            <Nav type="community" />
+            <Nav type="dataCenter" />
             <div id="background" className="background">
                 <div style={{ height: '200vh', display: 'flex', padding: '100px 0' }}>
                     <motion.div
@@ -84,70 +84,41 @@ export default function PostAdd() {
                         }}
                         style={{
                             position: 'relative',
-                            width: '400px',
-                            borderRight: '1px solid #444',
+                            width: '60%',
+                            margin: '0 auto',
                             textAlign: 'left',
                         }}
                     >
-                        <div
-                            style={{
-                                width: '110px',
-                                fontFamily: 'Pretendard-Bold',
-                                fontSize: '30px',
-                                color: '#fff',
-                                position: 'absolute',
-                                right: '50px',
-                            }}
-                        >
-                            공지사항
-                            <div
-                                style={{
-                                    marginTop: '40px',
-                                    fontFamily: 'Pretendard-Regular',
-                                    fontSize: '16px',
-                                }}
-                            >
+                        <div style={{}}>
+                            <div style={{ textAlign: 'center' }}>
                                 <div
-                                    className="post_tabs"
-                                    onClick={() => {
-                                        const deleteAdd = window.confirm('작성을 취소하시겠습니까?');
-                                        if (deleteAdd) {
-                                            window.location = '/postBoard';
-                                        }
+                                    style={{
+                                        marginBottom: '45px',
                                     }}
                                 >
-                                    작성 취소
+                                    <div
+                                        style={{
+                                            fontFamily: 'Pretendard-Bold',
+                                            fontSize: '30px',
+                                            color: '#fff',
+                                            marginBottom: '8px',
+                                        }}
+                                    >
+                                        알렉산드리아 도서관
+                                    </div>
+                                    <div
+                                        style={{
+                                            fontFamily: 'Pretendard-Regular',
+                                            fontSize: '12px',
+                                            color: '#888',
+                                        }}
+                                    >
+                                        알렉산드리아 도서관은 이집트 알렉산드리아에 있었던 고대에 가장 크고 영향력 있는
+                                        도서관으로,
+                                        <br />
+                                        세상의 모든 지식을 수집한다는 의미를 가지고 있습니다.
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: false }}
-                        transition={{
-                            ease: 'easeInOut',
-                            duration: 0.5,
-                            y: { duration: 0.5 },
-                        }}
-                        style={{
-                            position: 'relative',
-                            width: '1120px',
-                            heidht: '100%',
-                            textAlign: 'left',
-                        }}
-                    >
-                        <div style={{ width: '810px', position: 'absolute', left: '60px' }}>
-                            <div
-                                style={{
-                                    width: '100%',
-                                    fontFamily: 'Pretendard-Bold',
-                                    fontSize: '30px',
-                                    color: '#fff',
-                                }}
-                            >
-                                공지 작성
                             </div>
 
                             <form style={{ width: '100%', margin: '35px 0' }}>
@@ -162,62 +133,21 @@ export default function PostAdd() {
                                         fontSize: '16px',
                                     }}
                                 >
-                                    <div>분류</div>
-                                    <div
+                                    <div>논문 제목</div>
+                                    <input
+                                        id="title"
+                                        type="text"
+                                        placeholder="제목을 입력해주세요."
+                                        {...register('Title', {
+                                            required: '제목을 입력해주세요.',
+                                        })}
                                         style={{
-                                            boxSizing: 'border-box',
                                             width: '85%',
-                                            height: '30px',
-                                            padding: '5px 15px 5px 0',
-                                            backgroundColor: '#111015',
-                                            border: 'none',
-                                            boxShadow: 'inset -10px -10px 30px #242424, inset 15px 15px 30px #000',
-                                            borderRadius: '20px',
-                                            display: 'flex',
-                                            alignItems: 'center',
+                                            height: '15px',
+                                            fontFamily: 'Pretendard-Light',
+                                            fontSize: '16px',
                                         }}
-                                    >
-                                        <select
-                                            defaultValue={localStorage.getItem('postList')}
-                                            style={{
-                                                boxSizing: 'border-box',
-                                                width: '100%',
-                                                height: '30px',
-                                                padding: '5px 0px 5px 15px',
-                                                backgroundColor: 'transparent',
-                                                border: 'none',
-                                                borderRadius: '20px',
-                                                fontFamily: 'Pretendard-Light',
-                                                fontSize: '16px',
-                                                color: '#2CC295',
-                                                cursor: 'pointer',
-                                            }}
-                                            {...register('Category', {
-                                                required: '카테고리를 선택해주세요.',
-                                                validate: (value) => value !== '전체' || '카테고리를 선택해주세요.',
-                                            })}
-                                        >
-                                            <option
-                                                disabled
-                                                value="전체"
-                                                style={{ background: '#111015', color: '#ddd' }}
-                                            >
-                                                카테고리 선택
-                                            </option>
-                                            <option
-                                                value="대회 및 세미나"
-                                                style={{ background: '#111015', color: '#2CC295', cursor: 'pointer' }}
-                                            >
-                                                대회 및 세미나
-                                            </option>
-                                            <option
-                                                value="동아리 공지"
-                                                style={{ background: '#111015', color: '#2CC295', cursor: 'pointer' }}
-                                            >
-                                                동아리 공지
-                                            </option>
-                                        </select>
-                                    </div>
+                                    />
                                 </div>
                                 <div
                                     style={{
@@ -230,13 +160,94 @@ export default function PostAdd() {
                                         fontSize: '16px',
                                     }}
                                 >
-                                    <div>제목</div>
+                                    <div>논문 링크</div>
                                     <input
                                         id="title"
                                         type="text"
-                                        placeholder="제목을 입력해주세요."
+                                        placeholder="링크를 입력해주세요."
                                         {...register('Title', {
-                                            required: '제목을 입력해주세요.',
+                                            required: '링크를 입력해주세요.',
+                                        })}
+                                        style={{
+                                            width: '85%',
+                                            height: '15px',
+                                            fontFamily: 'Pretendard-Light',
+                                            fontSize: '16px',
+                                        }}
+                                    />
+                                </div>
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        marginBottom: '20px',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        fontFamily: 'Pretendard-Regular',
+                                        fontSize: '16px',
+                                    }}
+                                >
+                                    <div>연도</div>
+                                    <input
+                                        id="title"
+                                        type="text"
+                                        placeholder="연도을 입력해주세요."
+                                        {...register('Title', {
+                                            required: '연도를 입력해주세요.',
+                                        })}
+                                        style={{
+                                            width: '85%',
+                                            height: '15px',
+                                            fontFamily: 'Pretendard-Light',
+                                            fontSize: '16px',
+                                        }}
+                                    />
+                                </div>
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        marginBottom: '20px',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        fontFamily: 'Pretendard-Regular',
+                                        fontSize: '16px',
+                                    }}
+                                >
+                                    <div>주제</div>
+                                    <input
+                                        id="title"
+                                        type="text"
+                                        placeholder="주제를 입력해주세요."
+                                        {...register('Title', {
+                                            required: '주제를 입력해주세요.',
+                                        })}
+                                        style={{
+                                            width: '85%',
+                                            height: '15px',
+                                            fontFamily: 'Pretendard-Light',
+                                            fontSize: '16px',
+                                        }}
+                                    />
+                                </div>
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        marginBottom: '20px',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        fontFamily: 'Pretendard-Regular',
+                                        fontSize: '16px',
+                                    }}
+                                >
+                                    <div>태그</div>
+                                    <input
+                                        id="title"
+                                        type="text"
+                                        placeholder="태그를 입력해주세요."
+                                        {...register('Title', {
+                                            required: '태그를 입력해주세요.',
                                         })}
                                         style={{
                                             width: '85%',

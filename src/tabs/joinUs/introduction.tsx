@@ -6,10 +6,10 @@ import Nav from '../../components/nav.tsx';
 import BottomInfo from '../../components/bottomInfo.tsx';
 import '../../App.css';
 
-export default function Activity() {
+export default function Introduction() {
     return (
         <div>
-            <Nav type="community" />
+            <Nav type="joinUs" />
             <div className="background">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
@@ -25,7 +25,7 @@ export default function Activity() {
                     <div
                         style={{
                             position: 'relative',
-                            width: '30%',
+                            width: '300px',
                             borderRight: '1px solid #444',
                             fontFamily: 'Pretendard-Bold',
                             fontSize: '28px',
@@ -33,13 +33,13 @@ export default function Activity() {
                             textAlign: 'left',
                         }}
                     >
-                        <div style={{ position: 'absolute', right: '50px' }}>주요 활동</div>
+                        <div style={{ position: 'absolute', right: '50px' }}>동아리 소개</div>
                     </div>
 
                     <div
                         style={{
                             position: 'relative',
-                            width: '70%',
+                            width: '80%',
                             fontFamily: 'Pretendard-Bold',
                             fontSize: '28px',
                             color: '#fff',

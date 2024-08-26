@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import MDEditor from '@uiw/react-md-editor';
 import Button from '../../components/button.tsx';
 import Nav from '../../components/nav.tsx';
+import BottomInfo from '../../components/bottomInfo.tsx';
 import '../../App.css';
 
 export default function Discord() {
@@ -48,18 +49,7 @@ export default function Discord() {
                     ></div>
                 </motion.div>
 
-                <div
-                    style={{
-                        width: '100vw',
-                        height: '150px',
-                        backgroundColor: '#2CC295',
-                        textAlign: 'center',
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <div></div>
-                </div>
+                <BottomInfo />
             </div>
         </div>
     );

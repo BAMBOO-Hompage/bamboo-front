@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Button from '../../components/button.tsx';
 import Nav from '../../components/nav.tsx';
+import BottomInfo from '../../components/bottomInfo.tsx';
 import '../../App.css';
 
 export default function CurriculumStudy() {
@@ -92,18 +93,7 @@ export default function CurriculumStudy() {
                     </motion.div>
                 </div>
 
-                <div
-                    style={{
-                        width: '100vw',
-                        height: '150px',
-                        backgroundColor: '#2CC295',
-                        textAlign: 'center',
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <div></div>
-                </div>
+                <BottomInfo />
             </div>
         </div>
     );

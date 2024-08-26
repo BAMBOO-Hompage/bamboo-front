@@ -45,7 +45,7 @@ export default function Main() {
                     }}
                 >
                     <div>
-                        <img src="../../img/main_text.png" style={{ width: '780px' }} />
+                        <img src="../../img/main_text.png" style={{ width: '750px' }} />
                         {/** 
                         <div
                             style={{

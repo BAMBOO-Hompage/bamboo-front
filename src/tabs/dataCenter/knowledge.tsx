@@ -6,10 +6,10 @@ import Nav from '../../components/nav.tsx';
 import BottomInfo from '../../components/bottomInfo.tsx';
 import '../../App.css';
 
-export default function Activity() {
+export default function Knowledge() {
     return (
         <div>
-            <Nav type="community" />
+            <Nav type="dataCenter" />
             <div className="background">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
@@ -33,7 +33,7 @@ export default function Activity() {
                             textAlign: 'left',
                         }}
                     >
-                        <div style={{ position: 'absolute', right: '50px' }}>주요 활동</div>
+                        <div style={{ position: 'absolute', right: '50px' }}>지식 공유 게시판</div>
                     </div>
 
                     <div

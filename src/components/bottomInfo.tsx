@@ -2,12 +2,12 @@ import React from 'react';
 import '../App.css';
 
 // post.tsx
-export default function PostData() {
+export default function BottomInfo() {
     return (
         <div
             style={{
                 width: '100vw',
-                height: '150px',
+                height: '200px',
                 backgroundColor: '#2CC295',
                 textAlign: 'center',
                 display: 'flex',

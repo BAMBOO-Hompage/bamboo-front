@@ -6,7 +6,7 @@ export default function PostData() {
     return [
         /*
         {
-            id: 20,
+            id: 30,
             title: '2024-2 데나무 신입 부원 모집',
             date: '2024-09-01',
             content: '2024년도 2학기 데나무 신입 부원을 모집합니다.',
@@ -17,7 +17,7 @@ export default function PostData() {
             id: 15,
             title: '2025 상명 데이터 챌린지 공모전 개최',
             date: '2024-09-16',
-            content: '2025년도 상명 데이터 챌린지 공모전을 개최합니다.\n신청일자: 8월 31일 ~ 9월 8일',
+            content: '2025년도 상명 데이터 챌린지 공모전을 개최합니다.\n신청일자: 8월 31일 ~ 9월 8일\n# 맹의현',
             category: '동아리 공지',
         },
         {
