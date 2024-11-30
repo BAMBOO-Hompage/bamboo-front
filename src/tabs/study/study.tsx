@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import PostData from "../../mockup_data/post_data.tsx";
+import StudyData from "../../mockup_data/study_data.tsx";
 import "../../App.css";
 
-export default function Post() {
-  const data = PostData();
+export default function Study() {
+  const data = StudyData();
 
-  const postId = localStorage.getItem("postId");
+  const postId = localStorage.getItem("studyId");
   const currentPost = data.filter((post) => postId == post.id)[0];
 
   return (
     <div>
-      <Nav type="community" />
+      <Nav type="study" />
       <div id="background" className="background">
         <div style={{ height: "200vh", display: "flex", padding: "100px 0" }}>
           <motion.div
@@ -34,7 +34,7 @@ export default function Post() {
           >
             <div
               style={{
-                width: "110px",
+                width: "140px",
                 fontFamily: "Pretendard-Bold",
                 fontSize: "30px",
                 color: "#fff",
@@ -42,7 +42,7 @@ export default function Post() {
                 right: "50px",
               }}
             >
-              공지사항
+              스터디 모집
               <div
                 style={{
                   marginTop: "40px",
@@ -74,7 +74,7 @@ export default function Post() {
             style={{
               position: "relative",
               width: "1120px",
-              heidht: "100%",
+              height: "100%",
               textAlign: "left",
             }}
           >
