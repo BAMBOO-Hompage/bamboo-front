@@ -42,7 +42,7 @@ export default function Nav(props: NavType) {
           <Link to="/">
             <img
               src="../img/small_logo.png"
-              style={{ width: "60px", marginTop: "5px" }}
+              style={{ width: "80px", marginTop: "5px" }}
             />
           </Link>
         </div>
@@ -221,7 +221,7 @@ export default function Nav(props: NavType) {
               <div className="nav_tabs">자율 스터디</div>
             </Link>
             <Link to="/applyStudy" style={{ textDecoration: "none" }}>
-              <div className="nav_tabs">스터디 신청</div>
+              <div className="nav_tabs">스터디 모집</div>
             </Link>
           </div>
           <div

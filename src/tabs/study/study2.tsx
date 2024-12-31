@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import StudyData from "../../mockup_data/study_data.tsx";
+import StudyData from "../../mockup_data/study_data2.tsx";
 import "../../App.css";
 
 export default function Study() {

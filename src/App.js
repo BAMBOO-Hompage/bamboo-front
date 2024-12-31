@@ -20,7 +20,10 @@ import Knowledge from "./tabs/dataCenter/knowledge.tsx";
 import Introduction from "./tabs/joinUs/introduction.tsx";
 import JoinUs from "./tabs/joinUs/joinUs.tsx";
 import Study from "./tabs/study/study.tsx";
+import Study2 from "./tabs/study/study2.tsx";
 import ApplyStudy from "./tabs/study/applyStudy.tsx";
+import ApplyStudy2 from "./tabs/study/applyStudy2.tsx";
+import StudyAdd from "./tabs/study/studyAdd.tsx";
 import CurriculumStudy from "./tabs/study/curriculumStudy.tsx";
 import SelfStudy from "./tabs/study/selfStudy.tsx";
 import "./App.css";
@@ -50,7 +53,10 @@ function App() {
           <Route path="/introduction" element={<Introduction />} />
           <Route path="/joinUs" element={<JoinUs />} />
           <Route path="/applyStudy" element={<ApplyStudy />} />
+          <Route path="/applyStudy2" element={<ApplyStudy2 />} />
+          <Route path="/studyAdd" element={<StudyAdd />} />
           <Route path="/study" element={<Study />} />
+          <Route path="/study2" element={<Study2 />} />
           <Route path="/curriculumStudy" element={<CurriculumStudy />} />
           <Route path="/selfStudy" element={<SelfStudy />} />
         </Routes>

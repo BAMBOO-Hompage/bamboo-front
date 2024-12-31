@@ -15,7 +15,7 @@ export default function Main() {
 
   return (
     <div>
-      <Nav type="logOut" />
+      <Nav type="logIn" />
       <div className="background">
         <div
           style={{
@@ -56,7 +56,7 @@ export default function Main() {
           }}
         >
           <div>
-            <img src="../../img/main_text.png" style={{ width: "750px" }} />
+            <img src="../../img/main_text.png" style={{ width: "650px" }} />
             {/** 
                         <div
                             style={{
@@ -133,7 +133,7 @@ export default function Main() {
                 fontSize: "20px",
               }}
             >
-              '데나무'
+              'bomboo'
             </span>
             는 데이터 분석 및 인공지능(AI) 분야에 관심 있는 학생들이 모여 함께
             학습하고 성장하는 동아리입니다. 우리의 목표는 자발적이고 효율적인
@@ -143,7 +143,7 @@ export default function Main() {
             있습니다.
             <br />
             <br />
-            데나무에 가입하게 되면, 학년과 실력에 따라 학습할 교재를 선택하고,
+            bomboo에 가입하게 되면, 학년과 실력에 따라 학습할 교재를 선택하고,
             함께 학습할 수 있는 스터디 분반을 구성합니다. 정기적인 스터디,
             멘토링 및 네트워킹을 통해 동아리원들이 자발적으로 학습하고, 성장할
             수 있도록 지원합니다.
@@ -151,9 +151,9 @@ export default function Main() {
           <div
             style={{
               width: "25%",
-              height: "250px",
+              height: "200px",
               margin: "0 auto",
-              marginTop: "50px",
+              marginTop: "75px",
               backgroundColor: "#111015",
               borderRadius: "20px",
               boxShadow:
@@ -162,7 +162,7 @@ export default function Main() {
           >
             <img
               src="../img/main_logo.png"
-              style={{ height: "210px", marginTop: "20px" }}
+              style={{ height: "100px", marginTop: "50px" }}
             />
           </div>
         </motion.div>
@@ -211,7 +211,7 @@ export default function Main() {
                   fontSize: "20px",
                 }}
               >
-                '데나무'
+                'bomboo'
               </span>
               는 정기적인 스터디 뿐만 아니라 논문 리뷰 발표회, 파이썬 새싹톤,
               나무콘 등 다양한 활동을 통해서 부원들의 흥미를 돋우고, 의욕을
@@ -410,7 +410,7 @@ export default function Main() {
                 textShadow: "0 0 0.1em, 0 0 0.1em",
               }}
             >
-              Maeng
+              bomboo
             </div>
             <div
               style={{

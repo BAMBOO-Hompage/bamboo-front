@@ -1,7 +1,6 @@
 import React from "react";
 import "../App.css";
 
-// post.tsx
 export default function BottomInfo() {
   return (
     <div

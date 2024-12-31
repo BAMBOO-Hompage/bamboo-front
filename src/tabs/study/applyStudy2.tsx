@@ -1,25 +1,72 @@
 import React, { useState, useLayoutEffect, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
+import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import PostData from "../../mockup_data/post_data.tsx";
+import StudyData from "../../mockup_data/study_data2.tsx";
+// import StudyPostAPI from "../../api/studyPostAPI.tsx";
 import "../../App.css";
 
 const postsPerPage = 9;
 const maxVisiblePages = 5;
 
-export default function PostBoard() {
+function StudyPostAPI() {
+  const [studyPostList, setStudyPostList] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  console.log(1);
+
+  const fetchData = async () => {
+    try {
+      console.log(3);
+      const data = await getStudyPostInfo();
+      console.log(data);
+      setStudyPostList(data.result.list);
+    } catch (error) {
+      console.error("Failed to fetch timetable:", error);
+      window.location = "/";
+    }
+    setLoading(false);
+  };
+
+  console.log(2);
+  fetchData();
+
+  return { studyPostList, loading };
+}
+
+function getStudyPostInfo() {
+  console.log("Fetching data...");
+  return fetch("http://localhost:8080/api/v1/posts", {
+    method: "GET",
+    headers: {},
+  })
+    .then((response) => {
+      console.log("Response received with status:", response.status);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json(); // 여기에서 에러가 발생할 가능성 있음
+    })
+    .then((data) => {
+      console.log("Data received:", data); // JSON 파싱 성공 후 데이터 출력
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error occurred:", error.message); // 에러 디버깅
+    });
+}
+
+export default function ApplyStudy() {
   const [postList, setPostList] = useState("전체");
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
   const scrollPositions = useRef({});
-  const data = PostData();
+  // const { data, loading } = StudyPostAPI();
+  const data = StudyData();
 
-  const filteredData = data.filter(
-    (post) => postList === "전체" || post.category === postList
-  );
+  const filteredData = data;
 
   const totalPages = Math.ceil(filteredData.length / postsPerPage);
   const startIndex = (currentPage - 1) * postsPerPage;
@@ -56,9 +103,16 @@ export default function PostBoard() {
     }
   }, []);
 
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+  // if (!data) {
+  //   return <div>No data available</div>;
+  // }
+
   return (
     <div>
-      <Nav type="community" />
+      <Nav type="study" />
       <div id="background" className="background">
         <div style={{ height: "200vh", display: "flex", padding: "100px 0" }}>
           <motion.div
@@ -80,15 +134,15 @@ export default function PostBoard() {
           >
             <div
               style={{
-                width: "110px",
+                width: "140px",
                 fontFamily: "Pretendard-Bold",
                 fontSize: "30px",
                 color: "#fff",
                 position: "absolute",
-                left: "240px",
+                right: "50px",
               }}
             >
-              공지사항
+              스터디 모집
               <div
                 style={{
                   marginTop: "40px",
@@ -107,30 +161,27 @@ export default function PostBoard() {
                 >
                   전체
                 </div>
-
                 <div
                   className="post_tabs"
-                  style={
-                    postList === "대회 및 세미나" ? { color: "#2CC295" } : {}
-                  }
+                  style={postList === "모집 중" ? { color: "#2CC295" } : {}}
                   onClick={() => {
-                    setPostList("대회 및 세미나");
+                    setPostList("모집 중");
                     setCurrentPage(1);
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
-                  대회 및 세미나
+                  모집 중
                 </div>
                 <div
                   className="post_tabs"
-                  style={postList === "동아리 공지" ? { color: "#2CC295" } : {}}
+                  style={postList === "모집 완료" ? { color: "#2CC295" } : {}}
                   onClick={() => {
-                    setPostList("동아리 공지");
+                    setPostList("모집 완료");
                     setCurrentPage(1);
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
-                  동아리 공지
+                  모집 완료
                 </div>
               </div>
             </div>
@@ -168,18 +219,17 @@ export default function PostBoard() {
               >
                 {postList === "전체" ? (
                   <div>전체</div>
-                ) : postList === "대회 및 세미나" ? (
-                  <div>대회 및 세미나</div>
+                ) : postList === "모집 중" ? (
+                  <div>모집 중</div>
                 ) : (
-                  <div>동아리 공지</div>
+                  <div>모집 완료</div>
                 )}
 
                 <img
                   src="../../img/btn/edit_enabled.png"
                   style={{ width: "30px", cursor: "pointer" }}
                   onClick={() => {
-                    localStorage.setItem("postList", postList);
-                    window.location = "/postAdd";
+                    window.location = "/studyAdd";
                   }}
                 />
               </div>
@@ -201,13 +251,13 @@ export default function PostBoard() {
                   >
                     <div style={{ width: "90%", margin: "0 auto" }}>
                       <Link
-                        to="/post"
+                        to="/study2"
                         style={{ textDecoration: "none" }}
                         onClick={() => {
                           sessionStorage.setItem("scrollY", window.scrollY);
                           sessionStorage.setItem("postList", postList);
                           sessionStorage.setItem("currentPage", currentPage);
-                          localStorage.setItem("postId", post.id);
+                          localStorage.setItem("studyId", post.id);
                         }}
                       >
                         <div
