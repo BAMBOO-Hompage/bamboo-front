@@ -78,11 +78,10 @@ export default function Main() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            border: "1px solid #fff",
           }}
         >
           <div>
-            <img src="../../img/main_logo.png" style={{ width: "650px" }} />
+            <img src="../../img/main_logo.png" style={{ width: "700px" }} />
           </div>
         </motion.div>
 
@@ -104,7 +103,7 @@ export default function Main() {
         >
           <div
             style={{
-              padding: "70px 0",
+              padding: "80px 0 60px",
               fontFamily: "Pretendard-Bold",
               fontSize: "40px",
               color: "#fff",
@@ -112,6 +111,7 @@ export default function Main() {
             }}
           >
             About Us
+            <span> </span>
           </div>
           <div
             style={{
