@@ -15,7 +15,7 @@ export default function Main() {
 
   return (
     <div>
-      <Nav type="logIn" />
+      <Nav type="logOut" />
       <div className="background">
         <div
           style={{
@@ -24,8 +24,8 @@ export default function Main() {
             left: "0",
             width: "100vw",
             height: "100vh",
-            opacity: "0.4",
-            zIndex: "-1",
+            opacity: "1",
+            zIndex: "-2",
           }}
         >
           <video
@@ -37,6 +37,31 @@ export default function Main() {
             <source src="../../img/main_background.mp4" type="video/mp4" />
           </video>
         </div>
+        <div
+          style={{
+            position: "absolute",
+            top: " 0",
+            left: "0",
+            width: "100vw",
+            height: "100vh",
+            opacity: "0.6",
+            backgroundColor: "#000",
+            zIndex: "-1",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            top: " 100vh",
+            left: "15%",
+            width: "70%",
+            height: "25px",
+            borderRadius: "1171px",
+            background: "#2CC295",
+            filter: "blur(90px)",
+            zIndex: "-10",
+          }}
+        ></div>
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -53,40 +78,11 @@ export default function Main() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            border: "1px solid #fff",
           }}
         >
           <div>
-            <img src="../../img/main_text.png" style={{ width: "650px" }} />
-            {/** 
-                        <div
-                            style={{
-                                fontFamily: 'Pretendard-Bold',
-                                fontSize: '60px',
-                                color: '#fff',
-                            }}
-                        >
-                            Sangmyung University
-                        </div>
-                        <div
-                            style={{
-                                fontFamily: 'Pretendard-Bold',
-                                fontSize: '75px',
-                                color: '#fff',
-                            }}
-                        >
-                            Data Study Club
-                        </div>
-                        <div
-                            style={{
-                                fontFamily: 'Pretendard-SemiBold',
-                                fontSize: '22px',
-                                color: '#2CC295',
-                                marginTop: '15px',
-                            }}
-                        >
-                            상명대학교 서울캠퍼스 데이터 스터디 동아리 '데나무'
-                        </div>
-                        */}
+            <img src="../../img/main_logo.png" style={{ width: "650px" }} />
           </div>
         </motion.div>
 
@@ -100,13 +96,15 @@ export default function Main() {
             y: { duration: 1 },
           }}
           style={{
+            position: "relative",
             width: "100vw",
             height: "100vh",
+            border: "1px solid #fff",
           }}
         >
           <div
             style={{
-              padding: "60px 0",
+              padding: "70px 0",
               fontFamily: "Pretendard-Bold",
               fontSize: "40px",
               color: "#fff",
@@ -143,10 +141,19 @@ export default function Main() {
             있습니다.
             <br />
             <br />
-            bomboo에 가입하게 되면, 학년과 실력에 따라 학습할 교재를 선택하고,
-            함께 학습할 수 있는 스터디 분반을 구성합니다. 정기적인 스터디,
-            멘토링 및 네트워킹을 통해 동아리원들이 자발적으로 학습하고, 성장할
-            수 있도록 지원합니다.
+            <span
+              style={{
+                color: "#2CC295",
+                fontFamily: "Pretendard-SemiBold",
+                fontSize: "20px",
+              }}
+            >
+              'bomboo'
+            </span>
+            에 가입하게 되면, 학년과 실력에 따라 학습할 교재를 선택하고, 함께
+            학습할 수 있는 스터디 분반을 구성합니다. 정기적인 스터디, 멘토링 및
+            네트워킹을 통해 동아리원들이 자발적으로 학습하고, 성장할 수 있도록
+            지원합니다.
           </div>
           <div
             style={{
@@ -160,10 +167,10 @@ export default function Main() {
                 "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
             }}
           >
-            <img
+            {/* <img
               src="../img/main_logo.png"
               style={{ height: "100px", marginTop: "50px" }}
-            />
+            /> */}
           </div>
         </motion.div>
 
@@ -177,14 +184,48 @@ export default function Main() {
             y: { duration: 1 },
           }}
           style={{
+            position: "relative",
             width: "100vw",
             height: "100vh",
+            border: "1px solid #fff",
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              top: "80px",
+              left: "33%",
+              width: "34%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
+              style={{
+                width: "250px",
+                height: "50px",
+                borderRadius: "1171px",
+                background: "#2CC295",
+                filter: "blur(100px)",
+                zIndex: "-10",
+              }}
+            ></div>
+            <div
+              style={{
+                marginTop: "40px",
+                width: "250px",
+                height: "50px",
+                borderRadius: "1171px",
+                background: "#297FB8",
+                filter: "blur(100px)",
+                zIndex: "-10",
+              }}
+            ></div>
+          </div>
           <div>
             <div
               style={{
-                padding: "60px 0",
+                padding: "70px 0",
                 fontFamily: "Pretendard-Bold",
                 fontSize: "40px",
                 color: "#fff",
@@ -398,19 +439,60 @@ export default function Main() {
           style={{
             width: "100vw",
             height: "100vh",
+            border: "1px solid #fff",
           }}
         >
           <div>
             <div
               style={{
-                padding: "60px 0",
+                padding: "70px 0",
                 fontFamily: "Pretendard-Bold",
                 fontSize: "40px",
                 color: "#fff",
                 textShadow: "0 0 0.1em, 0 0 0.1em",
               }}
             >
-              bomboo
+              History
+            </div>
+            <div
+              style={{
+                width: "70%",
+                textAlign: "left",
+                margin: "0 auto",
+                fontFamily: "Pretendard-Light",
+                fontSize: "18px",
+                color: "#fff",
+              }}
+            ></div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+            y: { duration: 1 },
+          }}
+          style={{
+            width: "100vw",
+            height: "100vh",
+            border: "1px solid #fff",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                padding: "70px 0",
+                fontFamily: "Pretendard-Bold",
+                fontSize: "40px",
+                color: "#fff",
+                textShadow: "0 0 0.1em, 0 0 0.1em",
+              }}
+            >
+              Maeng
             </div>
             <div
               style={{

@@ -205,6 +205,9 @@ export default function Nav(props: NavType) {
             <Link to="/introduction" style={{ textDecoration: "none" }}>
               <div className="nav_tabs">동아리 소개</div>
             </Link>
+            <Link to="/activity" style={{ textDecoration: "none" }}>
+              <div className="nav_tabs">주요 활동</div>
+            </Link>
             <Link to="/joinUs" style={{ textDecoration: "none" }}>
               <div className="nav_tabs">지원 안내</div>
             </Link>
@@ -235,9 +238,6 @@ export default function Nav(props: NavType) {
             <Link to="/hallOfFame" style={{ textDecoration: "none" }}>
               <div className="nav_tabs">명예의 전당</div>
             </Link>
-            <Link to="/knowledge" style={{ textDecoration: "none" }}>
-              <div className="nav_tabs">지식 공유 게시판</div>
-            </Link>
           </div>
           <div
             className="nav_list"
@@ -251,11 +251,8 @@ export default function Nav(props: NavType) {
             >
               <div className="nav_tabs">공지사항</div>
             </Link>
-            <Link to="/activity" style={{ textDecoration: "none" }}>
-              <div className="nav_tabs">주요 활동</div>
-            </Link>
-            <Link to="/discord" style={{ textDecoration: "none" }}>
-              <div className="nav_tabs">Discord</div>
+            <Link to="/knowledge" style={{ textDecoration: "none" }}>
+              <div className="nav_tabs">지식 공유 게시판</div>
             </Link>
           </div>
         </div>
