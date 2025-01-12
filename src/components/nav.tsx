@@ -42,6 +42,7 @@ export default function Nav(props: NavType) {
           <Link to="/">
             <img
               src="../img/small_logo.png"
+              alt="small_logo"
               style={{ width: "80px", marginTop: "5px" }}
             />
           </Link>

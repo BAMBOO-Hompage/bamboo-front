@@ -27,7 +27,7 @@ export default function Login() {
       <div
         style={{
           position: "absolute",
-          top: "10vh",
+          top: "70px",
           left: "33%",
           width: "34%",
           display: "flex",
@@ -58,10 +58,10 @@ export default function Login() {
       </div>
       <div
         style={{
-          marginTop: "22vh",
+          marginTop: "160px",
         }}
       >
-        <div style={{ marginBottom: "15vh" }}>
+        <div style={{ marginBottom: "100px" }}>
           <img
             src="..\img\login_logo.png"
             alt="login_logo"
@@ -74,7 +74,7 @@ export default function Login() {
             <div
               style={{
                 margin: "0 auto",
-                marginBottom: "3vh",
+                marginBottom: "20px",
               }}
             >
               <div
@@ -182,6 +182,7 @@ export default function Login() {
             style={{
               width: "400px",
               marginTop: "40px",
+              marginBottom: "30px",
               display: "flex",
               justifyContent: "space-around",
             }}

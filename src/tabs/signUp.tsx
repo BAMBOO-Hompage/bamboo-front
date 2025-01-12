@@ -52,7 +52,7 @@ export default function Signup() {
 
       <div
         style={{
-          marginTop: "100px",
+          marginTop: "80px",
           marginBottom: "50px",
           fontFamily: "Pretendard-ExtraBold",
           fontSize: "35px",

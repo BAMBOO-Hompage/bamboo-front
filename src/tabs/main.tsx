@@ -4,7 +4,10 @@ import { motion } from "framer-motion";
 import Button from "../components/button.tsx";
 import Nav from "../components/nav.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
+import HistoryData from "../mockup_data/history_data.tsx";
 import "../App.css";
+
+const historyData = HistoryData();
 
 export default function Main() {
   useEffect(() => {
@@ -16,7 +19,7 @@ export default function Main() {
   return (
     <div>
       <Nav type="logOut" />
-      <div className="background">
+      <div style={{ width: "100%" }}>
         <div
           style={{
             position: "absolute",
@@ -40,7 +43,7 @@ export default function Main() {
         <div
           style={{
             position: "absolute",
-            top: " 0",
+            top: "0",
             left: "0",
             width: "100vw",
             height: "100vh",
@@ -53,8 +56,9 @@ export default function Main() {
           style={{
             position: "absolute",
             top: " 100vh",
-            left: "15%",
-            width: "70%",
+            left: "50%",
+            transform: "translate(-50%, 0)",
+            width: "1000px",
             height: "25px",
             borderRadius: "1171px",
             background: "#2CC295",
@@ -81,7 +85,11 @@ export default function Main() {
           }}
         >
           <div>
-            <img src="../../img/main_logo.png" style={{ width: "700px" }} />
+            <img
+              src="../../img/main_logo.png"
+              alt="main_logo"
+              style={{ width: "700px" }}
+            />
           </div>
         </motion.div>
 
@@ -98,24 +106,39 @@ export default function Main() {
             position: "relative",
             width: "100vw",
             height: "100vh",
-            border: "1px solid #fff",
           }}
         >
           <div
             style={{
-              padding: "80px 0 60px",
-              fontFamily: "Pretendard-Bold",
-              fontSize: "40px",
-              color: "#fff",
-              textShadow: "0 0 0.1em, 0 0 0.1em",
+              padding: "15vh 0 12vh",
             }}
           >
-            About Us
-            <span> </span>
+            <span
+              style={{
+                fontFamily: "Pretendard-Bold",
+                fontSize: "40px",
+                color: "#fff",
+                textShadow: "0 0 0.1em, 0 0 0.1em",
+                // color: "transparent",
+                // textShadow: "0px 2px 1px rgba(255,255,255,0.9), 0 0 0px #999",
+              }}
+            >
+              About Us
+            </span>
+            <br />
+            <span
+              style={{
+                fontFamily: "Pretendard-Regular",
+                fontSize: "16px",
+                color: "#999",
+              }}
+            >
+              소&emsp;개
+            </span>
           </div>
           <div
             style={{
-              width: "70%",
+              width: "1000px",
               textAlign: "left",
               margin: "0 auto",
               fontFamily: "Pretendard-Light",
@@ -131,7 +154,7 @@ export default function Main() {
                 fontSize: "20px",
               }}
             >
-              'bomboo'
+              'bamboo'
             </span>
             는 데이터 분석 및 인공지능(AI) 분야에 관심 있는 학생들이 모여 함께
             학습하고 성장하는 동아리입니다. 우리의 목표는 자발적이고 효율적인
@@ -148,30 +171,33 @@ export default function Main() {
                 fontSize: "20px",
               }}
             >
-              'bomboo'
+              'bamboo'
             </span>
             에 가입하게 되면, 학년과 실력에 따라 학습할 교재를 선택하고, 함께
             학습할 수 있는 스터디 분반을 구성합니다. 정기적인 스터디, 멘토링 및
             네트워킹을 통해 동아리원들이 자발적으로 학습하고, 성장할 수 있도록
             지원합니다.
           </div>
-          <div
-            style={{
-              width: "25%",
-              height: "200px",
-              margin: "0 auto",
-              marginTop: "75px",
-              backgroundColor: "#111015",
-              borderRadius: "20px",
-              boxShadow:
-                "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-            }}
-          >
-            {/* <img
-              src="../img/main_logo.png"
-              style={{ height: "100px", marginTop: "50px" }}
-            /> */}
-          </div>
+          <Link to="/introduction" style={{ textDecoration: "none" }}>
+            <div style={{ width: "1000px", margin: "0 auto" }}>
+              <div
+                style={{
+                  fontFamily: "Pretendard-Regular",
+                  fontSize: "16px",
+                  width: "150px",
+                  marginLeft: "830px",
+                  marginTop: "18vh",
+                  padding: "10px",
+                  backgroundColor: "#111015",
+                  borderRadius: "20px",
+                  boxShadow: "-10px -10px 30px #242424, 15px 15px 30px #000",
+                  color: "#2CC295",
+                }}
+              >
+                더 알아보기 {">"}
+              </div>
+            </div>
+          </Link>
         </motion.div>
 
         <motion.div
@@ -187,56 +213,70 @@ export default function Main() {
             position: "relative",
             width: "100vw",
             height: "100vh",
-            border: "1px solid #fff",
           }}
         >
           <div
             style={{
               position: "absolute",
               top: "80px",
-              left: "33%",
-              width: "34%",
+              left: "50%",
+              transform: "translate(-50%, 0)",
+              width: "450px",
               display: "flex",
               justifyContent: "space-between",
+              zIndex: "-10",
             }}
           >
             <div
               style={{
                 width: "250px",
-                height: "50px",
+                height: "60px",
                 borderRadius: "1171px",
                 background: "#2CC295",
                 filter: "blur(100px)",
-                zIndex: "-10",
               }}
             ></div>
             <div
               style={{
-                marginTop: "40px",
+                marginTop: "60px",
                 width: "250px",
-                height: "50px",
+                height: "60px",
                 borderRadius: "1171px",
                 background: "#297FB8",
                 filter: "blur(100px)",
-                zIndex: "-10",
               }}
             ></div>
           </div>
           <div>
             <div
               style={{
-                padding: "70px 0",
-                fontFamily: "Pretendard-Bold",
-                fontSize: "40px",
-                color: "#fff",
-                textShadow: "0 0 0.1em, 0 0 0.1em",
+                padding: "10vh 0 8vh",
               }}
             >
-              Activities
+              <span
+                style={{
+                  fontFamily: "Pretendard-Bold",
+                  fontSize: "40px",
+                  color: "#fff",
+                  textShadow: "0 0 0.1em, 0 0 0.1em",
+                }}
+              >
+                Activities
+              </span>
+              <br />
+              <span
+                style={{
+                  fontFamily: "Pretendard-Regular",
+                  fontSize: "16px",
+                  color: "#999",
+                }}
+              >
+                주 요 활 동
+              </span>
             </div>
             <div
               style={{
-                width: "70%",
+                width: "1000px",
                 textAlign: "left",
                 margin: "0 auto",
                 fontFamily: "Pretendard-Light",
@@ -252,19 +292,18 @@ export default function Main() {
                   fontSize: "20px",
                 }}
               >
-                'bomboo'
+                'bamboo'
               </span>
-              는 정기적인 스터디 뿐만 아니라 논문 리뷰 발표회, 파이썬 새싹톤,
-              나무콘 등 다양한 활동을 통해서 부원들의 흥미를 돋우고, 의욕을
-              일깨우고자 노력하고 있습니다. 동아리원들은 방학간 진행하는 각
-              활동을 통해서 학기 중 자신의 학습 정도를 검증할 수 있습니다.
+              는 정기적인 스터디 뿐만 아니라 데이터 분석 대회, 멘토링 및
+              네트워킹 등 다양한 활동을 통해 부원들의 학습 능력 증진을 돕고
+              있습니다.
             </div>
             <div
               style={{
-                width: "70%",
-                height: "370px",
+                width: "1000px",
+                height: "40vh",
                 margin: "0 auto",
-                marginTop: "50px",
+                marginTop: "5vh",
                 display: "flex",
                 justifyContent: "space-between",
               }}
@@ -272,7 +311,7 @@ export default function Main() {
               <div
                 style={{
                   width: "30%",
-                  height: "370px",
+                  height: "50vh",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
@@ -282,18 +321,19 @@ export default function Main() {
                 <div>
                   <img
                     src="../img/icon/paper.png"
+                    alt="paper"
                     style={{ height: "150px", marginTop: "20px" }}
                   />
                 </div>
                 <div
                   style={{
-                    margin: "10px 0 30px",
+                    margin: "1vh 0 5vh",
                     fontFamily: "Pretendard-SemiBold",
                     fontSize: "20px",
                     color: "#fff",
                   }}
                 >
-                  논문 리뷰 발표회
+                  커리큘럼 스터디
                 </div>
                 <div
                   style={{
@@ -306,76 +346,24 @@ export default function Main() {
                     lineHeight: "20px",
                   }}
                 >
-                  최신 데이터 분석 및 인공지능 논문을 리뷰하고 발표하는
-                  활동으로, 최신 연구 동향을 파악하고 학습한 내용을 공유하는
-                  기회를 제공합니다.
+                  학년, 실력, 시간에 따라 분반을 설정하고 매주 스터디를
+                  진행합니다.
+                  <br />
                   <br />
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "40px",
+                      lineHeight: "6vh",
                     }}
                   >
-                    #최신_동향_파악 #발표_능력_향상
+                    #간단한_실습 #자유로운_토론
                   </span>
                 </div>
               </div>
               <div
                 style={{
                   width: "30%",
-                  height: "370px",
-                  backgroundColor: "#111015",
-                  borderRadius: "20px",
-                  boxShadow:
-                    "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                }}
-              >
-                <div>
-                  <img
-                    src="../img/icon/python.png"
-                    style={{ height: "150px", marginTop: "20px" }}
-                  />
-                </div>
-                <div
-                  style={{
-                    margin: "10px 0 30px",
-                    fontFamily: "Pretendard-SemiBold",
-                    fontSize: "20px",
-                    color: "#fff",
-                  }}
-                >
-                  파이썬 새싹톤
-                </div>
-                <div
-                  style={{
-                    width: "80%",
-                    textAlign: "left",
-                    margin: "0 auto",
-                    fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
-                    color: "#fff",
-                    lineHeight: "20px",
-                  }}
-                >
-                  1박 2일동안 파이썬을 활용한 프로그램을 개발함으로써 문제 해결
-                  능력을 키우고, 창의적인 아이디어를 실현할 수 있는
-                  해커톤입니다.
-                  <br />
-                  <br />
-                  <span
-                    style={{
-                      color: "#2CC295",
-                      lineHeight: "40px",
-                    }}
-                  >
-                    #문제_해결_능력 #창의성_향상 #협업
-                  </span>
-                </div>
-              </div>
-              <div
-                style={{
-                  width: "30%",
-                  height: "370px",
+                  height: "50vh",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
@@ -385,18 +373,19 @@ export default function Main() {
                 <div>
                   <img
                     src="../img/icon/dacon.png"
+                    alt="dacon"
                     style={{ height: "150px", marginTop: "20px" }}
                   />
                 </div>
                 <div
                   style={{
-                    margin: "10px 0 30px",
+                    margin: "1vh 0 5vh",
                     fontFamily: "Pretendard-SemiBold",
                     fontSize: "20px",
                     color: "#fff",
                   }}
                 >
-                  나무콘
+                  데이터 분석 대회
                 </div>
                 <div
                   style={{
@@ -409,19 +398,296 @@ export default function Main() {
                     lineHeight: "20px",
                   }}
                 >
-                  데이터 분석 대회인 나무콘에 참여하여 실력을 검증하고, 최신
-                  데이터 분석 기술을 직접 사용해 볼 수 있는 기회를 제공합니다.
-                  <br />
+                  국내외 대회 정보를 수집 및 공유하고 팀별 또는 개인별 참가하여
+                  실전 경험을 쌓을 수 있습니다.
                   <br />
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "40px",
+                      lineHeight: "6vh",
+                    }}
+                  >
+                    #문제_해결_능력 #경쟁력_향상
+                  </span>
+                </div>
+              </div>
+              <div
+                style={{
+                  width: "30%",
+                  height: "50vh",
+                  backgroundColor: "#111015",
+                  borderRadius: "20px",
+                  boxShadow:
+                    "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                }}
+              >
+                <div>
+                  <img
+                    src="../img/icon/network.png"
+                    alt="network"
+                    style={{ height: "150px", marginTop: "20px" }}
+                  />
+                </div>
+                <div
+                  style={{
+                    margin: "1vh 0 5vh",
+                    fontFamily: "Pretendard-SemiBold",
+                    fontSize: "20px",
+                    color: "#fff",
+                  }}
+                >
+                  멘토링 및 네트워킹
+                </div>
+                <div
+                  style={{
+                    width: "80%",
+                    textAlign: "left",
+                    margin: "0 auto",
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "15px",
+                    color: "#fff",
+                    lineHeight: "20px",
+                  }}
+                >
+                  1:1 멘토링과 졸업 선배들과의 네트워킹을 통해 전문 지식과
+                  경험을 습득하여 성장을 촉진할 수 있습니다.
+                  <br />
+                  <span
+                    style={{
+                      color: "#2CC295",
+                      lineHeight: "6vh",
                     }}
                   >
                     #선의의_경쟁 #최신_기술_실습
                   </span>
                 </div>
+              </div>
+            </div>
+          </div>
+          <Link to="/activity" style={{ textDecoration: "none" }}>
+            <div style={{ width: "1000px", margin: "0 auto" }}>
+              <div
+                style={{
+                  fontFamily: "Pretendard-Regular",
+                  fontSize: "16px",
+                  width: "150px",
+                  marginLeft: "830px",
+                  marginTop: "14vh",
+                  padding: "10px",
+                  backgroundColor: "#111015",
+                  borderRadius: "20px",
+                  boxShadow: "-10px -10px 30px #242424, 15px 15px 30px #000",
+                  color: "#2CC295",
+                }}
+              >
+                더 알아보기 {">"}
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+            y: { duration: 1 },
+          }}
+          style={{
+            position: "relative",
+            width: "100vw",
+            height: "100vh",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: " 33vh",
+              left: "50%",
+
+              transform: "translate(-50%, 0)",
+              width: "1000px",
+              height: "25px",
+              borderRadius: "1171px",
+              background: "#2CC295",
+              filter: "blur(90px)",
+              zIndex: "-10",
+            }}
+          ></div>
+
+          <div>
+            <div
+              style={{
+                padding: "15vh 0 8vh",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "Pretendard-Bold",
+                  fontSize: "40px",
+                  color: "#fff",
+                  textShadow: "0 0 0.1em, 0 0 0.1em",
+                }}
+              >
+                History
+              </span>
+              <br />
+              <span
+                style={{
+                  fontFamily: "Pretendard-Regular",
+                  fontSize: "16px",
+                  color: "#999",
+                }}
+              >
+                연&emsp;혁
+              </span>
+            </div>
+
+            <div
+              style={{
+                position: "relative",
+                color: "#fff",
+                width: "1000px",
+                height: "390px",
+                margin: "0 auto",
+                backgroundColor: "#111015",
+                borderRadius: "20px",
+                boxShadow:
+                  "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {historyData.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <div
+                        style={{
+                          width: "100px",
+                          textAlign: "left",
+                          paddingLeft: "50px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontFamily: "Pretendard-Bold",
+                            fontSize: "40px",
+                            fontWeight: "bold",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          {item.year}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "230px",
+                  display: "flex",
+                  alignItems: "end",
+                }}
+              >
+                {historyData.map((item, index) => {
+                  if (index % 2 !== 0) {
+                    return (
+                      <div>
+                        <div
+                          style={{
+                            width: "50px",
+                            textAlign: "left",
+                            paddingLeft: "200px",
+                            marginBottom: "5px",
+                          }}
+                        >
+                          {item.events.map((event, idx) => (
+                            <div
+                              key={idx}
+                              style={{
+                                fontFamily: "Pretendard-Light",
+                                fontSize: "16px",
+                                lineHeight: "1.5",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {event}
+                            </div>
+                          ))}
+                        </div>
+                        <div
+                          style={{
+                            boxSizing: "border-box",
+                            width: "100px",
+                            height: "30px",
+                            marginLeft: "200px",
+                            borderLeft: "1px solid #2cc295",
+                          }}
+                        ></div>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "220px",
+                  height: "100%",
+                  display: "flex",
+                }}
+              >
+                {historyData.map((item, index) => {
+                  if (index % 2 === 0) {
+                    return (
+                      <div>
+                        <div
+                          style={{
+                            boxSizing: "border-box",
+                            width: "250px",
+                            height: "30px",
+                            marginLeft: "50px",
+                            borderLeft: "1px solid #2cc295",
+                          }}
+                        ></div>
+                        <div
+                          style={{
+                            width: "150px",
+                            textAlign: "left",
+                            paddingLeft: "50px",
+                            marginTop: "5px",
+                          }}
+                        >
+                          {item.events.map((event, idx) => (
+                            <div
+                              key={idx}
+                              style={{
+                                fontFamily: "Pretendard-Light",
+                                fontSize: "16px",
+                                lineHeight: "1.5",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {event}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
               </div>
             </div>
           </div>
@@ -437,74 +703,74 @@ export default function Main() {
             y: { duration: 1 },
           }}
           style={{
+            position: "relative",
             width: "100vw",
-            height: "100vh",
-            border: "1px solid #fff",
+            height: "80vh",
           }}
         >
-          <div>
+          <div
+            style={{
+              position: "absolute",
+              top: "160px",
+              left: "50%",
+              transform: "translate(-90%, 0)",
+              width: "400px",
+              display: "flex",
+              justifyContent: "space-between",
+              zIndex: "-10",
+            }}
+          >
             <div
               style={{
-                padding: "70px 0",
-                fontFamily: "Pretendard-Bold",
-                fontSize: "40px",
-                color: "#fff",
-                textShadow: "0 0 0.1em, 0 0 0.1em",
+                width: "250px",
+                height: "60px",
+                borderRadius: "1171px",
+                background: "#2CC295",
+                filter: "blur(100px)",
               }}
-            >
-              History
-            </div>
+            ></div>
             <div
               style={{
-                width: "70%",
-                textAlign: "left",
-                margin: "0 auto",
-                fontFamily: "Pretendard-Light",
-                fontSize: "18px",
-                color: "#fff",
+                marginTop: "60px",
+                width: "250px",
+                height: "60px",
+                borderRadius: "1171px",
+                background: "#297FB8",
+                filter: "blur(100px)",
               }}
             ></div>
           </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{
-            ease: "easeInOut",
-            duration: 1,
-            y: { duration: 1 },
-          }}
-          style={{
-            width: "100vw",
-            height: "100vh",
-            border: "1px solid #fff",
-          }}
-        >
-          <div>
-            <div
-              style={{
-                padding: "70px 0",
-                fontFamily: "Pretendard-Bold",
-                fontSize: "40px",
-                color: "#fff",
-                textShadow: "0 0 0.1em, 0 0 0.1em",
-              }}
-            >
-              Maeng
-            </div>
-            <div
-              style={{
-                width: "70%",
-                textAlign: "left",
-                margin: "0 auto",
-                fontFamily: "Pretendard-Light",
-                fontSize: "18px",
-                color: "#fff",
-              }}
-            ></div>
+          <div
+            style={{
+              padding: "16vh 0 8vh",
+            }}
+          >
+            <img
+              src="../../img/main_logo2.png"
+              alt="main_logo2"
+              style={{ width: "400px" }}
+            />
           </div>
+          <Link to="/joinUs" style={{ textDecoration: "none" }}>
+            <div style={{ width: "1000px", margin: "0 auto" }}>
+              <div
+                style={{
+                  fontFamily: "Pretendard-Regular",
+                  fontSize: "18px",
+                  width: "150px",
+                  margin: "0 auto",
+                  padding: "10px",
+                  backgroundColor: "#111015",
+                  borderRadius: "20px",
+                  boxShadow:
+                    "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                  color: "#2CC295",
+                }}
+              >
+                지원 안내 {">"}
+              </div>
+            </div>
+          </Link>
         </motion.div>
 
         <BottomInfo />
