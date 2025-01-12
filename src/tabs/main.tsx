@@ -154,7 +154,7 @@ export default function Main() {
                 fontSize: "20px",
               }}
             >
-              'bamboo'
+              'BAMBOO'
             </span>
             는 데이터 분석 및 인공지능(AI) 분야에 관심 있는 학생들이 모여 함께
             학습하고 성장하는 동아리입니다. 우리의 목표는 자발적이고 효율적인
@@ -171,7 +171,7 @@ export default function Main() {
                 fontSize: "20px",
               }}
             >
-              'bamboo'
+              'BAMBOO'
             </span>
             에 가입하게 되면, 학년과 실력에 따라 학습할 교재를 선택하고, 함께
             학습할 수 있는 스터디 분반을 구성합니다. 정기적인 스터디, 멘토링 및
