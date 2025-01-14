@@ -43,8 +43,8 @@ export default function Signup() {
       >
         <Link to="/">
           <img
-            src="../img/small_logo.png"
-            alt="small_logo"
+            src="../img/nav_logo.png"
+            alt="nav_logo"
             style={{ width: "80px", marginTop: "5px" }}
           />
         </Link>
@@ -449,7 +449,7 @@ export default function Signup() {
               </label>
               <input
                 id="name"
-                placeholder="ex) 맹의현"
+                placeholder=""
                 type="text"
                 autoComplete="none"
                 {...register("Name", {

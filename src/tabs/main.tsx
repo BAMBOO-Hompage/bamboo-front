@@ -86,7 +86,7 @@ export default function Main() {
         >
           <div>
             <img
-              src="../../img/main_logo.png"
+              src="../../img/main_logo1.png"
               alt="main_logo"
               style={{ width: "700px" }}
             />
@@ -105,12 +105,12 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "100vh",
+            height: "700px",
           }}
         >
           <div
             style={{
-              padding: "15vh 0 12vh",
+              padding: "110px 0 80px",
             }}
           >
             <span
@@ -142,9 +142,9 @@ export default function Main() {
               textAlign: "left",
               margin: "0 auto",
               fontFamily: "Pretendard-Light",
-              fontSize: "17px",
+              fontSize: "18px",
               color: "#fff",
-              lineHeight: "30px",
+              lineHeight: "33px",
             }}
           >
             <span
@@ -182,11 +182,11 @@ export default function Main() {
             <div style={{ width: "1000px", margin: "0 auto" }}>
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
-                  fontSize: "16px",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "18px",
                   width: "150px",
                   marginLeft: "830px",
-                  marginTop: "18vh",
+                  marginTop: "110px",
                   padding: "10px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
@@ -212,7 +212,8 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "100vh",
+            height: "700px",
+            border: "1px solid #fff",
           }}
         >
           <div
@@ -250,7 +251,7 @@ export default function Main() {
           <div>
             <div
               style={{
-                padding: "10vh 0 8vh",
+                padding: "70px 0 50px",
               }}
             >
               <span
@@ -280,7 +281,7 @@ export default function Main() {
                 textAlign: "left",
                 margin: "0 auto",
                 fontFamily: "Pretendard-Light",
-                fontSize: "17px",
+                fontSize: "18px",
                 color: "#fff",
                 lineHeight: "30px",
               }}
@@ -301,9 +302,9 @@ export default function Main() {
             <div
               style={{
                 width: "1000px",
-                height: "40vh",
+                height: "350px",
                 margin: "0 auto",
-                marginTop: "5vh",
+                marginTop: "10px",
                 display: "flex",
                 justifyContent: "space-between",
               }}
@@ -311,7 +312,7 @@ export default function Main() {
               <div
                 style={{
                   width: "30%",
-                  height: "50vh",
+                  height: "350px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
@@ -322,14 +323,14 @@ export default function Main() {
                   <img
                     src="../img/icon/paper.png"
                     alt="paper"
-                    style={{ height: "150px", marginTop: "20px" }}
+                    style={{ height: "140px", marginTop: "20px" }}
                   />
                 </div>
                 <div
                   style={{
-                    margin: "1vh 0 5vh",
+                    margin: "10px 0 35px",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "20px",
+                    fontSize: "22px",
                     color: "#fff",
                   }}
                 >
@@ -353,7 +354,7 @@ export default function Main() {
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "6vh",
+                      lineHeight: "45px",
                     }}
                   >
                     #간단한_실습 #자유로운_토론
@@ -363,7 +364,7 @@ export default function Main() {
               <div
                 style={{
                   width: "30%",
-                  height: "50vh",
+                  height: "350px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
@@ -374,14 +375,14 @@ export default function Main() {
                   <img
                     src="../img/icon/dacon.png"
                     alt="dacon"
-                    style={{ height: "150px", marginTop: "20px" }}
+                    style={{ height: "140px", marginTop: "20px" }}
                   />
                 </div>
                 <div
                   style={{
-                    margin: "1vh 0 5vh",
+                    margin: "10px 0 35px",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "20px",
+                    fontSize: "22px",
                     color: "#fff",
                   }}
                 >
@@ -404,7 +405,7 @@ export default function Main() {
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "6vh",
+                      lineHeight: "45px",
                     }}
                   >
                     #문제_해결_능력 #경쟁력_향상
@@ -414,7 +415,7 @@ export default function Main() {
               <div
                 style={{
                   width: "30%",
-                  height: "50vh",
+                  height: "350px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
@@ -425,14 +426,14 @@ export default function Main() {
                   <img
                     src="../img/icon/network.png"
                     alt="network"
-                    style={{ height: "150px", marginTop: "20px" }}
+                    style={{ height: "140px", marginTop: "20px" }}
                   />
                 </div>
                 <div
                   style={{
-                    margin: "1vh 0 5vh",
+                    margin: "10px 0 35px",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "20px",
+                    fontSize: "22px",
                     color: "#fff",
                   }}
                 >
@@ -455,7 +456,7 @@ export default function Main() {
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "6vh",
+                      lineHeight: "45px",
                     }}
                   >
                     #선의의_경쟁 #최신_기술_실습
@@ -468,11 +469,11 @@ export default function Main() {
             <div style={{ width: "1000px", margin: "0 auto" }}>
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Pretendard-Light",
                   fontSize: "16px",
                   width: "150px",
                   marginLeft: "830px",
-                  marginTop: "14vh",
+                  marginTop: "25px",
                   padding: "10px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
@@ -498,7 +499,8 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "100vh",
+            height: "700px",
+            border: "1px solid #fff",
           }}
         >
           <div
@@ -705,13 +707,14 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "80vh",
+            height: "520px",
+            border: "1px solid #fff",
           }}
         >
           <div
             style={{
               position: "absolute",
-              top: "160px",
+              top: "140px",
               left: "50%",
               transform: "translate(-90%, 0)",
               width: "400px",
@@ -742,7 +745,7 @@ export default function Main() {
           </div>
           <div
             style={{
-              padding: "16vh 0 8vh",
+              padding: "100px 0 100px",
             }}
           >
             <img
@@ -755,7 +758,7 @@ export default function Main() {
             <div style={{ width: "1000px", margin: "0 auto" }}>
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Pretendard-Light",
                   fontSize: "18px",
                   width: "150px",
                   margin: "0 auto",

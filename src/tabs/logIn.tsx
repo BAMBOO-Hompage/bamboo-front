@@ -63,7 +63,7 @@ export default function Login() {
       >
         <div style={{ marginBottom: "100px" }}>
           <img
-            src="..\img\login_logo.png"
+            src="..\img\main_logo_neon.png"
             alt="login_logo"
             style={{ width: "400px" }}
           />

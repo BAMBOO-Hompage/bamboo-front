@@ -12,7 +12,9 @@ type NavType =
   | "study"
   | "myPage";
 
-export default function Nav(props: NavType) {
+type NavProps = { type?: NavType };
+
+export default function Nav(props: NavProps) {
   const { type } = props;
   const [hover, setHover] = useState(false);
   const [currentFocus, setCurrentFocus] = useState("");
@@ -41,8 +43,8 @@ export default function Nav(props: NavType) {
         <div style={{ position: "absolute", left: "70px" }}>
           <Link to="/">
             <img
-              src="../img/small_logo.png"
-              alt="small_logo"
+              src="../img/nav_logo.png"
+              alt="nav_logo"
               style={{ width: "80px", marginTop: "5px" }}
             />
           </Link>

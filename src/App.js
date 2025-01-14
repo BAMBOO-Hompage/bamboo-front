@@ -57,7 +57,7 @@ function App() {
           <Route path="/hallOfFame" element={<HallOfFame />} />
 
           <Route path="/introduction" element={<Introduction />} />
-          <Route path="/joinUs" element={<JoinUs />} />
+          <Route path="/joinUs" element={<JoinUs type="inPeriod" />} />
           <Route path="/activity" element={<Activity />} />
 
           <Route path="/applyStudy" element={<ApplyStudy />} />

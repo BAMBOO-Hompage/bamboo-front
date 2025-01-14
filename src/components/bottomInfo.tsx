@@ -6,7 +6,7 @@ export default function BottomInfo() {
     <div
       style={{
         width: "100vw",
-        height: "200px",
+        height: "250px",
         backgroundColor: "#2CC295",
         textAlign: "center",
         display: "flex",
