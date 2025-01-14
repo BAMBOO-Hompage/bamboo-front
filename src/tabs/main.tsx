@@ -105,7 +105,7 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "700px",
+            height: "680px",
           }}
         >
           <div
@@ -186,7 +186,7 @@ export default function Main() {
                   fontSize: "18px",
                   width: "150px",
                   marginLeft: "830px",
-                  marginTop: "110px",
+                  marginTop: "100px",
                   padding: "10px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
@@ -212,14 +212,13 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "700px",
-            border: "1px solid #fff",
+            height: "680px",
           }}
         >
           <div
             style={{
               position: "absolute",
-              top: "80px",
+              top: "60px",
               left: "50%",
               transform: "translate(-50%, 0)",
               width: "450px",
@@ -251,7 +250,7 @@ export default function Main() {
           <div>
             <div
               style={{
-                padding: "70px 0 50px",
+                padding: "50px 0 50px",
               }}
             >
               <span
@@ -499,21 +498,19 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "700px",
-            border: "1px solid #fff",
+            height: "660px",
           }}
         >
           <div
             style={{
               position: "absolute",
-              top: " 33vh",
+              top: "180px",
               left: "50%",
-
               transform: "translate(-50%, 0)",
-              width: "1000px",
+              width: "900px",
               height: "25px",
               borderRadius: "1171px",
-              background: "#2CC295",
+              background: "#297FB8",
               filter: "blur(90px)",
               zIndex: "-10",
             }}
@@ -522,7 +519,7 @@ export default function Main() {
           <div>
             <div
               style={{
-                padding: "15vh 0 8vh",
+                padding: "60px 0 50px",
               }}
             >
               <span
@@ -708,7 +705,6 @@ export default function Main() {
             position: "relative",
             width: "100vw",
             height: "520px",
-            border: "1px solid #fff",
           }}
         >
           <div

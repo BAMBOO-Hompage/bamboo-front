@@ -7,7 +7,7 @@ type NavType =
   | "logOut"
   | "main"
   | "community"
-  | "joinUs"
+  | "aboutUs"
   | "dataCenter"
   | "study"
   | "myPage";
@@ -25,7 +25,7 @@ export default function Nav(props: NavProps) {
         position: "fixed",
         top: " 0",
         width: "100%",
-        zIndex: "2",
+        zIndex: "100",
       }}
       onMouseLeave={() => setHover(false)}
     >
@@ -56,7 +56,7 @@ export default function Nav(props: NavProps) {
           <div
             className="nav_text"
             style={
-              props.type === "joinUs"
+              props.type === "aboutUs"
                 ? {
                     color: "#2CC295",
                     textShadow: "0 0 0.1em, 0 0 0.3em",
@@ -168,6 +168,7 @@ export default function Nav(props: NavProps) {
             </Link>
             <img
               src="../img/btn/logout_disabled.png"
+              alt="logout"
               style={{ width: "35px", padding: "0 20px", cursor: "pointer" }}
               onClick={() => {
                 window.location = "/";

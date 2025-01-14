@@ -9,7 +9,7 @@ import "../../App.css";
 export default function Introduction() {
   return (
     <div>
-      <Nav type="joinUs" />
+      <Nav type="aboutUs" />
       <div className="background">
         <motion.div
           initial={{ opacity: 0 }}

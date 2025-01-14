@@ -14,7 +14,7 @@ export default function JoinUs(props: JoinUsProps) {
   const { type } = props;
   return (
     <div>
-      <Nav type="joinUs" />
+      <Nav type="aboutUs" />
       <div className="background">
         {props.type === "basic" ? (
           <>

@@ -26,7 +26,7 @@ export default function Signup() {
 
   // 유효성 검사 패턴
   const passwordPattern =
-    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,12}$/;
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*.,/])[a-zA-Z\d!@#$%^&*.,/]{8,12}$/;
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   return (

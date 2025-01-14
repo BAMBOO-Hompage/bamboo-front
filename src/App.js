@@ -19,9 +19,9 @@ import PaperEdit from "./tabs/dataCenter/paperEdit.tsx";
 import Paper from "./tabs/dataCenter/paper.tsx";
 import HallOfFame from "./tabs/dataCenter/hallOfFame.tsx";
 
-import Introduction from "./tabs/joinUs/introduction.tsx";
-import Activity from "./tabs/joinUs/activity.tsx";
-import JoinUs from "./tabs/joinUs/joinUs.tsx";
+import Introduction from "./tabs/aboutUs/introduction.tsx";
+import Activity from "./tabs/aboutUs/activity.tsx";
+import JoinUs from "./tabs/aboutUs/joinUs.tsx";
 
 import Study from "./tabs/study/study.tsx";
 import Study2 from "./tabs/study/study2.tsx";
@@ -57,7 +57,7 @@ function App() {
           <Route path="/hallOfFame" element={<HallOfFame />} />
 
           <Route path="/introduction" element={<Introduction />} />
-          <Route path="/joinUs" element={<JoinUs type="inPeriod" />} />
+          <Route path="/joinUs" element={<JoinUs type="basic" />} />
           <Route path="/activity" element={<Activity />} />
 
           <Route path="/applyStudy" element={<ApplyStudy />} />
