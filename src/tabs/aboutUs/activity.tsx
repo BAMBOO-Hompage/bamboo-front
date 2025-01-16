@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import moment from "moment";
 
-import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import ImageSlider from "../../components/imageSlider.tsx";
@@ -123,6 +122,7 @@ export default function Activity() {
                     }
                     onClick={() => {
                       setSelectedYear(year);
+                      setCurrentPage(1);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                   >
@@ -166,7 +166,7 @@ export default function Activity() {
                 >
                   {selectedYear}년도
                 </div>
-                <Link to="/">
+                <Link to="/activityAdd">
                   <img
                     src="../../img/btn/edit_enabled.png"
                     style={{ width: "30px", cursor: "pointer" }}

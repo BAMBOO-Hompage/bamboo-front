@@ -289,7 +289,6 @@ export default function PostAdd() {
                       backgroundColor: "#111015",
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      borderRadius: "20px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "15px",
                       color: "#fff",

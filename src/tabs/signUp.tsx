@@ -109,7 +109,12 @@ export default function Signup() {
                     message: "유효한 이메일 주소를 입력해주세요.",
                   },
                 })}
-                style={{ width: "280px", height: "30px", fontSize: "16px" }}
+                style={{
+                  width: "280px",
+                  height: "30px",
+                  margin: "0 20px",
+                  fontSize: "16px",
+                }}
               />
               <button
                 type="button"
@@ -206,7 +211,12 @@ export default function Signup() {
                   {...register("Code", {
                     required: "인증코드를 입력해주세요.",
                   })}
-                  style={{ width: "360px", height: "30px", fontSize: "16px" }}
+                  style={{
+                    width: "360px",
+                    height: "30px",
+                    margin: "0 20px",
+                    fontSize: "16px",
+                  }}
                 />
                 <button
                   type="button"
@@ -275,7 +285,12 @@ export default function Signup() {
                       "영어, 숫자, 특수문자 포함 8-12자리를 입력해주세요.",
                   },
                 })}
-                style={{ width: "280px", height: "30px", fontSize: "16px" }}
+                style={{
+                  width: "280px",
+                  height: "30px",
+                  margin: "0 20px",
+                  fontSize: "16px",
+                }}
               />
               {errors.Password ? (
                 <>
@@ -366,7 +381,12 @@ export default function Signup() {
                     value === getValues("Password") ||
                     "비밀번호가 일치하지 않습니다.",
                 })}
-                style={{ width: "280px", height: "30px", fontSize: "16px" }}
+                style={{
+                  width: "280px",
+                  height: "30px",
+                  margin: "0 20px",
+                  fontSize: "16px",
+                }}
               />
               {errors.RePassword ? (
                 <>
@@ -455,7 +475,12 @@ export default function Signup() {
                 {...register("Name", {
                   required: "이름을 입력해주세요.",
                 })}
-                style={{ width: "280px", height: "30px", fontSize: "16px" }}
+                style={{
+                  width: "280px",
+                  height: "30px",
+                  margin: "0 20px",
+                  fontSize: "16px",
+                }}
               />
               {errors.Name ? (
                 <>
@@ -544,7 +569,12 @@ export default function Signup() {
                 {...register("Major", {
                   required: "학과를 입력해주세요.",
                 })}
-                style={{ width: "280px", height: "30px", fontSize: "16px" }}
+                style={{
+                  width: "280px",
+                  height: "30px",
+                  margin: "0 20px",
+                  fontSize: "16px",
+                }}
               />
               {errors.Major ? (
                 <>
@@ -637,7 +667,12 @@ export default function Signup() {
                     message: "학번은 9글자를 입력해주세요.",
                   },
                 })}
-                style={{ width: "280px", height: "30px", fontSize: "16px" }}
+                style={{
+                  width: "280px",
+                  height: "30px",
+                  margin: "0 20px",
+                  fontSize: "16px",
+                }}
               />
               {errors.StudentNum ? (
                 <>
@@ -734,7 +769,12 @@ export default function Signup() {
                   },
                 })}
                 placeholder="ex) 01012345678"
-                style={{ width: "280px", height: "30px", fontSize: "16px" }}
+                style={{
+                  width: "280px",
+                  height: "30px",
+                  margin: "0 20px",
+                  fontSize: "16px",
+                }}
               />
               {errors.PhoneNum ? (
                 <>

@@ -96,7 +96,12 @@ export default function Login() {
                   {...register("StudentNum", {
                     required: "학번 혹은 비밀번호를 확인해주세요.",
                   })}
-                  style={{ width: "220px", height: "40px", fontSize: "16px" }}
+                  style={{
+                    width: "220px",
+                    height: "40px",
+                    margin: "0 20px",
+                    fontSize: "16px",
+                  }}
                 />
                 <span
                   style={{
@@ -127,7 +132,12 @@ export default function Login() {
                   {...register("Password", {
                     required: "이메일 혹은 비밀번호를 확인해주세요.",
                   })}
-                  style={{ width: "400px", height: "40px", fontSize: "16px" }}
+                  style={{
+                    width: "360px",
+                    height: "40px",
+                    margin: "0 20px",
+                    fontSize: "16px",
+                  }}
                 />
               </div>
               <div
