@@ -1,27 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import moment from "moment";
+import MDEditor from "@uiw/react-md-editor";
+import "react-markdown-editor-lite/lib/index.css";
 
-import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
+import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import ImageSlider from "../../components/imageSlider.tsx";
-
-import ActivityData from "../../mockup_data/activity_data.tsx";
 import "../../App.css";
 
-const activityData = ActivityData();
-
-export default function ActivityAdd() {
+export default function PostAdd() {
   const {
     register,
     getValues,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const [content, setContent] = useState<string>("");
   const [showImages, setShowImages] = useState<string[]>([]);
 
   const handleAddImages = (event) => {
@@ -33,17 +28,29 @@ export default function ActivityAdd() {
       fileNameLists.push(currentFileName);
     }
 
-    if (fileNameLists.length > 10) {
-      fileNameLists = fileNameLists.slice(0, 10); // 최대 10개 제한
+    if (fileNameLists.length > 4) {
+      fileNameLists = fileNameLists.slice(0, 4); // 최대 10개 제한
     }
 
     setShowImages(fileNameLists); // 파일명 리스트 저장
   };
 
   const onValid = (e) => {
-    console.log(e.Title + "\n" + showImages, "onValid");
-    alert("\n제목 : " + e.Title + "\n사진 : \n" + showImages);
-    window.location.href = "/activity";
+    console.log(
+      e.Category + "\n" + e.Title + "\n" + content + "\n" + showImages,
+      "onValid"
+    );
+    alert(
+      "카테고리 : " +
+        e.Category +
+        "\n제목 : " +
+        e.Title +
+        "\n내용 : \n" +
+        content +
+        "\n사진 : \n" +
+        showImages
+    );
+    window.location.href = "/notice";
   };
 
   const onInvalid = (e) => {
@@ -58,8 +65,8 @@ export default function ActivityAdd() {
 
   return (
     <div>
-      <Nav type="aboutUs" />
-      <div className="background">
+      <Nav type="community" />
+      <div id="background" className="background">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -70,14 +77,14 @@ export default function ActivityAdd() {
           }}
           style={{
             width: "100%",
-            height: "1000px",
+            height: "1250px",
           }}
         >
           <div
             style={{
               position: "relative",
               width: "1000px",
-              height: "850px",
+              height: "1100px",
               margin: "100px auto",
               display: "flex",
             }}
@@ -99,7 +106,7 @@ export default function ActivityAdd() {
                   textShadow: "0 0 0.1em, 0 0 0.1em",
                 }}
               >
-                주요 활동
+                공지사항
               </div>
               <div
                 style={{
@@ -114,7 +121,7 @@ export default function ActivityAdd() {
                     const deleteAdd =
                       window.confirm("작성을 취소하시겠습니까?");
                     if (deleteAdd) {
-                      window.location.href = "/activity";
+                      window.location.href = "/notice";
                     }
                   }}
                 >
@@ -148,10 +155,87 @@ export default function ActivityAdd() {
                   color: "#fff",
                 }}
               >
-                활동 사진 업로드
+                공지 작성
               </div>
 
               <form style={{ width: "100%", marginTop: "40px" }}>
+                <div
+                  style={{
+                    width: "100%",
+                    marginBottom: "20px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    fontFamily: "Pretendard-Regular",
+                    fontSize: "18px",
+                  }}
+                >
+                  <div>분류</div>
+                  <div
+                    style={{
+                      width: "620px",
+                      height: "40px",
+                      padding: "0 20px",
+                      backgroundColor: "#111015",
+                      boxShadow:
+                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                      borderRadius: "20px",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <select
+                      defaultValue={String(localStorage.getItem("postList"))}
+                      style={{
+                        width: "100%",
+                        height: "40px",
+                        backgroundColor: "transparent",
+                        borderRadius: "20px",
+                        border: "none",
+                        fontFamily: "Pretendard-Light",
+                        fontSize: "18px",
+                        color: "#2CC295",
+                        cursor: "pointer",
+                      }}
+                      {...register("Category", {
+                        required: "카테고리를 선택해주세요.",
+                        validate: (value) =>
+                          value !== "전체" || "카테고리를 선택해주세요.",
+                      })}
+                    >
+                      <option
+                        disabled
+                        value="전체"
+                        style={{ background: "#111015", color: "#ddd" }}
+                      >
+                        카테고리 선택
+                      </option>
+                      <option
+                        value="대회 및 세미나"
+                        style={{
+                          background: "#111015",
+                          color: "#2CC295",
+                          cursor: "pointer",
+                        }}
+                      >
+                        대회 및 세미나
+                      </option>
+                      <option
+                        value="동아리 공지"
+                        style={{
+                          background: "#111015",
+                          color: "#2CC295",
+                          cursor: "pointer",
+                        }}
+                      >
+                        동아리 공지
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -184,58 +268,50 @@ export default function ActivityAdd() {
                     }}
                   />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
                     marginBottom: "20px",
                     display: "flex",
                     justifyContent: "space-between",
-                    alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Pretendard-Light",
                     fontSize: "18px",
                   }}
                 >
-                  <div>기간</div>
+                  <div>내용</div>
                   <div
                     style={{
-                      position: "relative",
-                      width: "620px",
-                      height: "40px",
-                      padding: "0 20px",
+                      boxSizing: "border-box",
+                      width: "660px",
+                      height: "500px",
+                      borderRadius: "20px",
+                      border: "none",
                       backgroundColor: "#111015",
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      borderRadius: "20px",
-                      display: "flex",
-                      alignItems: "center",
+                      padding: "20px",
                     }}
                   >
-                    <input
-                      type="date"
-                      style={{
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "18px",
-                        width: "130px",
-                      }}
-                      {...register("StartDate", {
-                        required: "시작일을 입력해주세요.",
-                      })}
-                    />
-                    ~
-                    <input
-                      type="date"
-                      style={{
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "18px",
-                        marginLeft: "20px",
-                        width: "130px",
-                      }}
-                      {...register("EndDate", {
-                        required: "종료일을 입력해주세요.",
-                      })}
-                    />
+                    <div data-color-mode="dark">
+                      <MDEditor
+                        height={460}
+                        value={content}
+                        onChange={(text) => {
+                          setContent(text || "");
+                        }}
+                        className="custom-md-editor"
+                        preview={"edit"}
+                        style={{
+                          resize: "none",
+                          backgroundColor: "transparent",
+                          border: "none",
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -244,7 +320,7 @@ export default function ActivityAdd() {
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "16px",
                   }}
                 >
                   <div>사진 첨부</div>
@@ -282,7 +358,7 @@ export default function ActivityAdd() {
                       src="../../img/btn/search_enabled.png"
                       style={{ width: "25px" }}
                     />
-                    &emsp;사진 선택 (최대 10장)
+                    &emsp;사진 선택 (최대 4장)
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
@@ -297,7 +373,7 @@ export default function ActivityAdd() {
                     <div
                       style={{
                         width: "620px",
-                        height: "220px",
+                        height: "110px",
                         padding: "20px",
                         marginBottom: "30px",
                         backgroundColor: "#111015",
@@ -338,19 +414,7 @@ export default function ActivityAdd() {
                       ))}
                     </div>
                   ) : (
-                    <div
-                      style={{
-                        width: "620px",
-                        height: "220px",
-                        padding: "20px",
-                        marginBottom: "30px",
-                        backgroundColor: "#111015",
-                        boxShadow:
-                          "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                        borderRadius: "20px",
-                        overflow: "auto",
-                      }}
-                    ></div>
+                    <div></div>
                   )}
                 </div>
 

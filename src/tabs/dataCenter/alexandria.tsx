@@ -8,7 +8,7 @@ import BottomInfo from "../../components/bottomInfo.tsx";
 import AlexandriaData from "../../mockup_data/alexandria_data.tsx";
 import "../../App.css";
 
-const papersPerPage = 11;
+const papersPerPage = 10;
 const maxVisiblePages = 5;
 
 export default function Alexandria() {
@@ -47,173 +47,184 @@ export default function Alexandria() {
     <div>
       <Nav type="dataCenter" />
       <div id="background" className="background">
-        <div style={{ height: "200vh", display: "flex", padding: "100px 0" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{
-              ease: "easeInOut",
-              duration: 0.5,
-              y: { duration: 0.5 },
-            }}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+          }}
+          style={{
+            width: "100%",
+            height: "1450px",
+          }}
+        >
+          <div
             style={{
               position: "relative",
-              width: "60%",
-              margin: "0 auto",
+              width: "1000px",
+              height: "1300px",
+              margin: "100px auto",
               textAlign: "left",
             }}
           >
-            <div style={{ textAlign: "center" }}>
+            <div
+              style={{
+                marginBottom: "45px",
+                textAlign: "center",
+              }}
+            >
               <div
                 style={{
-                  marginBottom: "45px",
+                  fontFamily: "Pretendard-Bold",
+                  fontSize: "30px",
+                  color: "#fff",
+                  textShadow: "0 0 0.1em, 0 0 0.1em",
+                  marginBottom: "8px",
                 }}
               >
-                <div
-                  style={{
-                    fontFamily: "Pretendard-Bold",
-                    fontSize: "30px",
-                    color: "#fff",
-                    marginBottom: "8px",
-                  }}
-                >
-                  알렉산드리아 도서관
-                </div>
-                <div
-                  style={{
-                    fontFamily: "Pretendard-Regular",
-                    fontSize: "12px",
-                    color: "#888",
-                  }}
-                >
-                  알렉산드리아 도서관은 이집트 알렉산드리아에 있었던 고대에 가장
-                  크고 영향력 있는 도서관으로,
-                  <br />
-                  세상의 모든 지식을 수집한다는 의미를 가지고 있습니다.
-                </div>
+                알렉산드리아 도서관
               </div>
               <div
                 style={{
-                  width: "100%",
-                  marginBottom: "50px",
+                  fontFamily: "Pretendard-Regular",
+                  fontSize: "12px",
+                  color: "#888",
+                }}
+              >
+                알렉산드리아 도서관은 이집트 알렉산드리아에 있었던 고대에 가장
+                크고 영향력 있는 도서관으로,
+                <br />
+                세상의 모든 지식을 수집한다는 의미를 가지고 있습니다.
+              </div>
+            </div>
+
+            <div
+              style={{
+                width: "100%",
+                marginBottom: "50px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <form
+                style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "left",
                   alignItems: "center",
                 }}
               >
                 <div
                   style={{
-                    marginRight: "150px",
+                    width: "120px",
+                    height: "40px",
+                    padding: "0 0 0 10px",
+                    marginRight: "10px",
+                    borderRadius: "20px 0 0 20px",
+                    backgroundColor: "#111015",
+                    boxShadow:
+                      "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                  }}
+                >
+                  <select
+                    defaultValue="논문 이름"
+                    style={{
+                      width: "100%",
+                      height: "40px",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      color: "#2CC295",
+                      cursor: "pointer",
+                    }}
+                    {...register("Category", {
+                      validate: (value) =>
+                        value !== "전체" || "카테고리를 선택해주세요.",
+                    })}
+                  >
+                    <option
+                      value="논문 이름"
+                      style={{ background: "#111015", cursor: "pointer" }}
+                    >
+                      논문 이름
+                    </option>
+                    <option
+                      value="연도"
+                      style={{ background: "#111015", cursor: "pointer" }}
+                    >
+                      연도
+                    </option>
+                    <option
+                      value="태그"
+                      style={{ background: "#111015", cursor: "pointer" }}
+                    >
+                      태그
+                    </option>
+                  </select>
+                </div>
+                <div
+                  style={{
+                    width: "330px",
+                    height: "40px",
+                    borderRadius: "0 20px 20px 0",
+                    backgroundColor: "#111015",
+                    boxShadow:
+                      "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                     display: "flex",
                     justifyContent: "left",
                     alignItems: "center",
                   }}
                 >
-                  <div
-                    style={{
-                      width: "100px",
-                      height: "36px",
-                      marginRight: "10px",
-                      borderRadius: "20px 0 0 20px",
-                      backgroundColor: "#111015",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      fontFamily: "Pretendard-SemiBold",
-                      fontSize: "15px",
-                      color: "#2CC295",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <select
-                      defaultValue="논문 이름"
-                      style={{
-                        boxSizing: "border-box",
-                        width: "90%",
-                        height: "30px",
-                        backgroundColor: "transparent",
-                        border: "none",
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "16px",
-                        color: "#2CC295",
-                        cursor: "pointer",
-                      }}
-                      {...register("Category", {
-                        validate: (value) =>
-                          value !== "전체" || "카테고리를 선택해주세요.",
-                      })}
-                    >
-                      <option
-                        value="논문 이름"
-                        style={{ background: "#111015", cursor: "pointer" }}
-                      >
-                        논문 이름
-                      </option>
-                      <option
-                        value="연도"
-                        style={{ background: "#111015", cursor: "pointer" }}
-                      >
-                        연도
-                      </option>
-                      <option
-                        value="태그"
-                        style={{ background: "#111015", cursor: "pointer" }}
-                      >
-                        태그
-                      </option>
-                    </select>
-                  </div>
-                  <div
+                  <input
+                    id="search"
+                    type="text"
+                    placeholder="논문 검색"
                     style={{
                       width: "300px",
-                      height: "36px",
-                      borderRadius: "0 20px 20px 0",
-                      backgroundColor: "#111015",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      display: "flex",
-                      justifyContent: "left",
-                      alignItems: "center",
+                      height: "15px",
+                      padding: "15px 10px",
+                      backgroundColor: "transparent",
+                      boxShadow: "none",
+                      borderRadius: "10px",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
                     }}
-                  >
-                    <input
-                      id="search"
-                      type="text"
-                      placeholder="논문 검색"
-                      style={{
-                        width: "300px",
-                        height: "15px",
-                        padding: "15px 10px",
-                        backgroundColor: "transparent",
-                        boxShadow: "none",
-                        borderRadius: "0",
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "16px",
-                      }}
-                    />
-                    <input type="text" style={{ display: "none" }} />
-                    <img
-                      src="../../img/btn/search_disabled.png"
-                      style={{
-                        width: "30px",
-                        marginRight: "5px",
-                        opacity: "0.5",
-                        cursor: "pointer",
-                      }}
-                    />
-                  </div>
+                  />
+                  <input type="text" style={{ display: "none" }} />
+                  <img
+                    src="../../img/btn/search_disabled.png"
+                    style={{
+                      width: "30px",
+                      marginRight: "5px",
+                      opacity: "0.5",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "1"; // Hover 시 opacity 변경
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "0.5"; // Hover 해제 시 opacity 복원
+                    }}
+                    onClick={() => {}}
+                  />
                 </div>
-
-                <img
-                  src="../../img/btn/edit_enabled.png"
-                  style={{ width: "30px", cursor: "pointer" }}
-                  onClick={() => {
-                    window.location = "/paperAdd";
-                  }}
-                />
-              </div>
+              </form>
+              <img
+                src="../../img/btn/edit_enabled.png"
+                style={{ width: "30px", cursor: "pointer", opacity: "0.8" }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = "1";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = "0.5";
+                }}
+                onClick={() => {
+                  window.location.href = "/alexandriaAdd";
+                }}
+              />
             </div>
 
             <div>
@@ -227,12 +238,12 @@ export default function Alexandria() {
                   color: "#888",
                 }}
               >
-                <div style={{ width: "34%" }}>논문 이름</div>
-                <div style={{ width: "9%" }}>연도</div>
-                <div style={{ width: "14%" }}>태그</div>
-                <div style={{ width: "19%" }}>주제</div>
-                <div style={{ width: "9%" }}>발표자</div>
-                <div style={{ width: "10%" }}>논문 링크</div>
+                <div style={{ width: "340px" }}>논문 이름</div>
+                <div style={{ width: "70px" }}>연도</div>
+                <div style={{ width: "140px" }}>태그</div>
+                <div style={{ width: "200px" }}>주제</div>
+                <div style={{ width: "80px" }}>발표자</div>
+                <div style={{ width: "100px" }}>논문 링크</div>
               </div>
               <hr
                 style={{ height: "1px", background: "#666", border: "none" }}
@@ -243,22 +254,22 @@ export default function Alexandria() {
                   <div
                     style={{
                       width: "100%",
-                      height: "80px",
+                      height: "78px",
                       fontFamily: "Pretendard-Light",
-                      fontSize: "16px",
+                      fontSize: "18px",
                       color: "#fff",
                       display: "flex",
                       justifyContent: "space-between",
                     }}
                   >
-                    <div style={{ width: "34%" }}>{paper.title}</div>
-                    <div style={{ width: "9%" }}>{paper.year}</div>
-                    <div style={{ width: "14%" }}>#transformer #detector</div>
-                    <div style={{ width: "19%" }}>{paper.subject}</div>
-                    <div style={{ width: "9%" }}>{paper.user.name}</div>
+                    <div style={{ width: "340px" }}>{paper.title}</div>
+                    <div style={{ width: "70px" }}>{paper.year}</div>
+                    <div style={{ width: "140px" }}>#transformer #detector</div>
+                    <div style={{ width: "200px" }}>{paper.subject}</div>
+                    <div style={{ width: "80px" }}>{paper.user.name}</div>
                     <div
                       style={{
-                        width: "10%",
+                        width: "100px",
                         height: "100%",
                         display: "flex",
                         justifyContent: "left",
@@ -267,7 +278,7 @@ export default function Alexandria() {
                     >
                       <div
                         style={{
-                          width: "80px",
+                          width: "90%",
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -289,7 +300,7 @@ export default function Alexandria() {
                         >
                           <img
                             src="../../img/btn/move.png"
-                            style={{ width: "13px" }}
+                            style={{ width: "12px" }}
                           />
                         </Link>
                       </div>
@@ -354,8 +365,8 @@ export default function Alexandria() {
                 {">>"}
               </button>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
         <BottomInfo />
       </div>

@@ -15,7 +15,7 @@ export default function Login() {
 
   const onValid = (e) => {
     console.log(e, "onValid");
-    window.location = "/";
+    window.location.href = "/";
   };
 
   const onInvalid = (e) => {
@@ -100,6 +100,8 @@ export default function Login() {
                     width: "220px",
                     height: "40px",
                     margin: "0 20px",
+                    borderRadius: "10px",
+                    fontFamily: "Pretendard-Light",
                     fontSize: "16px",
                   }}
                 />
@@ -136,6 +138,8 @@ export default function Login() {
                     width: "360px",
                     height: "40px",
                     margin: "0 20px",
+                    borderRadius: "10px",
+                    fontFamily: "Pretendard-Light",
                     fontSize: "16px",
                   }}
                 />
@@ -156,7 +160,7 @@ export default function Login() {
                       paddingLeft: "20px",
                     }}
                   >
-                    * {errors.StudentNum.message}
+                    * {String(errors.StudentNum.message)}
                   </span>
                 ) : errors.Password ? (
                   <span
@@ -165,7 +169,7 @@ export default function Login() {
                       paddingLeft: "20px",
                     }}
                   >
-                    * {errors.Password.message}
+                    * {String(errors.Password.message)}
                   </span>
                 ) : (
                   <></>
@@ -199,6 +203,7 @@ export default function Login() {
           >
             <a
               href="/"
+              className="a"
               style={{
                 fontFamily: "Pretendard-Regular",
                 fontSize: "15px",
@@ -210,6 +215,7 @@ export default function Login() {
             </a>
             <a
               href="/signUp"
+              className="a"
               style={{
                 fontFamily: "Pretendard-Regular",
                 fontSize: "15px",

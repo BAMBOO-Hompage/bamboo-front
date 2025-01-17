@@ -4,19 +4,19 @@ import { motion } from "framer-motion";
 
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import KnowledgeData from "../../mockup_data/knowledge_data.tsx";
+import NoticeData from "../../mockup_data/notice_data.tsx";
 
 import "../../App.css";
 
 const postsPerPage = 8;
 const maxVisiblePages = 5;
 
-export default function Knoledge() {
+export default function Notice() {
   const [postList, setPostList] = useState<string>("전체");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const knowledgeData = KnowledgeData();
+  const noticeData = NoticeData();
 
-  const filteredData = knowledgeData.filter(
+  const filteredData = noticeData.filter(
     (post) => postList === "전체" || post.category === postList
   );
 
@@ -99,9 +99,7 @@ export default function Knoledge() {
                   textShadow: "0 0 0.1em, 0 0 0.1em",
                 }}
               >
-                지식 공유
-                <br />
-                게시판
+                공지사항
               </div>
 
               <div
@@ -133,7 +131,7 @@ export default function Knoledge() {
                 <div
                   className="side_tabs"
                   style={
-                    postList === "학습 자료"
+                    postList === "대회 및 세미나"
                       ? {
                           boxSizing: "border-box",
                           color: "#2CC295",
@@ -142,17 +140,17 @@ export default function Knoledge() {
                       : {}
                   }
                   onClick={() => {
-                    setPostList("학습 자료");
+                    setPostList("대회 및 세미나");
                     setCurrentPage(1);
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
-                  학습 자료
+                  대회 및 세미나
                 </div>
                 <div
                   className="side_tabs"
                   style={
-                    postList === "기술 트랜드 및 뉴스"
+                    postList === "동아리 공지"
                       ? {
                           boxSizing: "border-box",
                           color: "#2CC295",
@@ -161,31 +159,12 @@ export default function Knoledge() {
                       : {}
                   }
                   onClick={() => {
-                    setPostList("기술 트랜드 및 뉴스");
+                    setPostList("동아리 공지");
                     setCurrentPage(1);
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
-                  기술 트랜드 및 뉴스
-                </div>
-                <div
-                  className="side_tabs"
-                  style={
-                    postList === "커리어 및 취업 정보"
-                      ? {
-                          boxSizing: "border-box",
-                          color: "#2CC295",
-                          borderRight: "1px solid #2cc295",
-                        }
-                      : {}
-                  }
-                  onClick={() => {
-                    setPostList("커리어 및 취업 정보");
-                    setCurrentPage(1);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  커리어 및 취업 정보
+                  동아리 공지
                 </div>
               </div>
             </div>
@@ -225,15 +204,13 @@ export default function Knoledge() {
                 >
                   {postList === "전체" ? (
                     <div>전체</div>
-                  ) : postList === "학습 자료" ? (
-                    <div>학습 자료</div>
-                  ) : postList === "기술 트랜드 및 뉴스" ? (
-                    <div>기술 트랜드 및 뉴스</div>
+                  ) : postList === "대회 및 세미나" ? (
+                    <div>대회 및 세미나</div>
                   ) : (
-                    <div>커리어 및 취업 정보</div>
+                    <div>동아리 공지</div>
                   )}
                 </div>
-                <Link to="/knowledgeAdd">
+                <Link to="/noticeAdd">
                   <img
                     src="../../img/btn/edit_enabled.png"
                     style={{ width: "30px", cursor: "pointer" }}
@@ -261,7 +238,7 @@ export default function Knoledge() {
                   >
                     <div style={{ width: "90%", margin: "0 auto" }}>
                       <Link
-                        to="/knowledgePost"
+                        to="/noticePost"
                         style={{ textDecoration: "none" }}
                         onClick={() => {
                           sessionStorage.setItem(

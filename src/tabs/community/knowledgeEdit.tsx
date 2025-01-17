@@ -1,53 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import MarkdownIt from "markdown-it";
 import MDEditor from "@uiw/react-md-editor";
 import "react-markdown-editor-lite/lib/index.css";
-import ReactMarkdown from "react-markdown";
+
 import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
-import MarkdownEditor from "../../components/MarkdownPost.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import PostData from "../../mockup_data/post_data.tsx";
+
+import KnowledgeData from "../../mockup_data/knowledge_data.tsx";
 import "../../App.css";
 
-export default function PostAdd() {
+export default function KnowledgeEdit() {
   const {
     register,
     getValues,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [content, setContent] = useState("");
-  const [showImages, setShowImages] = useState([]);
 
-  const data = PostData();
+  const knowledgeData = KnowledgeData();
 
-  const postId = localStorage.getItem("postId");
-  const currentPost = data.filter((post) => postId == post.id)[0];
+  const postId = parseInt(localStorage.getItem("postId") || "0");
+  const editPost = knowledgeData.filter((post) => postId == post.id)[0];
 
-  const mdParser = new MarkdownIt();
-
-  const handleEditorChange = (text) => {
-    setContent(text);
-  };
+  const [content, setContent] = useState<string>(editPost.content);
+  const [showImages, setShowImages] = useState<string[]>([]);
 
   const handleAddImages = (event) => {
-    console.log("1");
-    const imageLists = event.target.files;
-    let imageUrlLists = [...showImages];
+    const imageLists = event.target.files; // 선택한 파일들
+    let fileNameLists: string[] = [...showImages]; // 기존 저장된 파일명들
 
     for (let i = 0; i < imageLists.length; i++) {
-      const currentImageUrl = URL.createObjectURL(imageLists[i]);
-      imageUrlLists.push(currentImageUrl);
+      const currentFileName: string = imageLists[i].name; // 파일명 가져오기
+      fileNameLists.push(currentFileName);
     }
 
-    if (imageUrlLists.length > 4) {
-      imageUrlLists = imageUrlLists.slice(0, 4);
+    if (fileNameLists.length > 4) {
+      fileNameLists = fileNameLists.slice(0, 4); // 최대 10개 제한
     }
 
-    setShowImages(imageUrlLists);
+    setShowImages(fileNameLists); // 파일명 리스트 저장
   };
 
   const onValid = (e) => {
@@ -65,7 +58,7 @@ export default function PostAdd() {
         "\n사진 : \n" +
         showImages
     );
-    window.location = "/postBoard";
+    window.location.href = "/notice";
   };
 
   const onInvalid = (e) => {
@@ -82,48 +75,63 @@ export default function PostAdd() {
     <div>
       <Nav type="community" />
       <div id="background" className="background">
-        <div style={{ height: "200vh", display: "flex", padding: "100px 0" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{
-              ease: "easeInOut",
-              duration: 0.5,
-              y: { duration: 0.5 },
-            }}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+          }}
+          style={{
+            width: "100%",
+            height: "1250px",
+          }}
+        >
+          <div
             style={{
               position: "relative",
-              width: "400px",
-              borderRight: "1px solid #444",
-              textAlign: "left",
+              width: "1000px",
+              height: "1100px",
+              margin: "100px auto",
+              display: "flex",
             }}
           >
             <div
               style={{
-                width: "110px",
-                fontFamily: "Pretendard-Bold",
-                fontSize: "30px",
-                color: "#fff",
-                position: "absolute",
-                right: "50px",
+                boxSizing: "border-box",
+                width: "180px",
+                height: "100%",
+                borderRight: "1px solid #444",
+                textAlign: "left",
               }}
             >
-              공지사항
+              <div
+                style={{
+                  fontFamily: "Pretendard-Bold",
+                  fontSize: "30px",
+                  color: "#fff",
+                  textShadow: "0 0 0.1em, 0 0 0.1em",
+                }}
+              >
+                지식 공유
+                <br />
+                게시판
+              </div>
               <div
                 style={{
                   marginTop: "40px",
                   fontFamily: "Pretendard-Regular",
-                  fontSize: "16px",
+                  fontSize: "18px",
                 }}
               >
                 <div
-                  className="post_tabs"
+                  className="side_tabs"
                   onClick={() => {
                     const deleteAdd =
                       window.confirm("작성을 취소하시겠습니까?");
                     if (deleteAdd) {
-                      window.location = "/postBoard";
+                      window.location.href = "/notice";
                     }
                   }}
                 >
@@ -131,25 +139,24 @@ export default function PostAdd() {
                 </div>
               </div>
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{
-              ease: "easeInOut",
-              duration: 0.5,
-              y: { duration: 0.5 },
-            }}
-            style={{
-              position: "relative",
-              width: "1120px",
-              heidht: "100%",
-              textAlign: "left",
-            }}
-          >
-            <div style={{ width: "810px", position: "absolute", left: "60px" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              transition={{
+                ease: "easeInOut",
+                duration: 0.5,
+                y: { duration: 0.5 },
+              }}
+              style={{
+                position: "relative",
+                width: "820px",
+                height: "100%",
+                textAlign: "left",
+                paddingLeft: "50px",
+              }}
+            >
               <div
                 style={{
                   width: "100%",
@@ -158,10 +165,10 @@ export default function PostAdd() {
                   color: "#fff",
                 }}
               >
-                공지 작성
+                게시글 수정
               </div>
 
-              <form style={{ width: "100%", margin: "35px 0" }}>
+              <form style={{ width: "100%", marginTop: "40px" }}>
                 <div
                   style={{
                     width: "100%",
@@ -170,37 +177,35 @@ export default function PostAdd() {
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
+                    fontSize: "18px",
                   }}
                 >
                   <div>분류</div>
                   <div
                     style={{
-                      boxSizing: "border-box",
-                      width: "85%",
-                      height: "30px",
-                      padding: "5px 15px 5px 0",
+                      width: "620px",
+                      height: "40px",
+                      padding: "0 20px",
                       backgroundColor: "#111015",
-                      border: "none",
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
                       display: "flex",
                       alignItems: "center",
                     }}
                   >
                     <select
-                      defaultValue={localStorage.getItem("postList")}
+                      defaultValue={editPost.category}
                       style={{
-                        boxSizing: "border-box",
                         width: "100%",
-                        height: "30px",
-                        padding: "5px 0px 5px 15px",
+                        height: "40px",
                         backgroundColor: "transparent",
-                        border: "none",
                         borderRadius: "20px",
+                        border: "none",
                         fontFamily: "Pretendard-Light",
-                        fontSize: "16px",
+                        fontSize: "18px",
                         color: "#2CC295",
                         cursor: "pointer",
                       }}
@@ -218,28 +223,39 @@ export default function PostAdd() {
                         카테고리 선택
                       </option>
                       <option
-                        value="대회 및 세미나"
+                        value="학습 자료"
                         style={{
                           background: "#111015",
                           color: "#2CC295",
                           cursor: "pointer",
                         }}
                       >
-                        대회 및 세미나
+                        학습 자료
                       </option>
                       <option
-                        value="동아리 공지"
+                        value="기술 트랜드 및 뉴스"
                         style={{
                           background: "#111015",
                           color: "#2CC295",
                           cursor: "pointer",
                         }}
                       >
-                        동아리 공지
+                        기술 트랜드 및 뉴스
+                      </option>
+                      <option
+                        value="커리어 및 취업 뉴스"
+                        style={{
+                          background: "#111015",
+                          color: "#2CC295",
+                          cursor: "pointer",
+                        }}
+                      >
+                        커리어 및 취업 뉴스
                       </option>
                     </select>
                   </div>
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -248,25 +264,32 @@ export default function PostAdd() {
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
+                    fontSize: "18px",
                   }}
                 >
                   <div>제목</div>
                   <input
                     id="title"
                     type="text"
+                    value={editPost.title}
                     placeholder="제목을 입력해주세요."
                     {...register("Title", {
                       required: "제목을 입력해주세요.",
                     })}
                     style={{
-                      width: "85%",
-                      height: "15px",
+                      width: "660px",
+                      height: "40px",
+                      padding: "0 20px",
+                      backgroundColor: "#111015",
+                      boxShadow:
+                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                      borderRadius: "20px",
                       fontFamily: "Pretendard-Light",
-                      fontSize: "16px",
+                      fontSize: "18px",
                     }}
                   />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -274,47 +297,41 @@ export default function PostAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "16px",
+                    fontSize: "18px",
                   }}
                 >
-                  <div style={{ paddingTop: "5px" }}>내용</div>
+                  <div>내용</div>
                   <div
                     style={{
                       boxSizing: "border-box",
-                      width: "85%",
-                      height: "600px",
+                      width: "660px",
+                      height: "500px",
                       borderRadius: "20px",
-                      resize: "none",
                       border: "none",
                       backgroundColor: "#111015",
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "15px",
-                      color: "#fff",
-                      lineHeight: "22px",
                       padding: "20px",
                     }}
                   >
                     <div data-color-mode="dark">
                       <MDEditor
-                        height={560}
+                        height={460}
                         value={content}
                         onChange={(text) => {
-                          setContent(text);
+                          setContent(text || "");
                         }}
                         className="custom-md-editor"
-                        preview={"edit"}
                         style={{
                           resize: "none",
                           backgroundColor: "transparent",
-                          color: "#fff",
                           border: "none",
                         }}
                       />
                     </div>
                   </div>
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -331,93 +348,95 @@ export default function PostAdd() {
                     htmlFor="fileInput"
                     style={{
                       boxSizing: "border-box",
-                      width: "85%",
-                      height: "30px",
-                      padding: "5px 20px",
+                      width: "660px",
+                      height: "40px",
+                      padding: "0 20px",
                       backgroundColor: "#111015",
                       border: "none",
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
                       fontFamily: "Pretendard-Light",
-                      fontSize: "16px",
+                      fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
                     }}
                     onChange={handleAddImages}
                   >
                     <input
                       type="file"
                       id="fileInput"
-                      name="fileInput"
                       style={{
                         display: "none",
                       }}
                       multiple
                       {...register("Image", {})}
                     />
-                    사진 선택 (최대 4장)
+                    <img
+                      src="../../img/btn/search_enabled.png"
+                      style={{ width: "25px" }}
+                    />
+                    &emsp;사진 선택 (최대 4장)
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
-                {showImages.length !== 0 ? (
-                  <div
-                    style={{
-                      boxSizing: "border-box",
-                      width: "85%",
-                      height: "150px",
-                      padding: "0 20px",
-                      marginBottom: "20px",
-                      marginLeft: "15%",
-                      backgroundColor: "#111015",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      borderRadius: "20px",
-                      display: "flex",
-                      justifyContent: "left",
-                      alignItems: "center",
-                      overflow: "auto",
-                    }}
-                  >
-                    {showImages.map((image, id) => (
-                      <div
-                        key={id}
-                        style={{
-                          position: "relative",
-                          marginRight: "15px",
-                        }}
-                      >
-                        <img
-                          src={image}
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "right",
+                  }}
+                >
+                  {showImages.length !== 0 ? (
+                    <div
+                      style={{
+                        width: "620px",
+                        height: "110px",
+                        padding: "20px",
+                        marginBottom: "30px",
+                        backgroundColor: "#111015",
+                        boxShadow:
+                          "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                        borderRadius: "20px",
+                        overflow: "auto",
+                      }}
+                    >
+                      {showImages.map((image, id) => (
+                        <div
+                          key={id}
                           style={{
-                            width: "120px",
-                            height: "120px",
-                            objectFit: "cover",
-                            borderRadius: "10px",
-                          }}
-                        />
-                        <span
-                          onClick={() => {
-                            handleDeleteImage(id);
-                          }}
-                          style={{
-                            position: "absolute",
-                            top: "-5px",
-                            left: "105px",
-                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            fontFamily: "Pretendard-Light",
+                            fontSize: "14px",
+                            marginBottom: "10px",
                           }}
                         >
                           <img
                             src="../../img/btn/delete_disabled.png"
-                            style={{ width: "20px" }}
+                            style={{ width: "16px", cursor: "pointer" }}
+                            onClick={() => {
+                              handleDeleteImage(id);
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                "../../img/btn/delete_enabled.png";
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                "../../img/btn/delete_disabled.png";
+                            }}
                           />
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <></>
-                )}
+                          &emsp;{image}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
 
                 <div
                   style={{
@@ -434,9 +453,9 @@ export default function PostAdd() {
                   />
                 </div>
               </form>
-            </div>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
+        </motion.div>
 
         <BottomInfo />
       </div>

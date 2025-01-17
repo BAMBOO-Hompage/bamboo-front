@@ -137,7 +137,7 @@ export default function Nav(props: NavProps) {
               size="login"
               title="Log In"
               onClick={() => {
-                window.location = "/logIn";
+                window.location.href = "/logIn";
               }}
             />
           </div>
@@ -171,7 +171,7 @@ export default function Nav(props: NavProps) {
               alt="logout"
               style={{ width: "35px", padding: "0 20px", cursor: "pointer" }}
               onClick={() => {
-                window.location = "/";
+                window.location.href = "/";
               }}
               onMouseOver={(event) => {
                 event.target.src = `../img/btn/logout_disabled.png`;
@@ -227,7 +227,7 @@ export default function Nav(props: NavProps) {
             <Link to="/selfStudy" style={{ textDecoration: "none" }}>
               <div className="nav_tabs">자율 스터디</div>
             </Link>
-            <Link to="/applyStudy" style={{ textDecoration: "none" }}>
+            <Link to="/studyRecruitment" style={{ textDecoration: "none" }}>
               <div className="nav_tabs">스터디 모집</div>
             </Link>
           </div>
@@ -249,7 +249,7 @@ export default function Nav(props: NavProps) {
             onMouseLeave={() => setCurrentFocus("")}
           >
             <Link
-              to="/postBoard"
+              to="/notice"
               style={{ textDecoration: "none" }}
               onClick={() => sessionStorage.clear()}
             >

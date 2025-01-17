@@ -180,7 +180,7 @@ export default function Signup() {
                         textAlign: "left",
                       }}
                     >
-                      {errors.Email.message}
+                      {String(errors.Email.message)}
                     </span>
                   </div>
                 </>
@@ -334,7 +334,7 @@ export default function Signup() {
                         textAlign: "left",
                       }}
                     >
-                      {errors.Password.message}
+                      {String(errors.Password.message)}
                     </span>
                   </div>
                 </>
@@ -430,7 +430,7 @@ export default function Signup() {
                         textAlign: "left",
                       }}
                     >
-                      {errors.RePassword.message}
+                      {String(errors.RePassword.message)}
                     </span>
                   </div>
                 </>
@@ -524,7 +524,7 @@ export default function Signup() {
                         textAlign: "left",
                       }}
                     >
-                      {errors.Name.message}
+                      {String(errors.Name.message)}
                     </span>
                   </div>
                 </>
@@ -618,7 +618,7 @@ export default function Signup() {
                         textAlign: "left",
                       }}
                     >
-                      {errors.Major.message}
+                      {String(errors.Major.message)}
                     </span>
                   </div>
                 </>
@@ -716,7 +716,7 @@ export default function Signup() {
                         textAlign: "left",
                       }}
                     >
-                      {errors.StudentNum.message}
+                      {String(errors.StudentNum.message)}
                     </span>
                   </div>
                 </>
@@ -818,7 +818,7 @@ export default function Signup() {
                         textAlign: "left",
                       }}
                     >
-                      {errors.PhoneNum.message}
+                      {String(errors.PhoneNum.message)}
                     </span>
                   </div>
                 </>

@@ -36,7 +36,7 @@ export default function Activity() {
     Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
   const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-  const changePage = (page) => {
+  const changePage = (page: number) => {
     if (page < 1) page = 1;
     if (page > totalPages) page = totalPages;
     setCurrentPage(page);
@@ -100,6 +100,7 @@ export default function Activity() {
               >
                 주요 활동
               </div>
+
               <div
                 style={{
                   marginTop: "40px",
@@ -131,6 +132,7 @@ export default function Activity() {
                 ))}
               </div>
             </div>
+
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -146,7 +148,7 @@ export default function Activity() {
                 width: "820px",
                 height: "100%",
                 textAlign: "left",
-                paddingLeft: "40px",
+                paddingLeft: "50px",
               }}
             >
               <div
@@ -174,9 +176,10 @@ export default function Activity() {
                   />
                 </Link>
               </div>
+
               <div
                 style={{
-                  width: "780px",
+                  width: "100%",
                 }}
               >
                 {postsToDisplay.map((activity) => (
@@ -220,10 +223,8 @@ export default function Activity() {
 
               <div
                 style={{
-                  width: "810px",
+                  width: "770px",
                   position: "absolute",
-                  left: "50%",
-                  transform: "translate(-50%)",
                   bottom: "0",
                   display: "flex",
                   justifyContent: "center",

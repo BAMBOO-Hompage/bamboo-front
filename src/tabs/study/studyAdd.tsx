@@ -9,7 +9,7 @@ import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import MarkdownEditor from "../../components/MarkdownPost.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import PostData from "../../mockup_data/post_data.tsx";
+import PostData from "../../mockup_data/notice_data.tsx";
 import "../../App.css";
 
 export default function PostAdd() {
