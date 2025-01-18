@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import MDEditor from "@uiw/react-md-editor";
@@ -6,10 +7,10 @@ import MDEditor from "@uiw/react-md-editor";
 import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-
+import AlexandriaData from "../../mockup_data/alexandria_data.tsx";
 import "../../App.css";
 
-export default function AlexandriaAdd() {
+export default function AlexandriaEdit() {
   const {
     register,
     getValues,
@@ -148,7 +149,7 @@ export default function AlexandriaAdd() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>
+                  <div>
                     ·&emsp;논문 링크<span style={{ color: "#FF5005" }}>*</span>
                   </div>
                   <input
@@ -183,7 +184,7 @@ export default function AlexandriaAdd() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>
+                  <div>
                     ·&emsp;연도<span style={{ color: "#FF5005" }}>*</span>
                   </div>
                   <input
@@ -218,7 +219,7 @@ export default function AlexandriaAdd() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>
+                  <div>
                     ·&emsp;주제<span style={{ color: "#FF5005" }}>*</span>
                   </div>
                   <input
@@ -253,7 +254,7 @@ export default function AlexandriaAdd() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>·&emsp;태그</div>
+                  <div>·&emsp;태그</div>
                   <input
                     id="tag"
                     type="text"

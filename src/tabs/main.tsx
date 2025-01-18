@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+
 import Button from "../components/button.tsx";
 import Nav from "../components/nav.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
+
 import HistoryData from "../mockup_data/history_data.tsx";
 import "../App.css";
 
@@ -18,7 +20,7 @@ export default function Main() {
 
   return (
     <div>
-      <Nav type="logOut" />
+      <Nav type="main" />
       <div style={{ width: "100%" }}>
         <div
           style={{
@@ -341,7 +343,7 @@ export default function Main() {
                     textAlign: "left",
                     margin: "0 auto",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                   }}
@@ -393,7 +395,7 @@ export default function Main() {
                     textAlign: "left",
                     margin: "0 auto",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                   }}
@@ -444,7 +446,7 @@ export default function Main() {
                     textAlign: "left",
                     margin: "0 auto",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                   }}

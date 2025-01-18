@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
@@ -20,11 +20,9 @@ export default function Alexandria() {
   } = useForm();
   const [paperList, setPaperList] = useState("전체");
   const [currentPage, setCurrentPage] = useState(1);
-  const data = AlexandriaData();
+  const paperData = AlexandriaData();
 
-  const filteredData = data.filter(
-    (paper) => paperList === "전체" || paper.category === paperList
-  );
+  const filteredData = paperData.filter((paper) => paperList === "전체");
 
   const totalPages = Math.ceil(filteredData.length / papersPerPage);
   const startIndex = (currentPage - 1) * papersPerPage;
@@ -35,13 +33,27 @@ export default function Alexandria() {
     Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
   const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-  const changePage = (page) => {
+  const changePage = (page: number) => {
     if (page < 1) page = 1;
     if (page > totalPages) page = totalPages;
     setCurrentPage(page);
 
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useLayoutEffect(() => {
+    const scrollY = sessionStorage.getItem("scrollY");
+    const currentPage = sessionStorage.getItem("currentPage");
+
+    if (scrollY) {
+      window.scrollTo({ top: parseInt(scrollY, 10), behavior: "auto" });
+      sessionStorage.removeItem("scrollY");
+    }
+    if (currentPage) {
+      setCurrentPage(parseInt(currentPage, 10));
+      sessionStorage.removeItem("currentPage");
+    }
+  }, []);
 
   return (
     <div>
@@ -71,7 +83,7 @@ export default function Alexandria() {
           >
             <div
               style={{
-                marginBottom: "45px",
+                marginBottom: "60px",
                 textAlign: "center",
               }}
             >
@@ -103,7 +115,7 @@ export default function Alexandria() {
             <div
               style={{
                 width: "100%",
-                marginBottom: "50px",
+                marginBottom: "40px",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -227,101 +239,104 @@ export default function Alexandria() {
               />
             </div>
 
-            <div>
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  fontFamily: "Pretendard-Light",
-                  fontSize: "16px",
-                  color: "#888",
-                }}
-              >
-                <div style={{ width: "340px" }}>논문 이름</div>
-                <div style={{ width: "70px" }}>연도</div>
-                <div style={{ width: "140px" }}>태그</div>
-                <div style={{ width: "200px" }}>주제</div>
-                <div style={{ width: "80px" }}>발표자</div>
-                <div style={{ width: "100px" }}>논문 링크</div>
-              </div>
-              <hr
-                style={{ height: "1px", background: "#666", border: "none" }}
-              />
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                fontFamily: "Pretendard-Light",
+                fontSize: "16px",
+                color: "#888",
+              }}
+            >
+              <div style={{ width: "340px" }}>논문 이름</div>
+              <div style={{ width: "70px" }}>연도</div>
+              <div style={{ width: "140px" }}>태그</div>
+              <div style={{ width: "200px" }}>주제</div>
+              <div style={{ width: "80px" }}>발표자</div>
+              <div style={{ width: "100px" }}>논문 링크</div>
+            </div>
+            <hr style={{ height: "1px", background: "#666", border: "none" }} />
 
-              {papersToDisplay.map((paper) => (
-                <div key={paper.id}>
+            {papersToDisplay.map((paper) => (
+              <div key={paper.id}>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "78px",
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "16px",
+                    color: "#fff",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div style={{ width: "340px" }}>{paper.title}</div>
+                  <div style={{ width: "70px" }}>{paper.year}</div>
+                  <div style={{ width: "140px" }}>#transformer #detector</div>
+                  <div style={{ width: "200px" }}>{paper.subject}</div>
+                  <div style={{ width: "80px" }}>{paper.user.name}</div>
                   <div
                     style={{
-                      width: "100%",
-                      height: "78px",
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
-                      color: "#fff",
+                      width: "100px",
+                      height: "100%",
                       display: "flex",
-                      justifyContent: "space-between",
+                      justifyContent: "left",
+                      alignItems: "center",
                     }}
                   >
-                    <div style={{ width: "340px" }}>{paper.title}</div>
-                    <div style={{ width: "70px" }}>{paper.year}</div>
-                    <div style={{ width: "140px" }}>#transformer #detector</div>
-                    <div style={{ width: "200px" }}>{paper.subject}</div>
-                    <div style={{ width: "80px" }}>{paper.user.name}</div>
                     <div
                       style={{
-                        width: "100px",
-                        height: "100%",
+                        width: "90%",
                         display: "flex",
-                        justifyContent: "left",
+                        justifyContent: "space-between",
                         alignItems: "center",
                       }}
                     >
-                      <div
-                        style={{
-                          width: "90%",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          cursor: "pointer",
+                      <a href={paper.link} target="_blank">
+                        <img
+                          src="../../img/btn/link_disabled.png"
+                          style={{ width: "30px", cursor: "pointer" }}
+                        />
+                      </a>
+                      <Link
+                        to="/alexandriaPost"
+                        style={{ textDecoration: "none" }}
+                        onClick={() => {
+                          sessionStorage.setItem(
+                            "scrollY",
+                            String(window.scrollY)
+                          );
+                          sessionStorage.setItem(
+                            "currentPage",
+                            String(currentPage)
+                          );
+                          localStorage.setItem("postId", String(paper.id));
                         }}
                       >
-                        <a href={paper.link} target="_blank">
-                          <img
-                            src="../../img/btn/link_disabled.png"
-                            style={{ width: "30px" }}
-                          />
-                        </a>
-                        <Link
-                          to="/paper"
-                          style={{ textDecoration: "none" }}
-                          onClick={() => {
-                            localStorage.setItem("paperId", paper.id);
-                          }}
-                        >
-                          <img
-                            src="../../img/btn/move.png"
-                            style={{ width: "12px" }}
-                          />
-                        </Link>
-                      </div>
+                        <img
+                          src="../../img/btn/move.png"
+                          style={{ width: "12px", cursor: "pointer" }}
+                        />
+                      </Link>
                     </div>
                   </div>
-                  <hr
-                    style={{
-                      height: "1px",
-                      background: "#666",
-                      border: "none",
-                    }}
-                  />
                 </div>
-              ))}
-            </div>
+                <hr
+                  style={{
+                    height: "1px",
+                    background: "#666",
+                    border: "none",
+                  }}
+                />
+              </div>
+            ))}
 
             <div
               style={{
                 width: "100%",
                 position: "absolute",
-                bottom: "10px",
+                bottom: "0",
                 display: "flex",
                 justifyContent: "center",
               }}

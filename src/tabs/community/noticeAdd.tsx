@@ -375,7 +375,7 @@ export default function PostAdd() {
                         width: "620px",
                         height: "110px",
                         padding: "20px",
-                        marginBottom: "30px",
+                        marginBottom: "20px",
                         backgroundColor: "#111015",
                         boxShadow:
                           "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",

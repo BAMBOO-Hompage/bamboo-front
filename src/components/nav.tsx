@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/button.tsx";
+
+import CheckAuth from "../api/checkAuthAPI.tsx";
+
 import "../App.css";
 
 type NavType =
-  | "logOut"
   | "main"
   | "community"
   | "aboutUs"
@@ -130,18 +132,7 @@ export default function Nav(props: NavProps) {
             Community
           </div>
         </div>
-        {type === "logOut" ? (
-          <div style={{ position: "absolute", right: "0" }}>
-            <Button
-              type="login"
-              size="login"
-              title="Log In"
-              onClick={() => {
-                window.location.href = "/logIn";
-              }}
-            />
-          </div>
-        ) : (
+        {CheckAuth() === 1 ? (
           <div
             style={{
               position: "absolute",
@@ -173,11 +164,26 @@ export default function Nav(props: NavProps) {
               onClick={() => {
                 window.location.href = "/";
               }}
-              onMouseOver={(event) => {
-                event.target.src = `../img/btn/logout_disabled.png`;
+              onMouseOver={(e) => {
+                (
+                  e.target as HTMLImageElement
+                ).src = `../img/btn/logout_disabled.png`;
               }}
-              onMouseOut={(event) => {
-                event.target.src = `../img/btn/logout_disabled.png`;
+              onMouseOut={(e) => {
+                (
+                  e.target as HTMLImageElement
+                ).src = `../img/btn/logout_disabled.png`;
+              }}
+            />
+          </div>
+        ) : (
+          <div style={{ position: "absolute", right: "0" }}>
+            <Button
+              type="logIn"
+              size="logIn"
+              title="Log In"
+              onClick={() => {
+                window.location.href = "/logIn";
               }}
             />
           </div>

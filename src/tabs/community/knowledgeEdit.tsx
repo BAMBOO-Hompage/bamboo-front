@@ -58,7 +58,7 @@ export default function KnowledgeEdit() {
         "\n사진 : \n" +
         showImages
     );
-    window.location.href = "/notice";
+    window.history.back();
   };
 
   const onInvalid = (e) => {
@@ -129,13 +129,13 @@ export default function KnowledgeEdit() {
                   className="side_tabs"
                   onClick={() => {
                     const deleteAdd =
-                      window.confirm("작성을 취소하시겠습니까?");
+                      window.confirm("수정을 취소하시겠습니까?");
                     if (deleteAdd) {
-                      window.location.href = "/notice";
+                      window.history.back();
                     }
                   }}
                 >
-                  작성 취소
+                  수정 취소
                 </div>
               </div>
             </div>
@@ -448,7 +448,7 @@ export default function KnowledgeEdit() {
                   <Button
                     type="primary"
                     size="small"
-                    title="작성 완료"
+                    title="수정 완료"
                     onClick={handleSubmit(onValid, onInvalid)}
                   />
                 </div>

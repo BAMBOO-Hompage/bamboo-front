@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import moment from "moment";
+
 import Button from "../components/button.tsx";
+
+import LoginAPI from "../api/members/loginAPI.tsx";
+
 import "../App.css";
 
 export default function Login() {
@@ -15,7 +19,7 @@ export default function Login() {
 
   const onValid = (e) => {
     console.log(e, "onValid");
-    window.location.href = "/";
+    LoginAPI(e.StudentNum, e.Password);
   };
 
   const onInvalid = (e) => {
@@ -28,10 +32,12 @@ export default function Login() {
         style={{
           position: "absolute",
           top: "70px",
-          left: "33%",
-          width: "34%",
+          left: "50%",
+          transform: "translate(-50%, 0)",
+          width: "500px",
           display: "flex",
           justifyContent: "space-between",
+          zIndex: "-10",
         }}
       >
         <div
@@ -42,7 +48,6 @@ export default function Login() {
             borderRadius: "1171px",
             background: "#297FB8",
             filter: "blur(110px)",
-            zIndex: "-10",
           }}
         ></div>
         <div
@@ -52,7 +57,6 @@ export default function Login() {
             borderRadius: "1171px",
             background: "#2CC295",
             filter: "blur(110px)",
-            zIndex: "-10",
           }}
         ></div>
       </div>
@@ -148,7 +152,7 @@ export default function Login() {
                 style={{
                   width: "400px",
                   height: "20px",
-                  color: "red",
+                  color: "#FF5005",
                   fontSize: "12px",
                   textAlign: "left",
                 }}

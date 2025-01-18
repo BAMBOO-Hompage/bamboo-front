@@ -23,8 +23,8 @@ import KnowledgePost from "./tabs/community/knowledgePost.tsx";
 
 import Alexandria from "./tabs/dataCenter/alexandria.tsx";
 import AlexandriaAdd from "./tabs/dataCenter/alexandriaAdd.tsx";
-import PaperEdit from "./tabs/dataCenter/paperEdit.tsx";
-import Paper from "./tabs/dataCenter/paper.tsx";
+import AlexandriaEdit from "./tabs/dataCenter/alexandriaEdit.tsx";
+import AlexandriaPost from "./tabs/dataCenter/alexandriaPost.tsx";
 import HallOfFame from "./tabs/dataCenter/hallOfFame.tsx";
 
 import CurriculumStudy from "./tabs/study/curriculumStudy.tsx";
@@ -47,7 +47,7 @@ function App() {
           <Route path="/myPage" element={<MyPage />} />
 
           <Route path="/introduction" element={<Introduction />} />
-          <Route path="/joinUs" element={<JoinUs type="inPeriod" />} />
+          <Route path="/joinUs" element={<JoinUs type="basic" />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/activityAdd" element={<ActivityAdd />} />
 
@@ -62,8 +62,8 @@ function App() {
 
           <Route path="/alexandria" element={<Alexandria />} />
           <Route path="/alexandriaAdd" element={<AlexandriaAdd />} />
-          <Route path="/paper" element={<Paper />} />
-          <Route path="/paperEdit" element={<PaperEdit />} />
+          <Route path="/alexandriaPost" element={<AlexandriaPost />} />
+          <Route path="/alexandriaEdit" element={<AlexandriaEdit />} />
           <Route path="/hallOfFame" element={<HallOfFame />} />
 
           <Route path="/curriculumStudy" element={<CurriculumStudy />} />

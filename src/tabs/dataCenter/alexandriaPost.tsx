@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import MDEditor from "@uiw/react-md-editor";
@@ -6,36 +7,14 @@ import MDEditor from "@uiw/react-md-editor";
 import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-
+import AlexandriaData from "../../mockup_data/alexandria_data.tsx";
 import "../../App.css";
 
-export default function AlexandriaAdd() {
-  const {
-    register,
-    getValues,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const [content, setContent] = useState("");
+export default function AlexandriaPost() {
+  const alexandriaData = AlexandriaData();
 
-  const onValid = (e) => {
-    console.log(e.Category + "\n" + e.Title + "\n" + content + "\n", "onValid");
-    alert(
-      "카테고리 : " +
-        e.Category +
-        "\n제목 : " +
-        e.Title +
-        "\n내용 : \n" +
-        content +
-        "\n사진 : \n"
-    );
-    window.location.href = "/alexandria";
-  };
-
-  const onInvalid = (e) => {
-    console.log(e, "onInvalid");
-    alert("입력한 정보를 다시 확인해주세요.");
-  };
+  const postId = parseInt(localStorage.getItem("postId") || "0");
+  const currentPost = alexandriaData.filter((post) => postId == post.id)[0];
 
   return (
     <div>
@@ -51,14 +30,14 @@ export default function AlexandriaAdd() {
           }}
           style={{
             width: "100%",
-            height: "1350px",
+            height: "1250px",
           }}
         >
           <div
             style={{
               position: "relative",
               width: "1000px",
-              height: "1300px",
+              height: "1200px",
               margin: "100px auto",
               textAlign: "left",
             }}
@@ -97,12 +76,12 @@ export default function AlexandriaAdd() {
             <div
               style={{
                 width: "100%",
-                height: "860px",
+                height: "960px",
                 backgroundColor: "#171717",
                 borderRadius: "20px",
               }}
             >
-              <form
+              <div
                 style={{
                   margin: "0 20px",
                   paddingTop: "20px",
@@ -111,34 +90,20 @@ export default function AlexandriaAdd() {
                 <div
                   style={{
                     width: "100%",
+                    height: "40px",
+                    padding: "0 20px",
                     marginBottom: "20px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
+                    fontFamily: "Pretendard-Bold",
+                    fontSize: "28px",
+                    color: "#fff",
                   }}
                 >
-                  <input
-                    id="title"
-                    className="title"
-                    type="text"
-                    placeholder="제목을 입력해주세요."
-                    {...register("Title", {
-                      required: "제목을 입력해주세요.",
-                    })}
-                    style={{
-                      width: "100%",
-                      height: "40px",
-                      padding: "0 20px",
-                      backgroundColor: "transparent",
-                      borderRadius: "10px",
-                      fontFamily: "Pretendard-Bold",
-                      fontSize: "28px",
-                    }}
-                  />
+                  {currentPost.title}
                 </div>
                 <div
                   style={{
                     width: "920px",
+                    height: "40px",
                     padding: "0 20px",
                     marginBottom: "10px",
                     display: "flex",
@@ -148,32 +113,26 @@ export default function AlexandriaAdd() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>
-                    ·&emsp;논문 링크<span style={{ color: "#FF5005" }}>*</span>
-                  </div>
-                  <input
-                    id="link"
-                    type="text"
-                    placeholder="논문 링크를 입력해주세요."
-                    {...register("Link", {
-                      required: "논문 링크를 입력해주세요.",
-                    })}
+                  <div style={{ color: "#aaa" }}>·&emsp;논문 링크</div>
+                  <a
+                    href={currentPost.link}
                     style={{
                       width: "760px",
-                      height: "40px",
                       padding: "0 20px",
-                      backgroundColor: "#111015",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
+                      color: "#fff",
                     }}
-                  />
+                    target="_blank"
+                  >
+                    {currentPost.link}
+                  </a>
                 </div>
                 <div
                   style={{
                     width: "920px",
+                    height: "40px",
                     padding: "0 20px",
                     marginBottom: "10px",
                     display: "flex",
@@ -183,32 +142,24 @@ export default function AlexandriaAdd() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>
-                    ·&emsp;연도<span style={{ color: "#FF5005" }}>*</span>
-                  </div>
-                  <input
-                    id="year"
-                    type="number"
-                    placeholder="논문 작성 연도를 입력해주세요."
-                    {...register("Year", {
-                      required: "논문 작성 연도를 입력해주세요.",
-                    })}
+                  <div style={{ color: "#aaa" }}>·&emsp;연도</div>
+                  <div
                     style={{
                       width: "760px",
-                      height: "40px",
                       padding: "0 20px",
-                      backgroundColor: "#111015",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
+                      color: "#fff",
                     }}
-                  />
+                  >
+                    {currentPost.year}
+                  </div>
                 </div>
                 <div
                   style={{
                     width: "920px",
+                    height: "40px",
                     padding: "0 20px",
                     marginBottom: "10px",
                     display: "flex",
@@ -218,32 +169,24 @@ export default function AlexandriaAdd() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>
-                    ·&emsp;주제<span style={{ color: "#FF5005" }}>*</span>
-                  </div>
-                  <input
-                    id="topic"
-                    type="text"
-                    placeholder="논문 주제를 입력해주세요."
-                    {...register("Topic", {
-                      required: "논문 주제를 입력해주세요.",
-                    })}
+                  <div style={{ color: "#aaa" }}>·&emsp;주제</div>
+                  <div
                     style={{
                       width: "760px",
-                      height: "40px",
                       padding: "0 20px",
-                      backgroundColor: "#111015",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
+                      color: "#fff",
                     }}
-                  />
+                  >
+                    {currentPost.subject}
+                  </div>
                 </div>
                 <div
                   style={{
                     width: "920px",
+                    height: "40px",
                     padding: "0 20px",
                     marginBottom: "20px",
                     display: "flex",
@@ -254,56 +197,48 @@ export default function AlexandriaAdd() {
                   }}
                 >
                   <div style={{ color: "#aaa" }}>·&emsp;태그</div>
-                  <input
-                    id="tag"
-                    type="text"
-                    placeholder="태그를 추가해보세요.  ex) #zero_shot"
-                    {...register("Tag", {
-                      required: "태그를 추가해보세요.",
-                    })}
+                  <div
                     style={{
                       width: "760px",
-                      height: "40px",
                       padding: "0 20px",
-                      backgroundColor: "#111015",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
+                      color: "#fff",
                     }}
-                  />
+                  >
+                    {currentPost.tag}
+                  </div>
                 </div>
+                <hr
+                  style={{
+                    width: "100%",
+                    border: "none",
+                    backgroundColor: "#444",
+                    height: "2px",
+                  }}
+                />
                 <div
                   style={{
                     boxSizing: "border-box",
                     width: "100%",
-                    height: "500px",
+                    height: "600px",
                     marginBottom: "20px",
                     borderRadius: "30px",
                     border: "none",
-                    backgroundColor: "#111015",
-                    boxShadow:
-                      "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                     padding: "20px",
+                    overflowY: "auto",
                   }}
                 >
-                  <div data-color-mode="dark">
-                    <MDEditor
-                      height={460}
-                      value={content}
-                      onChange={(text) => {
-                        setContent(text || "");
-                      }}
-                      className="custom-md-editor"
-                      preview={"edit"}
-                      style={{
-                        resize: "none",
-                        backgroundColor: "transparent",
-                        border: "none",
-                      }}
-                    />
-                  </div>
+                  <MDEditor.Markdown
+                    style={{
+                      backgroundColor: "transparent",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      color: "#fff",
+                    }}
+                    source={currentPost.content}
+                  />
                 </div>
 
                 <div
@@ -330,10 +265,10 @@ export default function AlexandriaAdd() {
                     type="primary"
                     size="small"
                     title="작성 완료"
-                    onClick={handleSubmit(onValid, onInvalid)}
+                    onClick={() => {}}
                   />
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </motion.div>

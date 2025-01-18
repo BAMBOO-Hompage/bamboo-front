@@ -3,8 +3,8 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 import "../App.css";
 
-type ButtonType = "primary" | "secondary" | "destructive" | "logout";
-type Size = "small" | "medium" | "large";
+type ButtonType = "primary" | "secondary" | "destructive" | "logIn";
+type Size = "small" | "medium" | "large" | "XLarge" | "logIn";
 
 type ButtonProps = {
   onClick?: () => void;
@@ -14,11 +14,11 @@ type ButtonProps = {
 };
 
 const ButtonContainer = styled.div<{
-  type: "primary" | "secondary" | "destructive" | "login";
-  size: "small" | "medium" | "large" | "login";
+  type: "primary" | "secondary" | "destructive" | "logIn";
+  size: "small" | "medium" | "large" | "XLarge" | "logIn";
 }>`
-  border: ${(props) => (props.type === "login" ? "none" : "1px #000 solid")};
-  border-radius: ${(props) => (props.type === "login" ? "0" : "20px")};
+  border: ${(props) => (props.type === "logIn" ? "none" : "none")};
+  border-radius: ${(props) => (props.type === "logIn" ? "0" : "20px")};
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -29,7 +29,7 @@ const ButtonContainer = styled.div<{
       : props.type === "secondary"
       ? "#A9FFDE"
       : props.type === "destructive"
-      ? "#FFF6F6"
+      ? "#343434"
       : "#2CC295"};
   color: ${(props) =>
     props.type === "primary"
@@ -37,10 +37,19 @@ const ButtonContainer = styled.div<{
       : props.type === "secondary"
       ? "#000"
       : props.type === "destructive"
-      ? "#FF3E3E"
+      ? "#fff"
       : "#fff"};
   cursor: pointer;
 
+  ${(props) =>
+    props.size === "XLarge" &&
+    css`
+      height: 45px;
+      font-size: 18px;
+      font-weight: 700;
+      width: 490px;
+      text-align: center;
+    `}
   ${(props) =>
     props.size === "large" &&
     css`
@@ -67,7 +76,7 @@ const ButtonContainer = styled.div<{
       text-align: center;
     `}
     ${(props) =>
-    props.size === "login" &&
+    props.size === "logIn" &&
     css`
       height: 60px;
       font-size: 18px;

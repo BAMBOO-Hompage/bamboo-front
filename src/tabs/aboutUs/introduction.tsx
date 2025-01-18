@@ -77,7 +77,7 @@ export default function Introduction() {
           <div
             style={{
               fontFamily: "Pretendard-Light",
-              fontSize: "17px",
+              fontSize: "18px",
               color: "#fff",
               width: "1000px",
               margin: "0 auto",
@@ -137,7 +137,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "17px",
+                fontSize: "18px",
                 position: "absolute",
                 left: "0",
               }}
@@ -157,7 +157,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "17px",
+                fontSize: "18px",
                 position: "absolute",
                 left: "200px",
               }}
@@ -177,7 +177,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "17px",
+                fontSize: "18px",
                 position: "absolute",
                 left: "400px",
               }}
@@ -197,7 +197,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "17px",
+                fontSize: "18px",
                 position: "absolute",
                 left: "600px",
               }}
@@ -217,7 +217,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "17px",
+                fontSize: "18px",
                 position: "absolute",
                 left: "800px",
               }}
@@ -238,7 +238,7 @@ export default function Introduction() {
             <div
               style={{
                 fontFamily: "Pretendard-SemiBold",
-                fontSize: "17px",
+                fontSize: "18px",
                 marginBottom: "10px",
               }}
             >
@@ -257,8 +257,8 @@ export default function Introduction() {
             <div
               style={{
                 fontFamily: "Pretendard-Light",
-                fontSize: "17px",
-                lineHeight: "2.3",
+                fontSize: "18px",
+                lineHeight: "2.2",
                 marginBottom: "30px",
               }}
             >
@@ -271,7 +271,7 @@ export default function Introduction() {
             <div
               style={{
                 fontFamily: "Pretendard-SemiBold",
-                fontSize: "17px",
+                fontSize: "18px",
                 marginBottom: "10px",
               }}
             >
@@ -290,8 +290,8 @@ export default function Introduction() {
             <div
               style={{
                 fontFamily: "Pretendard-Light",
-                fontSize: "17px",
-                lineHeight: "2.3",
+                fontSize: "18px",
+                lineHeight: "2.2",
                 marginBottom: "30px",
               }}
             >
@@ -443,7 +443,7 @@ export default function Introduction() {
                     textAlign: "left",
                     margin: "0 auto",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                   }}
@@ -495,7 +495,7 @@ export default function Introduction() {
                     textAlign: "left",
                     margin: "0 auto",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                   }}
@@ -546,7 +546,7 @@ export default function Introduction() {
                     textAlign: "left",
                     margin: "0 auto",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                   }}
@@ -713,7 +713,7 @@ export default function Introduction() {
                 <div
                   style={{
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                     marginBottom: "25px",
@@ -725,7 +725,7 @@ export default function Introduction() {
                 <div
                   style={{
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                   }}
@@ -764,7 +764,7 @@ export default function Introduction() {
                 <div
                   style={{
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                     marginBottom: "25px",
@@ -776,7 +776,7 @@ export default function Introduction() {
                 <div
                   style={{
                     fontFamily: "Pretendard-Light",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
                   }}
