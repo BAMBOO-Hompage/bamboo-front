@@ -188,7 +188,7 @@ export default function Signup() {
                       width: "150px",
                       position: "absolute",
                       bottom: "25px",
-                      left: "385px",
+                      left: "485px",
                       backgroundColor: "#171717",
                       borderTopLeftRadius: "30px",
                       borderTopRightRadius: "30px",
@@ -878,9 +878,11 @@ export default function Signup() {
           <div
             style={{
               width: "500px",
-              margin: "10px auto",
+              margin: "10px 0",
+              padding: "0",
               display: "flex",
               justifyContent: "right",
+              border: "none",
             }}
           >
             <Button

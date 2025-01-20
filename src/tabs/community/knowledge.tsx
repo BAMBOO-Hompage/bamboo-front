@@ -236,6 +236,7 @@ export default function Knoledge() {
                 <Link to="/knowledgeAdd">
                   <img
                     src="../../img/btn/edit_enabled.png"
+                    alt="edit"
                     style={{ width: "30px", cursor: "pointer" }}
                     onClick={() => {
                       localStorage.setItem("postList", postList);

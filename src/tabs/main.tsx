@@ -79,17 +79,16 @@ export default function Main() {
           style={{
             width: "100vw",
             height: "100vh",
-            textAlign: "left",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <div>
+          <div style={{ maxWidth: "700px", padding: "100px" }}>
             <img
               src="../../img/main_logo1.png"
               alt="main_logo"
-              style={{ width: "700px" }}
+              style={{ width: "100%" }}
             />
           </div>
         </motion.div>
@@ -106,7 +105,7 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "680px",
+            minHeight: "680px",
           }}
         >
           <div
@@ -139,9 +138,10 @@ export default function Main() {
           </div>
           <div
             style={{
-              width: "1000px",
+              maxWidth: "1000px",
               textAlign: "left",
               margin: "0 auto",
+              padding: "0 40px",
               fontFamily: "Pretendard-Light",
               fontSize: "18px",
               color: "#fff",
@@ -180,14 +180,22 @@ export default function Main() {
             지원합니다.
           </div>
           <Link to="/introduction" style={{ textDecoration: "none" }}>
-            <div style={{ width: "1000px", margin: "0 auto" }}>
+            <div
+              style={{
+                maxWidth: "1000px",
+                padding: "0 40px",
+                margin: "0 auto",
+                display: "flex",
+                justifyContent: "right",
+              }}
+            >
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
                   fontSize: "18px",
                   width: "150px",
-                  marginLeft: "830px",
                   marginTop: "100px",
+                  marginBottom: "80px",
                   padding: "10px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",

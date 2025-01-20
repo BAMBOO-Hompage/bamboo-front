@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 import "../App.css";
 
-type ButtonType = "primary" | "secondary" | "destructive" | "logIn";
+type ButtonType = "primary" | "secondary" | "destructive" | "logIn" | "submit";
 type Size = "small" | "medium" | "large" | "XLarge" | "logIn";
 
 type ButtonProps = {
@@ -14,14 +14,13 @@ type ButtonProps = {
 };
 
 const ButtonContainer = styled.div<{
-  type: "primary" | "secondary" | "destructive" | "logIn";
+  type: "primary" | "secondary" | "destructive" | "logIn" | "submit";
   size: "small" | "medium" | "large" | "XLarge" | "logIn";
 }>`
   border: ${(props) => (props.type === "logIn" ? "none" : "none")};
   border-radius: ${(props) => (props.type === "logIn" ? "0" : "20px")};
   justify-content: center;
   align-items: center;
-  gap: 10px;
   display: flex;
   background-color: ${(props) =>
     props.type === "primary"
@@ -47,7 +46,7 @@ const ButtonContainer = styled.div<{
       height: 45px;
       font-size: 18px;
       font-weight: 700;
-      width: 490px;
+      width: 500px;
       text-align: center;
     `}
   ${(props) =>
@@ -56,7 +55,7 @@ const ButtonContainer = styled.div<{
       height: 45px;
       font-size: 18px;
       font-weight: 700;
-      width: 390px;
+      width: 400px;
       text-align: center;
     `}
   ${(props) =>

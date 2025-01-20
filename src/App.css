@@ -106,7 +106,6 @@ input[type="number"] {
 .a:hover {
   font-weight: 700;
 }
-
 select {
   outline: none;
 }
@@ -118,7 +117,6 @@ select {
   font-family: Pretendard-Regular;
   font-size: 18px;
   color: #fff;
-  border-top: 2px solid transparent;
   border-bottom: 2px solid transparent;
   cursor: pointer;
 }
@@ -138,7 +136,6 @@ select {
   border-right: 1px solid #777;
   text-decoration-line: none;
 }
-
 .nav_tabs {
   color: #fff;
   margin-bottom: 10px;

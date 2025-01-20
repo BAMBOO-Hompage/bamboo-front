@@ -58,7 +58,6 @@ export default function AlexandriaAdd() {
             style={{
               position: "relative",
               width: "1000px",
-              height: "1300px",
               margin: "100px auto",
               textAlign: "left",
             }}
@@ -308,6 +307,9 @@ export default function AlexandriaAdd() {
 
                 <div
                   style={{
+                    position: "absolute",
+                    bottom: "20px",
+                    right: "20px",
                     width: "100%",
                     display: "flex",
                     justifyContent: "right",

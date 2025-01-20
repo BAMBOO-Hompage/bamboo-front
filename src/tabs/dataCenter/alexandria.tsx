@@ -208,6 +208,7 @@ export default function Alexandria() {
                   <input type="text" style={{ display: "none" }} />
                   <img
                     src="../../img/btn/search_disabled.png"
+                    alt="search"
                     style={{
                       width: "30px",
                       marginRight: "5px",
@@ -226,12 +227,13 @@ export default function Alexandria() {
               </form>
               <img
                 src="../../img/btn/edit_enabled.png"
+                alt="edit"
                 style={{ width: "30px", cursor: "pointer", opacity: "0.8" }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.opacity = "1";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = "0.5";
+                  e.currentTarget.style.opacity = "0.8";
                 }}
                 onClick={() => {
                   window.location.href = "/alexandriaAdd";
@@ -293,10 +295,21 @@ export default function Alexandria() {
                         alignItems: "center",
                       }}
                     >
-                      <a href={paper.link} target="_blank">
+                      <a href={paper.link} target="_blank" rel="noreferrer">
                         <img
                           src="../../img/btn/link_disabled.png"
-                          style={{ width: "30px", cursor: "pointer" }}
+                          alt="link"
+                          style={{
+                            width: "30px",
+                            cursor: "pointer",
+                            opacity: "0.8",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.opacity = "1"; // Hover 시 opacity 변경
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.opacity = "0.8"; // Hover 해제 시 opacity 복원
+                          }}
                         />
                       </a>
                       <Link

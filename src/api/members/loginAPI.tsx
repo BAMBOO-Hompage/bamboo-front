@@ -35,16 +35,16 @@ export default function LogInAPI(studentId: number, password: string) {
       // 쿠키에 토큰 저장
       setCookie("accessToken", accessToken, {
         path: "/",
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1일 뒤 만료
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1일 뒤 삭제
       });
-
       setCookie("refreshToken", refreshToken, {
         path: "/",
-        expires: new Date(Date.now() + 48 * 60 * 60 * 1000), // 2일 뒤 만료
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1일 뒤 삭제
       });
 
-      // 로그인 성공 후 페이지 이동
-      window.location.href = "/";
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 100); // 100ms 딜레이
     })
     .catch((error) => {
       console.error("LogIn failed:", error);

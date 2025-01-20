@@ -182,17 +182,22 @@ export default function Login() {
 
             <div
               style={{
-                width: "390px",
-                margin: "10px auto",
+                width: "400px",
+                margin: "10px 0",
                 textAlign: "center",
               }}
             >
-              <Button
-                type="primary"
-                size="large"
-                title="로그인"
-                onClick={handleSubmit(onValid, onInvalid)}
-              />
+              <button
+                type="submit"
+                style={{
+                  width: "100%",
+                  padding: "0",
+                  border: "none",
+                  backgroundColor: "transparent",
+                }}
+              >
+                <Button type="primary" size="large" title="로그인" />
+              </button>
             </div>
           </form>
           <div

@@ -30,15 +30,15 @@ export default function AlexandriaPost() {
           }}
           style={{
             width: "100%",
-            height: "1250px",
           }}
         >
           <div
             style={{
               position: "relative",
               width: "1000px",
-              height: "1200px",
-              margin: "100px auto",
+              margin: "0 auto",
+              marginTop: "100px",
+              marginBottom: "150px",
               textAlign: "left",
             }}
           >
@@ -76,7 +76,7 @@ export default function AlexandriaPost() {
             <div
               style={{
                 width: "100%",
-                height: "960px",
+                minHeight: "960px",
                 backgroundColor: "#171717",
                 borderRadius: "20px",
               }}
@@ -115,6 +115,8 @@ export default function AlexandriaPost() {
                 >
                   <div style={{ color: "#aaa" }}>·&emsp;논문 링크</div>
                   <a
+                    target="_blank"
+                    rel="noreferrer"
                     href={currentPost.link}
                     style={{
                       width: "760px",
@@ -124,7 +126,6 @@ export default function AlexandriaPost() {
                       fontSize: "18px",
                       color: "#fff",
                     }}
-                    target="_blank"
                   >
                     {currentPost.link}
                   </a>
@@ -222,12 +223,11 @@ export default function AlexandriaPost() {
                   style={{
                     boxSizing: "border-box",
                     width: "100%",
-                    height: "600px",
-                    marginBottom: "20px",
+                    minHeight: "500px",
                     borderRadius: "30px",
                     border: "none",
                     padding: "20px",
-                    overflowY: "auto",
+                    paddingBottom: "150px",
                   }}
                 >
                   <MDEditor.Markdown
@@ -243,6 +243,9 @@ export default function AlexandriaPost() {
 
                 <div
                   style={{
+                    position: "absolute",
+                    bottom: "20px",
+                    right: "20px",
                     width: "100%",
                     display: "flex",
                     justifyContent: "right",
