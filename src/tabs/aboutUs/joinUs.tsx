@@ -87,38 +87,6 @@ export default function JoinUs(props: JoinUsProps) {
 
               <div
                 style={{
-                  position: "absolute",
-                  top: "750px",
-                  left: "50%",
-                  transform: "translate(-50%, 0)",
-                  width: "400px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  zIndex: "-10",
-                }}
-              >
-                <div
-                  style={{
-                    width: "250px",
-                    height: "60px",
-                    borderRadius: "1171px",
-                    background: "#297FB8",
-                    filter: "blur(100px)",
-                  }}
-                ></div>
-                <div
-                  style={{
-                    width: "250px",
-                    height: "60px",
-                    borderRadius: "1171px",
-                    background: "#2CC295",
-                    filter: "blur(100px)",
-                  }}
-                ></div>
-              </div>
-
-              <div
-                style={{
                   width: "1000px",
                   margin: "0 auto",
                   display: "flex",
@@ -169,6 +137,37 @@ export default function JoinUs(props: JoinUsProps) {
                 height: "530px",
               }}
             >
+              <div
+                style={{
+                  position: "absolute",
+                  top: "130px",
+                  left: "50%",
+                  transform: "translate(-50%, 0)",
+                  width: "400px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  zIndex: "-10",
+                }}
+              >
+                <div
+                  style={{
+                    width: "250px",
+                    height: "60px",
+                    borderRadius: "1171px",
+                    background: "#297FB8",
+                    filter: "blur(100px)",
+                  }}
+                ></div>
+                <div
+                  style={{
+                    width: "250px",
+                    height: "60px",
+                    borderRadius: "1171px",
+                    background: "#2CC295",
+                    filter: "blur(100px)",
+                  }}
+                ></div>
+              </div>
               <div
                 style={{
                   width: "100%",

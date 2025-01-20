@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import Button from "../components/button.tsx";
 import Nav from "../components/nav.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
 
@@ -567,9 +566,9 @@ export default function Main() {
                   alignItems: "center",
                 }}
               >
-                {historyData.map((item, index) => {
+                {historyData.map((item) => {
                   return (
-                    <div key={index}>
+                    <div key={item.year}>
                       <div
                         style={{
                           width: "100px",
@@ -600,10 +599,10 @@ export default function Main() {
                   alignItems: "end",
                 }}
               >
-                {historyData.map((item, index) => {
-                  if (index % 2 !== 0) {
+                {historyData.map((item) => {
+                  if (parseInt(item.year) % 2 !== 0) {
                     return (
-                      <div>
+                      <div key={item.year}>
                         <div
                           style={{
                             width: "50px",
@@ -649,10 +648,10 @@ export default function Main() {
                   display: "flex",
                 }}
               >
-                {historyData.map((item, index) => {
-                  if (index % 2 === 0) {
+                {historyData.map((item) => {
+                  if (parseInt(item.year) % 2 === 0) {
                     return (
-                      <div>
+                      <div key={item.year}>
                         <div
                           style={{
                             boxSizing: "border-box",

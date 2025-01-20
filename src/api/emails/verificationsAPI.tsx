@@ -4,7 +4,9 @@ export default async function VerificationsAPI(
   email: string,
   authcode: string
 ): Promise<number> {
-  const url = `${API_SERVER_DOMAIN}/api/emails/verifications?email=${email}&authcode=${authcode}`;
+  const url =
+    API_SERVER_DOMAIN +
+    `/api/emails/verifications?email=${email}&authcode=${authcode}`;
 
   try {
     const response = await fetch(url, {
@@ -21,7 +23,6 @@ export default async function VerificationsAPI(
     if (!response.ok) {
       throw new Error("valid email failed");
     }
-
     console.log("Response:", response);
     return 1;
   } catch (error) {

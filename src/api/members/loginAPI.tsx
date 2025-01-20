@@ -1,25 +1,9 @@
+import { setCookie } from "../cookies.tsx";
+
 var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
 
-function setCookie(name, value, days) {
-  var expires = "";
-  if (days) {
-    var date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-// login.tsx
-export default function LoginAPI(studentId: number, password: string) {
-  // event.preventDefault(); // 기본 제출 동작을 막습니다.
-
-  // 사용자가 입력한 이메일과 비밀번호를 가져옵니다.
-  var studentId: number = studentId;
-  var password: string = password;
-
-  // 서버에 로그인 요청을 보냅니다.
-  fetch(API_SERVER_DOMAIN + "/api/members/login", {
+export default function LogInAPI(studentId: number, password: string) {
+  fetch(`${API_SERVER_DOMAIN}/api/members/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -29,25 +13,41 @@ export default function LoginAPI(studentId: number, password: string) {
       password: password,
     }),
   })
-    .then((response) => {
+    .then(async (response) => {
       if (!response.ok) {
-        throw new Error("Login failed");
+        throw new Error("LogIn failed");
       }
-      return response.json();
-    })
-    .then((data) => {
-      var accessToken = data.accessToken;
-      var refreshToken = data.refreshToken;
 
-      setCookie("accessToken", accessToken, 1);
-      setCookie("refreshToken", refreshToken, 7);
+      // JSON 데이터를 파싱해 로그 데이터 출력 (필요하다면 추가 작업)
+      const data = await response.json();
+      console.log("LogIn success:", data);
 
-      // 로그인이 성공하면 다음 동작을 수행합니다.
+      // 토큰을 응답 헤더에서 가져옴
+      const accessToken = response.headers
+        .get("authorization")
+        ?.replace("Bearer ", "");
+      const refreshToken = response.headers.get("refresh-token");
+
+      if (!accessToken || !refreshToken) {
+        throw new Error("Tokens are missing from the response headers.");
+      }
+
+      // 쿠키에 토큰 저장
+      setCookie("accessToken", accessToken, {
+        path: "/",
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1일 뒤 만료
+      });
+
+      setCookie("refreshToken", refreshToken, {
+        path: "/",
+        expires: new Date(Date.now() + 48 * 60 * 60 * 1000), // 2일 뒤 만료
+      });
+
+      // 로그인 성공 후 페이지 이동
       window.location.href = "/";
     })
     .catch((error) => {
-      console.log(error);
+      console.error("LogIn failed:", error);
       alert("아이디나 비밀번호를 다시 확인해주세요.");
-      // 로그인 실패 시 사용자에게 메시지를 표시하는 등의 동작을 수행할 수 있습니다.
     });
 }

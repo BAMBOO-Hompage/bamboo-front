@@ -259,7 +259,7 @@ export default function PostEdit() {
                   <input
                     id="title"
                     type="text"
-                    value={editPost.title}
+                    defaultValue={editPost.title}
                     placeholder="제목을 입력해주세요."
                     {...register("Title", {
                       required: "제목을 입력해주세요.",

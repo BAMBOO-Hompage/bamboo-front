@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/button.tsx";
 
-import CheckAuth from "../api/checkAuthAPI.tsx";
+import CheckAuthAPI from "../api/checkAuthAPI.tsx";
+import LogOutAPI from "../api/members/logOutAPI.tsx";
 
 import "../App.css";
 
@@ -20,6 +21,17 @@ export default function Nav(props: NavProps) {
   const { type } = props;
   const [hover, setHover] = useState(false);
   const [currentFocus, setCurrentFocus] = useState("");
+  const [checkAuth, setCheckAuth] = useState<number>(0);
+
+  useEffect(() => {
+    CheckAuthAPI().then((response) => {
+      if (response === 1) {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+    });
+  }, []);
 
   return (
     <div
@@ -132,7 +144,7 @@ export default function Nav(props: NavProps) {
             Community
           </div>
         </div>
-        {CheckAuth() === 1 ? (
+        {checkAuth === 1 ? (
           <div
             style={{
               position: "absolute",
@@ -159,10 +171,10 @@ export default function Nav(props: NavProps) {
             </Link>
             <img
               src="../img/btn/logout_disabled.png"
-              alt="logout"
+              alt="logOut"
               style={{ width: "35px", padding: "0 20px", cursor: "pointer" }}
               onClick={() => {
-                window.location.href = "/";
+                LogOutAPI();
               }}
               onMouseOver={(e) => {
                 (

@@ -1,28 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import moment from "moment";
 
 import Button from "../components/button.tsx";
 
-import LoginAPI from "../api/members/loginAPI.tsx";
+import LogInAPI from "../api/members/logInAPI.tsx";
 
 import "../App.css";
 
 export default function Login() {
   const {
     register,
-    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onValid = (e) => {
+  const onValid = (e: any) => {
     console.log(e, "onValid");
-    LoginAPI(e.StudentNum, e.Password);
+    LogInAPI(e.StudentNum, e.Password);
   };
-
-  const onInvalid = (e) => {
+  const onInvalid = (e: any) => {
     console.log(e, "onInvalid");
   };
 
@@ -74,7 +70,10 @@ export default function Login() {
         </div>
 
         <div style={{ width: "400px", margin: "0 auto" }}>
-          <form style={{ textAlign: "left", width: "400px" }}>
+          <form
+            style={{ textAlign: "left", width: "400px" }}
+            onSubmit={handleSubmit(onValid, onInvalid)}
+          >
             <div
               style={{
                 margin: "0 auto",

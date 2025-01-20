@@ -12,12 +12,12 @@ export default async function SignupAPI(
   // event.preventDefault(); // 기본 제출 동작을 막습니다.
 
   // 사용자가 입력한 이메일과 비밀번호를 가져옵니다.
-  var email: string = email;
-  var password: string = password;
-  var name: string = name;
-  var major: string = major;
-  var studentId: number = studentId;
-  var phoneNumber: number = phoneNumber;
+  // var email: string = email;
+  // var password: string = password;
+  // var name: string = name;
+  // var major: string = major;
+  // var studentId: number = studentId;
+  // var phoneNumber: number = phoneNumber;
 
   console.log(email, password, name, major, studentId, phoneNumber);
 
@@ -44,10 +44,10 @@ export default async function SignupAPI(
     if (!signupResponse.ok) {
       throw new Error("Signup failed");
     }
-
     // 회원가입이 성공하면 다음 동작을 수행합니다.
     alert("회원가입에 성공하였습니다.");
     window.location.href = "/login";
+    return signupResponse.json();
   } catch (error) {
     alert("회원가입 중 오류가 발생했습니다." + error);
   }

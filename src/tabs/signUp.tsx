@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import Button from "../components/button.tsx";
 
@@ -25,7 +25,6 @@ export default function Signup() {
   const {
     register: registerVerification,
     handleSubmit: handleSubmitVerification,
-    formState: { errors: errorsVerification },
   } = useForm();
 
   const [validEmail, setValidEmail] = useState(false);
@@ -161,7 +160,7 @@ export default function Signup() {
                   },
                 })}
                 style={{
-                  width: errorsEmail.Email ? "320px" : "280px",
+                  width: errorsEmail.Email ? "320px" : "270px",
                   height: "30px",
                   margin: "0 20px",
                   fontSize: "16px",
@@ -216,7 +215,7 @@ export default function Signup() {
                   style={{
                     width: "70px",
                     position: "absolute",
-                    right: "5px",
+                    right: "10px",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "12px",
                     backgroundColor: "#2CC295",
@@ -224,7 +223,7 @@ export default function Signup() {
                     textAlign: "center",
                     borderRadius: "20px",
                     border: "none",
-                    padding: "6px",
+                    padding: "5px",
                     marginLeft: "5px",
                     cursor: "pointer",
                     zIndex: "0",
@@ -259,7 +258,7 @@ export default function Signup() {
                     required: "인증코드를 입력해주세요.",
                   })}
                   style={{
-                    width: "400px",
+                    width: "390px",
                     height: "30px",
                     margin: "0 20px",
                     fontSize: "16px",
@@ -287,7 +286,7 @@ export default function Signup() {
                     style={{
                       width: "70px",
                       position: "absolute",
-                      right: "5px",
+                      right: "10px",
                       fontFamily: "Pretendard-Regular",
                       fontSize: "12px",
                       backgroundColor: "#2CC295",
@@ -295,7 +294,7 @@ export default function Signup() {
                       textAlign: "center",
                       borderRadius: "20px",
                       border: "none",
-                      padding: "6px",
+                      padding: "5px",
                       marginLeft: "5px",
                       cursor: "pointer",
                       zIndex: "0",
