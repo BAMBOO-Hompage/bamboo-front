@@ -27,7 +27,7 @@ export default async function VerificationsAPI(
     return 1;
   } catch (error) {
     console.error(error);
-    alert("이메일 인증에 실패하였습니다");
+    alert("이메일이나 인증코드를 다시 확인해주세요.");
     return 0;
   }
 }

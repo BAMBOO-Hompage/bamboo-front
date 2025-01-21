@@ -329,6 +329,7 @@ export default function Alexandria() {
                       >
                         <img
                           src="../../img/btn/move.png"
+                          alt="move"
                           style={{ width: "12px", cursor: "pointer" }}
                         />
                       </Link>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import moment from "moment";
@@ -7,30 +7,28 @@ import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import ImageSlider from "../../components/imageSlider.tsx";
 
-import ActivityData from "../../mockup_data/activity_data.tsx";
+import GetActivitiesAPI from "../../api/main-activities/getActivitiesAPI.tsx";
+
 import "../../App.css";
 
-const activityData = ActivityData();
+type Activities = {
+  mainActivitiesId: number;
+  title: string;
+  startDate: number[];
+  endDate: number[];
+  images: string[];
+};
 
 export default function Activity() {
   const [yearList, setYearList] = useState<number[]>([]);
   const [selectedYear, setSelectedYear] = useState<number>(
-    parseInt(moment(activityData[0].date).format("YYYY"))
+    parseInt(moment(new Date()).format("YYYY"))
   );
+  const [postsToDisplay, setPostsToDisplay] = useState<Activities[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredActivityData = activityData.filter(
-    (activity) =>
-      parseInt(moment(activity.date).format("YYYY")) === selectedYear
-  );
-
-  const postsPerPage = 3;
   const maxVisiblePages = 5;
-
-  const totalPages = Math.ceil(filteredActivityData.length / postsPerPage);
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const postsToDisplay = filteredActivityData.slice(startIndex, endIndex);
 
   const startPage =
     Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
@@ -44,16 +42,23 @@ export default function Activity() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useEffect(() => {
-    if (activityData.length > 0) {
-      const latestYear = parseInt(moment(activityData[0].date).format("YYYY"));
-      const years: Array<number> = [];
-      for (let year = latestYear; year >= 2022; year--) {
-        years.push(year);
-      }
-      setYearList(years); // 상태 업데이트
+  useLayoutEffect(() => {
+    const latestYear = parseInt(moment(new Date()).format("YYYY"));
+    const years: Array<number> = [];
+
+    for (let year = latestYear; year >= 2022; year--) {
+      years.push(year);
     }
-  }, [activityData]);
+    setYearList(years);
+  }, []);
+
+  useEffect(() => {
+    GetActivitiesAPI(selectedYear, currentPage).then((result) => {
+      var activityData = result.content;
+      setPostsToDisplay(activityData);
+      setTotalPages(result.totalPages);
+    });
+  }, [selectedYear, currentPage]);
 
   return (
     <div>
@@ -171,6 +176,7 @@ export default function Activity() {
                 <Link to="/activityAdd">
                   <img
                     src="../../img/btn/edit_enabled.png"
+                    alt="edit"
                     style={{ width: "30px", cursor: "pointer" }}
                     onClick={() => {}}
                   />
@@ -182,9 +188,9 @@ export default function Activity() {
                   width: "100%",
                 }}
               >
-                {postsToDisplay.map((activity) => (
+                {postsToDisplay.map((activity: Activities) => (
                   <div
-                    key={activity.id}
+                    key={activity.mainActivitiesId}
                     style={{
                       marginTop: "40px",
                       marginBottom: "50px",
@@ -207,7 +213,9 @@ export default function Activity() {
                         marginBottom: "10px",
                       }}
                     >
-                      {activity.date}
+                      {activity.startDate[0]}/{activity.startDate[1]}/
+                      {activity.startDate[2]} ~ {activity.endDate[0]}/
+                      {activity.endDate[1]}/{activity.endDate[2]}
                     </div>
                     <div
                       style={{

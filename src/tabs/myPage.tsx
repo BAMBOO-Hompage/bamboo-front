@@ -142,7 +142,65 @@ export default function MyPage() {
                     >
                       회원 관리
                     </div>
+                    <div></div>
                   </div>
+
+                  <div
+                    style={{
+                      width: "100%",
+                      marginTop: "40px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "16px",
+                      color: "#888",
+                    }}
+                  >
+                    <div style={{ width: "70px" }}>선택</div>
+                    <div style={{ width: "120px" }}>등급</div>
+                    <div style={{ width: "200px" }}>학과</div>
+                    <div style={{ width: "140px" }}>학번</div>
+                    <div style={{ width: "80px" }}>이름</div>
+                    <div style={{ width: "140px" }}>전화 번호</div>
+                  </div>
+                  <hr
+                    style={{
+                      height: "1px",
+                      background: "#666",
+                      border: "none",
+                    }}
+                  />
+                  {memberData.map((member) => (
+                    <div key={member.id}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "78px",
+                          fontFamily: "Pretendard-Light",
+                          fontSize: "16px",
+                          color: "#fff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div style={{ width: "70px" }}>{member.title}</div>
+                        <div style={{ width: "120px" }}>{member.year}</div>
+                        <div style={{ width: "200px" }}>
+                          #transformer #detector
+                        </div>
+                        <div style={{ width: "140px" }}>{member.subject}</div>
+                        <div style={{ width: "80px" }}>{member.user.name}</div>
+                        <div style={{ width: "140px" }}>{member.user.name}</div>
+                      </div>
+                      <hr
+                        style={{
+                          height: "1px",
+                          background: "#666",
+                          border: "none",
+                        }}
+                      />
+                    </div>
+                  ))}
                 </>
               )}
             </motion.div>

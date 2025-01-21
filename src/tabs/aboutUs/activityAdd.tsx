@@ -45,21 +45,20 @@ export default function ActivityAdd() {
       e.Title + "\n" + e.StartDate + "~" + e.EndDate + "\n" + showImages,
       "onValid"
     );
-    alert(
-      "\n제목 : " +
-        e.Title +
-        "\n기간 :" +
-        e.StartDate +
-        "~" +
-        e.EndDate +
-        "\n사진 : \n" +
-        showImages
-    );
 
     const year = parseInt(moment(e.startDate).format("YYYY"));
 
-    alert(1);
-    PostActivitiesAPI(e.Title, e.StartDate, e.EndDate, year, images);
+    const formData = new FormData();
+    formData.append("title", e.Title);
+    formData.append("startDate", e.StartDate);
+    formData.append("endDate", e.EndDate);
+    formData.append("year", String(year));
+    // 이미지 배열로 추가
+    images.forEach((file) => {
+      formData.append("images", file); // images 배열 형식으로 전송
+    });
+
+    PostActivitiesAPI(formData);
   };
 
   const onInvalid = (e) => {

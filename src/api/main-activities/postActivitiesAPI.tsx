@@ -1,4 +1,4 @@
-import { getCookie, removeCookie } from "../cookies.tsx";
+import { getCookie } from "../cookies.tsx";
 
 var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
 
@@ -24,51 +24,33 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
-async function postActivities(
-  //   accessToken,
-  title,
-  startDate,
-  endDate,
-  year,
-  images
-) {
-  return fetch(API_SERVER_DOMAIN + `/api/main-activities`, {
+function postActivities(accessToken, formData) {
+  return fetch(API_SERVER_DOMAIN + "/api/main-activities", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      //   Authorization: "Bearer " + accessToken,
+      Authorization: "Bearer " + accessToken,
     },
-    body: JSON.stringify({
-      title: title,
-      startDate: startDate,
-      endDate: endDate,
-      year: year,
-      images: images,
-    }),
+    body: formData,
   }).then((response) => {
     if (!response.ok) {
       throw new Error("Failed to post activies");
     }
-
     return response.json();
   });
 }
 
-export default async function PostActivitiesAPI(
-  title,
-  startDate,
-  endDate,
-  year,
-  images
-) {
+export default async function PostActivitiesAPI(formData) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      console.log(title, startDate, endDate, year, images);
-      alert(1);
-      await postActivities(title, startDate, endDate, year, images);
+      // FormData 확인
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+
+      await postActivities(accessToken, formData);
 
       alert("작성 완료");
       window.location.href = "/activity";
@@ -85,7 +67,7 @@ export default async function PostActivitiesAPI(
             refreshToken
           );
 
-          await postActivities(title, startDate, endDate, year, images);
+          await postActivities(newAccessToken, formData);
 
           alert("작성 완료");
           window.location.href = "/activity";
