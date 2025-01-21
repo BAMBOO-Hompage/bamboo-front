@@ -60,6 +60,8 @@ export default async function LogOutAPI() {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
+          alert("Refresh accessToken");
+
           const newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
@@ -68,7 +70,7 @@ export default async function LogOutAPI() {
 
           setTimeout(() => {
             window.location.reload();
-          }, 100); // 100ms 딜레이
+          }, 100);
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           removeCookie("accessToken");

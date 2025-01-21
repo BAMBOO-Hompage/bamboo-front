@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import Button from "../components/button.tsx";
+
+import PersonalInfo from "../tabs/myPage/personalInfo.tsx";
+
 import Nav from "../components/nav.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
 import "../App.css";
@@ -30,10 +30,10 @@ export default function MyPage() {
             style={{
               position: "relative",
               width: "1000px",
-              minHeight: "500px",
+              minHeight: "650px",
               margin: "0 auto",
               marginTop: "100px",
-              marginBottom: "150px",
+              marginBottom: "50px",
               display: "flex",
             }}
           >
@@ -41,7 +41,7 @@ export default function MyPage() {
               style={{
                 boxSizing: "border-box",
                 width: "180px",
-                minHeight: "100%",
+                height: "600px",
                 borderRight: "1px solid #444",
                 textAlign: "left",
               }}
@@ -120,7 +120,32 @@ export default function MyPage() {
                 textAlign: "left",
                 paddingLeft: "50px",
               }}
-            ></motion.div>
+            >
+              {postList === "개인 정보" ? (
+                <PersonalInfo />
+              ) : (
+                <>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily: "Pretendard-Bold",
+                        fontSize: "30px",
+                        color: "#fff",
+                      }}
+                    >
+                      회원 관리
+                    </div>
+                  </div>
+                </>
+              )}
+            </motion.div>
           </div>
         </motion.div>
 

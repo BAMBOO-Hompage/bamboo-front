@@ -65,12 +65,14 @@ input {
   box-sizing: border-box;
   border: none;
   background-color: transparent;
+  font-family: Pretendard-Light;
+  font-size: 18px;
   color: #fff;
   outline: none;
 }
 input::placeholder {
   font-family: Pretendard-Light;
-  font-size: 16px;
+  font-size: 18px;
   color: #777;
 }
 textarea::placeholder {

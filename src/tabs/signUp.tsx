@@ -76,7 +76,7 @@ export default function Signup() {
 
   // 유효성 검사 패턴
   const passwordPattern =
-    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*.,/])[a-zA-Z\d!@#$%^&*.,/]{8,12}$/;
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*.,/])[a-zA-Z\d!@#$%^&*.,/]{8,24}$/;
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   return (
@@ -139,7 +139,7 @@ export default function Signup() {
                 style={{
                   display: "inline-block",
                   fontFamily: "Pretendard-Regular",
-                  fontSize: "16px",
+                  fontSize: "18px",
                   color: "#fff",
                   width: "100px",
                   paddingLeft: "20px",
@@ -163,7 +163,6 @@ export default function Signup() {
                   width: errorsEmail.Email ? "320px" : "270px",
                   height: "30px",
                   margin: "0 20px",
-                  fontSize: "16px",
                 }}
               />
 
@@ -261,7 +260,6 @@ export default function Signup() {
                     width: "390px",
                     height: "30px",
                     margin: "0 20px",
-                    fontSize: "16px",
                   }}
                 />
 
@@ -332,7 +330,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     color: "#fff",
                     width: "100px",
                     paddingLeft: "20px",
@@ -349,14 +347,13 @@ export default function Signup() {
                     pattern: {
                       value: passwordPattern,
                       message:
-                        "영어, 숫자, 특수문자 포함 8-12자리를 입력해주세요.",
+                        "영어, 숫자, 특수문자 포함 8-24자리를 입력해주세요.",
                     },
                   })}
                   style={{
                     width: errorsSignUp.Password ? "320px" : "340px",
                     height: "30px",
                     margin: "0 20px",
-                    fontSize: "16px",
                   }}
                 />
                 {errorsSignUp.Password ? (
@@ -426,7 +423,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     color: "#fff",
                     width: "100px",
                     paddingLeft: "20px",
@@ -448,7 +445,6 @@ export default function Signup() {
                     width: errorsSignUp.RePassword ? "320px" : "340px",
                     height: "30px",
                     margin: "0 20px",
-                    fontSize: "16px",
                   }}
                 />
                 {errorsSignUp.RePassword ? (
@@ -522,7 +518,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     color: "#fff",
                     width: "100px",
                     paddingLeft: "20px",
@@ -542,7 +538,6 @@ export default function Signup() {
                     width: errorsSignUp.Name ? "320px" : "340px",
                     height: "30px",
                     margin: "0 20px",
-                    fontSize: "16px",
                   }}
                 />
                 {errorsSignUp.Name ? (
@@ -612,7 +607,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     color: "#fff",
                     width: "100px",
                     paddingLeft: "20px",
@@ -632,7 +627,6 @@ export default function Signup() {
                     width: errorsSignUp.Major ? "320px" : "340px",
                     height: "30px",
                     margin: "0 20px",
-                    fontSize: "16px",
                   }}
                 />
                 {errorsSignUp.Major ? (
@@ -702,7 +696,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     color: "#fff",
                     width: "100px",
                     paddingLeft: "20px",
@@ -726,7 +720,6 @@ export default function Signup() {
                     width: errorsSignUp.StudentNum ? "320px" : "340px",
                     height: "30px",
                     margin: "0 20px",
-                    fontSize: "16px",
                   }}
                 />
                 {errorsSignUp.StudentNum ? (
@@ -796,7 +789,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     color: "#fff",
                     width: "100px",
                     paddingLeft: "20px",
@@ -824,7 +817,6 @@ export default function Signup() {
                     width: errorsSignUp.PhoneNum ? "320px" : "340px",
                     height: "30px",
                     margin: "0 20px",
-                    fontSize: "16px",
                   }}
                 />
                 {errorsSignUp.PhoneNum ? (

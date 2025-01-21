@@ -213,6 +213,7 @@ export default function Notice() {
                 <Link to="/noticeAdd">
                   <img
                     src="../../img/btn/edit_enabled.png"
+                    alt="edit"
                     style={{ width: "30px", cursor: "pointer" }}
                     onClick={() => {
                       localStorage.setItem("postList", postList);

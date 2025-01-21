@@ -7,43 +7,59 @@ import moment from "moment";
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import ImageSlider from "../../components/imageSlider.tsx";
 
-import ActivityData from "../../mockup_data/activity_data.tsx";
+import PostActivitiesAPI from "../../api/main-activities/postActivitiesAPI.tsx";
 import "../../App.css";
-
-const activityData = ActivityData();
 
 export default function ActivityAdd() {
   const {
     register,
-    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const [images, setImages] = useState<File[]>([]);
   const [showImages, setShowImages] = useState<string[]>([]);
 
   const handleAddImages = (event) => {
     const imageLists = event.target.files; // 선택한 파일들
+    let fileLists: File[] = [...images];
     let fileNameLists: string[] = [...showImages]; // 기존 저장된 파일명들
 
     for (let i = 0; i < imageLists.length; i++) {
       const currentFileName: string = imageLists[i].name; // 파일명 가져오기
+      fileLists.push(imageLists[i]);
       fileNameLists.push(currentFileName);
     }
 
     if (fileNameLists.length > 10) {
+      fileLists = fileLists.slice(0, 10);
       fileNameLists = fileNameLists.slice(0, 10); // 최대 10개 제한
     }
 
+    setImages(fileLists);
     setShowImages(fileNameLists); // 파일명 리스트 저장
   };
 
-  const onValid = (e) => {
-    console.log(e.Title + "\n" + showImages, "onValid");
-    alert("\n제목 : " + e.Title + "\n사진 : \n" + showImages);
-    window.location.href = "/activity";
+  const onValid = async (e) => {
+    console.log(
+      e.Title + "\n" + e.StartDate + "~" + e.EndDate + "\n" + showImages,
+      "onValid"
+    );
+    alert(
+      "\n제목 : " +
+        e.Title +
+        "\n기간 :" +
+        e.StartDate +
+        "~" +
+        e.EndDate +
+        "\n사진 : \n" +
+        showImages
+    );
+
+    const year = parseInt(moment(e.startDate).format("YYYY"));
+
+    alert(1);
+    PostActivitiesAPI(e.Title, e.StartDate, e.EndDate, year, images);
   };
 
   const onInvalid = (e) => {
@@ -280,6 +296,7 @@ export default function ActivityAdd() {
                     />
                     <img
                       src="../../img/btn/search_enabled.png"
+                      alt="search"
                       style={{ width: "25px" }}
                     />
                     &emsp;사진 선택 (최대 10장)
@@ -320,6 +337,7 @@ export default function ActivityAdd() {
                         >
                           <img
                             src="../../img/btn/delete_disabled.png"
+                            alt="delete"
                             style={{ width: "16px", cursor: "pointer" }}
                             onClick={() => {
                               handleDeleteImage(id);

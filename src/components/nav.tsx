@@ -172,19 +172,20 @@ export default function Nav(props: NavProps) {
             <img
               src="../img/btn/logout_disabled.png"
               alt="logOut"
-              style={{ width: "35px", padding: "0 20px", cursor: "pointer" }}
+              style={{
+                width: "35px",
+                padding: "0 20px",
+                opacity: "0.8",
+                cursor: "pointer",
+              }}
               onClick={() => {
                 LogOutAPI();
               }}
-              onMouseOver={(e) => {
-                (
-                  e.target as HTMLImageElement
-                ).src = `../img/btn/logout_disabled.png`;
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "1";
               }}
-              onMouseOut={(e) => {
-                (
-                  e.target as HTMLImageElement
-                ).src = `../img/btn/logout_disabled.png`;
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "0.8";
               }}
             />
           </div>

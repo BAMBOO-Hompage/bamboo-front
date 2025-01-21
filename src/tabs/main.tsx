@@ -38,7 +38,7 @@ export default function Main() {
             loop
             style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
           >
-            <source src="../../img/main_background.mp4" type="video/mp4" />
+            <source src="../../img/main_background2.mp4" type="video/mp4" />
           </video>
         </div>
         <div
@@ -285,9 +285,10 @@ export default function Main() {
             </div>
             <div
               style={{
-                width: "1000px",
+                maxWidth: "1000px",
                 textAlign: "left",
                 margin: "0 auto",
+                padding: "0 40px",
                 fontFamily: "Pretendard-Light",
                 fontSize: "18px",
                 color: "#fff",
@@ -309,10 +310,11 @@ export default function Main() {
             </div>
             <div
               style={{
-                width: "1000px",
+                maxWidth: "1000px",
                 height: "350px",
                 margin: "0 auto",
                 marginTop: "10px",
+                padding: "0 40px",
                 display: "flex",
                 justifyContent: "space-between",
               }}

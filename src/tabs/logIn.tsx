@@ -105,13 +105,13 @@ export default function Login() {
                     margin: "0 20px",
                     borderRadius: "10px",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "16px",
+                    fontSize: "18px",
                   }}
                 />
                 <span
                   style={{
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "15px",
+                    fontSize: "16px",
                     color: "#777",
                   }}
                 >
@@ -143,7 +143,7 @@ export default function Login() {
                     margin: "0 20px",
                     borderRadius: "10px",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "16px",
+                    fontSize: "18px",
                   }}
                 />
               </div>
