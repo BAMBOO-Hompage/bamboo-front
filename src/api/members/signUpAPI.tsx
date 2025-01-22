@@ -6,19 +6,9 @@ export default async function SignupAPI(
   password: string,
   name: string,
   major: string,
-  studentId: number,
-  phoneNumber: number
+  studentId: string,
+  phoneNumber: string
 ) {
-  // event.preventDefault(); // 기본 제출 동작을 막습니다.
-
-  // 사용자가 입력한 이메일과 비밀번호를 가져옵니다.
-  // var email: string = email;
-  // var password: string = password;
-  // var name: string = name;
-  // var major: string = major;
-  // var studentId: number = studentId;
-  // var phoneNumber: number = phoneNumber;
-
   console.log(email, password, name, major, studentId, phoneNumber);
 
   try {

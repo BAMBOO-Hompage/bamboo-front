@@ -30,6 +30,7 @@ export default function Signup() {
   const [validEmail, setValidEmail] = useState(false);
   const [timer, setTimer] = useState(600); // 10분 (초 단위)
   const [isTimerActive, setIsTimerActive] = useState(false);
+  const [studentNum, setStudentNum] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [checkedEmail, setCheckedEmail] = useState(false);
   const [selectedMajor, setSelectedMajor] = useState("학과 선택");
@@ -54,6 +55,7 @@ export default function Signup() {
     VerificationRequestsAPI(studentNumToEmail);
     setValidEmail(true);
     startTimer();
+    setStudentNum(e.StudentNum);
     setEmail(studentNumToEmail);
   };
   const onEmailInvalid = (e) => {
@@ -81,9 +83,9 @@ export default function Signup() {
   };
 
   const onValid = (e) => {
-    console.log(e, "onValid");
+    e.PhoneNum = e.PhoneNum.replace(/-/g, "");
     if (checkedEmail) {
-      SignupAPI(email, e.Password, e.Name, e.Major, e.StudentNum, e.PhoneNum);
+      SignupAPI(email, e.Password, e.Name, e.Major, studentNum, e.PhoneNum);
     } else {
       alert("이메일 인증을 진행해주세요.");
     }

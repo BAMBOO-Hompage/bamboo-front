@@ -20,66 +20,57 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
       return response.json();
     })
     .then((data) => {
-      return data;
+      return data.accessToken;
     });
 }
 
-async function postActivities(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/main-activities", {
-    method: "POST",
+async function getMyPage(accessToken) {
+  return fetch(API_SERVER_DOMAIN + `/api/members/myPage`, {
+    method: "GET",
     headers: {
       Authorization: "Bearer " + accessToken,
     },
-    body: formData,
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to post activies");
+      throw new Error("Failed to logout");
     }
     return response.json();
   });
 }
 
-export default async function PostActivitiesAPI(formData) {
+export default async function MyPageAPI() {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      // FormData 확인
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
+      let data = await getMyPage(accessToken);
+      console.log(data.result);
 
-      await postActivities(accessToken, formData);
-
-      alert("작성 완료");
-      window.location.href = "/activity";
-
-      return 0;
+      return data.result;
     } catch (error) {
       if (refreshToken) {
         try {
-          console.error("accessToken expiration: ", error);
-          alert("Refresh accessToken");
-
-          const newAccessToken = await getAccessTokenWithRefreshToken(
+          let newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
+          let data = await getMyPage(newAccessToken);
+          console.log(data.result);
 
-          await postActivities(newAccessToken, formData);
-
-          alert("작성 완료");
-          window.location.href = "/activity";
+          return data.result;
         } catch (error) {
-          console.error("Failed to refresh accessToken: ", error);
-          window.location.href = "/activity";
+          console.error("Failed to refresh access token:", error);
+          alert("다시 로그인해주세요.");
+          window.location.href = "/";
         }
       } else {
-        window.location.href = "/activity";
+        console.error("No RefreshToken");
+        window.location.href = "/";
       }
     }
   } else {
-    window.location.href = "/activity";
+    console.error("No AccessToken");
+    window.location.href = "/";
   }
 }

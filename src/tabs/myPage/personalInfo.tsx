@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "../../components/button.tsx";
+
+import MyPageAPI from "../../api/members/myPageAPI.tsx";
 import "../../App.css";
+
+type MyDataType = {
+  studentId: string;
+  email: string;
+  name: string;
+  major: string;
+  phone: string;
+  role: string;
+  profileImageUrl: string;
+};
 
 export default function PersonalInfo() {
   const {
@@ -17,8 +29,21 @@ export default function PersonalInfo() {
     formState: { errors: errorsChangePassword },
   } = useForm();
 
+  const [myData, setmyData] = useState<MyDataType>({
+    studentId: "",
+    email: "",
+    name: "",
+    major: "",
+    phone: "",
+    role: "",
+    profileImageUrl: "",
+  });
   const [edit, setEdit] = useState<boolean>(false);
   const [changePassword, setChangePassword] = useState<boolean>(false);
+
+  useEffect(() => {
+    MyPageAPI().then((data) => setmyData(data));
+  }, []);
 
   const onValid = (e) => {
     console.log(e.Category + "\n" + e.Title + "\n", "onValid");
@@ -33,6 +58,28 @@ export default function PersonalInfo() {
 
   const passwordPattern =
     /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*.,/])[a-zA-Z\d!@#$%^&*.,/]{8,24}$/;
+
+  const autoSeparate = (id: string) => {
+    let input = document.getElementById(id) as HTMLInputElement | null;
+
+    if (!input) {
+      console.error(`Element with id "${id}" not found.`);
+      return;
+    }
+    let inputValue = input.value;
+
+    // 숫자가 아닌 문자 제거
+    inputValue = inputValue.replace(/[^0-9]/g, "");
+    // 올바른 위치에 대시 추가
+    if (inputValue.length > 3 && inputValue.charAt(3) !== "-") {
+      inputValue = inputValue.slice(0, 3) + "-" + inputValue.slice(3);
+    }
+    if (inputValue.length > 8 && inputValue.charAt(8) !== "-") {
+      inputValue = inputValue.slice(0, 8) + "-" + inputValue.slice(8);
+    }
+
+    input.value = inputValue;
+  };
 
   return (
     <>
@@ -76,7 +123,7 @@ export default function PersonalInfo() {
               color: "#2cc295",
             }}
           >
-            {` 아기 판다🐼`}
+            &nbsp;{myData.role}
           </span>
         </div>
         <div
@@ -136,7 +183,11 @@ export default function PersonalInfo() {
             }}
           >
             <img
-              src="https://github.com/user-attachments/assets/5ab779b6-ab38-474e-92a4-e481ea11f639"
+              src={
+                myData.profileImageUrl
+                  ? myData.profileImageUrl
+                  : "../img/icon/base_profile.png"
+              }
               alt="profile"
               style={{
                 width: "200px",
@@ -182,7 +233,7 @@ export default function PersonalInfo() {
                   alignItems: "center",
                 }}
               >
-                맹의현
+                {myData.name}
               </div>
             </div>
             <div
@@ -221,7 +272,7 @@ export default function PersonalInfo() {
                   alignItems: "center",
                 }}
               >
-                휴먼지능정보공학전공
+                {myData.major}
               </div>
             </div>
             <div
@@ -260,7 +311,7 @@ export default function PersonalInfo() {
                   alignItems: "center",
                 }}
               >
-                202010770
+                {myData.studentId}
               </div>
             </div>
 
@@ -299,7 +350,8 @@ export default function PersonalInfo() {
                   alignItems: "center",
                 }}
               >
-                01092428053
+                {myData.phone.slice(0, 3)}-{myData.phone.slice(3, 7)}-
+                {myData.phone.slice(7, 11)}
               </div>
             </div>
             <div
@@ -338,7 +390,7 @@ export default function PersonalInfo() {
                   alignItems: "center",
                 }}
               >
-                202010770@sangmyung.kr
+                {myData.email}
               </div>
             </div>
           </div>
@@ -369,11 +421,15 @@ export default function PersonalInfo() {
             }}
           >
             <img
-              src="../img/test/test_profile.png"
+              src={
+                myData.profileImageUrl
+                  ? myData.profileImageUrl
+                  : "../img/icon/base_profile.png"
+              }
               alt="profile"
               style={{
-                width: "180px",
-                height: "180px",
+                width: "200px",
+                height: "200px",
                 borderRadius: "90px",
               }}
             />
@@ -439,7 +495,7 @@ export default function PersonalInfo() {
                   alignItems: "center",
                 }}
               >
-                맹의현
+                {myData.name}
               </div>
             </div>
             <div
@@ -478,7 +534,7 @@ export default function PersonalInfo() {
                   alignItems: "center",
                 }}
               >
-                휴먼지능정보공학전공
+                {myData.major}
               </div>
             </div>
             <div
@@ -517,7 +573,7 @@ export default function PersonalInfo() {
                   alignItems: "center",
                 }}
               >
-                202010770
+                {myData.studentId}
               </div>
             </div>
 
@@ -552,7 +608,11 @@ export default function PersonalInfo() {
               <input
                 id="phoneNum"
                 type="text"
-                defaultValue={"01092428053"}
+                defaultValue={`${myData.phone.slice(0, 3)}-${myData.phone.slice(
+                  3,
+                  7
+                )}-${myData.phone.slice(7, 11)}`}
+                onKeyUp={() => autoSeparate("phoneNum")}
                 autoComplete="none"
                 {...register("PhoneNum", {
                   required: "전화번호를 입력해주세요.",
@@ -609,7 +669,7 @@ export default function PersonalInfo() {
                   alignItems: "center",
                 }}
               >
-                202010770@sangmyung.kr
+                {myData.email}
               </div>
             </div>
 

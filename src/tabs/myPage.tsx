@@ -7,6 +7,25 @@ import Nav from "../components/nav.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
 import "../App.css";
 
+const memberData = [
+  {
+    id: 1,
+    role: "아기판다🐼",
+    major: "휴먼지능정보공학전공",
+    studentId: "202010770",
+    name: "맹의현",
+    phone: "01092428053",
+  },
+  {
+    id: 2,
+    role: "아기판다🐼",
+    major: "휴먼지능정보공학전공",
+    studentId: "202010789",
+    name: "유민균",
+    phone: "01077128734",
+  },
+];
+
 export default function MyPage() {
   const [postList, setPostList] = useState<string>("개인 정보");
 
@@ -175,7 +194,7 @@ export default function MyPage() {
                       <div
                         style={{
                           width: "100%",
-                          height: "78px",
+                          height: "50px",
                           fontFamily: "Pretendard-Light",
                           fontSize: "16px",
                           color: "#fff",
@@ -183,14 +202,12 @@ export default function MyPage() {
                           justifyContent: "space-between",
                         }}
                       >
-                        <div style={{ width: "70px" }}>{member.title}</div>
-                        <div style={{ width: "120px" }}>{member.year}</div>
-                        <div style={{ width: "200px" }}>
-                          #transformer #detector
-                        </div>
-                        <div style={{ width: "140px" }}>{member.subject}</div>
-                        <div style={{ width: "80px" }}>{member.user.name}</div>
-                        <div style={{ width: "140px" }}>{member.user.name}</div>
+                        <div style={{ width: "70px" }}>선택버튼</div>
+                        <div style={{ width: "120px" }}>{member.role}</div>
+                        <div style={{ width: "200px" }}>{member.major}</div>
+                        <div style={{ width: "140px" }}>{member.studentId}</div>
+                        <div style={{ width: "80px" }}>{member.name}</div>
+                        <div style={{ width: "140px" }}>{member.phone}</div>
                       </div>
                       <hr
                         style={{

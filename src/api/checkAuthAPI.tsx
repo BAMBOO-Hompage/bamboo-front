@@ -31,12 +31,12 @@ export default async function checkAuth() {
   if (!accessToken) {
     if (refreshToken) {
       try {
-        let refreshTokenResponse = await getAccessTokenWithRefreshToken(
+        let newAccessToken = await getAccessTokenWithRefreshToken(
           accessToken,
           refreshToken
         );
 
-        console.log(refreshTokenResponse);
+        console.log(newAccessToken);
         return 1;
       } catch (error) {
         console.error("Failed to refresh access token:", error);
