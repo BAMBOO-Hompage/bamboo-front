@@ -1,5 +1,5 @@
-import React, { useState, useLayoutEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import Nav from "../../components/nav.tsx";
@@ -12,12 +12,14 @@ const postsPerPage = 8;
 const maxVisiblePages = 5;
 
 export default function Notice() {
-  const [postList, setPostList] = useState<string>("전체");
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
+  const currentPostList = searchParams.get("postList") || "전체";
+
   const noticeData = NoticeData();
 
   const filteredData = noticeData.filter(
-    (post) => postList === "전체" || post.category === postList
+    (post) => currentPostList === "전체" || post.category === currentPostList
   );
 
   const totalPages = Math.ceil(filteredData.length / postsPerPage);
@@ -32,29 +34,13 @@ export default function Notice() {
   const changePage = (page: number) => {
     if (page < 1) page = 1;
     if (page > totalPages) page = totalPages;
-    setCurrentPage(page);
-
+    setSearchParams({ postList: currentPostList, page: page.toString() });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useLayoutEffect(() => {
-    const scrollY = sessionStorage.getItem("scrollY");
-    const postList = sessionStorage.getItem("postList");
-    const currentPage = sessionStorage.getItem("currentPage");
-
-    if (scrollY) {
-      window.scrollTo({ top: parseInt(scrollY, 10), behavior: "auto" });
-      sessionStorage.removeItem("scrollY");
-    }
-    if (postList) {
-      setPostList(postList);
-      sessionStorage.removeItem("postList");
-    }
-    if (currentPage) {
-      setCurrentPage(parseInt(currentPage, 10));
-      sessionStorage.removeItem("currentPage");
-    }
-  }, []);
+  const changePostList = (newPostList: string) => {
+    setSearchParams({ postList: newPostList, page: "1" }); // 카테고리 변경 시 페이지를 1로 초기화
+  };
 
   return (
     <div>
@@ -109,63 +95,24 @@ export default function Notice() {
                   fontSize: "18px",
                 }}
               >
-                <div
-                  className="side_tabs"
-                  style={
-                    postList === "전체"
-                      ? {
-                          boxSizing: "border-box",
-                          color: "#2CC295",
-                          borderRight: "1px solid #2cc295",
-                        }
-                      : {}
-                  }
-                  onClick={() => {
-                    setPostList("전체");
-                    setCurrentPage(1);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  전체
-                </div>
-                <div
-                  className="side_tabs"
-                  style={
-                    postList === "대회 및 세미나"
-                      ? {
-                          boxSizing: "border-box",
-                          color: "#2CC295",
-                          borderRight: "1px solid #2cc295",
-                        }
-                      : {}
-                  }
-                  onClick={() => {
-                    setPostList("대회 및 세미나");
-                    setCurrentPage(1);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  대회 및 세미나
-                </div>
-                <div
-                  className="side_tabs"
-                  style={
-                    postList === "동아리 공지"
-                      ? {
-                          boxSizing: "border-box",
-                          color: "#2CC295",
-                          borderRight: "1px solid #2cc295",
-                        }
-                      : {}
-                  }
-                  onClick={() => {
-                    setPostList("동아리 공지");
-                    setCurrentPage(1);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  동아리 공지
-                </div>
+                {["전체", "대회 및 세미나", "동아리 공지"].map((category) => (
+                  <div
+                    key={category}
+                    className="side_tabs"
+                    style={
+                      currentPostList === category
+                        ? {
+                            boxSizing: "border-box",
+                            color: "#2CC295",
+                            borderRight: "1px solid #2cc295",
+                          }
+                        : {}
+                    }
+                    onClick={() => changePostList(category)}
+                  >
+                    {category}
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -178,7 +125,7 @@ export default function Notice() {
                 duration: 0.5,
                 y: { duration: 0.5 },
               }}
-              key={postList}
+              key={currentPostList}
               style={{
                 position: "relative",
                 width: "820px",
@@ -202,24 +149,8 @@ export default function Notice() {
                     color: "#fff",
                   }}
                 >
-                  {postList === "전체" ? (
-                    <div>전체</div>
-                  ) : postList === "대회 및 세미나" ? (
-                    <div>대회 및 세미나</div>
-                  ) : (
-                    <div>동아리 공지</div>
-                  )}
+                  {currentPostList}
                 </div>
-                <Link to="/noticeAdd">
-                  <img
-                    src="../../img/btn/edit_enabled.png"
-                    alt="edit"
-                    style={{ width: "30px", cursor: "pointer" }}
-                    onClick={() => {
-                      localStorage.setItem("postList", postList);
-                    }}
-                  />
-                </Link>
               </div>
 
               <div style={{ margin: "40px 0 50px" }}>
@@ -242,16 +173,11 @@ export default function Notice() {
                         to="/noticePost"
                         style={{ textDecoration: "none" }}
                         onClick={() => {
-                          sessionStorage.setItem(
-                            "scrollY",
-                            String(window.scrollY)
-                          );
-                          sessionStorage.setItem("postList", postList);
+                          sessionStorage.setItem("postList", currentPostList);
                           sessionStorage.setItem(
                             "currentPage",
                             String(currentPage)
                           );
-                          localStorage.setItem("postId", String(post.id));
                         }}
                       >
                         <div
@@ -343,9 +269,8 @@ export default function Notice() {
             </motion.div>
           </div>
         </motion.div>
-
-        <BottomInfo />
       </div>
+      <BottomInfo />
     </div>
   );
 }

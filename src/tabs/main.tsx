@@ -38,7 +38,7 @@ export default function Main() {
             loop
             style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
           >
-            <source src="../../img/main_background2.mp4" type="video/mp4" />
+            <source src="../../img/main_background.mp4" type="video/mp4" />
           </video>
         </div>
         <div

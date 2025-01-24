@@ -228,7 +228,10 @@ export default function Nav(props: NavProps) {
             <Link to="/introduction" style={{ textDecoration: "none" }}>
               <div className="nav_tabs">동아리 소개</div>
             </Link>
-            <Link to="/activity" style={{ textDecoration: "none" }}>
+            <Link
+              to="/activity?postList=&page=1"
+              style={{ textDecoration: "none" }}
+            >
               <div className="nav_tabs">주요 활동</div>
             </Link>
             <Link to="/joinUs" style={{ textDecoration: "none" }}>
@@ -255,7 +258,10 @@ export default function Nav(props: NavProps) {
             onMouseEnter={() => setCurrentFocus("dataCenter")}
             onMouseLeave={() => setCurrentFocus("")}
           >
-            <Link to="/alexandria" style={{ textDecoration: "none" }}>
+            <Link
+              to="/alexandria?page=&tag&search="
+              style={{ textDecoration: "none" }}
+            >
               <div className="nav_tabs">알렉산드리아 도서관</div>
             </Link>
             <Link to="/hallOfFame" style={{ textDecoration: "none" }}>
@@ -268,13 +274,16 @@ export default function Nav(props: NavProps) {
             onMouseLeave={() => setCurrentFocus("")}
           >
             <Link
-              to="/notice"
+              to="/notice?postList=전체&page=1"
               style={{ textDecoration: "none" }}
               onClick={() => sessionStorage.clear()}
             >
               <div className="nav_tabs">공지사항</div>
             </Link>
-            <Link to="/knowledge" style={{ textDecoration: "none" }}>
+            <Link
+              to="/knowledge?postList=&page="
+              style={{ textDecoration: "none" }}
+            >
               <div className="nav_tabs">지식 공유 게시판</div>
             </Link>
           </div>

@@ -1,7 +1,6 @@
 var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
 
 export default function VerificationRequestsAPI(email: string) {
-  var email: string = email;
   console.log(email);
 
   fetch(

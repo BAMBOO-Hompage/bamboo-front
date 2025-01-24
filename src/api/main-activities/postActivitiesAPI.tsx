@@ -1,26 +1,32 @@
-import { getCookie } from "../cookies.tsx";
+import { setCookie, getCookie, removeCookie } from "../cookies.tsx";
 
 var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
 
 async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
-  return fetch(API_SERVER_DOMAIN + "/auth/reissue", {
+  return fetch(API_SERVER_DOMAIN + `/auth/reissue`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: accessToken,
+      "Refresh-Token": refreshToken,
     },
-    body: JSON.stringify({
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    }),
+    body: JSON.stringify({}),
   })
     .then((response) => {
+      console.log(response);
       if (!response.ok) {
+        alert("-1: Fail Get AccessToken With RefreshToken");
         throw new Error("Failed to refresh access token");
       }
-      return response.json();
+      return response.text();
     })
-    .then((data) => {
-      return data;
+    .then((newAccessToken) => {
+      setCookie("accessToken", newAccessToken, {
+        path: "/",
+        expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 1일 뒤 삭제
+      });
+
+      return newAccessToken;
     });
 }
 
@@ -66,20 +72,25 @@ export default async function PostActivitiesAPI(formData) {
             accessToken,
             refreshToken
           );
-
+          console.log(newAccessToken);
           await postActivities(newAccessToken, formData);
 
           alert("작성 완료");
           window.location.href = "/activity";
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
-          window.location.href = "/activity";
+          alert("다시 로그인 해주세요.");
+          removeCookie("accessToken");
+          removeCookie("refreshToken");
+          window.location.href = "/";
         }
       } else {
-        window.location.href = "/activity";
+        alert("다시 로그인 해주세요.");
+        window.location.href = "/";
       }
     }
   } else {
-    window.location.href = "/activity";
+    alert("다시 로그인 해주세요.");
+    window.location.href = "/";
   }
 }

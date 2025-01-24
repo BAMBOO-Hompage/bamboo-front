@@ -39,7 +39,7 @@ export default function LogInAPI(studentId: number, password: string) {
       });
       setCookie("refreshToken", refreshToken, {
         path: "/",
-        expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 1일 뒤 삭제
+        expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 1일 뒤 삭제
       });
 
       setTimeout(() => {

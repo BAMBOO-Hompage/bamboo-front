@@ -356,6 +356,7 @@ export default function PostAdd() {
                     />
                     <img
                       src="../../img/btn/search_enabled.png"
+                      alt="search"
                       style={{ width: "25px" }}
                     />
                     &emsp;사진 선택 (최대 4장)
@@ -396,6 +397,7 @@ export default function PostAdd() {
                         >
                           <img
                             src="../../img/btn/delete_disabled.png"
+                            alt="delete"
                             style={{ width: "16px", cursor: "pointer" }}
                             onClick={() => {
                               handleDeleteImage(id);

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "../../components/button.tsx";
 
 import MyPageAPI from "../../api/members/myPageAPI.tsx";
+import PatchMyPageAPI from "../../api/members/patchMyPageAPI.tsx";
 import "../../App.css";
 
 type MyDataType = {
@@ -38,19 +39,45 @@ export default function PersonalInfo() {
     role: "",
     profileImageUrl: "",
   });
+  const [previewImage, setPreviewImage] = useState("");
+  const [image, setImage] = useState<File>();
   const [edit, setEdit] = useState<boolean>(false);
   const [changePassword, setChangePassword] = useState<boolean>(false);
 
-  useEffect(() => {
-    MyPageAPI().then((data) => setmyData(data));
+  useLayoutEffect(() => {
+    MyPageAPI().then((data) => {
+      if (!data.profileImageUrl) {
+        data.profileImageUrl = "../img/icon/base_profile.png";
+      }
+      setmyData(data);
+      setPreviewImage(data.profileImageUrl);
+    });
   }, []);
 
-  const onValid = (e) => {
-    console.log(e.Category + "\n" + e.Title + "\n", "onValid");
-    alert("카테고리 : " + e.Category + "\n제목 : " + e.Title + "\n내용 : \n");
-    window.location.href = "/mypage";
+  const handleProfileImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl);
+    }
+
+    setImage(file);
   };
 
+  const onValid = (e) => {
+    e.PhoneNum = e.PhoneNum.replace(/-/g, "");
+    console.log(previewImage + "\n" + e.PhoneNum, "onValid");
+
+    const formData = new FormData();
+    if (image) {
+      formData.append("profileImage", image);
+      formData.append("phoneNumber", e.PhoneNum);
+    } else {
+      formData.append("phoneNumber", e.PhoneNum);
+    }
+
+    PatchMyPageAPI(formData);
+  };
   const onInvalid = (e) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
@@ -183,15 +210,12 @@ export default function PersonalInfo() {
             }}
           >
             <img
-              src={
-                myData.profileImageUrl
-                  ? myData.profileImageUrl
-                  : "../img/icon/base_profile.png"
-              }
+              src={myData.profileImageUrl}
               alt="profile"
               style={{
                 width: "200px",
                 height: "200px",
+                objectFit: "cover",
                 borderRadius: "100px",
               }}
             />
@@ -421,25 +445,26 @@ export default function PersonalInfo() {
             }}
           >
             <img
-              src={
-                myData.profileImageUrl
-                  ? myData.profileImageUrl
-                  : "../img/icon/base_profile.png"
-              }
+              src={previewImage}
               alt="profile"
               style={{
                 width: "200px",
                 height: "200px",
+                objectFit: "cover",
                 borderRadius: "90px",
               }}
             />
 
-            <div
+            <label
+              htmlFor="fileInput"
               style={{
+                width: "35px",
+                borderRadius: "18px",
                 position: "absolute",
                 bottom: "20px",
                 right: "20px",
               }}
+              onChange={handleProfileImage}
             >
               <img
                 src="../img/btn/search_disabled.png"
@@ -456,7 +481,15 @@ export default function PersonalInfo() {
                   e.currentTarget.style.opacity = "0.8"; // Hover 해제 시 opacity 복원
                 }}
               />
-            </div>
+              <input
+                type="file"
+                id="fileInput"
+                style={{
+                  display: "none",
+                }}
+                {...register("Image", {})}
+              />
+            </label>
           </div>
           <div style={{ position: "relative" }}>
             <div
@@ -617,11 +650,11 @@ export default function PersonalInfo() {
                 {...register("PhoneNum", {
                   required: "전화번호를 입력해주세요.",
                   minLength: {
-                    value: 11,
+                    value: 13,
                     message: "전화번호는 '-'를 제외한 11자리를 입력해주세요.",
                   },
                   maxLength: {
-                    value: 11,
+                    value: 13,
                     message: "전화번호는 '-'를 제외한 11자리를 입력해주세요.",
                   },
                 })}

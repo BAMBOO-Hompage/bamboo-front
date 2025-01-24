@@ -22,6 +22,19 @@ export default function Login() {
     console.log(e, "onInvalid");
   };
 
+  const autoPattern = (id: string) => {
+    let input = document.getElementById(id) as HTMLInputElement | null;
+
+    if (!input) {
+      console.error(`Element with id "${id}" not found.`);
+      return;
+    }
+    let inputValue = input.value;
+
+    inputValue = inputValue.replace(/[^0-9]/g, "");
+    input.value = inputValue;
+  };
+
   return (
     <div style={{ position: "relative" }}>
       <div
@@ -96,6 +109,10 @@ export default function Login() {
                   id="studentNum"
                   placeholder="학 번"
                   type="text"
+                  autoComplete="off"
+                  onKeyUp={() => {
+                    autoPattern("studentNum");
+                  }}
                   {...register("StudentNum", {
                     required: "학번 혹은 비밀번호를 확인해주세요.",
                   })}

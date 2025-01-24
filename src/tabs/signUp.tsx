@@ -109,7 +109,6 @@ export default function Signup() {
     let inputValue = input.value;
 
     inputValue = inputValue.replace(/[^0-9]/g, "");
-
     input.value = inputValue;
   };
 
@@ -134,7 +133,6 @@ export default function Signup() {
     if (inputValue.length > 8 && inputValue.charAt(8) !== "-") {
       inputValue = inputValue.slice(0, 8) + "-" + inputValue.slice(8);
     }
-
     input.value = inputValue;
   };
 
@@ -210,7 +208,7 @@ export default function Signup() {
                 id="studentNum"
                 placeholder="학번 입력"
                 type="text"
-                autoComplete="none"
+                autoComplete="off"
                 onKeyUp={() => {
                   autoPattern("studentNum");
                 }}
@@ -327,6 +325,7 @@ export default function Signup() {
                   placeholder="인증코드를 입력해주세요."
                   type="text"
                   disabled={checkedEmail}
+                  autoComplete="off"
                   {...registerVerification("Code", {
                     required: "인증코드를 입력해주세요.",
                   })}
@@ -618,7 +617,7 @@ export default function Signup() {
                   id="name"
                   placeholder="이름 입력"
                   type="text"
-                  autoComplete="none"
+                  autoComplete="off"
                   {...registerSignUp("Name", {
                     required: "이름을 입력해주세요.",
                   })}
@@ -829,7 +828,7 @@ export default function Signup() {
                 <input
                   id="phoneNum"
                   type="text"
-                  autoComplete="none"
+                  autoComplete="off"
                   onKeyUp={() => autoSeparate("phoneNum")}
                   {...registerSignUp("PhoneNum", {
                     required: "전화번호를 입력해주세요.",

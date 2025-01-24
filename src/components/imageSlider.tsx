@@ -43,6 +43,7 @@ const ImageSlider = ({ images }) => {
 
       <img
         onClick={prevImage}
+        alt="prev"
         src={
           currentIndex === 0
             ? "../img/btn/prev_disabled.png"
@@ -106,6 +107,7 @@ const ImageSlider = ({ images }) => {
       </div>
       <img
         onClick={nextImage}
+        alt="next"
         src={
           currentIndex === images.length - 1
             ? "../img/btn/next_disabled.png"
