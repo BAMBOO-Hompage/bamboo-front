@@ -30,38 +30,32 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
-async function patchMyPage(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/members/myPage", {
-    method: "PATCH",
+async function deleteActivities(accessToken, id) {
+  return fetch(API_SERVER_DOMAIN + `/api/main-activities/${id}`, {
+    method: "DELETE",
     headers: {
       Authorization: "Bearer " + accessToken,
     },
-    body: formData,
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to post activies");
+      throw new Error("Failed to pdelete activies");
     }
     return response.json();
   });
 }
 
-export default async function PatchMyPageAPI(formData) {
+export default async function DeleteActivitiesAPI(id) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      // FormData 확인
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
+      await deleteActivities(accessToken, id);
 
-      await patchMyPage(accessToken, formData);
+      alert("삭제 완료");
+      window.location.href = "/activity";
 
-      alert("수정 완료");
-      window.location.href = "/myPage";
-
-      return;
+      return 0;
     } catch (error) {
       if (refreshToken) {
         try {
@@ -72,15 +66,16 @@ export default async function PatchMyPageAPI(formData) {
             accessToken,
             refreshToken
           );
-          await patchMyPage(newAccessToken, formData);
+          console.log(newAccessToken);
+          await deleteActivities(accessToken, id);
 
-          alert("수정 완료");
-          window.location.href = "/myPage";
+          alert("삭제 완료");
+          window.location.href = "/activity";
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");
-          removeCookie("accessToken");
-          removeCookie("refreshToken");
+          //   removeCookie("accessToken");
+          //   removeCookie("refreshToken");
           window.location.href = "/";
         }
       } else {

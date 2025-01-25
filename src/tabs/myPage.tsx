@@ -1,33 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import PersonalInfo from "../tabs/myPage/personalInfo.tsx";
+import MembershipManagement from "../tabs/myPage/membershipManagement.tsx";
 
 import Nav from "../components/nav.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
+
+import GetMembersAPI from "../api/members/getMembersAPI.tsx";
 import "../App.css";
 
-const memberData = [
-  {
-    id: 1,
-    role: "아기판다🐼",
-    major: "휴먼지능정보공학전공",
-    studentId: "202010770",
-    name: "맹의현",
-    phone: "01092428053",
-  },
-  {
-    id: 2,
-    role: "아기판다🐼",
-    major: "휴먼지능정보공학전공",
-    studentId: "202010789",
-    name: "유민균",
-    phone: "01077128734",
-  },
-];
+type Members = {
+  id: number;
+  studentId: string;
+  email: string;
+  name: string;
+  major: string;
+  phone: string;
+  role: string;
+};
 
 export default function MyPage() {
   const [postList, setPostList] = useState<string>("개인 정보");
+
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [membersToDisplay, setMembersToDisplay] = useState<Members[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const maxVisiblePages = 5;
+
+  const startPage =
+    Math.floor(currentPage - 1 / maxVisiblePages) * maxVisiblePages + 1;
+  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+  const changePage = (page: number) => {
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    setCurrentPage(page);
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    GetMembersAPI(currentPage - 1).then((result) => {
+      var memberData = result.content;
+      setMembersToDisplay(memberData);
+      setTotalPages(result.totalPages);
+    });
+  }, [currentPage]);
+
+  useEffect(() => {
+    // localStorage에서 selected_id를 가져와 상태를 초기화
+    const storedIds = JSON.parse(localStorage.getItem("selected_id") || "[]");
+    setSelectedIds(storedIds);
+  }, []);
+
+  const toggleSelect = (id: number) => {
+    let updatedIds: number[];
+
+    if (selectedIds.includes(id)) {
+      updatedIds = selectedIds.filter((selectedId) => selectedId !== id);
+    } else {
+      updatedIds = [...selectedIds, id];
+    }
+
+    setSelectedIds(updatedIds);
+    localStorage.setItem("selected_id", JSON.stringify(updatedIds));
+  };
 
   return (
     <div>
@@ -49,10 +89,10 @@ export default function MyPage() {
             style={{
               position: "relative",
               width: "1000px",
-              minHeight: "650px",
+              minHeight: "570px",
               margin: "0 auto",
               marginTop: "100px",
-              marginBottom: "50px",
+              marginBottom: "150px",
               display: "flex",
             }}
           >
@@ -60,7 +100,7 @@ export default function MyPage() {
               style={{
                 boxSizing: "border-box",
                 width: "180px",
-                height: "600px",
+                minHeight: "100%",
                 borderRight: "1px solid #444",
                 textAlign: "left",
               }}
@@ -135,7 +175,7 @@ export default function MyPage() {
               style={{
                 position: "relative",
                 width: "820px",
-                height: "100%",
+                minHeight: "100%",
                 textAlign: "left",
                 paddingLeft: "50px",
               }}
@@ -143,89 +183,13 @@ export default function MyPage() {
               {postList === "개인 정보" ? (
                 <PersonalInfo />
               ) : (
-                <>
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily: "Pretendard-Bold",
-                        fontSize: "30px",
-                        color: "#fff",
-                      }}
-                    >
-                      회원 관리
-                    </div>
-                    <div></div>
-                  </div>
-
-                  <div
-                    style={{
-                      width: "100%",
-                      marginTop: "40px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "16px",
-                      color: "#888",
-                    }}
-                  >
-                    <div style={{ width: "70px" }}>선택</div>
-                    <div style={{ width: "120px" }}>등급</div>
-                    <div style={{ width: "200px" }}>학과</div>
-                    <div style={{ width: "140px" }}>학번</div>
-                    <div style={{ width: "80px" }}>이름</div>
-                    <div style={{ width: "140px" }}>전화 번호</div>
-                  </div>
-                  <hr
-                    style={{
-                      height: "1px",
-                      background: "#666",
-                      border: "none",
-                    }}
-                  />
-                  {memberData.map((member) => (
-                    <div key={member.id}>
-                      <div
-                        style={{
-                          width: "100%",
-                          height: "50px",
-                          fontFamily: "Pretendard-Light",
-                          fontSize: "16px",
-                          color: "#fff",
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <div style={{ width: "70px" }}>선택버튼</div>
-                        <div style={{ width: "120px" }}>{member.role}</div>
-                        <div style={{ width: "200px" }}>{member.major}</div>
-                        <div style={{ width: "140px" }}>{member.studentId}</div>
-                        <div style={{ width: "80px" }}>{member.name}</div>
-                        <div style={{ width: "140px" }}>{member.phone}</div>
-                      </div>
-                      <hr
-                        style={{
-                          height: "1px",
-                          background: "#666",
-                          border: "none",
-                        }}
-                      />
-                    </div>
-                  ))}
-                </>
+                <MembershipManagement />
               )}
             </motion.div>
           </div>
         </motion.div>
-
-        <BottomInfo />
       </div>
+      <BottomInfo />
     </div>
   );
 }

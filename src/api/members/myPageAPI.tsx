@@ -78,6 +78,7 @@ export default async function MyPageAPI() {
       } else {
         console.error("No RefreshToken");
         alert("다시 로그인 해주세요.");
+        removeCookie("accessToken");
         window.location.href = "/";
       }
     }

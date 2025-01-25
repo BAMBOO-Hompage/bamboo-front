@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import moment from "moment";
 
@@ -8,6 +8,7 @@ import BottomInfo from "../../components/bottomInfo.tsx";
 import ImageSlider from "../../components/imageSlider.tsx";
 
 import GetActivitiesAPI from "../../api/main-activities/getActivitiesAPI.tsx";
+import DeleteActivitiesAPI from "../../api/main-activities/deleteAcitivitiesAPI.tsx";
 
 import "../../App.css";
 
@@ -19,16 +20,22 @@ type Activities = {
   images: string[];
 };
 
+const maxVisiblePages = 5;
+
 export default function Activity() {
-  const [yearList, setYearList] = useState<number[]>([]);
-  const [selectedYear, setSelectedYear] = useState<number>(
-    parseInt(moment(new Date()).format("YYYY"))
+  const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
+  const selectedYear = parseInt(
+    searchParams.get("year") || moment(new Date()).format("YYYY"),
+    10
   );
+
+  const [yearList, setYearList] = useState<number[]>([]);
+
   const [postsToDisplay, setPostsToDisplay] = useState<Activities[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const maxVisiblePages = 5;
 
   const startPage =
     Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
@@ -37,12 +44,11 @@ export default function Activity() {
   const changePage = (page: number) => {
     if (page < 1) page = 1;
     if (page > totalPages) page = totalPages;
-    setCurrentPage(page);
-
+    setSearchParams({ year: selectedYear.toString(), page: page.toString() });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const latestYear = parseInt(moment(new Date()).format("YYYY"));
     const years: Array<number> = [];
 
@@ -50,7 +56,10 @@ export default function Activity() {
       years.push(year);
     }
     setYearList(years);
-  }, []);
+
+    navigate(`/activity?year=${selectedYear}&page=1`, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate]);
 
   useEffect(() => {
     GetActivitiesAPI(selectedYear, currentPage).then((result) => {
@@ -127,8 +136,7 @@ export default function Activity() {
                         : {}
                     }
                     onClick={() => {
-                      setSelectedYear(year);
-                      setCurrentPage(1);
+                      setSearchParams({ year: year.toString(), page: "1" });
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                   >
@@ -198,12 +206,49 @@ export default function Activity() {
                   >
                     <div
                       style={{
-                        fontFamily: "Pretendard-SemiBold",
-                        fontSize: "20px",
-                        color: "#fff",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
                       }}
                     >
-                      {activity.title}
+                      <div
+                        style={{
+                          fontFamily: "Pretendard-SemiBold",
+                          fontSize: "20px",
+                          color: "#fff",
+                        }}
+                      >
+                        {activity.title}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "Pretendard-Light",
+                          fontSize: "14px",
+                          color: "#777",
+                        }}
+                      >
+                        <span
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            window.location.href = `/activityEdit?id=${activity.mainActivitiesId}`;
+                          }}
+                        >
+                          수정
+                        </span>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <span
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            const deleteConfirm =
+                              window.confirm("게시물을 삭제하시겠습니까?");
+                            if (deleteConfirm) {
+                              DeleteActivitiesAPI(activity.mainActivitiesId);
+                            }
+                          }}
+                        >
+                          삭제
+                        </span>
+                      </div>
                     </div>
                     <div
                       style={{

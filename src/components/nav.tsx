@@ -19,6 +19,7 @@ type NavProps = { type?: NavType };
 
 export default function Nav(props: NavProps) {
   const { type } = props;
+
   const [hover, setHover] = useState(false);
   const [currentFocus, setCurrentFocus] = useState("");
   const [checkAuth, setCheckAuth] = useState<number>(0);
@@ -153,7 +154,10 @@ export default function Nav(props: NavProps) {
               alignItems: "center",
             }}
           >
-            <Link to="/myPage" style={{ textDecoration: "none" }}>
+            <Link
+              to="/myPage?edit=&changePassword="
+              style={{ textDecoration: "none" }}
+            >
               <div
                 className="nav_text"
                 style={
@@ -229,7 +233,7 @@ export default function Nav(props: NavProps) {
               <div className="nav_tabs">동아리 소개</div>
             </Link>
             <Link
-              to="/activity?postList=&page=1"
+              to="/activity?year=&page=1"
               style={{ textDecoration: "none" }}
             >
               <div className="nav_tabs">주요 활동</div>
@@ -258,10 +262,7 @@ export default function Nav(props: NavProps) {
             onMouseEnter={() => setCurrentFocus("dataCenter")}
             onMouseLeave={() => setCurrentFocus("")}
           >
-            <Link
-              to="/alexandria?page=&tag&search="
-              style={{ textDecoration: "none" }}
-            >
+            <Link to="/alexandria" style={{ textDecoration: "none" }}>
               <div className="nav_tabs">알렉산드리아 도서관</div>
             </Link>
             <Link to="/hallOfFame" style={{ textDecoration: "none" }}>
@@ -280,10 +281,7 @@ export default function Nav(props: NavProps) {
             >
               <div className="nav_tabs">공지사항</div>
             </Link>
-            <Link
-              to="/knowledge?postList=&page="
-              style={{ textDecoration: "none" }}
-            >
+            <Link to="/knowledge" style={{ textDecoration: "none" }}>
               <div className="nav_tabs">지식 공유 게시판</div>
             </Link>
           </div>

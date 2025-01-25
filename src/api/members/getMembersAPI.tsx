@@ -30,65 +30,60 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
-async function patchMyPage(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/members/myPage", {
-    method: "PATCH",
+async function getMember(accessToken, page) {
+  return fetch(API_SERVER_DOMAIN + `/api/members?page=${page}&size=10`, {
+    method: "GET",
     headers: {
       Authorization: "Bearer " + accessToken,
     },
-    body: formData,
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to post activies");
+      throw new Error("Failed to get member");
     }
     return response.json();
   });
 }
 
-export default async function PatchMyPageAPI(formData) {
+export default async function GetMembersAPI(page) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      // FormData 확인
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
+      let data = await getMember(accessToken, page);
+      console.log(data.result);
 
-      await patchMyPage(accessToken, formData);
-
-      alert("수정 완료");
-      window.location.href = "/myPage";
-
-      return;
+      return data.result;
     } catch (error) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
           alert("Refresh accessToken");
 
-          const newAccessToken = await getAccessTokenWithRefreshToken(
+          let newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
-          await patchMyPage(newAccessToken, formData);
+          let data = await getMember(newAccessToken, page);
+          console.log(data.result);
 
-          alert("수정 완료");
-          window.location.href = "/myPage";
+          return data.result;
         } catch (error) {
-          console.error("Failed to refresh accessToken: ", error);
-          alert("다시 로그인 해주세요.");
+          console.error("Failed to refresh access token:", error);
+          alert("다시 로그인해주세요.");
           removeCookie("accessToken");
           removeCookie("refreshToken");
           window.location.href = "/";
         }
       } else {
+        console.error("No RefreshToken");
         alert("다시 로그인 해주세요.");
+        removeCookie("accessToken");
         window.location.href = "/";
       }
     }
   } else {
+    console.error("No AccessToken");
     alert("다시 로그인 해주세요.");
     window.location.href = "/";
   }

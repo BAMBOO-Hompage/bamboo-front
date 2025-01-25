@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import "../App.css";
 
 type ButtonType = "primary" | "secondary" | "destructive" | "logIn" | "submit";
-type Size = "small" | "medium" | "large" | "XLarge" | "logIn";
+type Size = "Xsmall" | "small" | "medium" | "large" | "XLarge" | "logIn";
 
 type ButtonProps = {
   onClick?: () => void;
@@ -15,7 +15,7 @@ type ButtonProps = {
 
 const ButtonContainer = styled.div<{
   type: "primary" | "secondary" | "destructive" | "logIn" | "submit";
-  size: "small" | "medium" | "large" | "XLarge" | "logIn";
+  size: "Xsmall" | "small" | "medium" | "large" | "XLarge" | "logIn";
 }>`
   border: ${(props) => (props.type === "logIn" ? "none" : "none")};
   border-radius: ${(props) => (props.type === "logIn" ? "0" : "20px")};
@@ -26,7 +26,7 @@ const ButtonContainer = styled.div<{
     props.type === "primary"
       ? "#2CC295"
       : props.type === "secondary"
-      ? "#A9FFDE"
+      ? "#343434"
       : props.type === "destructive"
       ? "#343434"
       : "#2CC295"};
@@ -34,7 +34,7 @@ const ButtonContainer = styled.div<{
     props.type === "primary"
       ? "#fff"
       : props.type === "secondary"
-      ? "#000"
+      ? "#2cc295"
       : props.type === "destructive"
       ? "#fff"
       : "#fff"};
@@ -72,6 +72,14 @@ const ButtonContainer = styled.div<{
       height: 30px;
       font-size: 16px;
       width: 120px;
+      text-align: center;
+    `}
+    ${(props) =>
+    props.size === "Xsmall" &&
+    css`
+      height: 30px;
+      font-size: 16px;
+      width: 80px;
       text-align: center;
     `}
     ${(props) =>

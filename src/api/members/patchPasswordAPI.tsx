@@ -30,35 +30,37 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
-async function patchMyPage(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/members/myPage", {
+async function patchPassword(accessToken, password, newPassword) {
+  return fetch(API_SERVER_DOMAIN + "/api/members/myPage/password", {
     method: "PATCH",
     headers: {
+      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    body: formData,
+    body: JSON.stringify({
+      password: password,
+      newPassword: newPassword,
+    }),
   }).then((response) => {
+    console.log(response);
     if (!response.ok) {
-      throw new Error("Failed to post activies");
+      throw new Error("Failed to patch password");
     }
     return response.json();
   });
 }
 
-export default async function PatchMyPageAPI(formData) {
+export default async function PatchPasswordAPI(password, newPassword) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      // FormData 확인
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
+      console.log("passoword: " + password + "\nnewPassword: " + newPassword);
 
-      await patchMyPage(accessToken, formData);
+      await patchPassword(accessToken, password, newPassword);
 
-      alert("수정 완료");
+      alert("변경 완료");
       window.location.href = "/myPage";
 
       return;
@@ -72,16 +74,17 @@ export default async function PatchMyPageAPI(formData) {
             accessToken,
             refreshToken
           );
-          await patchMyPage(newAccessToken, formData);
+          console.log(newAccessToken);
+          await patchPassword(newAccessToken, password, newPassword);
 
-          alert("수정 완료");
+          alert("변경 완료");
           window.location.href = "/myPage";
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");
-          removeCookie("accessToken");
-          removeCookie("refreshToken");
-          window.location.href = "/";
+          //   removeCookie("accessToken");
+          //   removeCookie("refreshToken");
+          //   window.location.href = "/";
         }
       } else {
         alert("다시 로그인 해주세요.");

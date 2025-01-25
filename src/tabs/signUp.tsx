@@ -740,14 +740,54 @@ export default function Signup() {
                     휴먼지능정보공학전공
                   </option>
                   <option
-                    value="컴퓨터공학전공"
+                    value="컴퓨터과학전공"
                     style={{
                       color: "#fff",
                       background: "#111015",
                       cursor: "pointer",
                     }}
                   >
-                    컴퓨터공학전공
+                    컴퓨터과학전공
+                  </option>
+                  <option
+                    value="핀테크·빅데이터융합·스마트생산전공"
+                    style={{
+                      color: "#fff",
+                      background: "#111015",
+                      cursor: "pointer",
+                    }}
+                  >
+                    핀테크·빅데이터융합·스마트생산전공
+                  </option>
+                  <option
+                    value="지능IOT융합전공"
+                    style={{
+                      color: "#fff",
+                      background: "#111015",
+                      cursor: "pointer",
+                    }}
+                  >
+                    지능IOT융합전공
+                  </option>
+                  <option
+                    value="애니메이션전공"
+                    style={{
+                      color: "#fff",
+                      background: "#111015",
+                      cursor: "pointer",
+                    }}
+                  >
+                    애니메이션전공
+                  </option>
+                  <option
+                    value="기타"
+                    style={{
+                      color: "#fff",
+                      background: "#111015",
+                      cursor: "pointer",
+                    }}
+                  >
+                    기타
                   </option>
                 </select>
                 {errorsSignUp.Major ? (

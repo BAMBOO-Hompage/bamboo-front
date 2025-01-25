@@ -10,6 +10,7 @@ import MyPage from "./tabs/myPage.tsx";
 import Introduction from "./tabs/aboutUs/introduction.tsx";
 import Activity from "./tabs/aboutUs/activity.tsx";
 import ActivityAdd from "./tabs/aboutUs/activityAdd.tsx";
+import ActivityEdit from "./tabs/aboutUs/activityEdit.tsx";
 import JoinUs from "./tabs/aboutUs/joinUs.tsx";
 
 import Notice from "./tabs/community/notice.tsx";
@@ -50,6 +51,7 @@ function App() {
           <Route path="/joinUs" element={<JoinUs type="basic" />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/activityAdd" element={<ActivityAdd />} />
+          <Route path="/activityEdit" element={<ActivityEdit />} />
 
           <Route path="/notice" element={<Notice />} />
           <Route path="/noticeAdd" element={<NoticeAdd />} />

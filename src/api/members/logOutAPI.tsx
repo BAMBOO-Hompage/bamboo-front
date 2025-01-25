@@ -58,10 +58,8 @@ export default async function LogOutAPI() {
       await postLogOut(accessToken);
 
       setTimeout(() => {
-        window.location.reload();
-      }, 100); // 100ms 딜레이
-
-      return 0;
+        window.location.href = "/";
+      }, 100);
     } catch (error) {
       if (refreshToken) {
         try {
@@ -75,20 +73,20 @@ export default async function LogOutAPI() {
           await postLogOut(newAccessToken);
 
           setTimeout(() => {
-            window.location.reload();
+            window.location.href = "/";
           }, 100);
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           removeCookie("accessToken");
           removeCookie("refreshToken");
 
-          window.location.reload();
+          window.location.href = "/";
         }
       } else {
-        window.location.reload();
+        window.location.href = "/";
       }
     }
   } else {
-    window.location.reload();
+    window.location.href = "/";
   }
 }

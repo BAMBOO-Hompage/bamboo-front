@@ -1,10 +1,12 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Button from "../../components/button.tsx";
 
 import MyPageAPI from "../../api/members/myPageAPI.tsx";
 import PatchMyPageAPI from "../../api/members/patchMyPageAPI.tsx";
+import PatchPasswordAPI from "../../api/members/patchPasswordAPI.tsx";
 import "../../App.css";
 
 type MyDataType = {
@@ -29,6 +31,8 @@ export default function PersonalInfo() {
     getValues: getValuesChangePassword,
     formState: { errors: errorsChangePassword },
   } = useForm();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [myData, setmyData] = useState<MyDataType>({
     studentId: "",
@@ -41,18 +45,19 @@ export default function PersonalInfo() {
   });
   const [previewImage, setPreviewImage] = useState("");
   const [image, setImage] = useState<File>();
-  const [edit, setEdit] = useState<boolean>(false);
-  const [changePassword, setChangePassword] = useState<boolean>(false);
+  const edit = searchParams.get("edit") || "0";
+  const changePassword = searchParams.get("changePassword") || "0";
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     MyPageAPI().then((data) => {
       if (!data.profileImageUrl) {
         data.profileImageUrl = "../img/icon/base_profile.png";
       }
       setmyData(data);
       setPreviewImage(data.profileImageUrl);
+      navigate("/myPage?edit=0&changePassword=0", { replace: true });
     });
-  }, []);
+  }, [navigate]);
 
   const handleProfileImage = (event) => {
     const file = event.target.files[0];
@@ -80,7 +85,28 @@ export default function PersonalInfo() {
   };
   const onInvalid = (e) => {
     console.log(e, "onInvalid");
-    alert("입력한 정보를 다시 확인해주세요.");
+    if (errors.PhoneNum) {
+      alert(String(errors.PhoneNum.message));
+    }
+  };
+
+  const onChangePasswordValid = (e) => {
+    console.log(e.Password + "\n" + e.NewPassword);
+    PatchPasswordAPI(e.Password, e.NewPassword);
+  };
+  const onChangePasswordInvalid = (e) => {
+    console.log(e, "onInvalid");
+    if (errors.Password) {
+      alert(String(errors.Password.message));
+    } else {
+      if (errors.NewPassword) {
+        alert(String(errors.NewPassword.message));
+      } else {
+        if (errors.ReNewPassword) {
+          alert(String(errors.ReNewPassword.message));
+        }
+      }
+    }
   };
 
   const passwordPattern =
@@ -143,15 +169,37 @@ export default function PersonalInfo() {
           }}
         >
           회원 등급 -
-          <span
-            style={{
-              fontFamily: "Pretendard-Bold",
-              fontSize: "30px",
-              color: "#2cc295",
-            }}
-          >
-            &nbsp;{myData.role}
-          </span>
+          {myData.role === "ROLE_USER" ? (
+            <span
+              style={{
+                fontFamily: "Pretendard-Bold",
+                fontSize: "30px",
+                color: "#2cc295",
+              }}
+            >
+              &nbsp;아기판다&nbsp;<span style={{ fontSize: "25px" }}>🐼</span>
+            </span>
+          ) : myData.role === "ROLE_ADMIN" ? (
+            <span
+              style={{
+                fontFamily: "Pretendard-Bold",
+                fontSize: "30px",
+                color: "#FF5005",
+              }}
+            >
+              &nbsp;운영진&nbsp;△
+            </span>
+          ) : (
+            <span
+              style={{
+                fontFamily: "Pretendard-Bold",
+                fontSize: "30px",
+                color: "#F1C411",
+              }}
+            >
+              &nbsp;관리자&nbsp;□
+            </span>
+          )}
         </div>
         <div
           style={{
@@ -178,13 +226,13 @@ export default function PersonalInfo() {
               e.currentTarget.style.opacity = "0.8";
             }}
             onClick={() => {
-              setEdit(true);
+              setSearchParams({ edit: "1" });
             }}
           />
         </div>
       </div>
 
-      {!changePassword && !edit ? (
+      {changePassword === "0" && edit === "0" ? (
         <div
           style={{
             width: "100%",
@@ -419,7 +467,7 @@ export default function PersonalInfo() {
             </div>
           </div>
         </div>
-      ) : !changePassword && edit ? (
+      ) : changePassword === "0" && edit === "1" ? (
         <form
           style={{
             width: "100%",
@@ -451,7 +499,7 @@ export default function PersonalInfo() {
                 width: "200px",
                 height: "200px",
                 objectFit: "cover",
-                borderRadius: "90px",
+                borderRadius: "100px",
               }}
             />
 
@@ -646,7 +694,7 @@ export default function PersonalInfo() {
                   7
                 )}-${myData.phone.slice(7, 11)}`}
                 onKeyUp={() => autoSeparate("phoneNum")}
-                autoComplete="none"
+                autoComplete="off"
                 {...register("PhoneNum", {
                   required: "전화번호를 입력해주세요.",
                   minLength: {
@@ -659,7 +707,7 @@ export default function PersonalInfo() {
                   },
                 })}
                 style={{
-                  width: errors.PhoneNum ? "240px" : "260px",
+                  width: "260px",
                   height: "30px",
                   margin: "0 20px",
                 }}
@@ -725,7 +773,7 @@ export default function PersonalInfo() {
                   const deleteAdd =
                     window.confirm("개인정보 수정을 취소하시겠습니까?");
                   if (deleteAdd) {
-                    setEdit(false);
+                    window.location.href = "/myPage?edit=&changePassword=";
                   }
                 }}
               />
@@ -789,7 +837,7 @@ export default function PersonalInfo() {
                   const deleteAdd =
                     window.confirm("비밀번호 변경을 취소하시겠습니까?");
                   if (deleteAdd) {
-                    setChangePassword(false);
+                    window.location.href = "/myPage?edit=&changePassword=";
                   }
                 }}
               />
@@ -797,7 +845,10 @@ export default function PersonalInfo() {
                 type="primary"
                 size="small"
                 title="저장"
-                onClick={handleSubmitChangePassword(onValid, onInvalid)}
+                onClick={handleSubmitChangePassword(
+                  onChangePasswordValid,
+                  onChangePasswordInvalid
+                )}
               />
             </div>
           </div>
@@ -881,7 +932,7 @@ export default function PersonalInfo() {
                   pattern: {
                     value: passwordPattern,
                     message:
-                      "영어, 숫자, 특수문자 포함 8-16자리를 입력해주세요.",
+                      "영어, 숫자, 특수문자 포함 8-24자리를 입력해주세요.",
                   },
                 })}
                 style={{
@@ -963,7 +1014,7 @@ export default function PersonalInfo() {
             cursor: "pointer",
           }}
           onClick={() => {
-            setChangePassword(true);
+            setSearchParams({ edit: "0", changePassword: "1" });
           }}
         >
           비밀번호 변경
