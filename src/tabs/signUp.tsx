@@ -297,6 +297,13 @@ export default function Signup() {
                     cursor: "pointer",
                     zIndex: "0",
                     display: checkedEmail ? "none" : "block",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.opacity = "1";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.opacity = "0.8";
                   }}
                   onClick={handleSubmitEmail(onEmailValid, onEmailInvalid)}
                 >
@@ -383,6 +390,14 @@ export default function Signup() {
                       marginLeft: "5px",
                       cursor: "pointer",
                       zIndex: "0",
+                      opacity: "0.8",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "0.8";
                     }}
                     onClick={handleSubmitVerification(
                       onVerificationValid,

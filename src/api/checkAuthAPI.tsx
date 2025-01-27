@@ -38,7 +38,7 @@ async function getMyPage(accessToken) {
     },
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to logout");
+      throw new Error("Failed to check auth");
     }
     return response.json();
   });
@@ -58,7 +58,6 @@ export default async function checkAuth() {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
-          alert("Refresh accessToken");
 
           let newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,

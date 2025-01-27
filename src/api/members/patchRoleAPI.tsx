@@ -15,7 +15,7 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     .then((response) => {
       console.log(response);
       if (!response.ok) {
-        alert("Fail Get AccessToken With RefreshToken");
+        alert("-1: Fail Get AccessToken With RefreshToken");
         throw new Error("Failed to refresh access token");
       }
       return response.text();
@@ -30,16 +30,16 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
-async function patchPassword(accessToken, password, newPassword) {
-  return fetch(API_SERVER_DOMAIN + "/api/members/myPage/password", {
+async function patchRole(accessToken, memberId, role) {
+  return fetch(API_SERVER_DOMAIN + `/api/members/${memberId}/role`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
     body: JSON.stringify({
-      password: password,
-      newPassword: newPassword,
+      memberId: memberId,
+      role: role,
     }),
   }).then((response) => {
     console.log(response);
@@ -50,19 +50,21 @@ async function patchPassword(accessToken, password, newPassword) {
   });
 }
 
-export default async function PatchPasswordAPI(password, newPassword) {
+export default async function PatchPasswordAPI(updatedMembers) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      console.log("passoword: " + password + "\nnewPassword: " + newPassword);
+      console.log(updatedMembers);
 
-      await patchPassword(accessToken, password, newPassword);
-
-      alert("변경 완료");
-      window.location.href = "/myPage";
-
+      for (let i = 0; i < updatedMembers.length; i++) {
+        const memberId = updatedMembers[i].id;
+        const role = updatedMembers[i].role;
+        await patchRole(accessToken, memberId, role);
+      }
+      alert("변경 사항이 저장되었습니다.");
+      window.location.reload();
       return;
     } catch (error) {
       if (refreshToken) {
@@ -75,10 +77,15 @@ export default async function PatchPasswordAPI(password, newPassword) {
             refreshToken
           );
           console.log(newAccessToken);
-          await patchPassword(newAccessToken, password, newPassword);
 
-          alert("변경 완료");
-          window.location.href = "/myPage";
+          for (let i = 0; i < updatedMembers.length; i++) {
+            const memberId = updatedMembers[i].id;
+            const role = updatedMembers[i].role;
+            await patchRole(accessToken, memberId, role);
+          }
+          alert("변경 사항이 저장되었습니다.");
+          window.location.reload();
+          return;
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

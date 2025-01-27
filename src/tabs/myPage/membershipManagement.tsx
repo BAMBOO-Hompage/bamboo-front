@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/button.tsx";
 
 import GetMembersAPI from "../../api/members/getMembersAPI.tsx";
+import PatchRoleAPI from "../../api/members/patchRoleAPI.tsx";
 import "../../App.css";
 
 type Members = {
@@ -67,6 +68,11 @@ export default function PersonalInfo() {
     navigate("/myPage?list=membershipManagement&page=1", {
       replace: true,
     });
+
+    // 컴포넌트 언마운트 시 selected_id 초기화
+    return () => {
+      localStorage.removeItem("selected_id");
+    };
   }, [navigate]);
 
   const toggleSelect = (id: number) => {
@@ -97,23 +103,43 @@ export default function PersonalInfo() {
   };
 
   const handleSave = () => {
+    const roleDescriptions = {
+      ROLE_USER: "비회원",
+      ROLE_MEMBER: "일반회원",
+      ROLE_ADMIN: "운영진",
+      ROLE_OPS: "관리자",
+    };
+
     const updatedMembers = Object.keys(changedRoles)
       .filter((id) => changedRoles[parseInt(id)])
       .map((id) => {
         const member = membersToDisplay.find((m) => m.id === parseInt(id));
-        return member ? { id: member.id, role: member.role } : null;
+        return member
+          ? {
+              id: member.id,
+              studentId: member.studentId,
+              name: member.name,
+              role: member.role,
+            }
+          : null;
       })
       .filter((m) => m !== null);
 
     if (updatedMembers.length > 0) {
-      // patchMembers(updatedMembers).then(() => {
-      //   alert("변경 사항이 저장되었습니다.");
-      //   window.location.reload();
-      // });
-      alert("변경 사항이 저장되었습니다.");
-      setSelectedIds([]);
-      localStorage.removeItem("selected_id");
-      window.location.reload();
+      const confirmUpdateRole = window.confirm(
+        "정말 변경하시겠습니까?\n" +
+          updatedMembers
+            .map(
+              (member) =>
+                `ID: ${member.id}, 학번: ${member.studentId}, 이름: ${
+                  member.name
+                }, 등급: ${roleDescriptions[member.role] || member.role}`
+            )
+            .join("\n")
+      );
+      if (confirmUpdateRole) {
+        PatchRoleAPI(updatedMembers);
+      }
     } else {
       alert("변경된 내용이 없습니다.");
     }
@@ -153,7 +179,12 @@ export default function PersonalInfo() {
             justifyContent: "right",
           }}
         >
-          <div style={{ marginRight: "30px" }}>
+          <div
+            style={{
+              marginRight: "30px",
+              display: selectedIds.length > 0 ? "block" : "none",
+            }}
+          >
             <Button
               type="secondary"
               size="small"
@@ -391,8 +422,7 @@ export default function PersonalInfo() {
                 justifyContent: "center",
               }}
             >
-              202511111
-              {/* {member.studentId} */}
+              {member.studentId.slice(0, 4)}11111
             </div>
             <div
               style={{
@@ -401,8 +431,7 @@ export default function PersonalInfo() {
                 justifyContent: "center",
               }}
             >
-              {member.name.slice(0, 1)}**
-              {/* {member.name} */}
+              {member.name.slice(0, 2)}*
             </div>
             <div
               style={{

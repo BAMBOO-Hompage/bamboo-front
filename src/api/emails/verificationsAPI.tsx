@@ -7,7 +7,6 @@ export default async function VerificationsAPI(
   const url =
     API_SERVER_DOMAIN +
     `/api/emails/verifications?email=${email}&authcode=${authcode}`;
-
   try {
     const response = await fetch(url, {
       method: "POST",

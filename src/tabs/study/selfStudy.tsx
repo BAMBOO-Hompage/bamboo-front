@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
+import LockedPageAuth from "../../components/lockedPageAuth.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import ImageSlider from "../../components/imageSlider.tsx";
+
 import "../../App.css";
 
 export default function SelfStudy() {
@@ -13,15 +14,20 @@ export default function SelfStudy() {
     <div>
       <Nav type="study" />
       <div className="background">
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+          }}
           style={{
-            padding: "200px 0 300px",
-            fontFamily: "Pretendard-Bold",
-            fontSize: "40px",
+            width: "100%",
           }}
         >
-          Coming Soon...
-        </div>
+          <LockedPageAuth />
+        </motion.div>
 
         <BottomInfo />
       </div>

@@ -176,7 +176,7 @@ export default function PersonalInfo() {
               style={{
                 fontFamily: "Pretendard-Bold",
                 fontSize: "30px",
-                color: "#fff",
+                color: "#aaa",
               }}
             >
               &nbsp;비회원
