@@ -92,6 +92,7 @@ const ButtonContainer = styled.div<{
     `}
     &:hover {
     & p {
+      transition: all 0.3s ease;
       text-shadow: 0 0 0.1em, 0 0 0.3em;
     }
   }

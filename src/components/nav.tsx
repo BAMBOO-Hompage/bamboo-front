@@ -22,11 +22,11 @@ export default function Nav(props: NavProps) {
 
   const [hover, setHover] = useState(false);
   const [currentFocus, setCurrentFocus] = useState("");
-  const [checkAuth, setCheckAuth] = useState<number>(0);
+  const [checkAuth, setCheckAuth] = useState<number>(1);
 
   useEffect(() => {
     CheckAuthAPI().then((response) => {
-      if (response === 1) {
+      if (response !== 0) {
         setCheckAuth(1);
       } else {
         setCheckAuth(0);
@@ -60,7 +60,11 @@ export default function Nav(props: NavProps) {
             <img
               src="../img/nav_logo.png"
               alt="nav_logo"
-              style={{ width: "80px", marginTop: "5px" }}
+              style={{
+                width: "90px",
+                marginTop: "5px",
+                transition: "all 0.2s ease",
+              }}
             />
           </Link>
         </div>
@@ -145,7 +149,7 @@ export default function Nav(props: NavProps) {
             Community
           </div>
         </div>
-        {checkAuth === 1 ? (
+        {checkAuth !== 0 ? (
           <div
             style={{
               position: "absolute",
@@ -179,8 +183,9 @@ export default function Nav(props: NavProps) {
               style={{
                 width: "35px",
                 padding: "0 20px",
-                opacity: "0.8",
+                opacity: "0.6",
                 cursor: "pointer",
+                transition: "all 0.3s ease",
               }}
               onClick={() => {
                 LogOutAPI();
@@ -189,7 +194,7 @@ export default function Nav(props: NavProps) {
                 e.currentTarget.style.opacity = "1";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "0.8";
+                e.currentTarget.style.opacity = "0.6";
               }}
             />
           </div>

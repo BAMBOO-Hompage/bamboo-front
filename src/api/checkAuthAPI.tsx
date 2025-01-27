@@ -30,29 +30,53 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
+async function getMyPage(accessToken) {
+  return fetch(API_SERVER_DOMAIN + `/api/members/myPage`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed to logout");
+    }
+    return response.json();
+  });
+}
+
 export default async function checkAuth() {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
-  if (!accessToken) {
-    if (refreshToken) {
-      try {
-        let newAccessToken = await getAccessTokenWithRefreshToken(
-          accessToken,
-          refreshToken
-        );
+  if (accessToken) {
+    try {
+      let data = await getMyPage(accessToken);
+      console.log(data.result);
 
-        console.log(newAccessToken);
-        return 1;
-      } catch (error) {
-        console.error("Failed to refresh access token:", error);
+      return data.result;
+    } catch (error) {
+      if (refreshToken) {
+        try {
+          console.error("accessToken expiration: ", error);
+          alert("Refresh accessToken");
 
+          let newAccessToken = await getAccessTokenWithRefreshToken(
+            accessToken,
+            refreshToken
+          );
+          let data = await getMyPage(newAccessToken);
+          console.log(data.result);
+
+          return data.result;
+        } catch (error) {
+          console.error("Failed to refresh access token:", error);
+          return 0;
+        }
+      } else {
         return 0;
       }
-    } else {
-      return 0;
     }
   } else {
-    return 1;
+    return 0;
   }
 }

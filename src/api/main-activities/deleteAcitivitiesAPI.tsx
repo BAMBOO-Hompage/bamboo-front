@@ -53,7 +53,7 @@ export default async function DeleteActivitiesAPI(id) {
       await deleteActivities(accessToken, id);
 
       alert("삭제 완료");
-      window.location.href = "/activity";
+      window.location.reload();
 
       return 0;
     } catch (error) {
@@ -70,12 +70,12 @@ export default async function DeleteActivitiesAPI(id) {
           await deleteActivities(accessToken, id);
 
           alert("삭제 완료");
-          window.location.href = "/activity";
+          window.location.reload();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");
-          //   removeCookie("accessToken");
-          //   removeCookie("refreshToken");
+          removeCookie("accessToken");
+          removeCookie("refreshToken");
           window.location.href = "/";
         }
       } else {

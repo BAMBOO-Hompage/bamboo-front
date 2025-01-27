@@ -322,7 +322,7 @@ export default function Signup() {
               >
                 <input
                   id="code"
-                  placeholder="인증코드를 입력해주세요."
+                  placeholder="인증코드를 입력하고 확인을 눌러주세요."
                   type="text"
                   disabled={checkedEmail}
                   autoComplete="off"

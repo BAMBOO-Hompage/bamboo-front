@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/scrollToTop.tsx";
 
 import LogIn from "./tabs/logIn.tsx";
+import PrivacyPolicy from "./tabs/privacyPolicy.tsx";
 import SignUp from "./tabs/signUp.tsx";
 import Main from "./tabs/main.tsx";
 import MyPage from "./tabs/myPage.tsx";
@@ -44,6 +45,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/logIn" element={<LogIn />} />
+          <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/myPage" element={<MyPage />} />
 

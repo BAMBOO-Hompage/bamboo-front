@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "../components/button.tsx";
@@ -13,6 +13,8 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const onValid = (e: any) => {
     console.log(e, "onValid");
@@ -33,6 +35,10 @@ export default function Login() {
 
     inputValue = inputValue.replace(/[^0-9]/g, "");
     input.value = inputValue;
+  };
+
+  const togglePopup = () => {
+    setIsPopupOpen((prev) => !prev);
   };
 
   return (
@@ -226,26 +232,28 @@ export default function Login() {
               justifyContent: "space-around",
             }}
           >
-            <a
-              href="/"
+            <div
+              onClick={togglePopup}
               className="a"
               style={{
                 fontFamily: "Pretendard-Regular",
                 fontSize: "15px",
                 color: "#777",
-                textDecorationLine: "none",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
               }}
             >
               비밀번호 찾기
-            </a>
+            </div>
             <a
-              href="/signUp"
+              href="/privacyPolicy"
               className="a"
               style={{
                 fontFamily: "Pretendard-Regular",
                 fontSize: "15px",
                 color: "#777",
                 textDecorationLine: "none",
+                transition: "all 0.3s ease",
               }}
             >
               회원가입
@@ -253,6 +261,62 @@ export default function Login() {
           </div>
         </div>
       </div>
+
+      {/* 팝업 컴포넌트 */}
+      {isPopupOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "400px",
+            backgroundColor: "#111015",
+            padding: "30px 20px 20px",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            borderRadius: "10px",
+            textAlign: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "Pretendard-Regular",
+              fontSize: "16px",
+              color: "#fff",
+              marginBottom: "30px",
+              lineHeight: "1.5",
+            }}
+          >
+            분실한 비밀번호는 아래 연락처로 연락 부탁드립니다.
+            <br />
+            <strong>010-9242-8053</strong>
+          </div>
+          <div style={{ width: "80px", margin: "0 auto" }}>
+            <Button
+              type="primary"
+              size="Xsmall"
+              title="닫기"
+              onClick={togglePopup}
+            />
+          </div>
+        </div>
+      )}
+      {/* 팝업 배경 */}
+      {isPopupOpen && (
+        <div
+          onClick={togglePopup}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 999,
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -7,6 +7,7 @@ import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import ImageSlider from "../../components/imageSlider.tsx";
 
+import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetActivitiesAPI from "../../api/main-activities/getActivitiesAPI.tsx";
 import DeleteActivitiesAPI from "../../api/main-activities/deleteAcitivitiesAPI.tsx";
 
@@ -32,6 +33,7 @@ export default function Activity() {
     10
   );
 
+  const [checkAuth, setCheckAuth] = useState<number>(1);
   const [yearList, setYearList] = useState<number[]>([]);
 
   const [postsToDisplay, setPostsToDisplay] = useState<Activities[]>([]);
@@ -47,6 +49,16 @@ export default function Activity() {
     setSearchParams({ year: selectedYear.toString(), page: page.toString() });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const latestYear = parseInt(moment(new Date()).format("YYYY"));
@@ -181,14 +193,40 @@ export default function Activity() {
                 >
                   {selectedYear}년도
                 </div>
-                <Link to="/activityAdd">
-                  <img
-                    src="../../img/btn/edit_enabled.png"
-                    alt="edit"
-                    style={{ width: "30px", cursor: "pointer" }}
-                    onClick={() => {}}
-                  />
-                </Link>
+                {checkAuth === 1 ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      color: "#777",
+                    }}
+                  >
+                    주요 활동 작성&emsp;
+                    <img
+                      src="../../img/btn/edit_enabled.png"
+                      alt="edit"
+                      style={{
+                        width: "30px",
+                        cursor: "pointer",
+                        opacity: "0.8",
+                        transition: "all 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.opacity = "1";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.opacity = "0.8";
+                      }}
+                      onClick={() => {
+                        window.location.href = "/activityAdd";
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
 
               <div
@@ -220,41 +258,64 @@ export default function Activity() {
                       >
                         {activity.title}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Pretendard-Light",
-                          fontSize: "14px",
-                          color: "#777",
-                        }}
-                      >
-                        <span
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            window.location.href = `/activityEdit?id=${activity.mainActivitiesId}`;
+                      {checkAuth === 1 ? (
+                        <div
+                          style={{
+                            fontFamily: "Pretendard-Light",
+                            fontSize: "14px",
+                            color: "#777",
                           }}
                         >
-                          수정
-                        </span>
-                        &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <span
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            const deleteConfirm =
-                              window.confirm("게시물을 삭제하시겠습니까?");
-                            if (deleteConfirm) {
-                              DeleteActivitiesAPI(activity.mainActivitiesId);
-                            }
-                          }}
-                        >
-                          삭제
-                        </span>
-                      </div>
+                          <span
+                            style={{
+                              cursor: "pointer",
+                              transition: "all 0.1s ease",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.fontWeight = "600";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.fontWeight = "300";
+                            }}
+                            onClick={() => {
+                              window.location.href = `/activityEdit?id=${activity.mainActivitiesId}`;
+                            }}
+                          >
+                            수정
+                          </span>
+                          &nbsp;&nbsp;|&nbsp;&nbsp;
+                          <span
+                            style={{
+                              cursor: "pointer",
+                              transition: "all 0.1s ease",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.fontWeight = "600";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.fontWeight = "300";
+                            }}
+                            onClick={() => {
+                              const deleteConfirm =
+                                window.confirm("게시물을 삭제하시겠습니까?");
+                              if (deleteConfirm) {
+                                DeleteActivitiesAPI(activity.mainActivitiesId);
+                              }
+                            }}
+                          >
+                            삭제
+                          </span>
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
                     </div>
                     <div
                       style={{
                         fontFamily: "Pretendard-Light",
-                        fontSize: "16px",
+                        fontSize: "14px",
                         color: "#777",
+                        marginTop: "2px",
                         marginBottom: "10px",
                       }}
                     >

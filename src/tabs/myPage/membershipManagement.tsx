@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Button from "../../components/button.tsx";
 
@@ -16,13 +17,16 @@ type Members = {
 };
 
 export default function PersonalInfo() {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [membersToDisplay, setMembersToDisplay] = useState<Members[]>([]);
   const [changedRoles, setChangedRoles] = useState<{ [key: number]: boolean }>(
     {}
   );
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
   const maxVisiblePages = 5;
 
@@ -33,7 +37,7 @@ export default function PersonalInfo() {
   const changePage = (page: number) => {
     if (page < 1) page = 1;
     if (page > totalPages) page = totalPages;
-    setCurrentPage(page);
+    setSearchParams({ lis: "membershipManagement", page: page.toString() });
 
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -60,7 +64,10 @@ export default function PersonalInfo() {
     // localStorage에서 selected_id를 가져와 상태를 초기화
     const storedIds = JSON.parse(localStorage.getItem("selected_id") || "[]");
     setSelectedIds(storedIds);
-  }, []);
+    navigate("/myPage?list=membershipManagement&page=1", {
+      replace: true,
+    });
+  }, [navigate]);
 
   const toggleSelect = (id: number) => {
     let updatedIds: number[];
@@ -129,7 +136,16 @@ export default function PersonalInfo() {
             color: "#fff",
           }}
         >
-          회원 관리
+          회원 관리&nbsp;
+          <span
+            style={{
+              fontFamily: "Pretendard-Light",
+              fontSize: "12px",
+              color: "#FF5005",
+            }}
+          >
+            test 기간동안만 개방합니다. (개인정보 마스킹, 일부 기능 제한)
+          </span>
         </div>
         <div
           style={{
@@ -340,16 +356,16 @@ export default function PersonalInfo() {
                   운영진
                 </option>
                 <option
-                  value="ROLE_USER"
+                  value="ROLE_MEMBER"
                   style={{
                     background: "#111015",
                     cursor: "pointer",
                   }}
                 >
-                  아기판다
+                  일반회원
                 </option>
                 <option
-                  value="ROLE_NONE"
+                  value="ROLE_USER"
                   style={{
                     background: "#111015",
                     cursor: "pointer",
@@ -375,7 +391,8 @@ export default function PersonalInfo() {
                 justifyContent: "center",
               }}
             >
-              {member.studentId}
+              202511111
+              {/* {member.studentId} */}
             </div>
             <div
               style={{
@@ -384,7 +401,8 @@ export default function PersonalInfo() {
                 justifyContent: "center",
               }}
             >
-              {member.name}
+              {member.name.slice(0, 1)}**
+              {/* {member.name} */}
             </div>
             <div
               style={{
@@ -393,8 +411,9 @@ export default function PersonalInfo() {
                 justifyContent: "center",
               }}
             >
-              {member.phone.slice(0, 3)}-{member.phone.slice(3, 7)}-
-              {member.phone.slice(7, 11)}
+              010-1234-5678
+              {/* {member.phone.slice(0, 3)}-{member.phone.slice(3, 7)}-
+              {member.phone.slice(7, 11)} */}
             </div>
           </div>
         ))}

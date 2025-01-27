@@ -580,6 +580,17 @@ export default function Introduction() {
                   borderRadius: "20px",
                   boxShadow: "-10px -10px 30px #242424, 15px 15px 30px #000",
                   color: "#2CC295",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  (e.target as HTMLDivElement).style.transform = "scale(1.05)"; // 살짝 확대
+                  (e.target as HTMLDivElement).style.boxShadow =
+                    "-15px -15px 40px rgba(36, 36, 36, 0.5), 20px 20px 40px rgba(0, 0, 0, 0.7)"; // 그림자 효과 강하게
+                }}
+                onMouseLeave={(e) => {
+                  (e.target as HTMLDivElement).style.transform = "scale(1)";
+                  (e.target as HTMLDivElement).style.boxShadow =
+                    "-10px -10px 30px #242424, 15px 15px 30px #000";
                 }}
               >
                 더 알아보기 {">"}

@@ -55,7 +55,9 @@ export default function PersonalInfo() {
       }
       setmyData(data);
       setPreviewImage(data.profileImageUrl);
-      navigate("/myPage?edit=0&changePassword=0", { replace: true });
+      navigate("/myPage?list=personalInfo&edit=0&changePassword=0", {
+        replace: true,
+      });
     });
   }, [navigate]);
 
@@ -96,14 +98,14 @@ export default function PersonalInfo() {
   };
   const onChangePasswordInvalid = (e) => {
     console.log(e, "onInvalid");
-    if (errors.Password) {
-      alert(String(errors.Password.message));
+    if (errorsChangePassword.Password) {
+      alert(String(errorsChangePassword.Password.message));
     } else {
-      if (errors.NewPassword) {
-        alert(String(errors.NewPassword.message));
+      if (errorsChangePassword.NewPassword) {
+        alert(String(errorsChangePassword.NewPassword.message));
       } else {
-        if (errors.ReNewPassword) {
-          alert(String(errors.ReNewPassword.message));
+        if (errorsChangePassword.ReNewPassword) {
+          alert(String(errorsChangePassword.ReNewPassword.message));
         }
       }
     }
@@ -174,10 +176,20 @@ export default function PersonalInfo() {
               style={{
                 fontFamily: "Pretendard-Bold",
                 fontSize: "30px",
+                color: "#fff",
+              }}
+            >
+              &nbsp;비회원
+            </span>
+          ) : myData.role === "ROLE_MEMBER" ? (
+            <span
+              style={{
+                fontFamily: "Pretendard-Bold",
+                fontSize: "30px",
                 color: "#2cc295",
               }}
             >
-              &nbsp;아기판다&nbsp;<span style={{ fontSize: "25px" }}>🐼</span>
+              &nbsp;일반회원&nbsp;<span style={{ fontSize: "25px" }}>🐼</span>
             </span>
           ) : myData.role === "ROLE_ADMIN" ? (
             <span
@@ -218,6 +230,7 @@ export default function PersonalInfo() {
               width: "30px",
               cursor: "pointer",
               opacity: "0.8",
+              transition: "all 0.3s ease",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.opacity = "1";
@@ -226,7 +239,11 @@ export default function PersonalInfo() {
               e.currentTarget.style.opacity = "0.8";
             }}
             onClick={() => {
-              setSearchParams({ edit: "1" });
+              setSearchParams({
+                list: "personalInfo",
+                edit: "1",
+                changePassword: "0",
+              });
             }}
           />
         </div>
@@ -1012,9 +1029,24 @@ export default function PersonalInfo() {
             boxShadow: "-10px -10px 30px #242424, 15px 15px 30px #000",
             color: "#2CC295",
             cursor: "pointer",
+            transition: "all 0.3s ease",
+          }}
+          onMouseEnter={(e) => {
+            (e.target as HTMLDivElement).style.transform = "scale(1.05)"; // 살짝 확대
+            (e.target as HTMLDivElement).style.boxShadow =
+              "-15px -15px 40px rgba(36, 36, 36, 0.5), 20px 20px 40px rgba(0, 0, 0, 0.7)"; // 그림자 효과 강하게
+          }}
+          onMouseLeave={(e) => {
+            (e.target as HTMLDivElement).style.transform = "scale(1)";
+            (e.target as HTMLDivElement).style.boxShadow =
+              "-10px -10px 30px #242424, 15px 15px 30px #000";
           }}
           onClick={() => {
-            setSearchParams({ edit: "0", changePassword: "1" });
+            setSearchParams({
+              list: "personalInfo",
+              edit: "0",
+              changePassword: "1",
+            });
           }}
         >
           비밀번호 변경
@@ -1030,6 +1062,17 @@ export default function PersonalInfo() {
             boxShadow: "-10px -10px 30px #242424, 15px 15px 30px #000",
             color: "#FF5005",
             cursor: "pointer",
+            transition: "all 0.3s ease",
+          }}
+          onMouseEnter={(e) => {
+            (e.target as HTMLDivElement).style.transform = "scale(1.05)"; // 살짝 확대
+            (e.target as HTMLDivElement).style.boxShadow =
+              "-15px -15px 40px rgba(36, 36, 36, 0.5), 20px 20px 40px rgba(0, 0, 0, 0.7)"; // 그림자 효과 강하게
+          }}
+          onMouseLeave={(e) => {
+            (e.target as HTMLDivElement).style.transform = "scale(1)";
+            (e.target as HTMLDivElement).style.boxShadow =
+              "-10px -10px 30px #242424, 15px 15px 30px #000";
           }}
           onClick={() => {
             var confirmDelete = window.confirm("정말 탈퇴하시겠습니까?");
