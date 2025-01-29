@@ -68,7 +68,7 @@ export default function JoinUs(props: JoinUsProps) {
                       marginBottom: "30px",
                     }}
                   >
-                    지금은 지원 기간이 아닙니다.
+                    6기 모집이 마감되었습니다.
                   </div>
                   <div
                     style={{
@@ -78,9 +78,9 @@ export default function JoinUs(props: JoinUsProps) {
                       lineHeight: "1.5",
                     }}
                   >
-                    현재는 신규 회원을 모집하지 않고 있습니다.
+                    현재는 신규 회원 모집 기간이 아닙니다.
                     <br />
-                    다음 학기에 지원하시기 바랍니다.
+                    다음 학기에 다시 지원해주세요.
                   </div>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function JoinUs(props: JoinUsProps) {
                     padding: "0 32px",
                   }}
                 >
-                  이전 모집 공고
+                  6기 모집 공고
                 </div>
                 <hr
                   style={{
@@ -358,13 +358,13 @@ export default function JoinUs(props: JoinUsProps) {
               }}
               style={{
                 width: "100vw",
-                height: "980px",
+                height: "920px",
               }}
             >
               <div
                 style={{
                   position: "absolute",
-                  top: "350px",
+                  top: "320px",
                   left: "50%",
                   transform: "translate(-50%, 0)",
                   width: "400px",
@@ -395,7 +395,7 @@ export default function JoinUs(props: JoinUsProps) {
               <div
                 style={{
                   position: "absolute",
-                  top: "1000px",
+                  top: "960px",
                   left: "50%",
                   transform: "translate(-50%, 0)",
                   width: "1000px",
@@ -409,7 +409,7 @@ export default function JoinUs(props: JoinUsProps) {
               <div
                 style={{
                   position: "absolute",
-                  top: "980px",
+                  top: "920px",
                   width: "100%",
                   height: "300px",
                   background: "#111015",
@@ -436,7 +436,7 @@ export default function JoinUs(props: JoinUsProps) {
                   alt="logo_blk"
                   style={{
                     width: "250px",
-                    marginTop: "150px",
+                    marginTop: "120px",
                   }}
                 />
                 <br />
@@ -448,7 +448,7 @@ export default function JoinUs(props: JoinUsProps) {
                     marginTop: "10px",
                   }}
                 >
-                  6기 모집
+                  6기 모집 중
                 </div>
                 <div
                   style={{
@@ -463,7 +463,7 @@ export default function JoinUs(props: JoinUsProps) {
               </div>
               <div
                 style={{
-                  marginTop: "150px",
+                  marginTop: "120px",
                   marginBottom: "50px",
                   fontFamily: "Pretendard-Bold",
                   fontSize: "28px",

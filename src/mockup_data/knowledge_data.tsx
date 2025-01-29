@@ -24,15 +24,14 @@ export default function KnowledgeData() {
       id: 16,
       title: "2024 상명 데이터 챌린지 공모전 개최",
       date: "2024-09-01",
-      content:
-        "2024년도 상명 데이터 챌린지 공모전을 개최합니다.\n신청일자: 8월 31일 ~ 9월 8일",
+      content: "<p>안녕은</p><p>영원한</p><p>헤어짐은 아니겠지요</p>",
       category: "기술 트랜드 및 뉴스",
     },
     {
       id: 17,
       title: "2023 상명 데이터 챌린지 공모전 개최",
       date: "2024-09-01",
-      content: "2024년도 상명 데이터 챌린지 공모전을 개최합니다.",
+      content: `<p>ㅎㅇ</p><p>ㅎㅇ</p><p>ㅎ</p><p>ㅇ</p><p><span style="color: rgb(230, 0, 0);">ㅎㅇ</span></p><ol><li><span style="color: rgb(255, 255, 255);">ㅎㅇ</span></li></ol>`,
       category: "커리어 및 취업 정보",
     },
     {

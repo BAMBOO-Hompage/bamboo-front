@@ -49,7 +49,7 @@ const CustomQuillEditorView = styled.div`
     box-sizing: border-box;
     height: 40px;
     width: 100%;
-    border: 1px solid #777;
+    border: 1px solid #343434;
     border-radius: 20px 20px 0 0;
     color: #fff;
     font-size: 32px;
@@ -76,7 +76,7 @@ const CustomQuillEditorView = styled.div`
   }
 
   #quillContent {
-    border: 1px solid #777;
+    border: 1px solid #343434;
     border-radius: 0 0 15px 15px;
     background-color: transparent;
 
@@ -84,7 +84,6 @@ const CustomQuillEditorView = styled.div`
       box-sizing: border-box;
       height: 420px;
       width: 100%;
-      padding: 5px 5px;
       border: none;
 
       .ql-editor {

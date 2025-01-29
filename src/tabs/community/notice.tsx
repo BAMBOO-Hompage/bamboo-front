@@ -167,6 +167,12 @@ export default function Notice() {
                       display: "flex",
                       alignItems: "center",
                     }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.border = "0.5px solid #777";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.border = "0.5px solid #343434";
+                    }}
                   >
                     <div style={{ width: "90%", margin: "0 auto" }}>
                       <Link

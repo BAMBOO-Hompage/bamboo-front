@@ -50,7 +50,7 @@ function App() {
           <Route path="/myPage" element={<MyPage />} />
 
           <Route path="/introduction" element={<Introduction />} />
-          <Route path="/joinUs" element={<JoinUs type="basic" />} />
+          <Route path="/joinUs" element={<JoinUs type="inPeriod" />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/activityAdd" element={<ActivityAdd />} />
           <Route path="/activityEdit" element={<ActivityEdit />} />

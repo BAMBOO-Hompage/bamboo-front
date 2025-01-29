@@ -237,7 +237,18 @@ export default function Knoledge() {
                   <img
                     src="../../img/btn/edit_enabled.png"
                     alt="edit"
-                    style={{ width: "30px", cursor: "pointer" }}
+                    style={{
+                      width: "30px",
+                      cursor: "pointer",
+                      opacity: "0.8",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "0.8";
+                    }}
                     onClick={() => {
                       localStorage.setItem("postList", postList);
                     }}
@@ -258,6 +269,12 @@ export default function Knoledge() {
                       marginBottom: "30px",
                       display: "flex",
                       alignItems: "center",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.border = "0.5px solid #777";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.border = "0.5px solid #343434";
                     }}
                   >
                     <div style={{ width: "90%", margin: "0 auto" }}>

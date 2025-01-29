@@ -69,7 +69,7 @@ export default function Nav(props: NavProps) {
           </Link>
         </div>
         <div
-          style={{ width: "720px", display: "flex" }}
+          style={{ width: "680px", display: "flex" }}
           onMouseEnter={() => setHover(true)}
         >
           <div
@@ -225,7 +225,7 @@ export default function Nav(props: NavProps) {
       >
         {/*#111015*/}
         <div
-          style={{ width: "720px", display: "flex" }}
+          style={{ width: "680px", display: "flex" }}
           onMouseEnter={() => setHover(true)}
         >
           <div

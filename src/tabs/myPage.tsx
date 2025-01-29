@@ -110,6 +110,42 @@ export default function MyPage() {
                 >
                   회원 관리
                 </div>
+                <div
+                  className="side_tabs"
+                  style={
+                    postList === "커리큘럼 관리"
+                      ? {
+                          boxSizing: "border-box",
+                          color: "#2CC295",
+                          borderRight: "1px solid #2cc295",
+                        }
+                      : {}
+                  }
+                  onClick={() => {
+                    setPostList("커리큘럼 관리");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                >
+                  커리큘럼 관리
+                </div>
+                <div
+                  className="side_tabs"
+                  style={
+                    postList === "스터디 생성"
+                      ? {
+                          boxSizing: "border-box",
+                          color: "#2CC295",
+                          borderRight: "1px solid #2cc295",
+                        }
+                      : {}
+                  }
+                  onClick={() => {
+                    setPostList("스터디 생성");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                >
+                  스터디 생성
+                </div>
               </div>
             </div>
 

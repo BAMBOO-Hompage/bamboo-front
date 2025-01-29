@@ -269,13 +269,15 @@ export default function Activity() {
                           <span
                             style={{
                               cursor: "pointer",
-                              transition: "all 0.1s ease",
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.fontWeight = "600";
+                              e.currentTarget.style.textDecoration =
+                                "underline #777";
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.fontWeight = "300";
+                              e.currentTarget.style.textDecoration = "none";
                             }}
                             onClick={() => {
                               window.location.href = `/activityEdit?id=${activity.mainActivitiesId}`;
@@ -287,13 +289,15 @@ export default function Activity() {
                           <span
                             style={{
                               cursor: "pointer",
-                              transition: "all 0.1s ease",
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.fontWeight = "600";
+                              e.currentTarget.style.textDecoration =
+                                "underline #777";
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.fontWeight = "300";
+                              e.currentTarget.style.textDecoration = "none";
                             }}
                             onClick={() => {
                               const deleteConfirm =
