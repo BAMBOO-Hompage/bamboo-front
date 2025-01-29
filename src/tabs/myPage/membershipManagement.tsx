@@ -127,7 +127,7 @@ export default function PersonalInfo() {
 
     if (updatedMembers.length > 0) {
       const confirmUpdateRole = window.confirm(
-        "정말 변경하시겠습니까?\n" +
+        "변경 사항을 확인해주세요.\n" +
           updatedMembers
             .map(
               (member) =>

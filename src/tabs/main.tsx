@@ -11,6 +11,8 @@ import "../App.css";
 const historyData = HistoryData();
 
 export default function Main() {
+  const [hovered, setHovered] = useState(false);
+
   useEffect(() => {
     window.onbeforeunload = function pushRefresh() {
       window.scrollTo(0, 0);
@@ -38,7 +40,7 @@ export default function Main() {
             loop
             style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
           >
-            <source src="../../img/main_background.mp4" type="video/mp4" />
+            <source src="../../img/main_background2.mp4" type="video/mp4" />
           </video>
         </div>
         <div
@@ -795,11 +797,57 @@ export default function Main() {
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
-                    "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                    "inset -10px -10px 30px #242424, inset 10px 10px 30px #000",
                   color: "#2CC295",
+                  transition: "box-shadow 0.5s ease",
+                  animation: hovered
+                    ? "shadow-rotate 0.5s linear forwards"
+                    : "shadow-reset 0.5s linear forwards",
                 }}
+                className={hovered ? "rotate-animation" : ""}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
               >
                 지원 안내 {">"}
+                <style>
+                  {`
+                    @keyframes shadow-rotate {
+                      0% {
+                        box-shadow: inset -10px -10px 30px #242424, inset 10px 10px 30px #000;
+                      }
+                      25% {
+                        box-shadow: inset -20px 0px 30px #242424, inset 20px 0px 30px #000;
+                      }
+                      50% {
+                        box-shadow: inset -10px 10px 30px #242424, inset 10px -10px 30px #000;
+                      }
+                      75% {
+                        box-shadow: inset 0px 20px 30px #242424, inset 0px -20px 30px #000;
+                      }
+                      100% {
+                        box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
+                      }
+                    }
+
+                    @keyframes shadow-reset {
+                      0% {
+                        box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
+                      }
+                      25% {
+                        box-shadow: inset 0px 20px 30px #242424, inset 0px -20px 30px #000;
+                      }
+                      50% {
+                        box-shadow: inset -10px 10px 30px #242424, inset 10px -10px 30px #000;
+                      }
+                      75% {
+                        box-shadow: inset -20px 0px 30px #242424, inset 0px 20px 30px #000;
+                      }
+                      100% {
+                        box-shadow: inset -10px -10px 30px #242424, inset 10px 10px 30px #000;
+                      }
+                    }
+                  `}
+                </style>
               </div>
             </div>
           </Link>

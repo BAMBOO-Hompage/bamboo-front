@@ -17,7 +17,7 @@ export default function KnowledgeData() {
       id: 15,
       title: "2025 상명 데이터 챌린지 공모전 개최",
       date: "2024-09-16",
-      content: `<img src="https://github.com/user-attachments/assets/66ee4f9b-b6a1-4a4a-90f3-b3670335fed6" width="200px" /><br />2025년도 상명 데이터 챌린지 공모전을 개최합니다.<br />신청일자: 8월 31일 ~ 9월 8일<br />맹의현`,
+      content: `<p>ㅎㅇㅎㅇ</p><h2>ㅎㅇㅎㅇ</h2><h3>ㅎㅇㅎㅇ</h3>`,
       category: "학습 자료",
     },
     {

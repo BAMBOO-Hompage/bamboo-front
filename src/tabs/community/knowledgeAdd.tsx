@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import MDEditor from "@uiw/react-md-editor";
-import "react-markdown-editor-lite/lib/index.css";
 
 import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
+import ReactEditor from "../../components/ReactEditor.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import "../../App.css";
 
@@ -16,6 +16,7 @@ export default function KnowledgeAdd() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const [content, setContent] = useState<string>("");
   const [showImages, setShowImages] = useState<string[]>([]);
 
@@ -305,22 +306,7 @@ export default function KnowledgeAdd() {
                       padding: "20px",
                     }}
                   >
-                    <div data-color-mode="dark">
-                      <MDEditor
-                        height={460}
-                        value={content}
-                        onChange={(text) => {
-                          setContent(text || "");
-                        }}
-                        className="custom-md-editor"
-                        preview={"edit"}
-                        style={{
-                          resize: "none",
-                          backgroundColor: "transparent",
-                          border: "none",
-                        }}
-                      />
-                    </div>
+                    <ReactEditor content={content} setContent={setContent} />
                   </div>
                 </div>
 
@@ -368,6 +354,7 @@ export default function KnowledgeAdd() {
                     />
                     <img
                       src="../../img/btn/search_enabled.png"
+                      alt="search"
                       style={{ width: "25px" }}
                     />
                     &emsp;사진 선택 (최대 4장)
@@ -408,6 +395,7 @@ export default function KnowledgeAdd() {
                         >
                           <img
                             src="../../img/btn/delete_disabled.png"
+                            alt="delete"
                             style={{ width: "16px", cursor: "pointer" }}
                             onClick={() => {
                               handleDeleteImage(id);

@@ -116,6 +116,7 @@ export default function KnowledgePost() {
                 <div style={{ height: "30px" }}>
                   <img
                     src="../../img/btn/trash_disabled.png"
+                    alt="trash"
                     style={{
                       width: "30px",
                       cursor: "pointer",
@@ -140,6 +141,7 @@ export default function KnowledgePost() {
                   />
                   <img
                     src="../../img/btn/edit_enabled.png"
+                    alt="edit"
                     style={{ width: "30px", cursor: "pointer" }}
                     onClick={() => {
                       window.location.href = "/knowledgeEdit";
