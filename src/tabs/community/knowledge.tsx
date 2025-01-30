@@ -100,8 +100,8 @@ export default function Knoledge() {
                 }}
               >
                 지식 공유
-                <br />
-                게시판
+                {/* <br />
+                게시판 */}
               </div>
 
               <div

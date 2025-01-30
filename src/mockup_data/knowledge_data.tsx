@@ -4,20 +4,11 @@ import "../App.css";
 // post.tsx
 export default function KnowledgeData() {
   return [
-    /*
-        {
-            id: 30,
-            title: '2024-2 데나무 신입 부원 모집',
-            date: '2024-09-01',
-            content: '2024년도 2학기 데나무 신입 부원을 모집합니다.',
-            category: '동아리 공지',
-        },
-        */
     {
       id: 15,
-      title: "2025 상명 데이터 챌린지 공모전 개최",
+      title: "2025 밤부톤 개최",
       date: "2024-09-16",
-      content: `<p>ㅎㅇㅎㅇ</p><h2>ㅎㅇㅎㅇ</h2><h3>ㅎㅇㅎㅇ</h3>`,
+      content: `<p>2024 밤부톤을 개최합니다.</p><p>많은 관심 부탁드립니다.</p><p><br></p><ul><li>개최 일시 : 2025-01-02</li><li>개최 장소 : 상명대학교 공학관 G102</li></ul><p><br></p><p>학우 여러분의 많은 참여 부탁드립니다.</p>`,
       category: "학습 자료",
     },
     {

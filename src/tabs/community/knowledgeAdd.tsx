@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import MDEditor from "@uiw/react-md-editor";
 
 import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
@@ -108,8 +107,6 @@ export default function KnowledgeAdd() {
                 }}
               >
                 지식 공유
-                <br />
-                게시판
               </div>
               <div
                 style={{

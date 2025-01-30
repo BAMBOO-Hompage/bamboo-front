@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import MDEditor from "@uiw/react-md-editor";
+import dompurify from "dompurify";
 
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
@@ -10,6 +11,8 @@ import "../../App.css";
 
 export default function KnowledgePost() {
   const knowledgeData = KnowledgeData();
+
+  const sanitizer = dompurify.sanitize;
 
   const postId = parseInt(localStorage.getItem("postId") || "0");
   const currentPost = knowledgeData.filter((post) => postId == post.id)[0];
@@ -171,24 +174,17 @@ export default function KnowledgePost() {
               </div>
               <div>
                 <div
-                  style={{
-                    marginBottom: "15px",
-                    fontFamily: "Pretendard-Light",
-                    fontSize: "16px",
-                    color: "#fff",
-                    lineHeight: "22px",
+                  className="container"
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizer(`${currentPost.content}`),
                   }}
-                >
-                  <MDEditor.Markdown
-                    style={{
-                      backgroundColor: "transparent",
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
-                      color: "#fff",
-                    }}
-                    source={currentPost.content}
-                  />
-                </div>
+                  style={{
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                    color: "#fff",
+                    lineHeight: "1.5",
+                  }}
+                />
               </div>
             </motion.div>
           </div>

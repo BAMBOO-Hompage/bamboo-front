@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-
 import styled from "styled-components";
+
+// import ImageApi from "../api/imageAPI.tsx";
 
 function ReactModule() {
   return (
@@ -28,11 +29,11 @@ function ReactModule() {
         <button className="ql-italic" />
         <button className="ql-underline" />
         <button className="ql-strike" />
+        <select className="ql-align" />
         <select className="ql-color" />
         <select className="ql-background" />
-        <select className="ql-align" />
-        <button className="ql-list" value="ordered" />
         <button className="ql-list" value="bullet" />
+        <button className="ql-list" value="ordered" />
       </div>
       <div className="ql-formats">
         <button className="ql-blockquote" />
@@ -85,10 +86,12 @@ const CustomQuillEditorView = styled.div`
       height: 420px;
       width: 100%;
       border: none;
+      font-family: Pretendard-Light;
+      font-size: 16px;
 
       .ql-editor {
         p {
-          font-size: 14px;
+          line-height: 1.5;
         }
         ul,
         ol {
@@ -106,11 +109,39 @@ const CustomQuillEditorView = styled.div`
           background: rgba(200, 200, 200, 0.1);
         }
       }
+      /* 플레이스홀더 색상 지정 */
+      .ql-editor.ql-blank::before {
+        color: #777 !important;
+      }
     }
   }
 `;
 
 const ReactEditor = ({ content, setContent }) => {
+  // const quillRef = useRef(null);
+
+  // const imageHandler = () => {
+  //   const input = document.createElement("input");
+  //   input.setAttribute("type", "file");
+  //   input.setAttribute("accept", "image/*");
+  //   input.click();
+
+  //   input.addEventListener("change", async () => {
+  //     const file = input.files?.[0];
+
+  //     try {
+  //       const res = await ImageApi({ img: file });
+  //       const imgUrl = res.data.imgUrl;
+  //       const editor = quillRef.current.getEditor();
+  //       const range = editor.getSelection();
+  //       editor.insertEmbed(range.index, "image", imgUrl);
+  //       editor.setSelection(range.index + 1);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   });
+  // };
+
   const formats: string[] = [
     "header",
     "size",
@@ -132,10 +163,15 @@ const ReactEditor = ({ content, setContent }) => {
     "code-block",
     "clean",
   ];
+
   const modules: {} = useMemo(
     () => ({
       toolbar: {
         container: "#toolBar",
+        // handlers: { image: imageHandler },
+      },
+      clipboard: {
+        matchVisual: false,
       },
     }),
     []
@@ -150,7 +186,7 @@ const ReactEditor = ({ content, setContent }) => {
         formats={formats}
         id="quillContent"
         value={content}
-        placeholder="글을 작성해주세요."
+        placeholder={"내용을 작성해주세요."}
         onChange={setContent}
       />
     </CustomQuillEditorView>

@@ -188,3 +188,12 @@ select {
 .custom-md-editor .w-md-editor-bar {
   display: none !important;
 }
+
+.container p {
+  margin: 0;
+}
+.container ol,
+ul {
+  margin: 0;
+  padding-left: 30px;
+}
