@@ -321,7 +321,7 @@ export default function Knoledge() {
                             color: "#888",
                           }}
                         >
-                          작성일자 : {post.date}
+                          작성자: {"맹의현"}&emsp;작성일자: {post.date}
                         </div>
                       </Link>
                     </div>

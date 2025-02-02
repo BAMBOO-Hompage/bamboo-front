@@ -159,7 +159,7 @@ export default function Nav(props: NavProps) {
             }}
           >
             <Link
-              to="/myPage?edit=&changePassword="
+              to="/personalInfo?edit=&changePassword="
               style={{ textDecoration: "none" }}
             >
               <div

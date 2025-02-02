@@ -30,6 +30,8 @@ export default async function SignupAPI(
         }),
       }
     );
+    console.log(email, password, name, major, studentId, phoneNumber);
+    console.log(signupResponse);
 
     if (!signupResponse.ok) {
       throw new Error("Signup failed");
@@ -39,6 +41,6 @@ export default async function SignupAPI(
     window.location.href = "/login";
     return signupResponse.json();
   } catch (error) {
-    alert("회원가입 중 오류가 발생했습니다." + error);
+    alert("회원가입 중 오류가 발생했습니다: " + error);
   }
 }

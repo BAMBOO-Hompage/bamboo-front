@@ -15,6 +15,7 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     .then((response) => {
       console.log(response);
       if (!response.ok) {
+        alert("-1: Fail Get AccessToken With RefreshToken");
         throw new Error("Failed to refresh access token");
       }
       return response.text();
@@ -29,60 +30,63 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
-async function deleteActivities(accessToken, id) {
-  return fetch(API_SERVER_DOMAIN + `/api/main-activities/${id}`, {
-    method: "DELETE",
+async function postDeactivate(accessToken) {
+  return fetch(API_SERVER_DOMAIN + `/api/members/deactivate`, {
+    method: "POST",
     headers: {
+      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
+    body: JSON.stringify({}),
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to pdelete activies");
+      throw new Error("Failed to logout");
     }
+    removeCookie("accessToken");
+    removeCookie("refreshToken");
+
     return response.json();
   });
 }
 
-export default async function DeleteActivitiesAPI(id) {
+export default async function DeactivateAPI() {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await deleteActivities(accessToken, id);
+      await postDeactivate(accessToken);
 
-      alert("삭제 완료");
-      window.location.reload();
-
-      return 0;
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 100);
     } catch (error) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
+          alert("Refresh accessToken");
 
           const newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
-          await deleteActivities(newAccessToken, id);
+          await postDeactivate(newAccessToken);
 
-          alert("삭제 완료");
-          window.location.reload();
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 100);
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
-          alert("다시 로그인 해주세요.");
           removeCookie("accessToken");
           removeCookie("refreshToken");
+
           window.location.href = "/";
         }
       } else {
-        alert("다시 로그인 해주세요.");
-        removeCookie("accessToken");
         window.location.href = "/";
       }
     }
   } else {
-    alert("다시 로그인 해주세요.");
     window.location.href = "/";
   }
 }

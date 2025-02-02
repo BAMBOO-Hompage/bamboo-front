@@ -15,7 +15,6 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     .then((response) => {
       console.log(response);
       if (!response.ok) {
-        alert("-1: Fail Get AccessToken With RefreshToken");
         throw new Error("Failed to refresh access token");
       }
       return response.text();

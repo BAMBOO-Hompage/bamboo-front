@@ -15,6 +15,7 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     .then((response) => {
       console.log(response);
       if (!response.ok) {
+        alert("-1: Fail Get AccessToken With RefreshToken");
         throw new Error("Failed to refresh access token");
       }
       return response.text();
@@ -29,60 +30,64 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
-async function deleteActivities(accessToken, id) {
-  return fetch(API_SERVER_DOMAIN + `/api/main-activities/${id}`, {
-    method: "DELETE",
+async function postSelectDeactivate(accessToken, id) {
+  return fetch(API_SERVER_DOMAIN + `/api/members/${id}/deactivate`, {
+    method: "POST",
     headers: {
+      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
+    body: JSON.stringify({}),
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to pdelete activies");
+      throw new Error("Failed to logout");
     }
     return response.json();
   });
 }
 
-export default async function DeleteActivitiesAPI(id) {
+export default async function SelectDeactivateAPI(ids) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await deleteActivities(accessToken, id);
+      for (let i = 0; i < ids.length; i++) {
+        await postSelectDeactivate(accessToken, ids[i]);
+      }
 
-      alert("삭제 완료");
+      alert("선택된 회원이 삭제되었습니다.");
+      localStorage.removeItem("selected_id");
       window.location.reload();
-
-      return 0;
     } catch (error) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
+          alert("Refresh accessToken");
 
           const newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
-          await deleteActivities(newAccessToken, id);
+          for (let i = 0; i < ids.length; i++) {
+            await postSelectDeactivate(newAccessToken, ids[i]);
+          }
 
-          alert("삭제 완료");
+          alert("선택된 회원이 삭제되었습니다.");
+          localStorage.removeItem("selected_id");
           window.location.reload();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
-          alert("다시 로그인 해주세요.");
           removeCookie("accessToken");
           removeCookie("refreshToken");
+
           window.location.href = "/";
         }
       } else {
-        alert("다시 로그인 해주세요.");
-        removeCookie("accessToken");
         window.location.href = "/";
       }
     }
   } else {
-    alert("다시 로그인 해주세요.");
     window.location.href = "/";
   }
 }

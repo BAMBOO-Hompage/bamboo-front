@@ -90,13 +90,14 @@ const CustomQuillEditorView = styled.div`
       font-size: 16px;
 
       .ql-editor {
-        p {
-          line-height: 1.5;
-        }
+        line-height: 1.4;
         ul,
         ol {
           padding-left: 0;
           margin-left: 0;
+          li {
+            margin: 5px 0;
+          }
         }
         &::-webkit-scrollbar {
           width: 5px;

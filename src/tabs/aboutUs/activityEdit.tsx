@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import moment from "moment";
@@ -8,22 +8,85 @@ import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
-import PostActivitiesAPI from "../../api/main-activities/postActivitiesAPI.tsx";
+import PatchActivitiesAPI from "../../api/main-activities/patchActivitiesAPI.tsx";
 import "../../App.css";
+import GetActivityAPI from "../../api/main-activities/getActivityAPI.tsx";
+
+type Activity = {
+  mainActivitiesId: number;
+  memberName: string;
+  title: string;
+  startDate: number[];
+  endDate: number[];
+  year: number;
+  views: number;
+  images: string[];
+};
 
 export default function ActivityEdit() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
-  const [images, setImages] = useState<File[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [activityData, setActivityData] = useState<Activity>({
+    mainActivitiesId: 0,
+    memberName: "",
+    title: "",
+    startDate: [],
+    endDate: [],
+    year: 0,
+    views: 0,
+    images: [],
+  });
+  const [images, setImages] = useState<any[]>([]);
   const [showImages, setShowImages] = useState<string[]>([]);
+  const [showNewImages, setShowNewImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    GetActivityAPI(searchParams.get("id")).then((data) => {
+      setActivityData(data);
+      setShowImages(data.images || []);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (activityData.title) {
+      setValue("Title", activityData.title);
+    }
+    if (activityData.startDate.length === 3) {
+      setValue(
+        "StartDate",
+        new Date(
+          activityData.startDate[0],
+          activityData.startDate[1] - 1,
+          activityData.startDate[2] + 1
+        )
+          .toISOString()
+          .split("T")[0]
+      );
+    }
+    if (activityData.endDate.length === 3) {
+      setValue(
+        "EndDate",
+        new Date(
+          activityData.endDate[0],
+          activityData.endDate[1] - 1,
+          activityData.endDate[2] + 1
+        )
+          .toISOString()
+          .split("T")[0]
+      );
+    }
+  }, [activityData, setValue]);
 
   const handleAddImages = (event) => {
     const imageLists = event.target.files; // 선택한 파일들
     let fileLists: File[] = [...images];
-    let fileNameLists: string[] = [...showImages]; // 기존 저장된 파일명들
+    let fileNameLists: string[] = [...showNewImages]; // 기존 저장된 파일명들
 
     for (let i = 0; i < imageLists.length; i++) {
       const currentFileName: string = imageLists[i].name; // 파일명 가져오기
@@ -37,7 +100,15 @@ export default function ActivityEdit() {
     }
 
     setImages(fileLists);
-    setShowImages(fileNameLists); // 파일명 리스트 저장
+    setShowNewImages(fileNameLists); // 파일명 리스트 저장
+  };
+
+  const handleDeleteImage = (id) => {
+    setShowImages(showImages.filter((_, index) => index !== id));
+  };
+  const handleDeleteNewImage = (id) => {
+    setImages(images.filter((_, index) => index !== id));
+    setShowNewImages(showNewImages.filter((_, index) => index !== id));
   };
 
   const onValid = async (e) => {
@@ -45,7 +116,6 @@ export default function ActivityEdit() {
       e.Title + "\n" + e.StartDate + "~" + e.EndDate + "\n" + showImages,
       "onValid"
     );
-
     const year = moment(e.StartDate).format("YYYY");
 
     const formData = new FormData();
@@ -53,22 +123,17 @@ export default function ActivityEdit() {
     formData.append("startDate", e.StartDate);
     formData.append("endDate", e.EndDate);
     formData.append("year", year);
-    // 이미지 배열로 추가
+    formData.append("imageUrls", JSON.stringify(showImages)); // images 배열 형식으로 전송
     images.forEach((file) => {
-      formData.append("images", file); // images 배열 형식으로 전송
+      formData.append("newImages", file); // images 배열 형식으로 전송
     });
 
-    PostActivitiesAPI(formData);
+    PatchActivitiesAPI(searchParams.get("id"), formData);
   };
 
   const onInvalid = (e) => {
     console.log(e, "onInvalid");
-    alert("입력한 정보를 다시 확인해주세요.");
-  };
-
-  // X버튼 클릭 시 이미지 삭제
-  const handleDeleteImage = (id) => {
-    setShowImages(showImages.filter((_, index) => index !== id));
+    alert("입력한 정보를 확인해주세요.");
   };
 
   return (
@@ -127,13 +192,13 @@ export default function ActivityEdit() {
                   className="side_tabs"
                   onClick={() => {
                     const deleteAdd =
-                      window.confirm("작성을 취소하시겠습니까?");
+                      window.confirm("수정을 취소하시겠습니까?");
                     if (deleteAdd) {
-                      window.location.href = "/activity";
+                      window.location.href = "/activity?year=&page=";
                     }
                   }}
                 >
-                  작성 취소
+                  수정 취소
                 </div>
               </div>
             </div>
@@ -182,6 +247,7 @@ export default function ActivityEdit() {
                   <input
                     id="title"
                     type="text"
+                    defaultValue={activityData.title}
                     placeholder="제목을 입력해주세요."
                     {...register("Title", {
                       required: "제목을 입력해주세요.",
@@ -227,6 +293,17 @@ export default function ActivityEdit() {
                   >
                     <input
                       type="date"
+                      defaultValue={
+                        activityData.startDate.length === 3
+                          ? new Date(
+                              activityData.startDate[0],
+                              activityData.startDate[1] - 1,
+                              activityData.startDate[2] + 1
+                            )
+                              .toISOString()
+                              .split("T")[0]
+                          : ""
+                      }
                       style={{
                         fontFamily: "Pretendard-Light",
                         fontSize: "18px",
@@ -239,6 +316,17 @@ export default function ActivityEdit() {
                     ~
                     <input
                       type="date"
+                      defaultValue={
+                        activityData.endDate.length === 3
+                          ? new Date(
+                              activityData.endDate[0],
+                              activityData.endDate[1] - 1,
+                              activityData.endDate[2] + 1
+                            )
+                              .toISOString()
+                              .split("T")[0]
+                          : ""
+                      }
                       style={{
                         fontFamily: "Pretendard-Light",
                         fontSize: "18px",
@@ -309,7 +397,7 @@ export default function ActivityEdit() {
                     justifyContent: "right",
                   }}
                 >
-                  {showImages.length !== 0 ? (
+                  {showImages.length !== 0 || showNewImages.length !== 0 ? (
                     <div
                       style={{
                         width: "620px",
@@ -350,7 +438,39 @@ export default function ActivityEdit() {
                                 "../../img/btn/delete_disabled.png";
                             }}
                           />
-                          &emsp;{image}
+                          &emsp;
+                          <div>{image}</div>
+                        </div>
+                      ))}
+                      {showNewImages.map((image, id) => (
+                        <div
+                          key={id}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontFamily: "Pretendard-Light",
+                            fontSize: "14px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          <img
+                            src="../../img/btn/delete_disabled.png"
+                            alt="delete"
+                            style={{ width: "16px", cursor: "pointer" }}
+                            onClick={() => {
+                              handleDeleteNewImage(id);
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                "../../img/btn/delete_enabled.png";
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                "../../img/btn/delete_disabled.png";
+                            }}
+                          />
+                          &emsp;
+                          <div>{image}</div>
                         </div>
                       ))}
                     </div>

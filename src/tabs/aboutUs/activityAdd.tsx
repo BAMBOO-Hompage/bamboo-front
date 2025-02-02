@@ -40,6 +40,11 @@ export default function ActivityAdd() {
     setShowImages(fileNameLists); // 파일명 리스트 저장
   };
 
+  const handleDeleteImage = (id) => {
+    setImages(images.filter((_, index) => index !== id));
+    setShowImages(showImages.filter((_, index) => index !== id));
+  };
+
   const onValid = async (e) => {
     console.log(
       e.Title + "\n" + e.StartDate + "~" + e.EndDate + "\n" + showImages,
@@ -64,11 +69,6 @@ export default function ActivityAdd() {
   const onInvalid = (e) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
-  };
-
-  // X버튼 클릭 시 이미지 삭제
-  const handleDeleteImage = (id) => {
-    setShowImages(showImages.filter((_, index) => index !== id));
   };
 
   return (

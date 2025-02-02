@@ -194,6 +194,6 @@ select {
 }
 .container ol,
 ul {
-  margin: 0;
+  margin: 5px 0;
   padding-left: 30px;
 }

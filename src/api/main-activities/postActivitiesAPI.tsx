@@ -15,7 +15,6 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     .then((response) => {
       console.log(response);
       if (!response.ok) {
-        alert("-1: Fail Get AccessToken With RefreshToken");
         throw new Error("Failed to refresh access token");
       }
       return response.text();
@@ -59,24 +58,20 @@ export default async function PostActivitiesAPI(formData) {
       await postActivities(accessToken, formData);
 
       alert("작성 완료");
-      window.location.href = "/activity";
-
-      return 0;
+      window.location.href = "/activity?year=&page=&size=3";
     } catch (error) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
-          alert("Refresh accessToken");
 
           const newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
-          console.log(newAccessToken);
           await postActivities(newAccessToken, formData);
 
           alert("작성 완료");
-          window.location.href = "/activity";
+          window.location.href = "/activity?year=&page=&size=3";
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");
@@ -86,6 +81,7 @@ export default async function PostActivitiesAPI(formData) {
         }
       } else {
         alert("다시 로그인 해주세요.");
+        removeCookie("accessToken");
         window.location.href = "/";
       }
     }

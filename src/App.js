@@ -6,7 +6,9 @@ import LogIn from "./tabs/logIn.tsx";
 import PrivacyPolicy from "./tabs/privacyPolicy.tsx";
 import SignUp from "./tabs/signUp.tsx";
 import Main from "./tabs/main.tsx";
-import MyPage from "./tabs/myPage.tsx";
+
+import PersonalInfo from "./tabs/myPage/personalInfo.tsx";
+import MembershipManagement from "./tabs/myPage/membershipManagement.tsx";
 
 import Introduction from "./tabs/aboutUs/introduction.tsx";
 import Activity from "./tabs/aboutUs/activity.tsx";
@@ -47,7 +49,12 @@ function App() {
           <Route path="/logIn" element={<LogIn />} />
           <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
           <Route path="/signUp" element={<SignUp />} />
-          <Route path="/myPage" element={<MyPage />} />
+
+          <Route path="/personalInfo" element={<PersonalInfo />} />
+          <Route
+            path="/membershipManagement"
+            element={<MembershipManagement />}
+          />
 
           <Route path="/introduction" element={<Introduction />} />
           <Route path="/joinUs" element={<JoinUs type="inPeriod" />} />

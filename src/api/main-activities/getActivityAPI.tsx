@@ -29,59 +29,59 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
-async function deleteActivities(accessToken, id) {
+async function getActivity(accessToken, id) {
   return fetch(API_SERVER_DOMAIN + `/api/main-activities/${id}`, {
-    method: "DELETE",
+    method: "GET",
     headers: {
       Authorization: "Bearer " + accessToken,
     },
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to pdelete activies");
+      throw new Error("Failed to logout");
     }
     return response.json();
   });
 }
 
-export default async function DeleteActivitiesAPI(id) {
+export default async function GetActivityAPI(id) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await deleteActivities(accessToken, id);
+      let data = await getActivity(accessToken, id);
+      console.log(data.result);
 
-      alert("삭제 완료");
-      window.location.reload();
-
-      return 0;
+      return data.result;
     } catch (error) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
 
-          const newAccessToken = await getAccessTokenWithRefreshToken(
+          let newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
-          await deleteActivities(newAccessToken, id);
+          let data = await getActivity(newAccessToken, id);
+          console.log(data.result);
 
-          alert("삭제 완료");
-          window.location.reload();
+          return data.result;
         } catch (error) {
-          console.error("Failed to refresh accessToken: ", error);
-          alert("다시 로그인 해주세요.");
+          console.error("Failed to refresh access token:", error);
+          alert("다시 로그인해주세요.");
           removeCookie("accessToken");
           removeCookie("refreshToken");
           window.location.href = "/";
         }
       } else {
+        console.error("No RefreshToken");
         alert("다시 로그인 해주세요.");
         removeCookie("accessToken");
         window.location.href = "/";
       }
     }
   } else {
+    console.error("No AccessToken");
     alert("다시 로그인 해주세요.");
     window.location.href = "/";
   }

@@ -61,7 +61,7 @@ export default async function PatchPasswordAPI(password, newPassword) {
       await patchPassword(accessToken, password, newPassword);
 
       alert("변경 완료");
-      window.location.href = "/myPage";
+      window.location.href = "/personalInfo?edit=&changePassword=";
 
       return;
     } catch (error) {
@@ -78,7 +78,7 @@ export default async function PatchPasswordAPI(password, newPassword) {
           await patchPassword(newAccessToken, password, newPassword);
 
           alert("변경 완료");
-          window.location.href = "/myPage";
+          window.location.href = "/personalInfo?edit=&changePassword=";
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

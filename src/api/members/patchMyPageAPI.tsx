@@ -58,8 +58,8 @@ export default async function PatchMyPageAPI(formData) {
 
       await patchMyPage(accessToken, formData);
 
-      alert("수정 완료");
-      window.location.href = "/myPage";
+      alert("변경 완료");
+      window.location.href = "/personalInfo?edit=&changePassword=";
 
       return;
     } catch (error) {
@@ -74,8 +74,8 @@ export default async function PatchMyPageAPI(formData) {
           );
           await patchMyPage(newAccessToken, formData);
 
-          alert("수정 완료");
-          window.location.href = "/myPage";
+          alert("변경 완료");
+          window.location.href = "/personalInfo?edit=&changePassword=";
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

@@ -29,30 +29,36 @@ async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
     });
 }
 
-async function deleteActivities(accessToken, id) {
+async function patchActivities(accessToken, id, formData) {
   return fetch(API_SERVER_DOMAIN + `/api/main-activities/${id}`, {
-    method: "DELETE",
+    method: "PATCH",
     headers: {
       Authorization: "Bearer " + accessToken,
     },
+    body: formData,
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to pdelete activies");
+      throw new Error("Failed to post activies");
     }
     return response.json();
   });
 }
 
-export default async function DeleteActivitiesAPI(id) {
+export default async function PatchActivitiesAPI(id, formData) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await deleteActivities(accessToken, id);
+      // FormData 확인
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
 
-      alert("삭제 완료");
-      window.location.reload();
+      await patchActivities(accessToken, id, formData);
+
+      alert("수정 완료");
+      window.history.back();
 
       return 0;
     } catch (error) {
@@ -64,10 +70,10 @@ export default async function DeleteActivitiesAPI(id) {
             accessToken,
             refreshToken
           );
-          await deleteActivities(newAccessToken, id);
+          await patchActivities(newAccessToken, id, formData);
 
-          alert("삭제 완료");
-          window.location.reload();
+          alert("수정 완료");
+          window.history.back();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

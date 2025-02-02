@@ -254,7 +254,7 @@ export default function AlexandriaPost() {
                     borderRadius: "30px",
                     border: "none",
                     padding: "20px",
-                    paddingBottom: "120px",
+                    paddingBottom: "100px",
                   }}
                 >
                   <MDEditor.Markdown

@@ -182,7 +182,7 @@ export default function KnowledgePost() {
                     fontFamily: "Pretendard-Light",
                     fontSize: "18px",
                     color: "#fff",
-                    lineHeight: "1.5",
+                    lineHeight: "1.4",
                   }}
                 />
               </div>

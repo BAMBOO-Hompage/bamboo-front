@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import moment from "moment";
 
@@ -24,8 +24,6 @@ type Activities = {
 const maxVisiblePages = 5;
 
 export default function Activity() {
-  const navigate = useNavigate();
-
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
   const selectedYear = parseInt(
@@ -46,7 +44,11 @@ export default function Activity() {
   const changePage = (page: number) => {
     if (page < 1) page = 1;
     if (page > totalPages) page = totalPages;
-    setSearchParams({ year: selectedYear.toString(), page: page.toString() });
+    setSearchParams({
+      year: selectedYear.toString(),
+      page: page.toString(),
+      size: "3",
+    });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -68,10 +70,7 @@ export default function Activity() {
       years.push(year);
     }
     setYearList(years);
-
-    navigate(`/activity?year=${selectedYear}&page=1`, { replace: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
     GetActivitiesAPI(selectedYear, currentPage).then((result) => {
