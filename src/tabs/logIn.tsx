@@ -233,27 +233,39 @@ export default function Login() {
             }}
           >
             <div
-              onClick={togglePopup}
-              className="a"
               style={{
                 fontFamily: "Pretendard-Regular",
                 fontSize: "15px",
                 color: "#777",
                 cursor: "pointer",
-                transition: "all 0.3s ease",
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.fontWeight = "600";
+                e.currentTarget.style.textDecoration = "underline #777";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.fontWeight = "300";
+                e.currentTarget.style.textDecoration = "none";
+              }}
+              onClick={togglePopup}
             >
               비밀번호 찾기
             </div>
             <a
               href="/privacyPolicy"
-              className="a"
               style={{
                 fontFamily: "Pretendard-Regular",
                 fontSize: "15px",
                 color: "#777",
                 textDecorationLine: "none",
-                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.fontWeight = "600";
+                e.currentTarget.style.textDecoration = "underline #777";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.fontWeight = "300";
+                e.currentTarget.style.textDecoration = "none";
               }}
             >
               회원가입

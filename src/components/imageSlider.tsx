@@ -36,7 +36,7 @@ const ImageSlider = ({ images }) => {
           width: "100%",
           height: "100%",
           background:
-            "linear-gradient(90deg, #111015 0%, rgba(255, 255, 255, 0) 25%, rgba(255, 255, 255, 0) 75%, #111015 100%)",
+            "linear-gradient(90deg, #111015 0%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 80%, #111015 100%)",
           zIndex: 3,
         }}
       ></div>

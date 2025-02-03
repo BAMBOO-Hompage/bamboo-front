@@ -3,13 +3,29 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
 
-async function postActivities(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/main-activities", {
+async function postPapers(
+  accessToken,
+  paperName,
+  link,
+  year,
+  topic,
+  tagNames,
+  content
+) {
+  return fetch(API_SERVER_DOMAIN + "/api/library-posts", {
     method: "POST",
     headers: {
+      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    body: formData,
+    body: JSON.stringify({
+      link: link,
+      year: year,
+      paperName: paperName,
+      topic: topic,
+      content: content,
+      tagNames: tagNames,
+    }),
   }).then((response) => {
     if (!response.ok) {
       throw new Error("Failed to post activies");
@@ -18,21 +34,31 @@ async function postActivities(accessToken, formData) {
   });
 }
 
-export default async function PostActivitiesAPI(formData) {
+export default async function PostPapersAPI(
+  paperName,
+  link,
+  year,
+  topic,
+  tagNames,
+  content
+) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      // FormData 확인
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
-
-      await postActivities(accessToken, formData);
+      await postPapers(
+        accessToken,
+        paperName,
+        link,
+        year,
+        topic,
+        tagNames,
+        content
+      );
 
       alert("작성 완료");
-      window.location.href = "/activity?year=&page=&size=3";
+      window.location.href = "/alexandria?tab=&search=&page=1&size=10";
     } catch (error) {
       if (refreshToken) {
         try {
@@ -42,10 +68,18 @@ export default async function PostActivitiesAPI(formData) {
             accessToken,
             refreshToken
           );
-          await postActivities(newAccessToken, formData);
+          await postPapers(
+            newAccessToken,
+            paperName,
+            link,
+            year,
+            topic,
+            tagNames,
+            content
+          );
 
           alert("작성 완료");
-          window.location.href = "/activity?year=&page=&size=3";
+          window.location.href = "/alexandria?tab=&search=&page=1&size=10";
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

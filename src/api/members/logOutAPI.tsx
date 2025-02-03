@@ -1,34 +1,7 @@
-import { setCookie, getCookie, removeCookie } from "../cookies.tsx";
+import { getCookie, removeCookie } from "../cookies.tsx";
+import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.tsx";
 
 var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
-
-async function getAccessTokenWithRefreshToken(accessToken, refreshToken) {
-  return fetch(API_SERVER_DOMAIN + `/auth/reissue`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: accessToken,
-      "Refresh-Token": refreshToken,
-    },
-    body: JSON.stringify({}),
-  })
-    .then((response) => {
-      console.log(response);
-      if (!response.ok) {
-        alert("-1: Fail Get AccessToken With RefreshToken");
-        throw new Error("Failed to refresh access token");
-      }
-      return response.text();
-    })
-    .then((newAccessToken) => {
-      setCookie("accessToken", newAccessToken, {
-        path: "/",
-        expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 1일 뒤 삭제
-      });
-
-      return newAccessToken;
-    });
-}
 
 async function postLogOut(accessToken) {
   return fetch(API_SERVER_DOMAIN + `/api/members/logout`, {

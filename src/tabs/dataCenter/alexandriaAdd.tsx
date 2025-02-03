@@ -1,13 +1,28 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import MDEditor from "@uiw/react-md-editor";
 
 import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
+import ReactEditor from "../../components/ReactEditor.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
+import PostPapersAPI from "../../api/library_posts/postPapersAPI.tsx";
+
 import "../../App.css";
+
+const tagData = [
+  "zero",
+  "zero_shot",
+  "ai",
+  "ml",
+  "dl",
+  "react",
+  "typescript",
+  "python",
+  "data",
+  "science",
+];
 
 export default function AlexandriaAdd() {
   const {
@@ -16,20 +31,41 @@ export default function AlexandriaAdd() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<string>("");
 
   const onValid = (e) => {
-    console.log(e.Category + "\n" + e.Title + "\n" + content + "\n", "onValid");
-    alert(
-      "카테고리 : " +
-        e.Category +
-        "\n제목 : " +
-        e.Title +
-        "\n내용 : \n" +
-        content +
-        "\n사진 : \n"
+    console.log(
+      e.Title +
+        "\n" +
+        e.Link +
+        "\n" +
+        e.Year +
+        "\n" +
+        e.Topic +
+        "\n" +
+        e.Tag +
+        "\n" +
+        content,
+      "onValid"
     );
-    window.location.href = "/alexandria";
+    var tagList = [];
+    if (e.Tag) {
+      const tags = e.Tag.split(/\s+/);
+      const allStartWithHash = tags.every((tag: string) => tag.startsWith("#"));
+      if (!allStartWithHash) {
+        alert("모든 태그는 #으로 시작해야 합니다.");
+        return;
+      }
+      const isValid = tags.every((tag: string) => /^#\w+$/.test(tag));
+      if (!isValid) {
+        alert("태그는 '_'를 제외한 특수문자를 포함할 수 없습니다.");
+        return;
+      }
+      tagList = tags.map((tag: string) => tag.slice(1));
+      console.log("유효한 태그 목록:", tagList);
+    }
+
+    PostPapersAPI(e.Title, e.Link, parseInt(e.Year), e.Topic, tagList, content);
   };
 
   const onInvalid = (e) => {
@@ -51,14 +87,15 @@ export default function AlexandriaAdd() {
           }}
           style={{
             width: "100%",
-            height: "1350px",
+            maxHeight: "1250px",
           }}
         >
           <div
             style={{
               position: "relative",
-              width: "1000px",
+              maxWidth: "1000px",
               margin: "100px auto",
+              padding: "0 40px",
               textAlign: "left",
             }}
           >
@@ -96,7 +133,7 @@ export default function AlexandriaAdd() {
             <div
               style={{
                 width: "100%",
-                height: "860px",
+                minHeight: "860px",
                 backgroundColor: "#171717",
                 borderRadius: "20px",
               }}
@@ -121,6 +158,7 @@ export default function AlexandriaAdd() {
                     className="title"
                     type="text"
                     placeholder="제목을 입력해주세요."
+                    autoComplete="off"
                     {...register("Title", {
                       required: "제목을 입력해주세요.",
                     })}
@@ -137,7 +175,7 @@ export default function AlexandriaAdd() {
                 </div>
                 <div
                   style={{
-                    width: "920px",
+                    maxWidth: "920px",
                     padding: "0 20px",
                     marginBottom: "10px",
                     display: "flex",
@@ -145,20 +183,23 @@ export default function AlexandriaAdd() {
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "18px",
+                    gap: "60px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>
+                  <div style={{ width: "100px", color: "#aaa" }}>
                     ·&emsp;논문 링크<span style={{ color: "#FF5005" }}>*</span>
                   </div>
                   <input
                     id="link"
                     type="text"
                     placeholder="논문 링크를 입력해주세요."
+                    autoComplete="off"
                     {...register("Link", {
                       required: "논문 링크를 입력해주세요.",
                     })}
                     style={{
-                      width: "760px",
+                      flex: "1",
+                      width: "150px",
                       height: "40px",
                       padding: "0 20px",
                       backgroundColor: "#111015",
@@ -172,7 +213,7 @@ export default function AlexandriaAdd() {
                 </div>
                 <div
                   style={{
-                    width: "920px",
+                    maxWidth: "920px",
                     padding: "0 20px",
                     marginBottom: "10px",
                     display: "flex",
@@ -180,20 +221,23 @@ export default function AlexandriaAdd() {
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "18px",
+                    gap: "60px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>
+                  <div style={{ width: "100px", color: "#aaa" }}>
                     ·&emsp;연도<span style={{ color: "#FF5005" }}>*</span>
                   </div>
                   <input
                     id="year"
                     type="number"
                     placeholder="논문 작성 연도를 입력해주세요."
+                    autoComplete="off"
                     {...register("Year", {
                       required: "논문 작성 연도를 입력해주세요.",
                     })}
                     style={{
-                      width: "760px",
+                      flex: "1",
+                      width: "150px",
                       height: "40px",
                       padding: "0 20px",
                       backgroundColor: "#111015",
@@ -207,7 +251,7 @@ export default function AlexandriaAdd() {
                 </div>
                 <div
                   style={{
-                    width: "920px",
+                    maxWidth: "920px",
                     padding: "0 20px",
                     marginBottom: "10px",
                     display: "flex",
@@ -215,20 +259,23 @@ export default function AlexandriaAdd() {
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "18px",
+                    gap: "60px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>
+                  <div style={{ width: "100px", color: "#aaa" }}>
                     ·&emsp;주제<span style={{ color: "#FF5005" }}>*</span>
                   </div>
                   <input
                     id="topic"
                     type="text"
                     placeholder="논문 주제를 입력해주세요."
+                    autoComplete="off"
                     {...register("Topic", {
                       required: "논문 주제를 입력해주세요.",
                     })}
                     style={{
-                      width: "760px",
+                      flex: "1",
+                      width: "150px",
                       height: "40px",
                       padding: "0 20px",
                       backgroundColor: "#111015",
@@ -242,7 +289,7 @@ export default function AlexandriaAdd() {
                 </div>
                 <div
                   style={{
-                    width: "920px",
+                    maxWidth: "920px",
                     padding: "0 20px",
                     marginBottom: "20px",
                     display: "flex",
@@ -250,18 +297,21 @@ export default function AlexandriaAdd() {
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "18px",
+                    gap: "60px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>·&emsp;태그</div>
+                  <div style={{ width: "100px", color: "#aaa" }}>
+                    ·&emsp;태그
+                  </div>
                   <input
                     id="tag"
                     type="text"
                     placeholder="태그를 추가해보세요.  ex) #zero_shot"
-                    {...register("Tag", {
-                      required: "태그를 추가해보세요.",
-                    })}
+                    autoComplete="off"
+                    {...register("Tag", {})}
                     style={{
-                      width: "760px",
+                      flex: "1",
+                      width: "150px",
                       height: "40px",
                       padding: "0 20px",
                       backgroundColor: "#111015",
@@ -277,7 +327,7 @@ export default function AlexandriaAdd() {
                   style={{
                     boxSizing: "border-box",
                     width: "100%",
-                    height: "500px",
+                    minHeight: "500px",
                     marginBottom: "20px",
                     borderRadius: "30px",
                     border: "none",
@@ -287,30 +337,13 @@ export default function AlexandriaAdd() {
                     padding: "20px",
                   }}
                 >
-                  <div data-color-mode="dark">
-                    <MDEditor
-                      height={460}
-                      value={content}
-                      onChange={(text) => {
-                        setContent(text || "");
-                      }}
-                      className="custom-md-editor"
-                      preview={"edit"}
-                      style={{
-                        resize: "none",
-                        backgroundColor: "transparent",
-                        border: "none",
-                      }}
-                    />
-                  </div>
+                  <ReactEditor content={content} setContent={setContent} />
                 </div>
 
                 <div
                   style={{
-                    position: "absolute",
-                    bottom: "20px",
-                    right: "20px",
-                    width: "100%",
+                    maxWidth: "1000px",
+                    paddingBottom: "20px",
                     display: "flex",
                     justifyContent: "right",
                     gap: "10px",

@@ -8,9 +8,10 @@ import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
-import PatchActivitiesAPI from "../../api/main-activities/patchActivitiesAPI.tsx";
-import "../../App.css";
 import GetActivityAPI from "../../api/main-activities/getActivityAPI.tsx";
+import PatchActivitiesAPI from "../../api/main-activities/patchActivitiesAPI.tsx";
+
+import "../../App.css";
 
 type Activity = {
   mainActivitiesId: number;

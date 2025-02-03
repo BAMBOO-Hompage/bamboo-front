@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import MDEditor from "@uiw/react-md-editor";
 import dompurify from "dompurify";
 
 import Nav from "../../components/nav.tsx";

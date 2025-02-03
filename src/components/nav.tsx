@@ -267,7 +267,10 @@ export default function Nav(props: NavProps) {
             onMouseEnter={() => setCurrentFocus("dataCenter")}
             onMouseLeave={() => setCurrentFocus("")}
           >
-            <Link to="/alexandria" style={{ textDecoration: "none" }}>
+            <Link
+              to="/alexandria?tab=&search=&page=1&size=10"
+              style={{ textDecoration: "none" }}
+            >
               <div className="nav_tabs">알렉산드리아 도서관</div>
             </Link>
             <Link to="/hallOfFame" style={{ textDecoration: "none" }}>

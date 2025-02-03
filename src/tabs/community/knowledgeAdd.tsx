@@ -262,6 +262,7 @@ export default function KnowledgeAdd() {
                     id="title"
                     type="text"
                     placeholder="제목을 입력해주세요."
+                    autoComplete="off"
                     {...register("Title", {
                       required: "제목을 입력해주세요.",
                     })}

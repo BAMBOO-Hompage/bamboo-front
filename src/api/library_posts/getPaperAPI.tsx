@@ -3,63 +3,59 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
 
-async function postActivities(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/main-activities", {
-    method: "POST",
+async function getPaper(accessToken, id) {
+  return fetch(API_SERVER_DOMAIN + `/api/library-posts/${id}`, {
+    method: "GET",
     headers: {
       Authorization: "Bearer " + accessToken,
     },
-    body: formData,
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to post activies");
+      throw new Error("Failed to logout");
     }
     return response.json();
   });
 }
 
-export default async function PostActivitiesAPI(formData) {
+export default async function GetPaperAPI(id) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      // FormData 확인
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
+      let data = await getPaper(accessToken, id);
+      console.log(data.result);
 
-      await postActivities(accessToken, formData);
-
-      alert("작성 완료");
-      window.location.href = "/activity?year=&page=&size=3";
+      return data.result;
     } catch (error) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
 
-          const newAccessToken = await getAccessTokenWithRefreshToken(
+          let newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
-          await postActivities(newAccessToken, formData);
+          let data = await getPaper(newAccessToken, id);
+          console.log(data.result);
 
-          alert("작성 완료");
-          window.location.href = "/activity?year=&page=&size=3";
+          return data.result;
         } catch (error) {
-          console.error("Failed to refresh accessToken: ", error);
-          alert("다시 로그인 해주세요.");
+          console.error("Failed to refresh access token:", error);
+          alert("다시 로그인해주세요.");
           removeCookie("accessToken");
           removeCookie("refreshToken");
           window.location.href = "/";
         }
       } else {
+        console.error("No RefreshToken");
         alert("다시 로그인 해주세요.");
         removeCookie("accessToken");
         window.location.href = "/";
       }
     }
   } else {
+    console.error("No AccessToken");
     alert("다시 로그인 해주세요.");
     window.location.href = "/";
   }

@@ -49,10 +49,10 @@ export default function Signup() {
     setIsTimerActive(true);
   };
 
-  const onEmailValid = (e) => {
+  const onEmailValid = async (e) => {
     var studentNumToEmail = `${e.StudentNum}@sangmyung.kr`;
 
-    VerificationRequestsAPI(studentNumToEmail);
+    await VerificationRequestsAPI(studentNumToEmail);
     setValidEmail(true);
     startTimer();
     setStudentNum(e.StudentNum);

@@ -1,22 +1,83 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import MDEditor from "@uiw/react-md-editor";
+import dompurify from "dompurify";
 
 import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import AlexandriaData from "../../mockup_data/alexandria_data.tsx";
+
+import GetPaperAPI from "../../api/library_posts/getPaperAPI.tsx";
+import DeletePapersAPI from "../../api/library_posts/deletePapersAPI.tsx";
+import MyPageAPI from "../../api/members/myPageAPI.tsx";
+
 import "../../App.css";
 
-export default function AlexandriaPost() {
-  const alexandriaData = AlexandriaData();
+type Paper = {
+  libraryPostId: number;
+  paperName: string;
+  link: string;
+  year: string;
+  speaker: { studentId: number; name: string };
+  topic: string;
+  tagNames: string[];
+  content: string;
+};
 
+type MyDataType = {
+  studentId: string;
+  email: string;
+  name: string;
+  major: string;
+  phone: string;
+  role: string;
+  profileImageUrl: string;
+};
+
+export default function AlexandriaPost() {
+  const sanitizer = dompurify.sanitize;
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [paperData, setPaperData] = useState<Paper>({
+    libraryPostId: 0,
+    paperName: "",
+    link: "",
+    year: "",
+    speaker: { studentId: 0, name: "" },
+    topic: "",
+    tagNames: [],
+    content: "",
+  });
   const [comment, setComment] = useState("");
 
-  const postId = parseInt(localStorage.getItem("postId") || "0");
-  const currentPost = alexandriaData.filter((post) => postId == post.id)[0];
+  const [myData, setmyData] = useState<MyDataType>({
+    studentId: "",
+    email: "",
+    name: "",
+    major: "",
+    phone: "",
+    role: "",
+    profileImageUrl: "",
+  });
+  const [previewImage, setPreviewImage] = useState("");
+
+  useEffect(() => {
+    GetPaperAPI(searchParams.get("id")).then((data) => {
+      setPaperData(data);
+    });
+  }, [searchParams]);
+
+  useEffect(() => {
+    MyPageAPI().then((data) => {
+      if (!data.profileImageUrl) {
+        data.profileImageUrl = "../img/icon/base_profile.png";
+      }
+      setmyData(data);
+      setPreviewImage(data.profileImageUrl);
+    });
+  }, []);
 
   return (
     <div>
@@ -80,24 +141,43 @@ export default function AlexandriaPost() {
                 width: "100%",
                 marginBottom: "10px",
                 display: "flex",
-                justifyContent: "right",
-                gap: "5px",
+                justifyContent: "space-between",
               }}
             >
               <Button
                 type="destructive"
                 size="Xsmall"
-                title="목록"
+                title="삭제"
                 onClick={() => {
-                  window.history.back();
+                  const deleteConfirm =
+                    window.confirm("게시물을 삭제하시겠습니까?");
+                  if (deleteConfirm) {
+                    DeletePapersAPI(paperData.libraryPostId);
+                  }
                 }}
               />
-              <Button
-                type="primary"
-                size="Xsmall"
-                title="수정"
-                onClick={() => {}}
-              />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "right",
+                  gap: "10px",
+                }}
+              >
+                <Button
+                  type="destructive"
+                  size="Xsmall"
+                  title="목록"
+                  onClick={() => {
+                    window.history.back();
+                  }}
+                />
+                <Button
+                  type="primary"
+                  size="Xsmall"
+                  title="수정"
+                  onClick={() => {}}
+                />
+              </div>
             </div>
 
             <div
@@ -116,8 +196,8 @@ export default function AlexandriaPost() {
               >
                 <div
                   style={{
-                    width: "100%",
-                    height: "40px",
+                    width: "920px",
+                    minHeight: "40px",
                     padding: "0 20px",
                     marginBottom: "20px",
                     fontFamily: "Pretendard-Bold",
@@ -125,7 +205,7 @@ export default function AlexandriaPost() {
                     color: "#fff",
                   }}
                 >
-                  {currentPost.title}
+                  {paperData.paperName}
                 </div>
                 <div
                   style={{
@@ -144,7 +224,7 @@ export default function AlexandriaPost() {
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href={currentPost.link}
+                    href={paperData.link}
                     style={{
                       width: "760px",
                       padding: "0 20px",
@@ -154,7 +234,7 @@ export default function AlexandriaPost() {
                       color: "#fff",
                     }}
                   >
-                    {currentPost.link}
+                    {paperData.link}
                   </a>
                 </div>
                 <div
@@ -181,7 +261,7 @@ export default function AlexandriaPost() {
                       color: "#fff",
                     }}
                   >
-                    {currentPost.year}
+                    {paperData.year}
                   </div>
                 </div>
                 <div
@@ -208,7 +288,7 @@ export default function AlexandriaPost() {
                       color: "#fff",
                     }}
                   >
-                    {currentPost.subject}
+                    {paperData.topic}
                   </div>
                 </div>
                 <div
@@ -235,7 +315,7 @@ export default function AlexandriaPost() {
                       color: "#fff",
                     }}
                   >
-                    {currentPost.tag}
+                    {paperData.tagNames.map((tag) => `#${tag} `)}
                   </div>
                 </div>
                 <hr
@@ -257,14 +337,17 @@ export default function AlexandriaPost() {
                     paddingBottom: "100px",
                   }}
                 >
-                  <MDEditor.Markdown
+                  <div
+                    className="container"
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizer(`${paperData.content}`),
+                    }}
                     style={{
-                      backgroundColor: "transparent",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       color: "#fff",
+                      lineHeight: "1.4",
                     }}
-                    source={currentPost.content}
                   />
                 </div>
                 <hr
@@ -295,17 +378,30 @@ export default function AlexandriaPost() {
                         fontFamily: "Pretendard-Bold",
                         fontSize: "16px",
                         color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
-                      <img src="#" style={{ marginRight: "20px" }} />
-                      {"휴먼지능정보공학전공_맹의현"}
+                      <img
+                        src={previewImage}
+                        alt="profile"
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
+                      {myData.major}_{myData.name}
                     </div>
-                    <Button
-                      type={comment.trim() ? "primary" : "destructive"}
-                      size="small"
-                      title="댓글 등록"
-                      onClick={() => {}}
-                    />
+                    <div style={{ display: comment.trim() ? "" : "none" }}>
+                      <Button
+                        type="primary"
+                        size="small"
+                        title="댓글 등록"
+                        onClick={() => {}}
+                      />
+                    </div>
                   </div>
                   <div
                     style={{

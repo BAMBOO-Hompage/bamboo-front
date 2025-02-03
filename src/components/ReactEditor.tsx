@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef } from "react";
+import React, { useMemo, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
@@ -48,8 +48,9 @@ function ReactModule() {
 const CustomQuillEditorView = styled.div`
   #toolBar {
     box-sizing: border-box;
-    height: 40px;
+    min-height: 40px;
     width: 100%;
+    padding: 0;
     border: 1px solid #343434;
     border-radius: 20px 20px 0 0;
     color: #fff;
@@ -58,7 +59,6 @@ const CustomQuillEditorView = styled.div`
     .ql-formats {
       display: inline-block;
       position: relative;
-      top: -10px;
 
       svg {
         width: 18px;
@@ -119,7 +119,7 @@ const CustomQuillEditorView = styled.div`
 `;
 
 const ReactEditor = ({ content, setContent }) => {
-  // const quillRef = useRef(null);
+  const quillRef = useRef<ReactQuill | null>(null);
 
   // const imageHandler = () => {
   //   const input = document.createElement("input");
@@ -133,15 +133,45 @@ const ReactEditor = ({ content, setContent }) => {
   //     try {
   //       const res = await ImageApi({ img: file });
   //       const imgUrl = res.data.imgUrl;
-  //       const editor = quillRef.current.getEditor();
-  //       const range = editor.getSelection();
-  //       editor.insertEmbed(range.index, "image", imgUrl);
-  //       editor.setSelection(range.index + 1);
+  //       if (quillRef.current) {
+  //         const editor = quillRef.current.getEditor();
+  //         const range = editor.getSelection();
+  //         editor.insertEmbed(range.index, "image", reader.result);
+  //         editor.setSelection(range.index + 1);
+  //       }
   //     } catch (error) {
   //       console.log(error);
   //     }
   //   });
   // };
+
+  useEffect(() => {
+    if (quillRef.current && content) {
+      const editor = quillRef.current.getEditor();
+      const regex = /https?:\/\/[^\s]+|(?:www\.)[^\s]+/g;
+      const ops = editor.getContents().ops;
+
+      if (ops) {
+        ops.forEach((op) => {
+          if (typeof op.insert === "string") {
+            const matches = op.insert.match(regex);
+            if (matches) {
+              matches.forEach((match) => {
+                const index = editor.getText().indexOf(match);
+                editor.formatText(index, match.length, "link", match);
+              });
+            }
+          }
+        });
+      }
+    }
+  }, [content]);
+
+  const handleTextChange = (value: string) => {
+    if (value !== content) {
+      setContent(value);
+    }
+  };
 
   const formats: string[] = [
     "header",
@@ -182,13 +212,14 @@ const ReactEditor = ({ content, setContent }) => {
     <CustomQuillEditorView>
       <div id="toolBar">{ReactModule()}</div>
       <ReactQuill
+        ref={quillRef}
         theme="snow"
         modules={modules}
         formats={formats}
         id="quillContent"
         value={content}
         placeholder={"내용을 작성해주세요."}
-        onChange={setContent}
+        onChange={handleTextChange}
       />
     </CustomQuillEditorView>
   );

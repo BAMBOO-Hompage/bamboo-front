@@ -104,10 +104,6 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-
-.a:hover {
-  font-weight: 700;
-}
 select {
   outline: none;
 }
@@ -189,11 +185,19 @@ select {
   display: none !important;
 }
 
+.container h1,
+h2,
+h3 {
+  margin: 15px 0;
+}
 .container p {
-  margin: 0;
+  margin: 5px;
 }
 .container ol,
 ul {
-  margin: 5px 0;
+  margin: 10px 0;
   padding-left: 30px;
+}
+.container li {
+  margin: 5px 0;
 }

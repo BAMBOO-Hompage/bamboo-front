@@ -6,7 +6,8 @@ export default function BottomInfo() {
     <div
       style={{
         width: "100vw",
-        height: "250px",
+        minHeight: "190px",
+        padding: "30px 0",
         backgroundColor: "#2CC295",
         textAlign: "left",
       }}
@@ -15,7 +16,7 @@ export default function BottomInfo() {
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "30px 40px 0 ",
+          padding: "0 40px",
           display: "flex",
           justifyContent: "space-between",
         }}
@@ -23,7 +24,7 @@ export default function BottomInfo() {
         <div
           style={{
             fontFamily: "Pretendard-Light",
-            fontSize: "16px",
+            fontSize: "14px",
             color: "#fff",
           }}
         >
@@ -90,6 +91,7 @@ export default function BottomInfo() {
             fontFamily: "Pretendard-SemiBold",
             fontSize: "18px",
             color: "#fff",
+            paddingLeft: "20px",
           }}
         >
           {" "}

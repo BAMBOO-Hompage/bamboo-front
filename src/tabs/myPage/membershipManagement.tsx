@@ -25,7 +25,6 @@ type Members = {
 const maxVisiblePages = 5;
 
 export default function PersonalInfo() {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
