@@ -114,7 +114,7 @@ export default function PostEdit() {
                   textShadow: "0 0 0.1em, 0 0 0.1em",
                 }}
               >
-                공지사항
+                공지 사항
               </div>
               <div
                 style={{

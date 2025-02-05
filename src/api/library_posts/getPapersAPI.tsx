@@ -47,6 +47,7 @@ export default async function GetPapersAPI(tab, keyword, page) {
         } catch (error) {
           console.error("Failed to refresh access token:", error);
           alert("다시 로그인해주세요.");
+          alert(tab + "\n" + keyword + "\n" + page);
           removeCookie("accessToken");
           removeCookie("refreshToken");
           window.location.href = "/";

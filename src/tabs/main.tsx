@@ -50,6 +50,7 @@ export default function Main() {
             left: "0",
             width: "100vw",
             height: "100vh",
+            border: "none",
             opacity: "0.6",
             backgroundColor: "#000",
             zIndex: "-1",

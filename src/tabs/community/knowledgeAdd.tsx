@@ -106,7 +106,7 @@ export default function KnowledgeAdd() {
                   textShadow: "0 0 0.1em, 0 0 0.1em",
                 }}
               >
-                지식 공유
+                정보 공유
               </div>
               <div
                 style={{

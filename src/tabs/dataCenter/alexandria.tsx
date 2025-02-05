@@ -202,6 +202,12 @@ export default function Alexandria() {
                     <option
                       value="논문 이름"
                       style={{ background: "#111015", cursor: "pointer" }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "#2cc295";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "#111015";
+                      }}
                     >
                       논문 이름
                     </option>
@@ -440,7 +446,7 @@ export default function Alexandria() {
                             transition: "transform 0.3s ease",
                           }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = "scale(1.3)";
+                            e.currentTarget.style.transform = "scale(1.4)";
                           }}
                           onMouseLeave={(e) => {
                             e.currentTarget.style.transform = "scale(1)";

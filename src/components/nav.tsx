@@ -61,8 +61,7 @@ export default function Nav(props: NavProps) {
               src="../img/nav_logo.png"
               alt="nav_logo"
               style={{
-                width: "90px",
-                marginTop: "5px",
+                width: "100px",
                 transition: "all 0.2s ease",
               }}
             />
@@ -287,10 +286,10 @@ export default function Nav(props: NavProps) {
               style={{ textDecoration: "none" }}
               onClick={() => sessionStorage.clear()}
             >
-              <div className="nav_tabs">공지사항</div>
+              <div className="nav_tabs">공지 사항</div>
             </Link>
             <Link to="/knowledge" style={{ textDecoration: "none" }}>
-              <div className="nav_tabs">지식 공유 게시판</div>
+              <div className="nav_tabs">정보 공유</div>
             </Link>
           </div>
         </div>

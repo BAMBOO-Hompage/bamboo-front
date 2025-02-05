@@ -407,7 +407,7 @@ export default function AlexandriaPost() {
                     style={{
                       boxSizing: "border-box",
                       width: "100%",
-                      height: "100px",
+                      height: "120px",
                       padding: "10px 15px",
                       borderRadius: "20px",
                       backgroundColor: "#222",
@@ -445,97 +445,6 @@ export default function AlexandriaPost() {
                 >
                   댓글 {"5"}개
                 </div>
-
-                <div style={{ padding: "0 20px 20px" }}>
-                  <div
-                    style={{
-                      marginBottom: "10px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily: "Pretendard-SemiBold",
-                        fontSize: "16px",
-                        color: "#fff",
-                      }}
-                    >
-                      <img src="#" style={{ marginRight: "20px" }} />
-                      {"휴먼지능정보공학전공_맹의현"}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "14px",
-                        color: "#777",
-                      }}
-                    >
-                      <span
-                        style={{
-                          cursor: "pointer",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.fontWeight = "600";
-                          e.currentTarget.style.textDecoration =
-                            "underline #777";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.fontWeight = "300";
-                          e.currentTarget.style.textDecoration = "none";
-                        }}
-                        onClick={() => {}}
-                      >
-                        수정
-                      </span>
-                      &nbsp;&nbsp;|&nbsp;&nbsp;
-                      <span
-                        style={{
-                          cursor: "pointer",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.fontWeight = "600";
-                          e.currentTarget.style.textDecoration =
-                            "underline #777";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.fontWeight = "300";
-                          e.currentTarget.style.textDecoration = "none";
-                        }}
-                        onClick={() => {}}
-                      >
-                        삭제
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      boxSizing: "border-box",
-                      width: "100%",
-                      padding: "10px 25px",
-                      borderRadius: "20px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily: "Pretendard-ExtraLight",
-                        fontSize: "16px",
-                        color: "#fff",
-                        width: "100%",
-                        border: "none",
-                        background: "transparent",
-                        resize: "none",
-                        outline: "none",
-                        lineHeight: "1.4",
-                      }}
-                    >
-                      {`이 논문은 중요한 주제를 다루고 있으며, 연구 질문이 명확하게 설정되어 있어 학문적 기여도가 높습니다. 저자는 기존 문헌을 잘 정리하고, 연구의 필요성을 잘 설명하였습니다. 또한, 실험 설계와 데이터 수집이 신중하게 이루어진 점도 긍정적으로 평가할 수 있습니다.
-그러나 몇 가지 개선점이 눈에 띕니다. 첫째, 연구 방법론에서 사용된 통계 분석 기법에 대한 설명이 부족하여, 결과의 신뢰성에 대한 확신을 가지기 어렵습니다. 특히, 변수 간의 상관관계 분석에서 사용된 방법이 보다 구체적으로 설명될 필요가 있습니다. 둘째, 실험 결과에 대한 해석이 다소 주관적으로 보이며, 대안적 설명 가능성을 충분히 고려하지 않은 점이 아쉽습니다.`}
-                    </div>
-                  </div>
-                </div>
-
                 <div style={{ padding: "0 20px 20px" }}>
                   <div
                     style={{
@@ -562,6 +471,24 @@ export default function AlexandriaPost() {
                         color: "#777",
                       }}
                     >
+                      <span
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.fontWeight = "600";
+                          e.currentTarget.style.textDecoration =
+                            "underline #777";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.fontWeight = "300";
+                          e.currentTarget.style.textDecoration = "none";
+                        }}
+                        onClick={() => {}}
+                      >
+                        답글 달기
+                      </span>
+                      &nbsp;&nbsp;|&nbsp;&nbsp;
                       <span
                         style={{
                           cursor: "pointer",

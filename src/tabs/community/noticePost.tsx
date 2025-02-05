@@ -12,7 +12,7 @@ export default function NoticePost() {
   const noticeData = NoticeData();
 
   const postId = parseInt(localStorage.getItem("postId") || "0");
-  const currentPost = noticeData.filter((post) => postId == post.id)[0];
+  const currentPost = noticeData.filter((post) => postId === post.id)[0];
 
   return (
     <div>
@@ -57,7 +57,7 @@ export default function NoticePost() {
                   textShadow: "0 0 0.1em, 0 0 0.1em",
                 }}
               >
-                공지사항
+                공지 사항
               </div>
               <div
                 style={{
@@ -114,6 +114,7 @@ export default function NoticePost() {
                 <div style={{ height: "30px" }}>
                   <img
                     src="../../img/btn/trash_disabled.png"
+                    alt="trash"
                     style={{
                       width: "30px",
                       cursor: "pointer",
@@ -138,6 +139,7 @@ export default function NoticePost() {
                   />
                   <img
                     src="../../img/btn/edit_enabled.png"
+                    alt="edit"
                     style={{ width: "30px", cursor: "pointer" }}
                     onClick={() => {
                       window.location.href = "/noticeEdit";
