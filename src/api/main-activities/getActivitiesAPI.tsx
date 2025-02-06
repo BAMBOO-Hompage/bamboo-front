@@ -1,4 +1,4 @@
-var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
+var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
 export default async function GetActivitiesAPI(year, page) {
   try {

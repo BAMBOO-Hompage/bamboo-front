@@ -332,8 +332,8 @@ export default function Alexandria() {
             >
               <div style={{ width: "340px" }}>논문 이름</div>
               <div style={{ width: "70px" }}>연도</div>
-              <div style={{ width: "140px" }}>태그</div>
-              <div style={{ width: "200px" }}>주제</div>
+              <div style={{ width: "100px" }}>태그</div>
+              <div style={{ width: "240px" }}>주제</div>
               <div style={{ width: "80px" }}>발표자</div>
               <div style={{ width: "100px" }}>논문</div>
             </div>
@@ -370,7 +370,7 @@ export default function Alexandria() {
                     <div style={{ width: "70px" }}>{paper.year}</div>
                     <div
                       style={{
-                        width: "140px",
+                        width: "100px",
                         overflow: "hidden",
                       }}
                     >
@@ -390,7 +390,7 @@ export default function Alexandria() {
                     </div>
                     <div
                       style={{
-                        width: "200px",
+                        width: "240px",
                         display: "-webkit-box",
                         WebkitLineClamp: 4,
                         WebkitBoxOrient: "vertical",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-var API_SERVER_DOMAIN = "http://localhost:8080/";
+var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
 export default function StudyPostAPI() {
   const [studyPostList, setstudyPostList] = useState(null);

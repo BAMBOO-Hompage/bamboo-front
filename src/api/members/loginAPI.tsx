@@ -1,6 +1,6 @@
 import { setCookie } from "../cookies.tsx";
 
-var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
+var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
 export default function LogInAPI(studentId: number, password: string) {
   fetch(`${API_SERVER_DOMAIN}/api/members/login`, {

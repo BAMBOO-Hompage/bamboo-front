@@ -1,7 +1,7 @@
 import { getCookie, removeCookie } from "../cookies.tsx";
 import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.tsx";
 
-var API_SERVER_DOMAIN = "http://52.78.239.177:8080";
+var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
 async function patchRole(accessToken, memberId, role) {
   return fetch(API_SERVER_DOMAIN + `/api/members/${memberId}/role`, {
