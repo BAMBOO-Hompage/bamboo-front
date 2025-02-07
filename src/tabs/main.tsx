@@ -22,7 +22,7 @@ export default function Main() {
   return (
     <div>
       <Nav type="main" />
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100vw" }}>
         <div
           style={{
             position: "absolute",
@@ -62,10 +62,9 @@ export default function Main() {
             top: " 100vh",
             left: "50%",
             transform: "translate(-50%, 0)",
-            width: "100%",
+            width: "100vw",
             maxWidth: "1000px",
             height: "25px",
-            padding: "0 30px",
             borderRadius: "1171px",
             background: "#2CC295",
             filter: "blur(90px)",
@@ -244,9 +243,8 @@ export default function Main() {
               top: "60px",
               left: "50%",
               transform: "translate(-50%, 0)",
-              width: "100%",
+              width: "100vw",
               maxWidth: "450px",
-              padding: "0 30px",
               display: "flex",
               justifyContent: "space-between",
               zIndex: "-10",
@@ -346,11 +344,15 @@ export default function Main() {
                     "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                 }}
               >
-                <div>
+                <div style={{ width: "100%" }}>
                   <img
                     src="../img/icon/paper.png"
                     alt="paper"
-                    style={{ height: "140px" }}
+                    style={{
+                      width: "100%",
+                      height: "140px",
+                      objectFit: "contain",
+                    }}
                   />
                 </div>
                 <div
@@ -399,11 +401,15 @@ export default function Main() {
                     "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                 }}
               >
-                <div>
+                <div style={{ width: "100%" }}>
                   <img
                     src="../img/icon/dacon.png"
-                    alt="dacon"
-                    style={{ height: "140px" }}
+                    alt="paper"
+                    style={{
+                      width: "100%",
+                      height: "140px",
+                      objectFit: "contain",
+                    }}
                   />
                 </div>
                 <div
@@ -451,11 +457,15 @@ export default function Main() {
                     "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                 }}
               >
-                <div>
+                <div style={{ width: "100%" }}>
                   <img
                     src="../img/icon/network.png"
-                    alt="network"
-                    style={{ height: "140px" }}
+                    alt="paper"
+                    style={{
+                      width: "100%",
+                      height: "140px",
+                      objectFit: "contain",
+                    }}
                   />
                 </div>
                 <div
@@ -559,7 +569,6 @@ export default function Main() {
               transform: "translate(-50%, 0)",
               width: "100%",
               maxWidth: "900px",
-              padding: "0 30px",
               height: "25px",
               borderRadius: "1171px",
               background: "#297FB8",

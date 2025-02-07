@@ -34,7 +34,7 @@ export default function BottomInfo() {
       </div>
       <hr
         style={{
-          width: "1200px",
+          maxWidth: "1200px",
           height: "1px",
           border: "none",
           backgroundColor: "#fff",

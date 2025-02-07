@@ -39,14 +39,14 @@ export default function Nav(props: NavProps) {
       style={{
         position: "fixed",
         top: " 0",
-        width: "100%",
+        width: "100vw",
         zIndex: "100",
       }}
       onMouseLeave={() => setHover(false)}
     >
       <div
         style={{
-          width: "100%",
+          width: "100vw",
           height: "60px",
           display: "flex",
           justifyContent: "center",
@@ -213,7 +213,7 @@ export default function Nav(props: NavProps) {
 
       <div
         style={{
-          width: "100%",
+          width: "100vw",
           height: hover ? "150px" : "0",
           display: "flex",
           justifyContent: "center",
