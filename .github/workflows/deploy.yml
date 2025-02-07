@@ -27,7 +27,7 @@ jobs:
         run: npm ci 
 
       - name: Build project
-        run: npm run build
+        run: CI=false npm run build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -42,5 +42,6 @@ jobs:
       - name: Invalidate CloudFront Cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ env.DIST_ID }} \
+            --distribution-id ${{ secrets.DIST_ID }} \
             --paths "/*"
+            
