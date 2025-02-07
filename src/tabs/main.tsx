@@ -619,144 +619,153 @@ export default function Main() {
                   position: "relative",
                   minHeight: "390px",
                   margin: "0 auto",
-                  padding: "0 50px",
+                  padding: "0 30px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
                     "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                  overflow: "auto",
                 }}
               >
                 <div
                   style={{
-                    position: "absolute",
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
+                    position: "relative",
+                    maxWidth: "940px",
+                    minHeight: "390px",
+                    margin: "0 auto",
+                    overflow: "auto",
                   }}
                 >
-                  {historyData.map((item) => {
-                    return (
-                      <div key={item.year}>
-                        <div
-                          style={{
-                            width: "100px",
-                            textAlign: "left",
-                            paddingRight: "50px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              fontFamily: "Pretendard-Bold",
-                              fontSize: "40px",
-                              fontWeight: "bold",
-                              marginBottom: "10px",
-                            }}
-                          >
-                            {item.year}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "230px",
-                    display: "flex",
-                    alignItems: "end",
-                  }}
-                >
-                  {historyData.map((item) => {
-                    if (parseInt(item.year) % 2 !== 0) {
+                  <div
+                    style={{
+                      position: "absolute",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {historyData.map((item) => {
                       return (
                         <div key={item.year}>
                           <div
                             style={{
-                              width: "50px",
-                              textAlign: "left",
-                              paddingLeft: "200px",
-                              marginBottom: "5px",
-                            }}
-                          >
-                            {item.events.map((event, idx) => (
-                              <div
-                                key={idx}
-                                style={{
-                                  fontFamily: "Pretendard-Light",
-                                  fontSize: "16px",
-                                  lineHeight: "1.5",
-                                  whiteSpace: "nowrap",
-                                }}
-                              >
-                                {event}
-                              </div>
-                            ))}
-                          </div>
-                          <div
-                            style={{
-                              boxSizing: "border-box",
                               width: "100px",
-                              height: "30px",
-                              marginLeft: "200px",
-                              borderLeft: "1px solid #2cc295",
-                            }}
-                          ></div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  })}
-                </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "220px",
-                    height: "40%",
-                    display: "flex",
-                  }}
-                >
-                  {historyData.map((item) => {
-                    if (parseInt(item.year) % 2 === 0) {
-                      return (
-                        <div key={item.year}>
-                          <div
-                            style={{
-                              boxSizing: "border-box",
-                              width: "250px",
-                              height: "30px",
-                              marginLeft: "50px",
-                              borderLeft: "1px solid #2cc295",
-                            }}
-                          ></div>
-                          <div
-                            style={{
-                              width: "150px",
                               textAlign: "left",
-                              paddingLeft: "50px",
-                              marginTop: "5px",
+                              paddingRight: "50px",
                             }}
                           >
-                            {item.events.map((event, idx) => (
-                              <div
-                                key={idx}
-                                style={{
-                                  fontFamily: "Pretendard-Light",
-                                  fontSize: "16px",
-                                  lineHeight: "1.5",
-                                  whiteSpace: "nowrap",
-                                }}
-                              >
-                                {event}
-                              </div>
-                            ))}
+                            <div
+                              style={{
+                                fontFamily: "Pretendard-Bold",
+                                fontSize: "40px",
+                                fontWeight: "bold",
+                                marginBottom: "10px",
+                              }}
+                            >
+                              {item.year}
+                            </div>
                           </div>
                         </div>
                       );
-                    }
-                    return null;
-                  })}
+                    })}
+                  </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "230px",
+                      display: "flex",
+                      alignItems: "end",
+                    }}
+                  >
+                    {historyData.map((item) => {
+                      if (parseInt(item.year) % 2 !== 0) {
+                        return (
+                          <div key={item.year}>
+                            <div
+                              style={{
+                                width: "50px",
+                                textAlign: "left",
+                                paddingLeft: "200px",
+                                marginBottom: "5px",
+                              }}
+                            >
+                              {item.events.map((event, idx) => (
+                                <div
+                                  key={idx}
+                                  style={{
+                                    fontFamily: "Pretendard-Light",
+                                    fontSize: "16px",
+                                    lineHeight: "1.5",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {event}
+                                </div>
+                              ))}
+                            </div>
+                            <div
+                              style={{
+                                boxSizing: "border-box",
+                                width: "100px",
+                                height: "30px",
+                                marginLeft: "200px",
+                                borderLeft: "1px solid #2cc295",
+                              }}
+                            ></div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
+                  </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "220px",
+                      height: "40%",
+                      display: "flex",
+                    }}
+                  >
+                    {historyData.map((item) => {
+                      if (parseInt(item.year) % 2 === 0) {
+                        return (
+                          <div key={item.year}>
+                            <div
+                              style={{
+                                boxSizing: "border-box",
+                                width: "250px",
+                                height: "30px",
+                                marginLeft: "50px",
+                                borderLeft: "1px solid #2cc295",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "150px",
+                                textAlign: "left",
+                                paddingLeft: "50px",
+                                marginTop: "5px",
+                              }}
+                            >
+                              {item.events.map((event, idx) => (
+                                <div
+                                  key={idx}
+                                  style={{
+                                    fontFamily: "Pretendard-Light",
+                                    fontSize: "16px",
+                                    lineHeight: "1.5",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {event}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
