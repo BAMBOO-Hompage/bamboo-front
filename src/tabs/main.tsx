@@ -38,7 +38,7 @@ export default function Main() {
             autoPlay
             muted
             loop
-            playsinline
+            playsInline
             style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
           >
             <source src="../../img/main_background2.mp4" type="video/mp4" />
