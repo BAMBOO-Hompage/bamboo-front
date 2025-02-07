@@ -23,6 +23,7 @@ export default function Nav(props: NavProps) {
   const [hover, setHover] = useState(false);
   const [currentFocus, setCurrentFocus] = useState("");
   const [checkAuth, setCheckAuth] = useState<number>(1);
+  const [isMenuActive, setIsMenuActive] = useState(false); // 메뉴 상태 관리
 
   useEffect(() => {
     CheckAuthAPI().then((response) => {
@@ -67,8 +68,21 @@ export default function Nav(props: NavProps) {
             />
           </Link>
         </div>
+
+        {/* 햄버거 메뉴 */}
         <div
-          style={{ width: "680px", display: "flex" }}
+          className="hamburger"
+          onClick={() => setIsMenuActive(!isMenuActive)}
+        >
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+
+        {/* 네비게이션 메뉴 */}
+        <div
+          className={`nav_menu ${isMenuActive ? "active" : ""}`}
+          style={{ width: "680px" }}
           onMouseEnter={() => setHover(true)}
         >
           <div

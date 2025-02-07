@@ -108,6 +108,24 @@ select {
   outline: none;
 }
 
+.hamburger {
+  display: none;
+}
+.nav_menu {
+  display: flex;
+}
+
+@media screen and (max-width: 1024px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav_menu {
+    display: none;
+    width: "100%";
+  }
+}
+
 .nav_text {
   width: 170px;
   padding: 20px 0;
