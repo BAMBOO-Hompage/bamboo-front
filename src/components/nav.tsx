@@ -62,7 +62,7 @@ export default function Nav(props: NavProps) {
               alt="nav_logo"
               style={{
                 width: "100px",
-                transition: "all 0.2s ease",
+                height: "30px",
               }}
             />
           </Link>

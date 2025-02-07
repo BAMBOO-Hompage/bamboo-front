@@ -152,14 +152,14 @@ export default function Signup() {
           <img
             src="../img/nav_logo.png"
             alt="nav_logo"
-            style={{ width: "80px", marginTop: "5px" }}
+            style={{ width: "100px", height: "30px" }}
           />
         </Link>
       </div>
 
       <div
         style={{
-          marginTop: "100px",
+          marginTop: "20vh",
           marginBottom: "60px",
           fontFamily: "Pretendard-ExtraBold",
           fontSize: "35px",
@@ -954,7 +954,7 @@ export default function Signup() {
           <div
             style={{
               width: "500px",
-              margin: "10px 0",
+              margin: "50px 0",
               padding: "0",
               display: "flex",
               justifyContent: "right",
@@ -963,7 +963,7 @@ export default function Signup() {
           >
             <Button
               type="primary"
-              size="XLarge"
+              size="medium"
               title="계정 생성"
               onClick={handleSubmitSignUp(onValid, onInvalid)}
             />

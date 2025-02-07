@@ -64,7 +64,7 @@ const ButtonContainer = styled.div<{
       height: 40px;
       font-size: 18px;
       font-weight: 600;
-      width: 250px;
+      width: 200px;
       text-align: center;
     `}
     ${(props) =>

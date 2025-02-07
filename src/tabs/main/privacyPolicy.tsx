@@ -32,7 +32,7 @@ export default function Signup() {
           <img
             src="../img/nav_logo.png"
             alt="nav_logo"
-            style={{ width: "80px", marginTop: "5px" }}
+            style={{ width: "100px", height: "30px" }}
           />
         </Link>
       </div>
@@ -40,7 +40,7 @@ export default function Signup() {
       <div style={{ maxWidth: "850px", margin: "0 auto", padding: "0 40px" }}>
         <div
           style={{
-            marginTop: "80px",
+            marginTop: "15vh",
             marginBottom: "25px",
             fontFamily: "Pretendard-Bold",
             fontSize: "30px",

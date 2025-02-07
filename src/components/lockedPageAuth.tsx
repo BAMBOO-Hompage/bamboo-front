@@ -49,7 +49,7 @@ export default function LockedPageAuth() {
           13시)
         </span>
       </div>
-      <div style={{ maxWidth: "250px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "200px", margin: "0 auto" }}>
         <Button
           type="primary"
           size="medium"

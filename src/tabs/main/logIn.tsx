@@ -46,7 +46,7 @@ export default function Login() {
       <div
         style={{
           position: "absolute",
-          top: "70px",
+          top: "60px",
           left: "50%",
           transform: "translate(-50%, 0)",
           width: "500px",
@@ -77,7 +77,7 @@ export default function Login() {
       </div>
       <div
         style={{
-          marginTop: "160px",
+          marginTop: "25vh",
         }}
       >
         <div style={{ marginBottom: "100px" }}>
