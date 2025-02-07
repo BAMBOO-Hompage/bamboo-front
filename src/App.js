@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/scrollToTop.tsx";
 
-import LogIn from "./tabs/logIn.tsx";
-import PrivacyPolicy from "./tabs/privacyPolicy.tsx";
-import SignUp from "./tabs/signUp.tsx";
+import LogIn from "./tabs/main/logIn.tsx";
+import PrivacyPolicy from "./tabs/main/privacyPolicy.tsx";
+import SignUp from "./tabs/main/signUp.tsx";
 import Main from "./tabs/main.tsx";
 
 import PersonalInfo from "./tabs/myPage/personalInfo.tsx";

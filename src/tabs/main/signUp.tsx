@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import Button from "../components/button.tsx";
+import Button from "../../components/button.tsx";
 
-import VerificationRequestsAPI from "../api/emails/verificationReauestsAPI.tsx";
-import VerificationsAPI from "../api/emails/verificationsAPI.tsx";
-import SignupAPI from "../api/members/signUpAPI.tsx";
+import VerificationRequestsAPI from "../../api/emails/verificationReauestsAPI.tsx";
+import VerificationsAPI from "../../api/emails/verificationsAPI.tsx";
+import SignupAPI from "../../api/members/signUpAPI.tsx";
 
-import "../App.css";
+import "../../App.css";
 
 export default function Signup() {
   const {

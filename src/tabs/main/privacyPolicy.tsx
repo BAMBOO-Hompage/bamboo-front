@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../components/button.tsx";
+import Button from "../../components/button.tsx";
 
-import PrivacyPolicyData from "../mockup_data/privacyPolicy_data.tsx";
+import PrivacyPolicyData from "../../mockup_data/privacyPolicy_data.tsx";
 
-import "../App.css";
+import "../../App.css";
 
 export default function Signup() {
   const [expandedSections, setExpandedSections] = useState({});

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import Button from "../components/button.tsx";
+import Button from "../../components/button.tsx";
 
-import LogInAPI from "../api/members/logInAPI.tsx";
+import LogInAPI from "../../api/members/logInAPI.tsx";
 
-import "../App.css";
+import "../../App.css";
 
 export default function Login() {
   const {
