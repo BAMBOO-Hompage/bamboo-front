@@ -24,6 +24,7 @@ export default function Nav(props: NavProps) {
   const [currentFocus, setCurrentFocus] = useState("");
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [isMenuActive, setIsMenuActive] = useState(false); // 메뉴 상태 관리
+  const [hamburgerMenu, setHamburgerMenu] = useState();
 
   useEffect(() => {
     CheckAuthAPI().then((response) => {
@@ -56,7 +57,7 @@ export default function Nav(props: NavProps) {
           borderBottom: hover ? "2px solid #555" : "none",
         }}
       >
-        <div style={{ position: "absolute", left: "70px" }}>
+        <div style={{ position: "absolute", left: "20px" }}>
           <Link to="/">
             <img
               src="../img/nav_logo.png"
@@ -69,19 +70,9 @@ export default function Nav(props: NavProps) {
           </Link>
         </div>
 
-        {/* 햄버거 메뉴 */}
-        <div
-          className="hamburger"
-          onClick={() => setIsMenuActive(!isMenuActive)}
-        >
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-
         {/* 네비게이션 메뉴 */}
         <div
-          className={`nav_menu ${isMenuActive ? "active" : ""}`}
+          className="nav_menu"
           style={{ width: "680px" }}
           onMouseEnter={() => setHover(true)}
         >
@@ -94,7 +85,7 @@ export default function Nav(props: NavProps) {
                     textShadow: "0 0 0.1em, 0 0 0.3em",
                     borderBottom: "2px solid #2cc295",
                   }
-                : currentFocus === "joinUs"
+                : currentFocus === "aboutUs"
                 ? {
                     textShadow: "0 0 0.1em, 0 0 0.3em",
                     borderBottom: "2px solid #2cc295",
@@ -163,66 +154,356 @@ export default function Nav(props: NavProps) {
           </div>
         </div>
         {checkAuth !== 0 ? (
+          <>
+            {/* 햄버거 메뉴 */}
+            <div
+              className="hamburger"
+              style={{
+                position: "absolute",
+                right: "40px",
+                display: "flex",
+                alignItems: "center",
+              }}
+              onClick={() => setIsMenuActive(!isMenuActive)}
+            >
+              <img
+                src="../img/icon/hamburger.png"
+                alt="hamburger"
+                style={{ width: "30px", cursor: "pointer" }}
+              />
+            </div>
+
+            <div
+              className="nav_menu"
+              style={{
+                position: "absolute",
+                right: "0",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Link
+                to="/personalInfo?edit=&changePassword="
+                style={{ textDecoration: "none" }}
+              >
+                <div
+                  className="nav_text"
+                  style={
+                    props.type === "myPage"
+                      ? {
+                          color: "#2CC295",
+                          textShadow: "0 0 0.1em, 0 0 0.3em",
+                          borderBottom: "2px solid #2cc295",
+                        }
+                      : {}
+                  }
+                >
+                  MyPage
+                </div>
+              </Link>
+              <img
+                src="../img/btn/logout_disabled.png"
+                alt="logOut"
+                style={{
+                  width: "35px",
+                  padding: "0 20px",
+                  opacity: "0.6",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                }}
+                onClick={() => {
+                  LogOutAPI();
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = "1";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = "0.6";
+                }}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            {/* 햄버거 메뉴 */}
+            <div
+              className="hamburger"
+              style={{
+                position: "absolute",
+                right: "40px",
+                display: "flex",
+                alignItems: "center",
+              }}
+              onClick={() => setIsMenuActive(!isMenuActive)}
+            >
+              <img
+                src="../img/icon/hamburger.png"
+                alt="hamburger"
+                style={{ width: "25px", cursor: "pointer" }}
+              />
+            </div>
+
+            <div
+              className="nav_menu"
+              style={{ position: "absolute", right: "0" }}
+            >
+              <Button
+                type="logIn"
+                size="logIn"
+                title="Log In"
+                onClick={() => {
+                  window.location.href = "/logIn";
+                }}
+              />
+            </div>
+          </>
+        )}
+      </div>
+
+      <div
+        className="hamburger"
+        style={{
+          position: "absolute",
+          top: "60px",
+          right: "0",
+          width: isMenuActive ? "1000vw" : "0",
+          height: "100vh",
+          backgroundColor: "rgba(0,0,0,0.5)",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            right: "0",
+            width: isMenuActive ? "300px" : "0",
+            height: "100vh",
+            backgroundColor: "#000",
+            opacity: "1",
+            transition: "width 0.3s ease",
+            textAlign: "left",
+          }}
+        >
           <div
             style={{
-              position: "absolute",
-              right: "0",
-              display: "flex",
-              alignItems: "center",
+              minWidth: "100px",
+              margin: "40px 60px 20px 30px",
             }}
           >
-            <Link
-              to="/personalInfo?edit=&changePassword="
-              style={{ textDecoration: "none" }}
-            >
-              <div
-                className="nav_text"
-                style={
-                  props.type === "myPage"
-                    ? {
-                        color: "#2CC295",
-                        textShadow: "0 0 0.1em, 0 0 0.3em",
-                        borderBottom: "2px solid #2cc295",
-                      }
-                    : {}
+            <div
+              className="hamburger_text"
+              style={
+                props.type === "aboutUs"
+                  ? {
+                      color: "#2CC295",
+                      textShadow: "0 0 0.1em, 0 0 0.3em",
+                      borderBottom: "2px solid #2cc295",
+                    }
+                  : hamburgerMenu === "About Us"
+                  ? {
+                      color: "#2CC295",
+                      textShadow: "0 0 0.1em, 0 0 0.3em",
+                      borderBottom: "2px solid #2cc295",
+                    }
+                  : {}
+              }
+              onClick={() => {
+                if (hamburgerMenu !== "About Us") {
+                  setHamburgerMenu("About Us");
+                } else {
+                  setHamburgerMenu("");
                 }
+              }}
+            >
+              About Us
+            </div>
+            <div
+              style={
+                hamburgerMenu === "About Us"
+                  ? {
+                      display: "",
+                      transition: "all 0.3 ease",
+                    }
+                  : { display: "none", transition: "all 0.3 ease" }
+              }
+            >
+              <Link to="/introduction" style={{ textDecoration: "none" }}>
+                <div className="hamburger_tabs">동아리 소개</div>
+              </Link>
+              <Link
+                to="/activity?year=&page=1"
+                style={{ textDecoration: "none" }}
               >
-                MyPage
-              </div>
-            </Link>
-            <img
-              src="../img/btn/logout_disabled.png"
-              alt="logOut"
-              style={{
-                width: "35px",
-                padding: "0 20px",
-                opacity: "0.6",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-              }}
-              onClick={() => {
-                LogOutAPI();
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = "1";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "0.6";
-              }}
-            />
+                <div className="hamburger_tabs">주요 활동</div>
+              </Link>
+              <Link to="/joinUs" style={{ textDecoration: "none" }}>
+                <div className="hamburger_tabs">지원 안내</div>
+              </Link>
+            </div>
           </div>
-        ) : (
-          <div style={{ position: "absolute", right: "0" }}>
-            <Button
-              type="logIn"
-              size="logIn"
-              title="Log In"
+          <div
+            style={{
+              minWidth: "100px",
+              margin: "40px 60px 20px 30px",
+            }}
+          >
+            <div
+              className="hamburger_text"
+              style={
+                props.type === "study"
+                  ? {
+                      color: "#2CC295",
+                      textShadow: "0 0 0.1em, 0 0 0.3em",
+                      borderBottom: "2px solid #2cc295",
+                    }
+                  : hamburgerMenu === "Study"
+                  ? {
+                      color: "#2CC295",
+                      textShadow: "0 0 0.1em, 0 0 0.3em",
+                      borderBottom: "2px solid #2cc295",
+                    }
+                  : {}
+              }
               onClick={() => {
-                window.location.href = "/logIn";
+                if (hamburgerMenu !== "Study") {
+                  setHamburgerMenu("Study");
+                } else {
+                  setHamburgerMenu("");
+                }
               }}
-            />
+            >
+              Study
+            </div>
+            <div
+              style={
+                hamburgerMenu === "Study"
+                  ? {
+                      display: "",
+                      transition: "all 0.3 ease",
+                    }
+                  : { display: "none", transition: "all 0.3 ease" }
+              }
+            >
+              <Link to="/curriculumStudy" style={{ textDecoration: "none" }}>
+                <div className="hamburger_tabs">커리큘럼 스터디</div>
+              </Link>
+              <Link to="/selfStudy" style={{ textDecoration: "none" }}>
+                <div className="hamburger_tabs">자율 스터디</div>
+              </Link>
+              <Link to="/studyRecruitment" style={{ textDecoration: "none" }}>
+                <div className="hamburger_tabs">스터디 모집</div>
+              </Link>
+            </div>
           </div>
-        )}
+          <div
+            style={{
+              minWidth: "100px",
+              margin: "40px 60px 20px 30px",
+            }}
+          >
+            <div
+              className="hamburger_text"
+              style={
+                props.type === "dataCenter"
+                  ? {
+                      color: "#2CC295",
+                      textShadow: "0 0 0.1em, 0 0 0.3em",
+                      borderBottom: "2px solid #2cc295",
+                    }
+                  : hamburgerMenu === "Data Center"
+                  ? {
+                      color: "#2CC295",
+                      textShadow: "0 0 0.1em, 0 0 0.3em",
+                      borderBottom: "2px solid #2cc295",
+                    }
+                  : {}
+              }
+              onClick={() => {
+                if (hamburgerMenu !== "Data Center") {
+                  setHamburgerMenu("Data Center");
+                } else {
+                  setHamburgerMenu("");
+                }
+              }}
+            >
+              Data Center
+            </div>
+            <div
+              style={
+                hamburgerMenu === "Data Center"
+                  ? {
+                      display: "",
+                      transition: "all 0.3 ease",
+                    }
+                  : { display: "none", transition: "all 0.3 ease" }
+              }
+            >
+              <Link
+                to="/alexandria?tab=&search=&page=1&size=10"
+                style={{ textDecoration: "none" }}
+              >
+                <div className="hamburger_tabs">알렉산드리아 도서관</div>
+              </Link>
+              <Link to="/hallOfFame" style={{ textDecoration: "none" }}>
+                <div className="hamburger_tabs">명예의 전당</div>
+              </Link>
+            </div>
+          </div>
+          <div
+            style={{
+              minWidth: "100px",
+              margin: "40px 60px 20px 30px",
+            }}
+          >
+            <div
+              className="hamburger_text"
+              style={
+                props.type === "community"
+                  ? {
+                      color: "#2CC295",
+                      textShadow: "0 0 0.1em, 0 0 0.3em",
+                      borderBottom: "2px solid #2cc295",
+                    }
+                  : hamburgerMenu === "Community"
+                  ? {
+                      color: "#2CC295",
+                      textShadow: "0 0 0.1em, 0 0 0.3em",
+                      borderBottom: "2px solid #2cc295",
+                    }
+                  : {}
+              }
+              onClick={() => {
+                if (hamburgerMenu !== "Community") {
+                  setHamburgerMenu("Community");
+                } else {
+                  setHamburgerMenu("");
+                }
+              }}
+            >
+              Community
+            </div>
+            <div
+              style={
+                hamburgerMenu === "Community"
+                  ? {
+                      display: "",
+                      transition: "all 0.3 ease",
+                    }
+                  : { display: "none", transition: "all 0.3 ease" }
+              }
+            >
+              <Link
+                to="/notice?postList=전체&page=1"
+                style={{ textDecoration: "none" }}
+                onClick={() => sessionStorage.clear()}
+              >
+                <div className="hamburger_tabs">공지 사항</div>
+              </Link>
+              <Link to="/knowledge" style={{ textDecoration: "none" }}>
+                <div className="hamburger_tabs">정보 공유</div>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div
@@ -244,7 +525,7 @@ export default function Nav(props: NavProps) {
           <div
             className="nav_list"
             style={{ borderLeft: "1px solid #777" }}
-            onMouseEnter={() => setCurrentFocus("joinUs")}
+            onMouseEnter={() => setCurrentFocus("aboutUs")}
             onMouseLeave={() => setCurrentFocus("")}
           >
             <Link to="/introduction" style={{ textDecoration: "none" }}>
