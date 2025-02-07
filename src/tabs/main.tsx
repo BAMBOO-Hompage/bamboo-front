@@ -62,8 +62,10 @@ export default function Main() {
             top: " 100vh",
             left: "50%",
             transform: "translate(-50%, 0)",
-            width: "1000px",
+            width: "100%",
+            maxWidth: "1000px",
             height: "25px",
+            padding: "0 30px",
             borderRadius: "1171px",
             background: "#2CC295",
             filter: "blur(90px)",
@@ -87,7 +89,7 @@ export default function Main() {
             alignItems: "center",
           }}
         >
-          <div style={{ maxWidth: "700px", padding: "100px" }}>
+          <div style={{ maxWidth: "700px", padding: "50px" }}>
             <img
               src="../../img/main_logo1.png"
               alt="main_logo"
@@ -122,8 +124,6 @@ export default function Main() {
                 fontSize: "40px",
                 color: "#fff",
                 textShadow: "0 0 0.1em, 0 0 0.1em",
-                // color: "transparent",
-                // textShadow: "0px 2px 1px rgba(255,255,255,0.9), 0 0 0px #999",
               }}
             >
               About Us
@@ -186,7 +186,7 @@ export default function Main() {
             <div
               style={{
                 maxWidth: "1000px",
-                padding: "0 40px",
+                padding: "0 30px",
                 margin: "0 auto",
                 display: "flex",
                 justifyContent: "right",
@@ -235,7 +235,7 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "680px",
+            minHeight: "680px",
           }}
         >
           <div
@@ -244,7 +244,9 @@ export default function Main() {
               top: "60px",
               left: "50%",
               transform: "translate(-50%, 0)",
-              width: "450px",
+              width: "100%",
+              maxWidth: "450px",
+              padding: "0 30px",
               display: "flex",
               justifyContent: "space-between",
               zIndex: "-10",
@@ -252,7 +254,7 @@ export default function Main() {
           >
             <div
               style={{
-                width: "250px",
+                width: "50%",
                 height: "60px",
                 borderRadius: "1171px",
                 background: "#2CC295",
@@ -262,7 +264,7 @@ export default function Main() {
             <div
               style={{
                 marginTop: "60px",
-                width: "250px",
+                width: "50%",
                 height: "60px",
                 borderRadius: "1171px",
                 background: "#297FB8",
@@ -325,10 +327,10 @@ export default function Main() {
             <div
               style={{
                 maxWidth: "1000px",
-                height: "350px",
+                minHeight: "320px",
                 margin: "0 auto",
                 marginTop: "10px",
-                padding: "0 40px",
+                padding: "0 30px",
                 display: "flex",
                 justifyContent: "space-between",
               }}
@@ -336,7 +338,8 @@ export default function Main() {
               <div
                 style={{
                   width: "30%",
-                  height: "350px",
+                  minHeight: "320px",
+                  padding: "20px 0",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
@@ -347,7 +350,7 @@ export default function Main() {
                   <img
                     src="../img/icon/paper.png"
                     alt="paper"
-                    style={{ height: "140px", marginTop: "20px" }}
+                    style={{ height: "140px" }}
                   />
                 </div>
                 <div
@@ -375,10 +378,10 @@ export default function Main() {
                   진행합니다.
                   <br />
                   <br />
+                  <br />
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "45px",
                     }}
                   >
                     #간단한_실습 #자유로운_토론
@@ -388,7 +391,8 @@ export default function Main() {
               <div
                 style={{
                   width: "30%",
-                  height: "350px",
+                  minHeight: "320px",
+                  padding: "20px 0",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
@@ -399,7 +403,7 @@ export default function Main() {
                   <img
                     src="../img/icon/dacon.png"
                     alt="dacon"
-                    style={{ height: "140px", marginTop: "20px" }}
+                    style={{ height: "140px" }}
                   />
                 </div>
                 <div
@@ -426,10 +430,10 @@ export default function Main() {
                   국내외 대회 정보를 수집 및 공유하고 팀별 또는 개인별 참가하여
                   실전 경험을 쌓을 수 있습니다.
                   <br />
+                  <br />
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "45px",
                     }}
                   >
                     #문제_해결_능력 #경쟁력_향상
@@ -439,7 +443,8 @@ export default function Main() {
               <div
                 style={{
                   width: "30%",
-                  height: "350px",
+                  minHeight: "320px",
+                  padding: "20px 0",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
@@ -450,7 +455,7 @@ export default function Main() {
                   <img
                     src="../img/icon/network.png"
                     alt="network"
-                    style={{ height: "140px", marginTop: "20px" }}
+                    style={{ height: "140px" }}
                   />
                 </div>
                 <div
@@ -477,10 +482,10 @@ export default function Main() {
                   1:1 멘토링과 졸업 선배들과의 네트워킹을 통해 전문 지식과
                   경험을 습득하여 성장을 촉진할 수 있습니다.
                   <br />
+                  <br />
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "45px",
                     }}
                   >
                     #선의의_경쟁 #최신_기술_실습
@@ -490,14 +495,22 @@ export default function Main() {
             </div>
           </div>
           <Link to="/activity" style={{ textDecoration: "none" }}>
-            <div style={{ width: "1000px", margin: "0 auto" }}>
+            <div
+              style={{
+                maxWidth: "1000px",
+                padding: "0 30px",
+                margin: "0 auto",
+                display: "flex",
+                justifyContent: "right",
+              }}
+            >
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
                   fontSize: "16px",
                   width: "150px",
-                  marginLeft: "830px",
                   marginTop: "25px",
+                  marginBottom: "30px",
                   padding: "10px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
@@ -534,16 +547,19 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "660px",
+            minHeight: "660px",
           }}
         >
           <div
             style={{
+              flex: "1",
               position: "absolute",
               top: "180px",
               left: "50%",
               transform: "translate(-50%, 0)",
-              width: "900px",
+              width: "100%",
+              maxWidth: "900px",
+              padding: "0 30px",
               height: "25px",
               borderRadius: "1171px",
               background: "#297FB8",
@@ -582,147 +598,156 @@ export default function Main() {
 
             <div
               style={{
-                position: "relative",
-                color: "#fff",
-                width: "1000px",
-                height: "390px",
+                maxWidth: "1000px",
+                minHeight: "390px",
+                padding: "0 30px",
                 margin: "0 auto",
-                backgroundColor: "#111015",
-                borderRadius: "20px",
-                boxShadow:
-                  "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
               }}
             >
               <div
                 style={{
-                  position: "absolute",
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
+                  position: "relative",
+                  minHeight: "390px",
+                  margin: "0 auto",
+                  padding: "0 50px",
+                  backgroundColor: "#111015",
+                  borderRadius: "20px",
+                  boxShadow:
+                    "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                  overflow: "auto",
                 }}
               >
-                {historyData.map((item) => {
-                  return (
-                    <div key={item.year}>
-                      <div
-                        style={{
-                          width: "100px",
-                          textAlign: "left",
-                          paddingLeft: "50px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontFamily: "Pretendard-Bold",
-                            fontSize: "40px",
-                            fontWeight: "bold",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          {item.year}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "230px",
-                  display: "flex",
-                  alignItems: "end",
-                }}
-              >
-                {historyData.map((item) => {
-                  if (parseInt(item.year) % 2 !== 0) {
+                <div
+                  style={{
+                    position: "absolute",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {historyData.map((item) => {
                     return (
                       <div key={item.year}>
                         <div
                           style={{
-                            width: "50px",
-                            textAlign: "left",
-                            paddingLeft: "200px",
-                            marginBottom: "5px",
-                          }}
-                        >
-                          {item.events.map((event, idx) => (
-                            <div
-                              key={idx}
-                              style={{
-                                fontFamily: "Pretendard-Light",
-                                fontSize: "16px",
-                                lineHeight: "1.5",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              {event}
-                            </div>
-                          ))}
-                        </div>
-                        <div
-                          style={{
-                            boxSizing: "border-box",
                             width: "100px",
-                            height: "30px",
-                            marginLeft: "200px",
-                            borderLeft: "1px solid #2cc295",
-                          }}
-                        ></div>
-                      </div>
-                    );
-                  }
-                  return null;
-                })}
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  top: "220px",
-                  height: "100%",
-                  display: "flex",
-                }}
-              >
-                {historyData.map((item) => {
-                  if (parseInt(item.year) % 2 === 0) {
-                    return (
-                      <div key={item.year}>
-                        <div
-                          style={{
-                            boxSizing: "border-box",
-                            width: "250px",
-                            height: "30px",
-                            marginLeft: "50px",
-                            borderLeft: "1px solid #2cc295",
-                          }}
-                        ></div>
-                        <div
-                          style={{
-                            width: "150px",
                             textAlign: "left",
-                            paddingLeft: "50px",
-                            marginTop: "5px",
+                            paddingRight: "50px",
                           }}
                         >
-                          {item.events.map((event, idx) => (
-                            <div
-                              key={idx}
-                              style={{
-                                fontFamily: "Pretendard-Light",
-                                fontSize: "16px",
-                                lineHeight: "1.5",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              {event}
-                            </div>
-                          ))}
+                          <div
+                            style={{
+                              fontFamily: "Pretendard-Bold",
+                              fontSize: "40px",
+                              fontWeight: "bold",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            {item.year}
+                          </div>
                         </div>
                       </div>
                     );
-                  }
-                  return null;
-                })}
+                  })}
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "230px",
+                    display: "flex",
+                    alignItems: "end",
+                  }}
+                >
+                  {historyData.map((item) => {
+                    if (parseInt(item.year) % 2 !== 0) {
+                      return (
+                        <div key={item.year}>
+                          <div
+                            style={{
+                              width: "50px",
+                              textAlign: "left",
+                              paddingLeft: "200px",
+                              marginBottom: "5px",
+                            }}
+                          >
+                            {item.events.map((event, idx) => (
+                              <div
+                                key={idx}
+                                style={{
+                                  fontFamily: "Pretendard-Light",
+                                  fontSize: "16px",
+                                  lineHeight: "1.5",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {event}
+                              </div>
+                            ))}
+                          </div>
+                          <div
+                            style={{
+                              boxSizing: "border-box",
+                              width: "100px",
+                              height: "30px",
+                              marginLeft: "200px",
+                              borderLeft: "1px solid #2cc295",
+                            }}
+                          ></div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "220px",
+                    height: "40%",
+                    display: "flex",
+                  }}
+                >
+                  {historyData.map((item) => {
+                    if (parseInt(item.year) % 2 === 0) {
+                      return (
+                        <div key={item.year}>
+                          <div
+                            style={{
+                              boxSizing: "border-box",
+                              width: "250px",
+                              height: "30px",
+                              marginLeft: "50px",
+                              borderLeft: "1px solid #2cc295",
+                            }}
+                          ></div>
+                          <div
+                            style={{
+                              width: "150px",
+                              textAlign: "left",
+                              paddingLeft: "50px",
+                              marginTop: "5px",
+                            }}
+                          >
+                            {item.events.map((event, idx) => (
+                              <div
+                                key={idx}
+                                style={{
+                                  fontFamily: "Pretendard-Light",
+                                  fontSize: "16px",
+                                  lineHeight: "1.5",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {event}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -777,17 +802,25 @@ export default function Main() {
           </div>
           <div
             style={{
-              padding: "100px 0 100px",
+              padding: "100px 30px 100px",
+              maxWidth: "400px",
+              margin: "0 auto",
             }}
           >
             <img
               src="../../img/main_logo2.png"
               alt="main_logo2"
-              style={{ width: "400px" }}
+              style={{ width: "100%" }}
             />
           </div>
           <Link to="/joinUs" style={{ textDecoration: "none" }}>
-            <div style={{ width: "1000px", margin: "0 auto" }}>
+            <div
+              style={{
+                maxWidth: "1000px",
+                padding: "0 30px",
+                margin: "0 auto",
+              }}
+            >
               <div
                 style={{
                   fontFamily: "Pretendard-Light",

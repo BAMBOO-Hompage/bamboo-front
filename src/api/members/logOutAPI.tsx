@@ -56,6 +56,7 @@ export default async function LogOutAPI() {
           window.location.href = "/";
         }
       } else {
+        removeCookie("accessToken");
         window.location.href = "/";
       }
     }
