@@ -24,7 +24,9 @@ export default function Nav(props: NavProps) {
   const [currentFocus, setCurrentFocus] = useState("");
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [isMenuActive, setIsMenuActive] = useState(false); // 메뉴 상태 관리
-  const [hamburgerMenu, setHamburgerMenu] = useState();
+  const [hamburgerMenu, setHamburgerMenu] = useState<NavType | undefined>(
+    props.type
+  );
 
   useEffect(() => {
     CheckAuthAPI().then((response) => {
@@ -292,13 +294,7 @@ export default function Nav(props: NavProps) {
             <div
               className="hamburger_text"
               style={
-                props.type === "aboutUs"
-                  ? {
-                      color: "#2CC295",
-                      textShadow: "0 0 0.1em, 0 0 0.3em",
-                      borderBottom: "2px solid #2cc295",
-                    }
-                  : hamburgerMenu === "About Us"
+                hamburgerMenu === "aboutUs"
                   ? {
                       color: "#2CC295",
                       textShadow: "0 0 0.1em, 0 0 0.3em",
@@ -307,10 +303,10 @@ export default function Nav(props: NavProps) {
                   : {}
               }
               onClick={() => {
-                if (hamburgerMenu !== "About Us") {
-                  setHamburgerMenu("About Us");
+                if (hamburgerMenu !== "aboutUs") {
+                  setHamburgerMenu("aboutUs");
                 } else {
-                  setHamburgerMenu("");
+                  setHamburgerMenu(undefined);
                 }
               }}
             >
@@ -318,7 +314,7 @@ export default function Nav(props: NavProps) {
             </div>
             <div
               style={
-                hamburgerMenu === "About Us"
+                hamburgerMenu === "aboutUs"
                   ? {
                       display: "",
                       transition: "all 0.3 ease",
@@ -349,13 +345,7 @@ export default function Nav(props: NavProps) {
             <div
               className="hamburger_text"
               style={
-                props.type === "study"
-                  ? {
-                      color: "#2CC295",
-                      textShadow: "0 0 0.1em, 0 0 0.3em",
-                      borderBottom: "2px solid #2cc295",
-                    }
-                  : hamburgerMenu === "Study"
+                hamburgerMenu === "study"
                   ? {
                       color: "#2CC295",
                       textShadow: "0 0 0.1em, 0 0 0.3em",
@@ -364,10 +354,10 @@ export default function Nav(props: NavProps) {
                   : {}
               }
               onClick={() => {
-                if (hamburgerMenu !== "Study") {
-                  setHamburgerMenu("Study");
+                if (hamburgerMenu !== "study") {
+                  setHamburgerMenu("study");
                 } else {
-                  setHamburgerMenu("");
+                  setHamburgerMenu(undefined);
                 }
               }}
             >
@@ -375,7 +365,7 @@ export default function Nav(props: NavProps) {
             </div>
             <div
               style={
-                hamburgerMenu === "Study"
+                hamburgerMenu === "study"
                   ? {
                       display: "",
                       transition: "all 0.3 ease",
@@ -403,13 +393,7 @@ export default function Nav(props: NavProps) {
             <div
               className="hamburger_text"
               style={
-                props.type === "dataCenter"
-                  ? {
-                      color: "#2CC295",
-                      textShadow: "0 0 0.1em, 0 0 0.3em",
-                      borderBottom: "2px solid #2cc295",
-                    }
-                  : hamburgerMenu === "Data Center"
+                hamburgerMenu === "dataCenter"
                   ? {
                       color: "#2CC295",
                       textShadow: "0 0 0.1em, 0 0 0.3em",
@@ -418,10 +402,10 @@ export default function Nav(props: NavProps) {
                   : {}
               }
               onClick={() => {
-                if (hamburgerMenu !== "Data Center") {
-                  setHamburgerMenu("Data Center");
+                if (hamburgerMenu !== "dataCenter") {
+                  setHamburgerMenu("dataCenter");
                 } else {
-                  setHamburgerMenu("");
+                  setHamburgerMenu(undefined);
                 }
               }}
             >
@@ -429,7 +413,7 @@ export default function Nav(props: NavProps) {
             </div>
             <div
               style={
-                hamburgerMenu === "Data Center"
+                hamburgerMenu === "dataCenter"
                   ? {
                       display: "",
                       transition: "all 0.3 ease",
@@ -457,13 +441,7 @@ export default function Nav(props: NavProps) {
             <div
               className="hamburger_text"
               style={
-                props.type === "community"
-                  ? {
-                      color: "#2CC295",
-                      textShadow: "0 0 0.1em, 0 0 0.3em",
-                      borderBottom: "2px solid #2cc295",
-                    }
-                  : hamburgerMenu === "Community"
+                hamburgerMenu === "community"
                   ? {
                       color: "#2CC295",
                       textShadow: "0 0 0.1em, 0 0 0.3em",
@@ -472,10 +450,10 @@ export default function Nav(props: NavProps) {
                   : {}
               }
               onClick={() => {
-                if (hamburgerMenu !== "Community") {
-                  setHamburgerMenu("Community");
+                if (hamburgerMenu !== "community") {
+                  setHamburgerMenu("community");
                 } else {
-                  setHamburgerMenu("");
+                  setHamburgerMenu(undefined);
                 }
               }}
             >
@@ -483,7 +461,7 @@ export default function Nav(props: NavProps) {
             </div>
             <div
               style={
-                hamburgerMenu === "Community"
+                hamburgerMenu === "community"
                   ? {
                       display: "",
                       transition: "all 0.3 ease",
