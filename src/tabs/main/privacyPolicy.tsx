@@ -141,7 +141,7 @@ export default function Signup() {
           maxWidth: "850px",
           margin: "0 auto",
           marginTop: "30px",
-          marginBottom: "40px",
+          marginBottom: "150px",
           padding: "0 30px",
           display: "flex",
           justifyContent: "center",

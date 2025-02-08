@@ -205,6 +205,7 @@ export default function Signup() {
                   fontSize: "18px",
                   color: "#fff",
                   width: "120px",
+                  minWidth: "70px",
                   paddingLeft: "20px",
                 }}
               >
@@ -227,31 +228,29 @@ export default function Signup() {
                   },
                 })}
                 style={{
-                  width: errorsEmail.StudentNum ? "170px" : "120px",
+                  width: "100%",
+                  maxWidth: errorsEmail.StudentNum ? "170px" : "160px",
                   height: "30px",
                   marginLeft: "20px",
                   color: checkedEmail ? "#777" : "#fff",
                 }}
               />
-              <span
+              <div
                 style={{
-                  width: "200px",
-                  marginRight: "20px",
+                  width: "90px",
+                  marginRight: "10px",
                   fontFamily: "Pretendard-Regular",
-                  fontSize: "16px",
+                  fontSize: "12px",
                   color: "#777",
                 }}
               >
                 @sangmyung.kr
-              </span>
+              </div>
               {errorsEmail.StudentNum ? (
-                <>
+                <div>
                   <div
                     style={{
                       width: "28px",
-                      position: "absolute",
-                      top: "10px",
-                      right: "0px",
                     }}
                   >
                     <img
@@ -261,6 +260,7 @@ export default function Signup() {
                     />
                   </div>
                   <div
+                    className="signUpError"
                     style={{
                       width: "150px",
                       position: "absolute",
@@ -285,14 +285,13 @@ export default function Signup() {
                       {String(errorsEmail.StudentNum.message)}
                     </span>
                   </div>
-                </>
+                </div>
               ) : (
                 <button
                   type="button"
                   style={{
                     width: "70px",
-                    position: "absolute",
-                    right: "10px",
+                    minWidth: "70px",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "12px",
                     backgroundColor: "#2CC295",
@@ -301,7 +300,7 @@ export default function Signup() {
                     borderRadius: "20px",
                     border: "none",
                     padding: "5px",
-                    marginLeft: "5px",
+                    marginRight: "10px",
                     cursor: "pointer",
                     zIndex: "0",
                     display: checkedEmail ? "none" : "block",
@@ -395,7 +394,7 @@ export default function Signup() {
                       borderRadius: "20px",
                       border: "none",
                       padding: "5px",
-                      marginLeft: "5px",
+                      marginRight: "5px",
                       cursor: "pointer",
                       zIndex: "0",
                       opacity: "0.8",
@@ -443,6 +442,7 @@ export default function Signup() {
                     fontSize: "18px",
                     color: "#fff",
                     width: "120px",
+                    minWidth: "70px",
                     paddingLeft: "20px",
                   }}
                 >
@@ -461,19 +461,17 @@ export default function Signup() {
                     },
                   })}
                   style={{
-                    width: errorsSignUp.Password ? "300px" : "320px",
+                    width: "100%",
+                    maxWidth: errorsSignUp.Password ? "290px" : "320px",
                     height: "30px",
                     margin: "0 20px",
                   }}
                 />
                 {errorsSignUp.Password ? (
-                  <>
+                  <div>
                     <div
                       style={{
-                        width: "28px",
-                        position: "absolute",
-                        top: "10px",
-                        right: "0px",
+                        width: "30px",
                       }}
                     >
                       <img
@@ -483,6 +481,7 @@ export default function Signup() {
                       />
                     </div>
                     <div
+                      className="signUpError"
                       style={{
                         width: "150px",
                         position: "absolute",
@@ -507,7 +506,7 @@ export default function Signup() {
                         {String(errorsSignUp.Password.message)}
                       </span>
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <></>
                 )}
@@ -536,6 +535,7 @@ export default function Signup() {
                     fontSize: "18px",
                     color: "#fff",
                     width: "120px",
+                    minWidth: "70px",
                     paddingLeft: "20px",
                   }}
                 >
@@ -552,32 +552,27 @@ export default function Signup() {
                       "비밀번호가 일치하지 않습니다.",
                   })}
                   style={{
-                    width: errorsSignUp.RePassword ? "300px" : "320px",
+                    width: "100%",
+                    maxWidth: errorsSignUp.RePassword ? "290px" : "320px",
                     height: "30px",
                     margin: "0 20px",
                   }}
                 />
                 {errorsSignUp.RePassword ? (
-                  <>
+                  <div>
                     <div
                       style={{
-                        width: "28px",
-                        position: "absolute",
-                        top: "10px",
-                        right: "0px",
+                        width: "30px",
                       }}
                     >
-                      {errorsSignUp.RePassword ? (
-                        <img
-                          src="..\img\btn\fail.png"
-                          alt="fail"
-                          style={{ width: "15px" }}
-                        />
-                      ) : (
-                        <></>
-                      )}
+                      <img
+                        src="..\img\btn\fail.png"
+                        alt="fail"
+                        style={{ width: "15px" }}
+                      />
                     </div>
                     <div
+                      className="signUpError"
                       style={{
                         width: "150px",
                         position: "absolute",
@@ -602,7 +597,7 @@ export default function Signup() {
                         {String(errorsSignUp.RePassword.message)}
                       </span>
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <></>
                 )}
@@ -631,6 +626,7 @@ export default function Signup() {
                     fontSize: "18px",
                     color: "#fff",
                     width: "120px",
+                    minWidth: "70px",
                     paddingLeft: "20px",
                   }}
                 >
@@ -645,19 +641,17 @@ export default function Signup() {
                     required: "이름을 입력해주세요.",
                   })}
                   style={{
-                    width: errorsSignUp.Name ? "300px" : "320px",
+                    width: "100%",
+                    maxWidth: errorsSignUp.Name ? "290px" : "320px",
                     height: "30px",
                     margin: "0 20px",
                   }}
                 />
                 {errorsSignUp.Name ? (
-                  <>
+                  <div>
                     <div
                       style={{
-                        width: "28px",
-                        position: "absolute",
-                        top: "10px",
-                        right: "0px",
+                        width: "30px",
                       }}
                     >
                       <img
@@ -667,6 +661,7 @@ export default function Signup() {
                       />
                     </div>
                     <div
+                      className="signUpError"
                       style={{
                         width: "150px",
                         position: "absolute",
@@ -691,7 +686,7 @@ export default function Signup() {
                         {String(errorsSignUp.Name.message)}
                       </span>
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <></>
                 )}
@@ -720,114 +715,106 @@ export default function Signup() {
                     fontSize: "18px",
                     color: "#fff",
                     width: "120px",
+                    minWidth: "70px",
                     paddingLeft: "20px",
                   }}
                 >
                   학 과
                 </label>
-                <span
+                <select
+                  defaultValue="학과 선택"
+                  id="major"
                   style={{
-                    boxSizing: "border-box",
-                    border: "none",
+                    width: "100%",
+                    maxWidth: errorsSignUp.Major ? "290px" : "320px",
                     margin: "0 20px",
+                    height: "40px",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                    color: selectedMajor === "학과 선택" ? "#777" : "#fff",
+                    cursor: "pointer",
                   }}
+                  {...registerSignUp("Major", {
+                    validate: (value) =>
+                      value !== "학과 선택" || "학과를 선택해주세요.",
+                    onChange: handleChange,
+                  })}
                 >
-                  <select
-                    defaultValue="학과 선택"
-                    id="major"
+                  <option
+                    disabled
+                    value="학과 선택"
+                    style={{ background: "#111015", cursor: "pointer" }}
+                  >
+                    학과 선택
+                  </option>
+                  <option
+                    value="휴먼지능정보공학전공"
                     style={{
-                      width: "100%",
-                      height: "40px",
-                      backgroundColor: "transparent",
-                      border: "none",
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
-                      color: selectedMajor === "학과 선택" ? "#777" : "#fff",
+                      color: "#fff",
+                      background: "#111015",
                       cursor: "pointer",
                     }}
-                    {...registerSignUp("Major", {
-                      validate: (value) =>
-                        value !== "학과 선택" || "학과를 선택해주세요.",
-                      onChange: handleChange,
-                    })}
                   >
-                    <option
-                      disabled
-                      value="학과 선택"
-                      style={{ background: "#111015", cursor: "pointer" }}
-                    >
-                      학과 선택
-                    </option>
-                    <option
-                      value="휴먼지능정보공학전공"
-                      style={{
-                        color: "#fff",
-                        background: "#111015",
-                        cursor: "pointer",
-                      }}
-                    >
-                      휴먼지능정보공학전공
-                    </option>
-                    <option
-                      value="컴퓨터과학전공"
-                      style={{
-                        color: "#fff",
-                        background: "#111015",
-                        cursor: "pointer",
-                      }}
-                    >
-                      컴퓨터과학전공
-                    </option>
-                    <option
-                      value="핀테크·빅데이터융합·스마트생산전공"
-                      style={{
-                        color: "#fff",
-                        background: "#111015",
-                        cursor: "pointer",
-                      }}
-                    >
-                      핀테크·빅데이터융합·스마트생산전공
-                    </option>
-                    <option
-                      value="지능IOT융합전공"
-                      style={{
-                        color: "#fff",
-                        background: "#111015",
-                        cursor: "pointer",
-                      }}
-                    >
-                      지능IOT융합전공
-                    </option>
-                    <option
-                      value="애니메이션전공"
-                      style={{
-                        color: "#fff",
-                        background: "#111015",
-                        cursor: "pointer",
-                      }}
-                    >
-                      애니메이션전공
-                    </option>
-                    <option
-                      value="기타"
-                      style={{
-                        color: "#fff",
-                        background: "#111015",
-                        cursor: "pointer",
-                      }}
-                    >
-                      기타
-                    </option>
-                  </select>
-                </span>
+                    휴먼지능정보공학전공
+                  </option>
+                  <option
+                    value="컴퓨터과학전공"
+                    style={{
+                      color: "#fff",
+                      background: "#111015",
+                      cursor: "pointer",
+                    }}
+                  >
+                    컴퓨터과학전공
+                  </option>
+                  <option
+                    value="핀테크·빅데이터융합·스마트생산전공"
+                    style={{
+                      color: "#fff",
+                      background: "#111015",
+                      cursor: "pointer",
+                    }}
+                  >
+                    핀테크·빅데이터융합·스마트생산전공
+                  </option>
+                  <option
+                    value="지능IOT융합전공"
+                    style={{
+                      color: "#fff",
+                      background: "#111015",
+                      cursor: "pointer",
+                    }}
+                  >
+                    지능IOT융합전공
+                  </option>
+                  <option
+                    value="애니메이션전공"
+                    style={{
+                      color: "#fff",
+                      background: "#111015",
+                      cursor: "pointer",
+                    }}
+                  >
+                    애니메이션전공
+                  </option>
+                  <option
+                    value="기타"
+                    style={{
+                      color: "#fff",
+                      background: "#111015",
+                      cursor: "pointer",
+                    }}
+                  >
+                    기타
+                  </option>
+                </select>
                 {errorsSignUp.Major ? (
-                  <>
+                  <div>
                     <div
                       style={{
-                        width: "28px",
-                        position: "absolute",
-                        top: "10px",
-                        right: "0px",
+                        width: "30px",
                       }}
                     >
                       <img
@@ -837,6 +824,7 @@ export default function Signup() {
                       />
                     </div>
                     <div
+                      className="signUpError"
                       style={{
                         width: "150px",
                         position: "absolute",
@@ -861,7 +849,7 @@ export default function Signup() {
                         {String(errorsSignUp.Major.message)}
                       </span>
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <></>
                 )}
@@ -890,6 +878,7 @@ export default function Signup() {
                     fontSize: "18px",
                     color: "#fff",
                     width: "120px",
+                    minWidth: "70px",
                     paddingLeft: "20px",
                   }}
                 >
@@ -913,19 +902,17 @@ export default function Signup() {
                   })}
                   placeholder="전화번호 입력"
                   style={{
-                    width: errorsSignUp.PhoneNum ? "300px" : "320px",
+                    width: "100%",
+                    maxWidth: errorsSignUp.PhoneNum ? "290px" : "320px",
                     height: "30px",
                     margin: "0 20px",
                   }}
                 />
                 {errorsSignUp.PhoneNum ? (
-                  <>
+                  <div>
                     <div
                       style={{
-                        width: "28px",
-                        position: "absolute",
-                        top: "10px",
-                        right: "0px",
+                        width: "30px",
                       }}
                     >
                       <img
@@ -935,6 +922,7 @@ export default function Signup() {
                       />
                     </div>
                     <div
+                      className="signUpError"
                       style={{
                         width: "150px",
                         position: "absolute",
@@ -959,7 +947,7 @@ export default function Signup() {
                         {String(errorsSignUp.PhoneNum.message)}
                       </span>
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <></>
                 )}
@@ -969,7 +957,7 @@ export default function Signup() {
           <div
             style={{
               maxWidth: "500px",
-              margin: "50px 0",
+              margin: "50px 0 150px",
               padding: "0",
               display: "flex",
               justifyContent: "right",

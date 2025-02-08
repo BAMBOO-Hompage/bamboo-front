@@ -229,7 +229,7 @@ export default function Login() {
             style={{
               width: "400px",
               marginTop: "40px",
-              marginBottom: "30px",
+              marginBottom: "150px",
               display: "flex",
               justifyContent: "space-around",
             }}
