@@ -52,11 +52,17 @@ export default function Signup() {
   const onEmailValid = async (e) => {
     var studentNumToEmail = `${e.StudentNum}@sangmyung.kr`;
 
-    await VerificationRequestsAPI(studentNumToEmail);
-    setValidEmail(true);
-    startTimer();
-    setStudentNum(e.StudentNum);
-    setEmail(studentNumToEmail);
+    const handleVerification = async () => {
+      const success = await VerificationRequestsAPI(studentNumToEmail);
+
+      if (success) {
+        setValidEmail(true);
+        startTimer();
+        setStudentNum(e.StudentNum);
+        setEmail(studentNumToEmail);
+      }
+    };
+    handleVerification();
   };
   const onEmailInvalid = (e) => {
     console.log(e, "onEmailInvalid");
@@ -143,7 +149,7 @@ export default function Signup() {
           textAlign: "left",
           position: "fixed",
           top: "13px",
-          left: "70px",
+          left: "6vw",
           width: "100%",
           zIndex: "2",
         }}

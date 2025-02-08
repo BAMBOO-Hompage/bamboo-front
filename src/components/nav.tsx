@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/button.tsx";
 
-import CheckAuthAPI from "../api/checkAuthAPI.tsx";
+import { getCookie } from "../api/cookies.tsx";
 import LogOutAPI from "../api/members/logOutAPI.tsx";
 
 import "../App.css";
@@ -22,20 +22,20 @@ export default function Nav(props: NavProps) {
 
   const [hover, setHover] = useState(false);
   const [currentFocus, setCurrentFocus] = useState("");
-  const [checkAuth, setCheckAuth] = useState<number>(1);
+  const [checkAuth, setCheckAuth] = useState<number | undefined>(undefined);
   const [isMenuActive, setIsMenuActive] = useState(false); // 메뉴 상태 관리
   const [hamburgerMenu, setHamburgerMenu] = useState<NavType | undefined>(
     props.type
   );
 
   useEffect(() => {
-    CheckAuthAPI().then((response) => {
-      if (response !== 0) {
-        setCheckAuth(1);
-      } else {
-        setCheckAuth(0);
-      }
-    });
+    var accessToken = getCookie("accessToken");
+
+    if (!accessToken) {
+      setCheckAuth(0);
+    } else {
+      setCheckAuth(1);
+    }
   }, []);
 
   return (
@@ -59,7 +59,7 @@ export default function Nav(props: NavProps) {
           borderBottom: hover ? "2px solid #555" : "none",
         }}
       >
-        <div style={{ position: "absolute", left: "20px" }}>
+        <div style={{ position: "absolute", left: "6vw" }}>
           <Link to="/">
             <img
               src="../img/nav_logo.png"
@@ -155,74 +155,58 @@ export default function Nav(props: NavProps) {
             Community
           </div>
         </div>
-        {/* 햄버거 메뉴 */}
-        <div
-          className="hamburger"
-          style={{
-            position: "absolute",
-            right: "40px",
-            display: "flex",
-            alignItems: "center",
-          }}
-          onClick={() => setIsMenuActive(!isMenuActive)}
-        >
-          <img
-            src="../img/icon/hamburger.png"
-            alt="hamburger"
-            style={{ width: "30px", cursor: "pointer" }}
-          />
-        </div>
-        {checkAuth !== 0 ? (
-          <div
-            className="nav_menu"
-            style={{
-              position: "absolute",
-              right: "0",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Link
-              to="/personalInfo?edit=&changePassword="
-              style={{ textDecoration: "none" }}
-            >
-              <div
-                className="nav_text"
-                style={
-                  props.type === "myPage"
-                    ? {
-                        color: "#2CC295",
-                        textShadow: "0 0 0.1em, 0 0 0.3em",
-                        borderBottom: "2px solid #2cc295",
-                      }
-                    : {}
-                }
-              >
-                MyPage
-              </div>
-            </Link>
-            <img
-              src="../img/btn/logout_disabled.png"
-              alt="logOut"
+        {checkAuth === 1 ? (
+          <div className="nav_menu">
+            <div
               style={{
-                width: "35px",
-                padding: "0 20px",
-                opacity: "0.6",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
+                position: "absolute",
+                right: "0",
+                display: "flex",
+                alignItems: "center",
               }}
-              onClick={() => {
-                LogOutAPI();
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = "1";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "0.6";
-              }}
-            />
+            >
+              <Link
+                to="/personalInfo?edit=&changePassword="
+                style={{ textDecoration: "none" }}
+              >
+                <div
+                  className="nav_text"
+                  style={
+                    props.type === "myPage"
+                      ? {
+                          color: "#2CC295",
+                          textShadow: "0 0 0.1em, 0 0 0.3em",
+                          borderBottom: "2px solid #2cc295",
+                        }
+                      : {}
+                  }
+                >
+                  MyPage
+                </div>
+              </Link>
+              <img
+                src="../img/btn/logout_disabled.png"
+                alt="logOut"
+                style={{
+                  width: "35px",
+                  padding: "0 20px",
+                  opacity: "0.6",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                }}
+                onClick={() => {
+                  LogOutAPI();
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = "1";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = "0.6";
+                }}
+              />
+            </div>
           </div>
-        ) : (
+        ) : checkAuth === 0 ? (
           <div
             className="nav_menu"
             style={{ position: "absolute", right: "0" }}
@@ -236,7 +220,25 @@ export default function Nav(props: NavProps) {
               }}
             />
           </div>
+        ) : (
+          <></>
         )}
+
+        {/* 햄버거 메뉴 */}
+        <div
+          className="hamburger"
+          style={{
+            position: "absolute",
+            right: "40px",
+          }}
+          onClick={() => setIsMenuActive(!isMenuActive)}
+        >
+          <img
+            src="../img/icon/hamburger.png"
+            alt="hamburger"
+            style={{ width: "30px", cursor: "pointer" }}
+          />
+        </div>
       </div>
 
       <div
@@ -265,7 +267,7 @@ export default function Nav(props: NavProps) {
           <div
             style={{
               minWidth: "100px",
-              margin: "40px 60px 20px 30px",
+              margin: "40px 60px 0 30px",
             }}
           >
             <div
@@ -472,32 +474,32 @@ export default function Nav(props: NavProps) {
                 <div className="hamburger_text">Log In</div>
               </Link>
             </div>
-          ) : (
-            <>
+          ) : checkAuth === 1 ? (
+            <div
+              style={{
+                position: "absolute",
+                bottom: "100px",
+                left: "30px",
+                minWidth: "100px",
+              }}
+            >
+              <Link
+                to="/personalInfo?edit=&changePassword="
+                style={{ textDecoration: "none" }}
+              >
+                <div className="hamburger_text">MyPage</div>
+              </Link>
               <div
-                style={{
-                  position: "absolute",
-                  bottom: "100px",
-                  left: "30px",
-                  minWidth: "100px",
+                className="hamburger_text"
+                onClick={() => {
+                  LogOutAPI();
                 }}
               >
-                <Link
-                  to="/personalInfo?edit=&changePassword="
-                  style={{ textDecoration: "none" }}
-                >
-                  <div className="hamburger_text">MyPage</div>
-                </Link>
-                <div
-                  className="hamburger_text"
-                  onClick={() => {
-                    LogOutAPI();
-                  }}
-                >
-                  Log Out
-                </div>
+                Log Out
               </div>
-            </>
+            </div>
+          ) : (
+            <></>
           )}
         </div>
       </div>
@@ -513,7 +515,6 @@ export default function Nav(props: NavProps) {
           transition: "height 0.3s ease",
         }}
       >
-        {/*#111015*/}
         <div
           style={{ width: "680px", display: "flex" }}
           onMouseEnter={() => setHover(true)}
