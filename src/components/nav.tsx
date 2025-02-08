@@ -156,61 +156,49 @@ export default function Nav(props: NavProps) {
           </div>
         </div>
         {checkAuth === 1 ? (
-          <div className="nav_menu">
-            <div
-              style={{
-                position: "absolute",
-                right: "0",
-                display: "flex",
-                alignItems: "center",
-              }}
+          <div className="nav_menu_logInOut">
+            <Link
+              to="/personalInfo?edit=&changePassword="
+              style={{ textDecoration: "none" }}
             >
-              <Link
-                to="/personalInfo?edit=&changePassword="
-                style={{ textDecoration: "none" }}
+              <div
+                className="nav_text"
+                style={
+                  props.type === "myPage"
+                    ? {
+                        color: "#2CC295",
+                        textShadow: "0 0 0.1em, 0 0 0.3em",
+                        borderBottom: "2px solid #2cc295",
+                      }
+                    : {}
+                }
               >
-                <div
-                  className="nav_text"
-                  style={
-                    props.type === "myPage"
-                      ? {
-                          color: "#2CC295",
-                          textShadow: "0 0 0.1em, 0 0 0.3em",
-                          borderBottom: "2px solid #2cc295",
-                        }
-                      : {}
-                  }
-                >
-                  MyPage
-                </div>
-              </Link>
-              <img
-                src="../img/btn/logout_disabled.png"
-                alt="logOut"
-                style={{
-                  width: "35px",
-                  padding: "0 20px",
-                  opacity: "0.6",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                }}
-                onClick={() => {
-                  LogOutAPI();
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = "1";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = "0.6";
-                }}
-              />
-            </div>
+                MyPage
+              </div>
+            </Link>
+            <img
+              src="../img/btn/logout_disabled.png"
+              alt="logOut"
+              style={{
+                width: "35px",
+                padding: "0 20px",
+                opacity: "0.6",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+              }}
+              onClick={() => {
+                LogOutAPI();
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "1";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "0.6";
+              }}
+            />
           </div>
         ) : checkAuth === 0 ? (
-          <div
-            className="nav_menu"
-            style={{ position: "absolute", right: "0" }}
-          >
+          <div className="nav_menu_logInOut">
             <Button
               type="logIn"
               size="logIn"
