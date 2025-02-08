@@ -121,6 +121,12 @@ select {
   align-items: center;
 }
 
+@media screen and (max-width: 900px) {
+  .signUpError {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .hamburger {
     display: flex;

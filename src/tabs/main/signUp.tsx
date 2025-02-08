@@ -250,7 +250,9 @@ export default function Signup() {
                 <div>
                   <div
                     style={{
-                      width: "28px",
+                      boxSizing: "border-box",
+                      width: "70px",
+                      paddingLeft: "40px",
                     }}
                   >
                     <img

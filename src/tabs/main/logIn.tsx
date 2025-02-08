@@ -42,7 +42,7 @@ export default function Login() {
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div>
       <div
         style={{
           position: "absolute",
@@ -50,8 +50,7 @@ export default function Login() {
           left: "50%",
           transform: "translate(-50%, 0)",
           width: "100vw",
-          maxWidth: "500px",
-          padding: "0 30px",
+          maxWidth: "450px",
           display: "flex",
           justifyContent: "space-between",
           zIndex: "-10",
