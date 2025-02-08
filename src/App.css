@@ -116,7 +116,7 @@ select {
 }
 .nav_menu_logInOut {
   position: absolute;
-  right: 0;
+  right: 10px;
   display: flex;
   align-items: center;
 }

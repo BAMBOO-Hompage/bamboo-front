@@ -49,7 +49,9 @@ export default function Login() {
           top: "60px",
           left: "50%",
           transform: "translate(-50%, 0)",
-          width: "500px",
+          width: "100vw",
+          maxWidth: "500px",
+          padding: "0 30px",
           display: "flex",
           justifyContent: "space-between",
           zIndex: "-10",
@@ -84,11 +86,11 @@ export default function Login() {
           <img
             src="..\img\main_logo_neon.png"
             alt="login_logo"
-            style={{ width: "400px" }}
+            style={{ maxWidth: "400px", padding: "0 30px" }}
           />
         </div>
 
-        <div style={{ width: "400px", margin: "0 auto" }}>
+        <div style={{ maxWidth: "400px", padding: "0 30px", margin: "0 auto" }}>
           <form
             style={{ textAlign: "left", width: "400px" }}
             onSubmit={handleSubmit(onValid, onInvalid)}

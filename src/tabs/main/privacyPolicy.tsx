@@ -23,7 +23,7 @@ export default function Signup() {
           textAlign: "left",
           position: "fixed",
           top: "13px",
-          left: "70px",
+          left: "6vw",
           width: "100%",
           zIndex: "2",
         }}
@@ -37,7 +37,7 @@ export default function Signup() {
         </Link>
       </div>
 
-      <div style={{ maxWidth: "850px", margin: "0 auto", padding: "0 40px" }}>
+      <div style={{ maxWidth: "850px", margin: "0 auto", padding: "0 30px" }}>
         <div
           style={{
             marginTop: "15vh",
@@ -142,7 +142,7 @@ export default function Signup() {
           margin: "0 auto",
           marginTop: "30px",
           marginBottom: "40px",
-          padding: "0 40px",
+          padding: "0 30px",
           display: "flex",
           justifyContent: "center",
         }}

@@ -174,7 +174,7 @@ export default function Signup() {
         회원가입
       </div>
 
-      <div style={{ width: "500px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "500px", padding: "0 30px", margin: "0 auto" }}>
         <div style={{ textAlign: "left", width: "100%", margin: "0 auto" }}>
           <div
             style={{
@@ -229,12 +229,14 @@ export default function Signup() {
                 style={{
                   width: errorsEmail.StudentNum ? "170px" : "120px",
                   height: "30px",
-                  margin: "0 10px 0 20px",
+                  marginLeft: "20px",
                   color: checkedEmail ? "#777" : "#fff",
                 }}
               />
               <span
                 style={{
+                  width: "200px",
+                  marginRight: "20px",
                   fontFamily: "Pretendard-Regular",
                   fontSize: "16px",
                   color: "#777",
@@ -723,94 +725,101 @@ export default function Signup() {
                 >
                   학 과
                 </label>
-                <select
-                  defaultValue="학과 선택"
-                  id="major"
+                <span
                   style={{
-                    width: errorsSignUp.Major ? "300px" : "320px",
-                    height: "40px",
-                    margin: "0 20px",
-                    backgroundColor: "transparent",
+                    boxSizing: "border-box",
                     border: "none",
-                    fontFamily: "Pretendard-Light",
-                    fontSize: "18px",
-                    color: selectedMajor === "학과 선택" ? "#777" : "#fff",
-                    cursor: "pointer",
+                    margin: "0 20px",
                   }}
-                  {...registerSignUp("Major", {
-                    validate: (value) =>
-                      value !== "학과 선택" || "학과를 선택해주세요.",
-                    onChange: handleChange,
-                  })}
                 >
-                  <option
-                    disabled
-                    value="학과 선택"
-                    style={{ background: "#111015", cursor: "pointer" }}
-                  >
-                    학과 선택
-                  </option>
-                  <option
-                    value="휴먼지능정보공학전공"
+                  <select
+                    defaultValue="학과 선택"
+                    id="major"
                     style={{
-                      color: "#fff",
-                      background: "#111015",
+                      width: "100%",
+                      height: "40px",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      color: selectedMajor === "학과 선택" ? "#777" : "#fff",
                       cursor: "pointer",
                     }}
+                    {...registerSignUp("Major", {
+                      validate: (value) =>
+                        value !== "학과 선택" || "학과를 선택해주세요.",
+                      onChange: handleChange,
+                    })}
                   >
-                    휴먼지능정보공학전공
-                  </option>
-                  <option
-                    value="컴퓨터과학전공"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    컴퓨터과학전공
-                  </option>
-                  <option
-                    value="핀테크·빅데이터융합·스마트생산전공"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    핀테크·빅데이터융합·스마트생산전공
-                  </option>
-                  <option
-                    value="지능IOT융합전공"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    지능IOT융합전공
-                  </option>
-                  <option
-                    value="애니메이션전공"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    애니메이션전공
-                  </option>
-                  <option
-                    value="기타"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    기타
-                  </option>
-                </select>
+                    <option
+                      disabled
+                      value="학과 선택"
+                      style={{ background: "#111015", cursor: "pointer" }}
+                    >
+                      학과 선택
+                    </option>
+                    <option
+                      value="휴먼지능정보공학전공"
+                      style={{
+                        color: "#fff",
+                        background: "#111015",
+                        cursor: "pointer",
+                      }}
+                    >
+                      휴먼지능정보공학전공
+                    </option>
+                    <option
+                      value="컴퓨터과학전공"
+                      style={{
+                        color: "#fff",
+                        background: "#111015",
+                        cursor: "pointer",
+                      }}
+                    >
+                      컴퓨터과학전공
+                    </option>
+                    <option
+                      value="핀테크·빅데이터융합·스마트생산전공"
+                      style={{
+                        color: "#fff",
+                        background: "#111015",
+                        cursor: "pointer",
+                      }}
+                    >
+                      핀테크·빅데이터융합·스마트생산전공
+                    </option>
+                    <option
+                      value="지능IOT융합전공"
+                      style={{
+                        color: "#fff",
+                        background: "#111015",
+                        cursor: "pointer",
+                      }}
+                    >
+                      지능IOT융합전공
+                    </option>
+                    <option
+                      value="애니메이션전공"
+                      style={{
+                        color: "#fff",
+                        background: "#111015",
+                        cursor: "pointer",
+                      }}
+                    >
+                      애니메이션전공
+                    </option>
+                    <option
+                      value="기타"
+                      style={{
+                        color: "#fff",
+                        background: "#111015",
+                        cursor: "pointer",
+                      }}
+                    >
+                      기타
+                    </option>
+                  </select>
+                </span>
                 {errorsSignUp.Major ? (
                   <>
                     <div
@@ -959,7 +968,7 @@ export default function Signup() {
           </div>
           <div
             style={{
-              width: "500px",
+              maxWidth: "500px",
               margin: "50px 0",
               padding: "0",
               display: "flex",
