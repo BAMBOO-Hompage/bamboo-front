@@ -217,7 +217,7 @@ export default function Nav(props: NavProps) {
           className="hamburger"
           style={{
             position: "absolute",
-            right: "40px",
+            right: "5vw",
           }}
           onClick={() => setIsMenuActive(!isMenuActive)}
         >

@@ -301,9 +301,9 @@ export default function Main() {
             <div
               style={{
                 maxWidth: "1000px",
+                padding: "0 30px",
                 textAlign: "left",
                 margin: "0 auto",
-                padding: "0 30px",
                 fontFamily: "Pretendard-Light",
                 fontSize: "18px",
                 color: "#fff",
@@ -327,9 +327,9 @@ export default function Main() {
               style={{
                 maxWidth: "1000px",
                 minHeight: "320px",
+                padding: "0 30px",
                 margin: "0 auto",
                 marginTop: "10px",
-                padding: "0 30px",
                 display: "flex",
                 justifyContent: "space-between",
               }}
@@ -793,7 +793,8 @@ export default function Main() {
               top: "140px",
               left: "50%",
               transform: "translate(-90%, 0)",
-              width: "400px",
+              width: "100vw",
+              maxWidth: "400px",
               display: "flex",
               justifyContent: "space-between",
               zIndex: "-10",
@@ -801,7 +802,7 @@ export default function Main() {
           >
             <div
               style={{
-                width: "250px",
+                width: "50%",
                 height: "60px",
                 borderRadius: "1171px",
                 background: "#2CC295",
@@ -811,7 +812,7 @@ export default function Main() {
             <div
               style={{
                 marginTop: "60px",
-                width: "250px",
+                width: "50%",
                 height: "60px",
                 borderRadius: "1171px",
                 background: "#297FB8",

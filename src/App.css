@@ -108,6 +108,13 @@ select {
   outline: none;
 }
 
+/* 반응형 작업 */
+.bottom_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .hamburger {
   display: none;
 }
@@ -121,10 +128,29 @@ select {
   align-items: center;
 }
 
+.intro_font {
+  font-size: 20px;
+}
+
 @media screen and (max-width: 900px) {
+  .bottom_info {
+    display: block;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
   .signUpError {
     display: none;
   }
+
+  .intro_font {
+    font-size: 16px;
+  }
+  .intro_img {
+    display: none;
+  }
+  /* .intro_back {
+    transform: translate(-0%, 0);
+  } */
 }
 
 @media screen and (max-width: 1200px) {

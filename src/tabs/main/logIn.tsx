@@ -42,7 +42,7 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div style={{ width: "100vw" }}>
       <div
         style={{
           position: "absolute",
@@ -59,7 +59,7 @@ export default function Login() {
         <div
           style={{
             marginTop: "20px",
-            width: "300px",
+            width: "50%",
             height: "80px",
             borderRadius: "1171px",
             background: "#297FB8",
@@ -68,7 +68,7 @@ export default function Login() {
         ></div>
         <div
           style={{
-            width: "300px",
+            width: "50%",
             height: "80px",
             borderRadius: "1171px",
             background: "#2CC295",
@@ -283,7 +283,7 @@ export default function Login() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "400px",
+            maxWidth: "400px",
             backgroundColor: "#111015",
             padding: "30px 20px 20px",
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",

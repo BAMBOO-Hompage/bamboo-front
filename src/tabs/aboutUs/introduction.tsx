@@ -23,15 +23,15 @@ export default function Introduction() {
           }}
           style={{
             width: "100vw",
-            height: "700px",
+            minHeight: "700px",
           }}
         >
           <div
             style={{
-              width: "1000px",
+              maxWidth: "1000px",
               margin: "0 auto",
               marginBottom: "20px",
-              paddingTop: "100px",
+              padding: "100px 30px 0",
               fontFamily: "Pretendard-Bold",
               fontSize: "30px",
               color: "#fff",
@@ -44,36 +44,45 @@ export default function Introduction() {
 
           <div
             style={{
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 30px",
               margin: "0 auto",
               marginBottom: "20px",
-              background: "linear-gradient(320deg, #042222 0%, #2CC295 100%)",
-              textAlign: "left",
             }}
           >
-            <div style={{ padding: "120px 0" }}>
-              <img
-                src="../img/main_logo_blk.png"
-                alt="logo_blk"
-                style={{
-                  width: "280px",
-                  paddingLeft: "100px",
-                  marginBottom: "30px",
-                }}
-              />
-              <br />
-              <span
-                style={{
-                  fontFamily: "Pretendard-Thin",
-                  fontSize: "20px",
-                  color: "#000",
-                  width: "280px",
-                  paddingLeft: "100px",
-                }}
-              >
-                BigData · AI · Machine Learning · Basic Programming ·
-                Optimization · Overall algorithms
-              </span>
+            <div
+              style={{
+                width: "100%",
+                background: "linear-gradient(320deg, #042222 0%, #2CC295 100%)",
+                textAlign: "left",
+              }}
+            >
+              <div style={{ padding: "120px 5vw" }}>
+                <div
+                  style={{
+                    maxWidth: "280px",
+                    marginBottom: "30px",
+                  }}
+                >
+                  <img
+                    src="../img/main_logo_blk.png"
+                    alt="logo_blk"
+                    style={{
+                      width: "100%",
+                    }}
+                  />
+                </div>
+                <div
+                  className="intro_font"
+                  style={{
+                    fontFamily: "Pretendard-Thin",
+                    color: "#000",
+                  }}
+                >
+                  BigData · AI · Machine Learning · Basic Programming ·
+                  Optimization · Overall algorithms
+                </div>
+              </div>
             </div>
           </div>
           <div
@@ -81,7 +90,8 @@ export default function Introduction() {
               fontFamily: "Pretendard-Light",
               fontSize: "18px",
               color: "#fff",
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: " 0 30px 60px",
               margin: "0 auto",
               textAlign: "left",
               lineHeight: "2.3",
@@ -114,15 +124,14 @@ export default function Introduction() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "680px",
+            minHeight: "680px",
           }}
         >
           <div
             style={{
-              width: "1000px",
-              height: "220px",
+              maxWidth: "1000px",
+              padding: "30px 30px 0",
               margin: "0 auto",
-              paddingTop: "30px",
               display: "flex",
               justifyContent: "space-between",
               position: "relative",
@@ -130,8 +139,8 @@ export default function Introduction() {
           >
             <div
               style={{
-                width: "220px",
-                height: "220px",
+                width: "clamp(100px, 20%, 200px)",
+                aspectRatio: "1 / 1",
                 borderRadius: "110px",
                 background:
                   "linear-gradient(320deg, #111015 40%, #2CC295 150%)",
@@ -139,9 +148,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "18px",
-                position: "absolute",
-                left: "0",
+                fontSize: "clamp(14px, 1.2vw, 18px)",
               }}
             >
               학년별 및 실력별
@@ -150,8 +157,8 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                width: "220px",
-                height: "220px",
+                width: "clamp(100px, 20%, 200px)",
+                aspectRatio: "1 / 1",
                 borderRadius: "110px",
                 background:
                   "linear-gradient(320deg, #111015 40%, #2CC295 150%)",
@@ -159,9 +166,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "18px",
-                position: "absolute",
-                left: "200px",
+                fontSize: "clamp(14px, 1.2vw, 18px)",
               }}
             >
               선후배 간의
@@ -170,8 +175,8 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                width: "220px",
-                height: "220px",
+                width: "clamp(100px, 20%, 200px)",
+                aspectRatio: "1 / 1",
                 borderRadius: "110px",
                 background:
                   "linear-gradient(320deg, #111015 40%, #2CC295 150%)",
@@ -179,9 +184,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "18px",
-                position: "absolute",
-                left: "400px",
+                fontSize: "clamp(14px, 1.2vw, 18px)",
               }}
             >
               학습 자료
@@ -190,8 +193,8 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                width: "220px",
-                height: "220px",
+                width: "clamp(100px, 20%, 200px)",
+                aspectRatio: "1 / 1",
                 borderRadius: "110px",
                 background:
                   "linear-gradient(320deg, #111015 40%, #2CC295 150%)",
@@ -199,9 +202,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "18px",
-                position: "absolute",
-                left: "600px",
+                fontSize: "clamp(14px, 1.2vw, 18px)",
               }}
             >
               다양한 대회
@@ -210,8 +211,8 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                width: "220px",
-                height: "220px",
+                width: "clamp(100px, 20%, 200px)",
+                aspectRatio: "1 / 1",
                 borderRadius: "110px",
                 background:
                   "linear-gradient(320deg, #111015 40%, #2CC295 150%)",
@@ -219,9 +220,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "18px",
-                position: "absolute",
-                left: "800px",
+                fontSize: "clamp(14px, 1.2vw, 18px)",
               }}
             >
               졸업 선배들과의
@@ -231,7 +230,8 @@ export default function Introduction() {
           </div>
           <div
             style={{
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: " 0 30px 50px",
               margin: "0 auto",
               marginTop: "50px",
               textAlign: "left",
@@ -294,7 +294,6 @@ export default function Introduction() {
                 fontFamily: "Pretendard-Light",
                 fontSize: "18px",
                 lineHeight: "2.2",
-                marginBottom: "30px",
               }}
             >
               학년과 실력에 맞춘 스터디 분반과 멘토링, 네트워킹 기회를 통해
@@ -316,7 +315,7 @@ export default function Introduction() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "700px",
+            minHeight: "680px",
           }}
         >
           <div
@@ -325,7 +324,8 @@ export default function Introduction() {
               top: "80px",
               left: "50%",
               transform: "translate(-50%, 0)",
-              width: "450px",
+              width: "100vw",
+              maxWidth: "450px",
               display: "flex",
               justifyContent: "space-between",
               zIndex: "-10",
@@ -333,7 +333,7 @@ export default function Introduction() {
           >
             <div
               style={{
-                width: "250px",
+                width: "50%",
                 height: "60px",
                 borderRadius: "1171px",
                 background: "#2CC295",
@@ -343,7 +343,7 @@ export default function Introduction() {
             <div
               style={{
                 marginTop: "60px",
-                width: "250px",
+                width: "50%",
                 height: "60px",
                 borderRadius: "1171px",
                 background: "#297FB8",
@@ -380,7 +380,8 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                width: "1000px",
+                maxWidth: "1000px",
+                padding: "0 30px",
                 textAlign: "left",
                 margin: "0 auto",
                 fontFamily: "Pretendard-Light",
@@ -404,8 +405,9 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                width: "1000px",
-                height: "350px",
+                maxWidth: "1000px",
+                minHeight: "320px",
+                padding: "0 30px",
                 margin: "0 auto",
                 marginTop: "10px",
                 display: "flex",
@@ -415,18 +417,23 @@ export default function Introduction() {
               <div
                 style={{
                   width: "30%",
-                  height: "350px",
+                  minHeight: "320px",
+                  padding: "20px 0",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
                     "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                 }}
               >
-                <div>
+                <div style={{ width: "100%" }}>
                   <img
                     src="../img/icon/paper.png"
                     alt="paper"
-                    style={{ height: "140px", marginTop: "20px" }}
+                    style={{
+                      width: "100%",
+                      height: "140px",
+                      objectFit: "contain",
+                    }}
                   />
                 </div>
                 <div
@@ -454,10 +461,10 @@ export default function Introduction() {
                   진행합니다.
                   <br />
                   <br />
+                  <br />
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "45px",
                     }}
                   >
                     #간단한_실습 #자유로운_토론
@@ -467,18 +474,23 @@ export default function Introduction() {
               <div
                 style={{
                   width: "30%",
-                  height: "350px",
+                  minHeight: "320px",
+                  padding: "20px 0",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
                     "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                 }}
               >
-                <div>
+                <div style={{ width: "100%" }}>
                   <img
                     src="../img/icon/dacon.png"
                     alt="dacon"
-                    style={{ height: "140px", marginTop: "20px" }}
+                    style={{
+                      width: "100%",
+                      height: "140px",
+                      objectFit: "contain",
+                    }}
                   />
                 </div>
                 <div
@@ -505,10 +517,10 @@ export default function Introduction() {
                   국내외 대회 정보를 수집 및 공유하고 팀별 또는 개인별 참가하여
                   실전 경험을 쌓을 수 있습니다.
                   <br />
+                  <br />
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "45px",
                     }}
                   >
                     #문제_해결_능력 #경쟁력_향상
@@ -518,18 +530,23 @@ export default function Introduction() {
               <div
                 style={{
                   width: "30%",
-                  height: "350px",
+                  minHeight: "320px",
+                  padding: "20px 0",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
                   boxShadow:
                     "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                 }}
               >
-                <div>
+                <div style={{ width: "100%" }}>
                   <img
                     src="../img/icon/network.png"
                     alt="network"
-                    style={{ height: "140px", marginTop: "20px" }}
+                    style={{
+                      width: "100%",
+                      height: "140px",
+                      objectFit: "contain",
+                    }}
                   />
                 </div>
                 <div
@@ -556,10 +573,10 @@ export default function Introduction() {
                   1:1 멘토링과 졸업 선배들과의 네트워킹을 통해 전문 지식과
                   경험을 습득하여 성장을 촉진할 수 있습니다.
                   <br />
+                  <br />
                   <span
                     style={{
                       color: "#2CC295",
-                      lineHeight: "45px",
                     }}
                   >
                     #선의의_경쟁 #최신_기술_실습
@@ -569,13 +586,20 @@ export default function Introduction() {
             </div>
           </div>
           <Link to="/activity" style={{ textDecoration: "none" }}>
-            <div style={{ width: "1000px", margin: "0 auto" }}>
+            <div
+              style={{
+                maxWidth: "1000px",
+                padding: "0 30px",
+                margin: "0 auto",
+                display: "flex",
+                justifyContent: "right",
+              }}
+            >
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
                   fontSize: "16px",
                   width: "150px",
-                  marginLeft: "830px",
                   marginTop: "25px",
                   padding: "10px",
                   backgroundColor: "#111015",
@@ -613,7 +637,7 @@ export default function Introduction() {
           style={{
             position: "relative",
             width: "100vw",
-            height: "680px",
+            minHeight: "680px",
           }}
         >
           <div
@@ -621,37 +645,50 @@ export default function Introduction() {
               position: "absolute",
               top: "120px",
               left: "50%",
-              transform: "translate(-0%, 0)",
-              width: "450px",
+              transform: "translate(-50%, 0)",
+              width: "100vw",
+              maxWidth: "1000px",
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "right",
               zIndex: "-10",
             }}
           >
             <div
+              className="intro_back"
               style={{
-                marginTop: "80px",
-                width: "250px",
-                height: "60px",
-                borderRadius: "1171px",
-                background: "#297FB8",
-                filter: "blur(100px)",
+                width: "100vw",
+                maxWidth: "450px",
+                display: "flex",
+                justifyContent: "space-between",
+                zIndex: "-10",
               }}
-            ></div>
-            <div
-              style={{
-                width: "250px",
-                height: "60px",
-                borderRadius: "1171px",
-                background: "#2CC295",
-                filter: "blur(100px)",
-              }}
-            ></div>
+            >
+              <div
+                style={{
+                  marginTop: "80px",
+                  width: "50%",
+                  height: "60px",
+                  borderRadius: "1171px",
+                  background: "#297FB8",
+                  filter: "blur(100px)",
+                }}
+              ></div>
+              <div
+                style={{
+                  width: "50%",
+                  height: "60px",
+                  borderRadius: "1171px",
+                  background: "#2CC295",
+                  filter: "blur(100px)",
+                }}
+              ></div>
+            </div>
           </div>
 
           <div
             style={{
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 30px",
               margin: "0 auto",
               fontFamily: "Pretendard-Bold",
               fontSize: "35px",
@@ -682,9 +719,10 @@ export default function Introduction() {
                 <img
                   src="../img/main_logo_blk.png"
                   alt="logo_blk"
+                  className="intro_img"
                   style={{
                     width: "260px",
-                    paddingRight: "100px",
+                    paddingRight: "5vw",
                   }}
                 />
               </div>
@@ -692,7 +730,8 @@ export default function Introduction() {
           </div>
           <div
             style={{
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 30px",
               margin: "0 auto",
               display: "flex",
               justifyContent: "space-between",
@@ -701,8 +740,8 @@ export default function Introduction() {
             <div
               style={{
                 position: "relative",
-                width: "480px",
-                height: "280px",
+                width: "48%",
+                minHeight: "280px",
                 backgroundColor: "#111015",
                 borderRadius: "20px",
                 boxShadow:
@@ -718,6 +757,7 @@ export default function Introduction() {
                     fontFamily: "Pretendard-SemiBold",
                     fontSize: "22px",
                     color: "#2cc295",
+                    marginTop: "20px",
                     marginBottom: "30px",
                   }}
                 >
@@ -741,6 +781,7 @@ export default function Introduction() {
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
+                    marginBottom: "20px",
                   }}
                 >
                   동아리원들이 필요한 자료를 손쉽게 접근하고, 최신 지식을
@@ -752,8 +793,8 @@ export default function Introduction() {
               style={{
                 position: "relative",
                 color: "#fff",
-                width: "480px",
-                height: "280px",
+                width: "48%",
+                minHeight: "280px",
                 backgroundColor: "#111015",
                 borderRadius: "20px",
                 boxShadow:
@@ -769,6 +810,7 @@ export default function Introduction() {
                     fontFamily: "Pretendard-SemiBold",
                     fontSize: "22px",
                     color: "#2cc295",
+                    marginTop: "20px",
                     marginBottom: "30px",
                   }}
                 >
@@ -792,6 +834,7 @@ export default function Introduction() {
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
+                    marginBottom: "20px",
                   }}
                 >
                   이를 통해 동아리원들은 자기주도적으로 학습하며, 공동의 목표를
@@ -823,7 +866,8 @@ export default function Introduction() {
               top: "140px",
               left: "50%",
               transform: "translate(-90%, 0)",
-              width: "400px",
+              width: "100vw",
+              maxWidth: "400px",
               display: "flex",
               justifyContent: "space-between",
               zIndex: "-10",
@@ -831,7 +875,7 @@ export default function Introduction() {
           >
             <div
               style={{
-                width: "250px",
+                width: "50%",
                 height: "60px",
                 borderRadius: "1171px",
                 background: "#2CC295",
@@ -841,7 +885,7 @@ export default function Introduction() {
             <div
               style={{
                 marginTop: "60px",
-                width: "250px",
+                width: "50%",
                 height: "60px",
                 borderRadius: "1171px",
                 background: "#297FB8",
@@ -851,17 +895,25 @@ export default function Introduction() {
           </div>
           <div
             style={{
-              padding: "100px 0 100px",
+              padding: "100px 30px 100px",
+              maxWidth: "400px",
+              margin: "0 auto",
             }}
           >
             <img
               src="../../img/main_logo2.png"
               alt="main_logo2"
-              style={{ width: "400px" }}
+              style={{ width: "100%" }}
             />
           </div>
           <Link to="/joinUs" style={{ textDecoration: "none" }}>
-            <div style={{ width: "1000px", margin: "0 auto" }}>
+            <div
+              style={{
+                maxWidth: "1000px",
+                padding: "0 30px",
+                margin: "0 auto",
+              }}
+            >
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
@@ -903,8 +955,8 @@ export default function Introduction() {
                         box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
                       }
                     }
-
-                    @keyframes shadow-reset {
+        
+                      keyframes shadow-reset {
                       0% {
                         box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
                       }

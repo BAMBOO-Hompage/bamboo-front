@@ -41,13 +41,11 @@ export default function BottomInfo() {
         }}
       />
       <div
+        className="bottom_info"
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
           padding: "20px 40px 0",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
         }}
       >
         <div
@@ -55,6 +53,7 @@ export default function BottomInfo() {
             fontFamily: "Pretendard-SemiBold",
             fontSize: "18px",
             color: "#fff",
+            marginBottom: "20px",
           }}
         >
           Made by BAMBOO
@@ -91,10 +90,8 @@ export default function BottomInfo() {
             fontFamily: "Pretendard-SemiBold",
             fontSize: "18px",
             color: "#fff",
-            paddingLeft: "20px",
           }}
         >
-          {" "}
           6기 회장
           <br />
           <span
