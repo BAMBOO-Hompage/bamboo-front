@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import "../App.css";
 
 type ButtonType = "primary" | "secondary" | "destructive" | "logIn" | "submit";
-type Size = "Xsmall" | "small" | "medium" | "large" | "XLarge" | "logIn";
+type Size = "xsmall" | "small" | "medium" | "large" | "xlarge" | "logIn";
 
 type ButtonProps = {
   onClick?: () => void;
@@ -15,7 +15,7 @@ type ButtonProps = {
 
 const ButtonContainer = styled.div<{
   type: "primary" | "secondary" | "destructive" | "logIn" | "submit";
-  size: "Xsmall" | "small" | "medium" | "large" | "XLarge" | "logIn";
+  size: "xsmall" | "small" | "medium" | "large" | "xlarge" | "logIn";
 }>`
   border: ${(props) => (props.type === "logIn" ? "none" : "none")};
   border-radius: ${(props) => (props.type === "logIn" ? "0" : "20px")};
@@ -41,7 +41,7 @@ const ButtonContainer = styled.div<{
   cursor: pointer;
 
   ${(props) =>
-    props.size === "XLarge" &&
+    props.size === "xlarge" &&
     css`
       height: 45px;
       font-size: 18px;
@@ -76,7 +76,7 @@ const ButtonContainer = styled.div<{
       text-align: center;
     `}
     ${(props) =>
-    props.size === "Xsmall" &&
+    props.size === "xsmall" &&
     css`
       height: 30px;
       font-size: 16px;

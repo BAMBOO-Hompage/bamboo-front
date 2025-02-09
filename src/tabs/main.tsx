@@ -22,13 +22,13 @@ export default function Main() {
   return (
     <div>
       <Nav type="main" />
-      <div style={{ width: "100vw" }}>
+      <div style={{ width: "100%" }}>
         <div
           style={{
             position: "absolute",
             top: " 0",
             left: "0",
-            width: "100vw",
+            width: "100%",
             height: "100vh",
             opacity: "1",
             zIndex: "-2",
@@ -39,7 +39,7 @@ export default function Main() {
             muted
             loop
             playsInline
-            style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
+            style={{ width: "100%", height: "100vh", objectFit: "cover" }}
           >
             <source src="../../img/main_background2.mp4" type="video/mp4" />
           </video>
@@ -49,7 +49,7 @@ export default function Main() {
             position: "absolute",
             top: "0",
             left: "0",
-            width: "100vw",
+            width: "100%",
             height: "100vh",
             border: "none",
             opacity: "0.6",
@@ -63,7 +63,7 @@ export default function Main() {
             top: " 100vh",
             left: "50%",
             transform: "translate(-50%, 0)",
-            width: "100vw",
+            width: "100%",
             maxWidth: "1000px",
             height: "25px",
             borderRadius: "1171px",
@@ -82,7 +82,7 @@ export default function Main() {
             duration: 1,
           }}
           style={{
-            width: "100vw",
+            width: "100%",
             height: "100vh",
             display: "flex",
             justifyContent: "center",
@@ -109,7 +109,7 @@ export default function Main() {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             minHeight: "680px",
           }}
         >
@@ -234,7 +234,7 @@ export default function Main() {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             minHeight: "680px",
           }}
         >
@@ -244,7 +244,7 @@ export default function Main() {
               top: "60px",
               left: "50%",
               transform: "translate(-50%, 0)",
-              width: "100vw",
+              width: "100%",
               maxWidth: "450px",
               display: "flex",
               justifyContent: "space-between",
@@ -557,7 +557,7 @@ export default function Main() {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             minHeight: "660px",
           }}
         >
@@ -783,7 +783,7 @@ export default function Main() {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             height: "520px",
           }}
         >
@@ -793,7 +793,7 @@ export default function Main() {
               top: "140px",
               left: "50%",
               transform: "translate(-90%, 0)",
-              width: "100vw",
+              width: "100%",
               maxWidth: "400px",
               display: "flex",
               justifyContent: "space-between",

@@ -307,7 +307,7 @@ export default function PersonalInfo() {
                   >
                     <Button
                       type="destructive"
-                      size="Xsmall"
+                      size="xsmall"
                       title="취소"
                       onClick={() => {
                         const deleteAdd =
@@ -320,7 +320,7 @@ export default function PersonalInfo() {
                     />
                     <Button
                       type="primary"
-                      size="Xsmall"
+                      size="xsmall"
                       title="저장"
                       onClick={handleSave}
                     />

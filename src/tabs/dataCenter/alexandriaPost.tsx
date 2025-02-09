@@ -146,7 +146,7 @@ export default function AlexandriaPost() {
             >
               <Button
                 type="destructive"
-                size="Xsmall"
+                size="xsmall"
                 title="삭제"
                 onClick={() => {
                   const deleteConfirm =
@@ -165,7 +165,7 @@ export default function AlexandriaPost() {
               >
                 <Button
                   type="destructive"
-                  size="Xsmall"
+                  size="xsmall"
                   title="목록"
                   onClick={() => {
                     window.history.back();
@@ -173,7 +173,7 @@ export default function AlexandriaPost() {
                 />
                 <Button
                   type="primary"
-                  size="Xsmall"
+                  size="xsmall"
                   title="수정"
                   onClick={() => {}}
                 />

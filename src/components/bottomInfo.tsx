@@ -5,7 +5,7 @@ export default function BottomInfo() {
   return (
     <div
       style={{
-        width: "100vw",
+        width: "100%",
         minHeight: "190px",
         padding: "30px 0",
         backgroundColor: "#2CC295",

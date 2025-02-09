@@ -29,7 +29,7 @@ export default function JoinUs(props: JoinUsProps) {
                 duration: 1,
               }}
               style={{
-                width: "100vw",
+                width: "100%",
                 height: "620px",
               }}
             >
@@ -135,7 +135,7 @@ export default function JoinUs(props: JoinUsProps) {
               }}
               style={{
                 position: "relative",
-                width: "100vw",
+                width: "100%",
                 height: "530px",
               }}
             >
@@ -359,7 +359,7 @@ export default function JoinUs(props: JoinUsProps) {
                 duration: 1,
               }}
               style={{
-                width: "100vw",
+                width: "100%",
                 height: "920px",
               }}
             >
@@ -667,7 +667,7 @@ export default function JoinUs(props: JoinUsProps) {
               }}
               style={{
                 position: "relative",
-                width: "100vw",
+                width: "100%",
                 height: "420px",
               }}
             >
@@ -831,7 +831,7 @@ export default function JoinUs(props: JoinUsProps) {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             height: "730px",
           }}
         >
@@ -990,7 +990,7 @@ export default function JoinUs(props: JoinUsProps) {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             height: "420px",
           }}
         >

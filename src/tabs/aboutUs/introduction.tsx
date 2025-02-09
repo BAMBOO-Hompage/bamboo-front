@@ -22,7 +22,7 @@ export default function Introduction() {
             duration: 1,
           }}
           style={{
-            width: "100vw",
+            width: "100%",
             minHeight: "700px",
           }}
         >
@@ -57,7 +57,7 @@ export default function Introduction() {
                 textAlign: "left",
               }}
             >
-              <div style={{ padding: "120px 5vw" }}>
+              <div style={{ padding: "120px 5%" }}>
                 <div
                   style={{
                     maxWidth: "280px",
@@ -123,7 +123,7 @@ export default function Introduction() {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             minHeight: "680px",
           }}
         >
@@ -314,7 +314,7 @@ export default function Introduction() {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             minHeight: "680px",
           }}
         >
@@ -324,7 +324,7 @@ export default function Introduction() {
               top: "80px",
               left: "50%",
               transform: "translate(-50%, 0)",
-              width: "100vw",
+              width: "100%",
               maxWidth: "450px",
               display: "flex",
               justifyContent: "space-between",
@@ -636,7 +636,7 @@ export default function Introduction() {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             minHeight: "680px",
           }}
         >
@@ -646,7 +646,7 @@ export default function Introduction() {
               top: "120px",
               left: "50%",
               transform: "translate(-50%, 0)",
-              width: "100vw",
+              width: "100%",
               maxWidth: "1000px",
               display: "flex",
               justifyContent: "right",
@@ -654,9 +654,8 @@ export default function Introduction() {
             }}
           >
             <div
-              className="intro_back"
               style={{
-                width: "100vw",
+                width: "100%",
                 maxWidth: "450px",
                 display: "flex",
                 justifyContent: "space-between",
@@ -722,7 +721,7 @@ export default function Introduction() {
                   className="intro_img"
                   style={{
                     width: "260px",
-                    paddingRight: "5vw",
+                    paddingRight: "5%",
                   }}
                 />
               </div>
@@ -856,7 +855,7 @@ export default function Introduction() {
           }}
           style={{
             position: "relative",
-            width: "100vw",
+            width: "100%",
             height: "520px",
           }}
         >
@@ -866,7 +865,7 @@ export default function Introduction() {
               top: "140px",
               left: "50%",
               transform: "translate(-90%, 0)",
-              width: "100vw",
+              width: "100%",
               maxWidth: "400px",
               display: "flex",
               justifyContent: "space-between",

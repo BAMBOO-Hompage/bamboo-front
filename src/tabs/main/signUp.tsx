@@ -147,10 +147,9 @@ export default function Signup() {
       <div
         style={{
           textAlign: "left",
-          position: "fixed",
+          position: "absolute",
           top: "13px",
-          left: "6vw",
-          width: "100%",
+          left: "6%",
           zIndex: "2",
         }}
       >
@@ -165,7 +164,7 @@ export default function Signup() {
 
       <div
         style={{
-          marginTop: "20vh",
+          paddingTop: "20vh",
           marginBottom: "60px",
           fontFamily: "Pretendard-ExtraBold",
           fontSize: "35px",

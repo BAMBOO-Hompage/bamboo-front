@@ -43,14 +43,14 @@ export default function Nav(props: NavProps) {
       style={{
         position: "fixed",
         top: " 0",
-        width: "100vw",
+        width: "100%",
         zIndex: "100",
       }}
       onMouseLeave={() => setHover(false)}
     >
       <div
         style={{
-          width: "100vw",
+          width: "100%",
           height: "60px",
           display: "flex",
           justifyContent: "center",
@@ -59,7 +59,7 @@ export default function Nav(props: NavProps) {
           borderBottom: hover ? "2px solid #555" : "none",
         }}
       >
-        <div style={{ position: "absolute", left: "6vw" }}>
+        <div style={{ position: "absolute", left: "6%" }}>
           <Link to="/">
             <img
               src="../img/nav_logo.png"
@@ -217,7 +217,7 @@ export default function Nav(props: NavProps) {
           className="hamburger"
           style={{
             position: "absolute",
-            right: "5vw",
+            right: "5%",
           }}
           onClick={() => setIsMenuActive(!isMenuActive)}
         >
@@ -235,7 +235,7 @@ export default function Nav(props: NavProps) {
           position: "absolute",
           top: "60px",
           right: "0",
-          width: isMenuActive ? "1000vw" : "0",
+          width: isMenuActive ? "100%" : "0",
           height: "100vh",
           backgroundColor: "rgba(0,0,0,0.5)",
         }}
@@ -306,7 +306,7 @@ export default function Nav(props: NavProps) {
           <div
             style={{
               minWidth: "100px",
-              margin: "40px 60px 20px 30px",
+              margin: "30px 60px 20px 30px",
             }}
           >
             <div
@@ -354,7 +354,7 @@ export default function Nav(props: NavProps) {
           <div
             style={{
               minWidth: "100px",
-              margin: "40px 60px 20px 30px",
+              margin: "30px 60px 20px 30px",
             }}
           >
             <div
@@ -402,7 +402,7 @@ export default function Nav(props: NavProps) {
           <div
             style={{
               minWidth: "100px",
-              margin: "40px 60px 20px 30px",
+              margin: "30px 60px 20px 30px",
             }}
           >
             <div
@@ -494,7 +494,7 @@ export default function Nav(props: NavProps) {
 
       <div
         style={{
-          width: "100vw",
+          width: "100%",
           height: hover ? "150px" : "0",
           display: "flex",
           justifyContent: "center",

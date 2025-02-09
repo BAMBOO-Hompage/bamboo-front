@@ -123,7 +123,7 @@ select {
 }
 .nav_menu_logInOut {
   position: absolute;
-  right: 10px;
+  right: 0;
   display: flex;
   align-items: center;
 }

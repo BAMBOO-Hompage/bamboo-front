@@ -42,56 +42,82 @@ export default function Login() {
   };
 
   return (
-    <div style={{ width: "100vw" }}>
+    <div>
       <div
         style={{
           position: "absolute",
           top: "60px",
           left: "50%",
           transform: "translate(-50%, 0)",
-          width: "100vw",
-          maxWidth: "450px",
+          width: "100%",
+          maxWidth: "1000px",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           zIndex: "-10",
         }}
       >
         <div
           style={{
-            marginTop: "20px",
-            width: "50%",
-            height: "80px",
-            borderRadius: "1171px",
-            background: "#297FB8",
-            filter: "blur(110px)",
+            width: "100%",
+            maxWidth: "450px",
+            display: "flex",
+            justifyContent: "space-between",
+            zIndex: "-10",
           }}
-        ></div>
-        <div
-          style={{
-            width: "50%",
-            height: "80px",
-            borderRadius: "1171px",
-            background: "#2CC295",
-            filter: "blur(110px)",
-          }}
-        ></div>
+        >
+          <div
+            style={{
+              marginTop: "20px",
+              width: "50%",
+              height: "80px",
+              borderRadius: "1171px",
+              background: "#297FB8",
+              filter: "blur(110px)",
+            }}
+          ></div>
+          <div
+            style={{
+              width: "50%",
+              height: "80px",
+              borderRadius: "1171px",
+              background: "#2CC295",
+              filter: "blur(110px)",
+            }}
+          ></div>
+        </div>
       </div>
+
       <div
         style={{
-          marginTop: "25vh",
+          maxWidth: "460px",
+          margin: "25vh auto",
         }}
       >
-        <div style={{ marginBottom: "100px" }}>
+        <div
+          style={{
+            boxSizing: "border-box",
+            maxWidth: "460px",
+            padding: "0 30px",
+            marginBottom: "100px",
+          }}
+        >
           <img
             src="..\img\main_logo_neon.png"
             alt="login_logo"
-            style={{ maxWidth: "400px", padding: "0 30px" }}
+            style={{ width: "100%" }}
           />
         </div>
 
-        <div style={{ maxWidth: "400px", padding: "0 30px", margin: "0 auto" }}>
+        <div
+          style={{
+            boxSizing: "border-box",
+            maxWidth: "460px",
+            padding: "0 30px",
+            margin: "0 auto",
+          }}
+        >
           <form
-            style={{ textAlign: "left", width: "400px" }}
+            style={{ textAlign: "left", width: "100%" }}
             onSubmit={handleSubmit(onValid, onInvalid)}
           >
             <div
@@ -102,7 +128,7 @@ export default function Login() {
             >
               <div
                 style={{
-                  width: "400px",
+                  width: "100%",
                   height: "40px",
                   backgroundColor: "#111015",
                   boxShadow:
@@ -110,6 +136,9 @@ export default function Login() {
                   borderRadius: "20px",
                   margin: "0 auto",
                   marginBottom: "12px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
                 <input
@@ -124,7 +153,8 @@ export default function Login() {
                     required: "학번 혹은 비밀번호를 확인해주세요.",
                   })}
                   style={{
-                    width: "220px",
+                    width: "100%",
+                    maxWidth: "250px",
                     height: "40px",
                     margin: "0 20px",
                     borderRadius: "10px",
@@ -132,19 +162,20 @@ export default function Login() {
                     fontSize: "18px",
                   }}
                 />
-                <span
+                <div
                   style={{
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
+                    fontSize: "clamp(14px, 1.2vw, 16px)",
                     color: "#777",
+                    marginRight: "20px",
                   }}
                 >
                   @sangmyung.kr
-                </span>
+                </div>
               </div>
               <div
                 style={{
-                  width: "400px",
+                  width: "100%",
                   height: "40px",
                   backgroundColor: "#111015",
                   boxShadow:
@@ -152,6 +183,8 @@ export default function Login() {
                   borderRadius: "20px",
                   margin: "0 auto",
                   marginBottom: "10px",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
                 <input
@@ -162,7 +195,8 @@ export default function Login() {
                     required: "이메일 혹은 비밀번호를 확인해주세요.",
                   })}
                   style={{
-                    width: "360px",
+                    width: "100%",
+                    maxWidth: "360px",
                     height: "40px",
                     margin: "0 20px",
                     borderRadius: "10px",
@@ -173,7 +207,7 @@ export default function Login() {
               </div>
               <div
                 style={{
-                  width: "400px",
+                  maxWidth: "400px",
                   height: "20px",
                   color: "#FF5005",
                   fontSize: "12px",
@@ -206,7 +240,7 @@ export default function Login() {
 
             <div
               style={{
-                width: "400px",
+                width: "100%",
                 margin: "10px 0",
                 textAlign: "center",
               }}
@@ -214,19 +248,27 @@ export default function Login() {
               <button
                 type="submit"
                 style={{
-                  width: "100%",
+                  maxWidth: "100%",
                   padding: "0",
                   border: "none",
                   backgroundColor: "transparent",
                 }}
               >
-                <Button type="primary" size="large" title="로그인" />
+                <div
+                  style={{
+                    maxWidth: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button type="primary" size="large" title="로그인" />
+                </div>
               </button>
             </div>
           </form>
           <div
             style={{
-              width: "400px",
+              maxWidth: "400px",
               marginTop: "40px",
               marginBottom: "150px",
               display: "flex",
@@ -308,7 +350,7 @@ export default function Login() {
           <div style={{ width: "80px", margin: "0 auto" }}>
             <Button
               type="primary"
-              size="Xsmall"
+              size="xsmall"
               title="닫기"
               onClick={togglePopup}
             />
