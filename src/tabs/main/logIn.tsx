@@ -97,7 +97,7 @@ export default function Login() {
           style={{
             boxSizing: "border-box",
             maxWidth: "460px",
-            padding: "0 30px",
+            padding: "0 20px",
             marginBottom: "100px",
           }}
         >
@@ -112,7 +112,7 @@ export default function Login() {
           style={{
             boxSizing: "border-box",
             maxWidth: "460px",
-            padding: "0 30px",
+            padding: "0 20px",
             margin: "0 auto",
           }}
         >
@@ -325,6 +325,7 @@ export default function Login() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
+            width: "80%",
             maxWidth: "400px",
             backgroundColor: "#111015",
             padding: "30px 20px 20px",
@@ -365,6 +366,7 @@ export default function Login() {
             position: "fixed",
             top: 0,
             left: 0,
+            padding: "0 20px",
             width: "100%",
             height: "100%",
             backgroundColor: "rgba(0, 0, 0, 0.5)",

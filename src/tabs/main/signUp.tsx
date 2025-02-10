@@ -173,7 +173,7 @@ export default function Signup() {
         회원가입
       </div>
 
-      <div style={{ maxWidth: "500px", padding: "0 30px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "500px", padding: "0 20px", margin: "0 auto" }}>
         <div style={{ textAlign: "left", width: "100%", margin: "0 auto" }}>
           <div
             style={{

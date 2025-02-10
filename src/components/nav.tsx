@@ -217,7 +217,7 @@ export default function Nav(props: NavProps) {
           className="hamburger"
           style={{
             position: "absolute",
-            right: "5%",
+            right: "20px",
           }}
           onClick={() => setIsMenuActive(!isMenuActive)}
         >
@@ -244,8 +244,8 @@ export default function Nav(props: NavProps) {
           style={{
             position: "absolute",
             right: "0",
-            width: isMenuActive ? "300px" : "0",
-            height: "100vh",
+            width: isMenuActive ? "280px" : "0",
+            height: "100%",
             backgroundColor: "#000",
             opacity: "1",
             transition: "width 0.3s ease",
@@ -255,7 +255,7 @@ export default function Nav(props: NavProps) {
           <div
             style={{
               minWidth: "100px",
-              margin: "40px 60px 0 30px",
+              margin: "40px 50px 0 30px",
             }}
           >
             <div
@@ -306,7 +306,7 @@ export default function Nav(props: NavProps) {
           <div
             style={{
               minWidth: "100px",
-              margin: "30px 60px 20px 30px",
+              margin: "30px 50px 20px 30px",
             }}
           >
             <div
@@ -354,7 +354,7 @@ export default function Nav(props: NavProps) {
           <div
             style={{
               minWidth: "100px",
-              margin: "30px 60px 20px 30px",
+              margin: "30px 50px 20px 30px",
             }}
           >
             <div
@@ -402,7 +402,7 @@ export default function Nav(props: NavProps) {
           <div
             style={{
               minWidth: "100px",
-              margin: "30px 60px 20px 30px",
+              margin: "30px 50px 20px 30px",
             }}
           >
             <div

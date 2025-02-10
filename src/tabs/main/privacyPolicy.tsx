@@ -36,7 +36,7 @@ export default function Signup() {
         </Link>
       </div>
 
-      <div style={{ maxWidth: "850px", margin: "0 auto", padding: "0 30px" }}>
+      <div style={{ maxWidth: "850px", margin: "0 auto", padding: "0 20px" }}>
         <div
           style={{
             paddingTop: "15vh",
@@ -141,7 +141,7 @@ export default function Signup() {
           margin: "0 auto",
           marginTop: "30px",
           marginBottom: "150px",
-          padding: "0 30px",
+          padding: "0 20px",
           display: "flex",
           justifyContent: "center",
         }}

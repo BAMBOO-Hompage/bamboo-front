@@ -31,7 +31,7 @@ export default function Introduction() {
               maxWidth: "1000px",
               margin: "0 auto",
               marginBottom: "20px",
-              padding: "100px 30px 0",
+              padding: "100px 20px 0",
               fontFamily: "Pretendard-Bold",
               fontSize: "30px",
               color: "#fff",
@@ -45,7 +45,7 @@ export default function Introduction() {
           <div
             style={{
               maxWidth: "1000px",
-              padding: "0 30px",
+              padding: "0 20px",
               margin: "0 auto",
               marginBottom: "20px",
             }}
@@ -69,6 +69,7 @@ export default function Introduction() {
                     alt="logo_blk"
                     style={{
                       width: "100%",
+                      marginRight: "50px",
                     }}
                   />
                 </div>
@@ -91,7 +92,7 @@ export default function Introduction() {
               fontSize: "18px",
               color: "#fff",
               maxWidth: "1000px",
-              padding: " 0 30px 60px",
+              padding: " 0 20px 60px",
               margin: "0 auto",
               textAlign: "left",
               lineHeight: "2.3",
@@ -130,7 +131,7 @@ export default function Introduction() {
           <div
             style={{
               maxWidth: "1000px",
-              padding: "30px 30px 0",
+              padding: "30px 20px 0",
               margin: "0 auto",
               display: "flex",
               justifyContent: "space-between",
@@ -231,7 +232,7 @@ export default function Introduction() {
           <div
             style={{
               maxWidth: "1000px",
-              padding: " 0 30px 50px",
+              padding: " 0 20px 50px",
               margin: "0 auto",
               marginTop: "50px",
               textAlign: "left",
@@ -381,7 +382,7 @@ export default function Introduction() {
             <div
               style={{
                 maxWidth: "1000px",
-                padding: "0 30px",
+                padding: "0 20px",
                 textAlign: "left",
                 margin: "0 auto",
                 fontFamily: "Pretendard-Light",
@@ -407,7 +408,7 @@ export default function Introduction() {
               style={{
                 maxWidth: "1000px",
                 minHeight: "320px",
-                padding: "0 30px",
+                padding: "0 20px",
                 margin: "0 auto",
                 marginTop: "10px",
                 display: "flex",
@@ -589,7 +590,7 @@ export default function Introduction() {
             <div
               style={{
                 maxWidth: "1000px",
-                padding: "0 30px",
+                padding: "0 20px",
                 margin: "0 auto",
                 display: "flex",
                 justifyContent: "right",
@@ -687,7 +688,7 @@ export default function Introduction() {
           <div
             style={{
               maxWidth: "1000px",
-              padding: "0 30px",
+              padding: "0 20px",
               margin: "0 auto",
               fontFamily: "Pretendard-Bold",
               fontSize: "35px",
@@ -730,7 +731,7 @@ export default function Introduction() {
           <div
             style={{
               maxWidth: "1000px",
-              padding: "0 30px",
+              padding: "0 20px",
               margin: "0 auto",
               display: "flex",
               justifyContent: "space-between",
@@ -894,7 +895,7 @@ export default function Introduction() {
           </div>
           <div
             style={{
-              padding: "100px 30px 100px",
+              padding: "100px 20px 100px",
               maxWidth: "400px",
               margin: "0 auto",
             }}
@@ -909,7 +910,7 @@ export default function Introduction() {
             <div
               style={{
                 maxWidth: "1000px",
-                padding: "0 30px",
+                padding: "0 20px",
                 margin: "0 auto",
               }}
             >

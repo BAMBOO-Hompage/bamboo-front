@@ -29,7 +29,7 @@ export default function Main() {
             top: " 0",
             left: "0",
             width: "100%",
-            height: "100vh",
+            height: "100%",
             opacity: "1",
             zIndex: "-2",
           }}
@@ -144,7 +144,7 @@ export default function Main() {
               maxWidth: "1000px",
               textAlign: "left",
               margin: "0 auto",
-              padding: "0 30px",
+              padding: "0 20px",
               fontFamily: "Pretendard-Light",
               fontSize: "18px",
               color: "#fff",
@@ -186,7 +186,7 @@ export default function Main() {
             <div
               style={{
                 maxWidth: "1000px",
-                padding: "0 30px",
+                padding: "0 20px",
                 margin: "0 auto",
                 display: "flex",
                 justifyContent: "right",
@@ -301,7 +301,7 @@ export default function Main() {
             <div
               style={{
                 maxWidth: "1000px",
-                padding: "0 30px",
+                padding: "0 20px",
                 textAlign: "left",
                 margin: "0 auto",
                 fontFamily: "Pretendard-Light",
@@ -327,7 +327,7 @@ export default function Main() {
               style={{
                 maxWidth: "1000px",
                 minHeight: "320px",
-                padding: "0 30px",
+                padding: "0 20px",
                 margin: "0 auto",
                 marginTop: "10px",
                 display: "flex",
@@ -509,7 +509,7 @@ export default function Main() {
             <div
               style={{
                 maxWidth: "1000px",
-                padding: "0 30px",
+                padding: "0 20px",
                 margin: "0 auto",
                 display: "flex",
                 justifyContent: "right",
@@ -610,7 +610,7 @@ export default function Main() {
               style={{
                 maxWidth: "1000px",
                 minHeight: "390px",
-                padding: "0 30px",
+                padding: "0 20px",
                 margin: "0 auto",
               }}
             >
@@ -822,7 +822,7 @@ export default function Main() {
           </div>
           <div
             style={{
-              padding: "100px 30px 100px",
+              padding: "100px 20px 100px",
               maxWidth: "400px",
               margin: "0 auto",
             }}
@@ -837,7 +837,7 @@ export default function Main() {
             <div
               style={{
                 maxWidth: "1000px",
-                padding: "0 30px",
+                padding: "0 20px",
                 margin: "0 auto",
               }}
             >
