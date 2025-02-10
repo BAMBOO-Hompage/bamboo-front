@@ -16,7 +16,7 @@ export default function BottomInfo() {
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "0 40px",
+          padding: "0 20px",
           display: "flex",
           justifyContent: "space-between",
         }}
@@ -45,7 +45,7 @@ export default function BottomInfo() {
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "20px 40px 0",
+          padding: "20px 20px 0",
         }}
       >
         <div

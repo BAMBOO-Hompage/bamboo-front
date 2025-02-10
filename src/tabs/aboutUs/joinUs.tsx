@@ -1080,7 +1080,7 @@ export default function JoinUs(props: JoinUsProps) {
           <div
             style={{
               maxWidth: "980px",
-              padding: "0 40px",
+              padding: "0 20px",
               margin: "0 auto",
             }}
           >
