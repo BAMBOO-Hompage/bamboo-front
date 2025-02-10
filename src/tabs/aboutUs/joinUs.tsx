@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
+
 import "../../App.css";
 
 type JoinUsType = "basic" | "inPeriod";
@@ -35,9 +37,9 @@ export default function JoinUs(props: JoinUsProps) {
             >
               <div
                 style={{
-                  width: "1000px",
+                  maxWidth: "1000px",
+                  padding: "120px 20px 0",
                   margin: "0 auto",
-                  paddingTop: "120px",
                   marginBottom: "60px",
                   fontFamily: "Pretendard-Bold",
                   fontSize: "30px",
@@ -359,8 +361,9 @@ export default function JoinUs(props: JoinUsProps) {
                 duration: 1,
               }}
               style={{
+                position: "relative",
                 width: "100%",
-                height: "920px",
+                minHeight: "900px",
               }}
             >
               <div
@@ -369,38 +372,50 @@ export default function JoinUs(props: JoinUsProps) {
                   top: "320px",
                   left: "50%",
                   transform: "translate(-50%, 0)",
-                  width: "400px",
+                  width: "100%",
+                  maxWidth: "1000px",
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                   zIndex: "-10",
                 }}
               >
                 <div
                   style={{
-                    width: "250px",
-                    height: "60px",
-                    borderRadius: "1171px",
-                    background: "#297FB8",
-                    filter: "blur(100px)",
+                    width: "100%",
+                    maxWidth: "400px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    zIndex: "-10",
                   }}
-                ></div>
-                <div
-                  style={{
-                    width: "250px",
-                    height: "60px",
-                    borderRadius: "1171px",
-                    background: "#2CC295",
-                    filter: "blur(100px)",
-                  }}
-                ></div>
+                >
+                  <div
+                    style={{
+                      width: "50%",
+                      height: "60px",
+                      borderRadius: "1171px",
+                      background: "#297FB8",
+                      filter: "blur(100px)",
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      width: "50%",
+                      height: "60px",
+                      borderRadius: "1171px",
+                      background: "#2CC295",
+                      filter: "blur(100px)",
+                    }}
+                  ></div>
+                </div>
               </div>
               <div
                 style={{
                   position: "absolute",
-                  top: "960px",
+                  top: "100%",
                   left: "50%",
                   transform: "translate(-50%, 0)",
-                  width: "1000px",
+                  width: "100%",
+                  maxWidth: "1000px",
                   height: "25px",
                   borderRadius: "1171px",
                   background: "#2CC295",
@@ -411,7 +426,7 @@ export default function JoinUs(props: JoinUsProps) {
               <div
                 style={{
                   position: "absolute",
-                  top: "920px",
+                  top: "100%",
                   width: "100%",
                   height: "300px",
                   background: "#111015",
@@ -421,9 +436,9 @@ export default function JoinUs(props: JoinUsProps) {
 
               <div
                 style={{
-                  width: "1000px",
+                  maxWidth: "1000px",
+                  padding: "120px 29px 0",
                   margin: "0 auto",
-                  paddingTop: "120px",
                   fontFamily: "Pretendard-Bold",
                   fontSize: "30px",
                   color: "#fff",
@@ -432,13 +447,19 @@ export default function JoinUs(props: JoinUsProps) {
               >
                 지 원&nbsp;&nbsp;안 내
               </div>
-              <div>
+              <div
+                style={{
+                  maxWidth: "250px",
+                  padding: "0 20px",
+                  margin: "0 auto",
+                  marginTop: "120px",
+                }}
+              >
                 <img
                   src="../img/main_logo.png"
                   alt="logo_blk"
                   style={{
-                    width: "250px",
-                    marginTop: "120px",
+                    width: "100%",
                   }}
                 />
                 <br />
@@ -465,7 +486,8 @@ export default function JoinUs(props: JoinUsProps) {
               </div>
               <div
                 style={{
-                  marginTop: "120px",
+                  padding: "0 20px",
+                  marginTop: "100px",
                   marginBottom: "50px",
                   fontFamily: "Pretendard-Bold",
                   fontSize: "28px",
@@ -474,13 +496,18 @@ export default function JoinUs(props: JoinUsProps) {
               >
                 “ 파이썬, 데이터 분석, 데이터 과학, 머신러닝, 딥러닝 까지! ”
               </div>
-              <div style={{ width: "1000px", margin: "0 auto" }}>
+              <div
+                style={{
+                  maxWidth: "1000px",
+                  padding: "0 20px",
+                  margin: "0 auto",
+                  textAlign: "left",
+                }}
+              >
                 <div
+                  className="joinUs_text"
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "40px",
+                    marginBottom: "30px",
                   }}
                 >
                   <div
@@ -502,10 +529,11 @@ export default function JoinUs(props: JoinUsProps) {
                   </div>
                   <div
                     style={{
-                      display: "flex",
+                      marginTop: "10px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       color: "#fff",
+                      textAlign: "right",
                     }}
                   >
                     파이썬부터 딥러닝, 논문 리뷰와 작성까지 데이터 과학 핵심
@@ -513,11 +541,9 @@ export default function JoinUs(props: JoinUsProps) {
                   </div>
                 </div>
                 <div
+                  className="joinUs_text"
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "40px",
+                    marginBottom: "30px",
                   }}
                 >
                   <div
@@ -539,10 +565,11 @@ export default function JoinUs(props: JoinUsProps) {
                   </div>
                   <div
                     style={{
-                      display: "flex",
+                      marginTop: "10px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       color: "#fff",
+                      textAlign: "right",
                     }}
                   >
                     데이콘·캐글 대회와 백준 문제 풀이로 실무 데이터와 알고리즘
@@ -550,11 +577,9 @@ export default function JoinUs(props: JoinUsProps) {
                   </div>
                 </div>
                 <div
+                  className="joinUs_text"
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "40px",
+                    marginBottom: "20px",
                   }}
                 >
                   <div
@@ -576,10 +601,11 @@ export default function JoinUs(props: JoinUsProps) {
                   </div>
                   <div
                     style={{
-                      display: "flex",
+                      marginTop: "10px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       color: "#fff",
+                      textAlign: "right",
                     }}
                   >
                     멘토·동료와의 협업과 전문가 네트워크를 통해 폭넓은 경험을
@@ -588,14 +614,22 @@ export default function JoinUs(props: JoinUsProps) {
                 </div>
               </div>
               <Link to="/activity" style={{ textDecoration: "none" }}>
-                <div style={{ width: "1000px", margin: "0 auto" }}>
+                <div
+                  style={{
+                    maxWidth: "1000px",
+                    padding: "0 20px",
+                    margin: "0 auto",
+                    display: "flex",
+                    justifyContent: "right",
+                  }}
+                >
                   <div
                     style={{
                       fontFamily: "Pretendard-Light",
                       fontSize: "16px",
                       width: "150px",
-                      marginLeft: "830px",
-                      marginTop: "60px",
+                      marginTop: "40px",
+                      marginBottom: "50px",
                       padding: "10px",
                       backgroundColor: "#111015",
                       borderRadius: "20px",
@@ -668,7 +702,7 @@ export default function JoinUs(props: JoinUsProps) {
               style={{
                 position: "relative",
                 width: "100%",
-                height: "420px",
+                minHeight: "420px",
               }}
             >
               <div
@@ -685,7 +719,8 @@ export default function JoinUs(props: JoinUsProps) {
               </div>
               <div
                 style={{
-                  width: "1000px",
+                  maxWidth: "1000px",
+                  padding: "0 20px",
                   margin: "0 auto",
                   display: "flex",
                   justifyContent: "space-between",
@@ -832,7 +867,7 @@ export default function JoinUs(props: JoinUsProps) {
           style={{
             position: "relative",
             width: "100%",
-            height: "730px",
+            minHeight: "730px",
           }}
         >
           <div
@@ -849,7 +884,8 @@ export default function JoinUs(props: JoinUsProps) {
           </div>
           <div
             style={{
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 20px",
               margin: "0 auto",
             }}
           >
@@ -858,7 +894,8 @@ export default function JoinUs(props: JoinUsProps) {
                 position: "relative",
                 color: "#fff",
                 width: "100%",
-                height: "150px",
+                minHeight: "110px",
+                padding: "20px 0",
                 backgroundColor: "#111015",
                 borderRadius: "20px",
                 boxShadow:
@@ -899,7 +936,8 @@ export default function JoinUs(props: JoinUsProps) {
                 position: "relative",
                 color: "#fff",
                 width: "100%",
-                height: "150px",
+                minHeight: "110px",
+                padding: "20px 0",
                 backgroundColor: "#111015",
                 borderRadius: "20px",
                 boxShadow:
@@ -940,7 +978,8 @@ export default function JoinUs(props: JoinUsProps) {
                 position: "relative",
                 color: "#fff",
                 width: "100%",
-                height: "150px",
+                minHeight: "110px",
+                padding: "20px 0",
                 backgroundColor: "#111015",
                 borderRadius: "20px",
                 boxShadow:
@@ -948,6 +987,7 @@ export default function JoinUs(props: JoinUsProps) {
                 textAlign: "left",
                 display: "flex",
                 alignItems: "center",
+                marginBottom: "30px",
               }}
             >
               <div style={{ width: "80%", margin: "0 auto" }}>
@@ -991,7 +1031,7 @@ export default function JoinUs(props: JoinUsProps) {
           style={{
             position: "relative",
             width: "100%",
-            height: "420px",
+            minHeight: "420px",
           }}
         >
           <div
@@ -999,36 +1039,48 @@ export default function JoinUs(props: JoinUsProps) {
               position: "absolute",
               top: "120px",
               left: "50%",
-              transform: "translate(-0%, 0)",
-              width: "450px",
+              transform: "translate(-50%, 0)",
+              width: "100%",
+              maxWidth: "1000px",
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "right",
               zIndex: "-10",
             }}
           >
             <div
               style={{
-                marginTop: "80px",
-                width: "250px",
-                height: "60px",
-                borderRadius: "1171px",
-                background: "#297FB8",
-                filter: "blur(100px)",
+                width: "100%",
+                maxWidth: "450px",
+                display: "flex",
+                justifyContent: "space-between",
+                zIndex: "-10",
               }}
-            ></div>
-            <div
-              style={{
-                width: "250px",
-                height: "60px",
-                borderRadius: "1171px",
-                background: "#2CC295",
-                filter: "blur(100px)",
-              }}
-            ></div>
+            >
+              <div
+                style={{
+                  marginTop: "80px",
+                  width: "50%",
+                  height: "60px",
+                  borderRadius: "1171px",
+                  background: "#297FB8",
+                  filter: "blur(100px)",
+                }}
+              ></div>
+              <div
+                style={{
+                  width: "50%",
+                  height: "60px",
+                  borderRadius: "1171px",
+                  background: "#2CC295",
+                  filter: "blur(100px)",
+                }}
+              ></div>
+            </div>
           </div>
           <div
             style={{
-              width: "980px",
+              maxWidth: "980px",
+              padding: "0 40px",
               margin: "0 auto",
             }}
           >
@@ -1049,7 +1101,7 @@ export default function JoinUs(props: JoinUsProps) {
                   style={{
                     color: "#fff",
                     fontFamily: "Pretendard-Bold",
-                    fontSize: "30px",
+                    fontSize: "clamp(26px, 2.2vw, 30px)",
                     marginBottom: "10px",
                   }}
                 >
@@ -1059,7 +1111,7 @@ export default function JoinUs(props: JoinUsProps) {
                   style={{
                     color: "#777",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "18px",
+                    fontSize: "clamp(16px, 1.4vw, 18px)",
                     lineHeight: "2",
                   }}
                 >
@@ -1072,9 +1124,10 @@ export default function JoinUs(props: JoinUsProps) {
                 <img
                   src="../img/main_logo_blk.png"
                   alt="logo_blk"
+                  className="joinUs_img"
                   style={{
                     width: "260px",
-                    paddingRight: "100px",
+                    paddingRight: "90px",
                   }}
                 />
               </div>

@@ -132,11 +132,15 @@ select {
   font-size: 20px;
 }
 
+.joinUs_text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media screen and (max-width: 900px) {
   .bottom_info {
     display: block;
-    justify-content: space-between;
-    align-items: flex-start;
   }
   .signUpError {
     display: none;
@@ -148,10 +152,20 @@ select {
   .intro_img {
     display: none;
   }
-  /* .intro_back {
-    transform: translate(-0%, 0);
-  } */
+
+  .joinUs_text {
+    display: block;
+  }
+  .joinUs_img {
+    display: none;
+  }
 }
+
+/* @media screen and (max-width: 1040px) {
+  .joinUs_text {
+    display: block;
+  }
+} */
 
 @media screen and (max-width: 1200px) {
   .hamburger {
