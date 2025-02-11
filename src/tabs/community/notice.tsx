@@ -261,9 +261,8 @@ export default function Notice() {
                             color: "#888",
                           }}
                         >
-                          작성자:{" "}
-                          {post.member.studentId + " " + post.member.name}
-                          &emsp; 작성 일자 :{" "}
+                          작성자: {post.member.name}
+                          &emsp; 작성 일자:{" "}
                           {post.createdAt[0] +
                             "/" +
                             post.createdAt[1] +

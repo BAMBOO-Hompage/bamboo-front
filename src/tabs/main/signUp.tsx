@@ -228,7 +228,7 @@ export default function Signup() {
                 })}
                 style={{
                   width: "100%",
-                  maxWidth: errorsEmail.StudentNum ? "170px" : "160px",
+                  maxWidth: "160px",
                   height: "30px",
                   marginLeft: "20px",
                   color: checkedEmail ? "#777" : "#fff",
@@ -250,7 +250,7 @@ export default function Signup() {
                   <div
                     style={{
                       boxSizing: "border-box",
-                      width: "70px",
+                      width: "80px",
                       paddingLeft: "40px",
                     }}
                   >
@@ -345,15 +345,18 @@ export default function Signup() {
                     required: "인증코드를 입력해주세요.",
                   })}
                   style={{
-                    width: "330px",
+                    width: "100%",
+                    maxWidth: "350px",
                     height: "30px",
-                    margin: "0 20px",
+                    margin: "0 10px 0 20px",
                     color: checkedEmail ? "#777" : "#fff",
                   }}
                 />
-                {isTimerActive && !checkedEmail && (
-                  <span
+                {isTimerActive && !checkedEmail ? (
+                  <div
                     style={{
+                      width: "40px",
+                      marginRight: "10px",
                       fontFamily: "Pretendard-Regular",
                       fontSize: "16px",
                       color: "#777",
@@ -363,15 +366,24 @@ export default function Signup() {
                       2,
                       "0"
                     )}`}
-                  </span>
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      width: "40px",
+                      marginRight: "10px",
+                      fontFamily: "Pretendard-Regular",
+                      fontSize: "16px",
+                      color: "#777",
+                    }}
+                  ></div>
                 )}
                 {checkedEmail ? (
                   <div
                     style={{
-                      width: "28px",
-                      position: "absolute",
-                      top: "10px",
-                      right: "0px",
+                      boxSizing: "border-box",
+                      width: "80px",
+                      paddingLeft: "40px",
                     }}
                   >
                     <img
@@ -385,8 +397,7 @@ export default function Signup() {
                     type="button"
                     style={{
                       width: "70px",
-                      position: "absolute",
-                      right: "10px",
+                      minWidth: "70px",
                       fontFamily: "Pretendard-Regular",
                       fontSize: "12px",
                       backgroundColor: "#2CC295",
@@ -395,10 +406,10 @@ export default function Signup() {
                       borderRadius: "20px",
                       border: "none",
                       padding: "5px",
-                      marginRight: "5px",
+                      marginRight: "10px",
                       cursor: "pointer",
                       zIndex: "0",
-                      opacity: "0.8",
+                      display: checkedEmail ? "none" : "block",
                       transition: "all 0.3s ease",
                     }}
                     onMouseEnter={(e) => {
@@ -453,6 +464,7 @@ export default function Signup() {
                   id="password"
                   placeholder="비밀번호 입력"
                   type="password"
+                  autoComplete="off"
                   {...registerSignUp("Password", {
                     required: "비밀번호를 입력해주세요.",
                     pattern: {
@@ -546,6 +558,7 @@ export default function Signup() {
                   id="rePassword"
                   placeholder="비밀번호 확인"
                   type="password"
+                  autoComplete="off"
                   {...registerSignUp("RePassword", {
                     required: "비밀번호를 확인해주세요.",
                     validate: (value) =>

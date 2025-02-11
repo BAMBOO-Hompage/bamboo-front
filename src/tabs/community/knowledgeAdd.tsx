@@ -374,7 +374,7 @@ export default function KnowledgeAdd() {
                         display: "none",
                       }}
                       multiple
-                      accept=".pdf"
+                      accept=".pdf, .hwp, .pptx, .docx, .doc, .xlsx, .txt"
                       {...register("Image", {})}
                     />
                     <img

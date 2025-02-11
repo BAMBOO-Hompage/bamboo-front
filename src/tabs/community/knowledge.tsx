@@ -332,12 +332,19 @@ export default function Knoledge() {
                             color: "#888",
                           }}
                         >
-                          작성자:{" "}
-                          {post.member.studentId + " " + post.member.name}
-                          &emsp; 작성일자: {post.createdAt[0]}/
-                          {post.createdAt[1]}/{post.createdAt[2]}{" "}
-                          {post.createdAt[3]}:{post.createdAt[4]}:
-                          {post.createdAt[5]}
+                          작성자: {post.member.name}
+                          &emsp; 작성일자:{" "}
+                          {post.createdAt[0] +
+                            "/" +
+                            post.createdAt[1] +
+                            "/" +
+                            post.createdAt[2] +
+                            " " +
+                            post.createdAt[3] +
+                            ":" +
+                            post.createdAt[4] +
+                            ":" +
+                            post.createdAt[5]}
                         </div>
                       </div>
                     </Link>

@@ -62,15 +62,16 @@ export default function NoticePost() {
           }}
           style={{
             width: "100%",
-            height: "1250px",
           }}
         >
           <div
             style={{
               position: "relative",
               width: "1000px",
-              height: "1100px",
-              margin: "100px auto",
+              minHeight: "960px",
+              margin: "0 auto",
+              marginTop: "100px",
+              marginBottom: "150px",
               display: "flex",
             }}
           >
@@ -78,7 +79,7 @@ export default function NoticePost() {
               style={{
                 boxSizing: "border-box",
                 width: "180px",
-                height: "100%",
+                minHeight: "100%",
                 borderRight: "1px solid #444",
                 textAlign: "left",
               }}
@@ -199,8 +200,8 @@ export default function NoticePost() {
                   color: "#777",
                 }}
               >
-                작성자: {postData.member.studentId + " " + postData.member.name}
-                &emsp; 작성 일자 :{" "}
+                작성자: {postData.member.name}
+                &emsp; 작성 일자:{" "}
                 {postData.createdAt[0] +
                   "/" +
                   postData.createdAt[1] +

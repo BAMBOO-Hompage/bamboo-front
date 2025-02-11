@@ -126,7 +126,7 @@ export default function KnowledgePost() {
               style={{
                 position: "relative",
                 width: "820px",
-                height: "100%",
+                maxHeight: "100%",
                 textAlign: "left",
                 paddingLeft: "50px",
               }}
@@ -203,8 +203,8 @@ export default function KnowledgePost() {
                   color: "#777",
                 }}
               >
-                작성자: {postData.member.studentId + " " + postData.member.name}
-                &emsp; 작성 일자 :{" "}
+                작성자: {postData.member.name}
+                &emsp; 작성 일자:{" "}
                 {postData.createdAt[0] +
                   "/" +
                   postData.createdAt[1] +
@@ -217,6 +217,7 @@ export default function KnowledgePost() {
                   ":" +
                   postData.createdAt[5]}
               </div>
+              <div></div>
               <div>
                 <div
                   className="container"
