@@ -243,12 +243,12 @@ export default function Nav(props: NavProps) {
         <div
           style={{
             position: "absolute",
-            right: "0",
-            width: isMenuActive ? "280px" : "0",
+            right: isMenuActive ? "0" : "-280px",
+            width: "280px",
             height: "100%",
             backgroundColor: "#000",
             opacity: "1",
-            transition: "width 0.3s ease",
+            transition: "right 0.3s ease",
             textAlign: "left",
           }}
         >
@@ -280,14 +280,11 @@ export default function Nav(props: NavProps) {
               About Us
             </div>
             <div
-              style={
-                hamburgerMenu === "aboutUs"
-                  ? {
-                      display: "",
-                      transition: "all 0.3 ease",
-                    }
-                  : { display: "none", transition: "all 0.3 ease" }
-              }
+              style={{
+                maxHeight: hamburgerMenu === "aboutUs" ? "90px" : "0",
+                overflow: "hidden",
+                transition: "max-height 0.3s ease-out",
+              }}
             >
               <Link to="/introduction" style={{ textDecoration: "none" }}>
                 <div className="hamburger_tabs">동아리 소개</div>
@@ -331,14 +328,11 @@ export default function Nav(props: NavProps) {
               Study
             </div>
             <div
-              style={
-                hamburgerMenu === "study"
-                  ? {
-                      display: "",
-                      transition: "all 0.3 ease",
-                    }
-                  : { display: "none", transition: "all 0.3 ease" }
-              }
+              style={{
+                maxHeight: hamburgerMenu === "study" ? "90px" : "0",
+                overflow: "hidden",
+                transition: "max-height 0.3s ease-out",
+              }}
             >
               <Link to="/curriculumStudy" style={{ textDecoration: "none" }}>
                 <div className="hamburger_tabs">커리큘럼 스터디</div>
@@ -379,14 +373,11 @@ export default function Nav(props: NavProps) {
               Data Center
             </div>
             <div
-              style={
-                hamburgerMenu === "dataCenter"
-                  ? {
-                      display: "",
-                      transition: "all 0.3 ease",
-                    }
-                  : { display: "none", transition: "all 0.3 ease" }
-              }
+              style={{
+                maxHeight: hamburgerMenu === "dataCenter" ? "60px" : "0",
+                overflow: "hidden",
+                transition: "max-height 0.3s ease-out",
+              }}
             >
               <Link
                 to="/alexandria?tab=&search=&page=1&size=10"
@@ -427,14 +418,11 @@ export default function Nav(props: NavProps) {
               Community
             </div>
             <div
-              style={
-                hamburgerMenu === "community"
-                  ? {
-                      display: "",
-                      transition: "all 0.3 ease",
-                    }
-                  : { display: "none", transition: "all 0.3 ease" }
-              }
+              style={{
+                maxHeight: hamburgerMenu === "community" ? "60px" : "0",
+                overflow: "hidden",
+                transition: "max-height 0.3s ease-out",
+              }}
             >
               <Link
                 to="/notice?post=전체&page=1&size=8"
@@ -478,7 +466,20 @@ export default function Nav(props: NavProps) {
                 to="/personalInfo?edit=&changePassword="
                 style={{ textDecoration: "none" }}
               >
-                <div className="hamburger_text">MyPage</div>
+                <div
+                  className="hamburger_text"
+                  style={
+                    hamburgerMenu === "myPage"
+                      ? {
+                          color: "#2CC295",
+                          textShadow: "0 0 0.1em, 0 0 0.3em",
+                          borderBottom: "2px solid #2cc295",
+                        }
+                      : {}
+                  }
+                >
+                  MyPage
+                </div>
               </Link>
               <div
                 className="hamburger_text"
