@@ -3,36 +3,34 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function postLogOut(accessToken) {
-  return fetch(API_SERVER_DOMAIN + `/api/members/logout`, {
+async function postKnowledges(accessToken, formData) {
+  return fetch(API_SERVER_DOMAIN + "/api/knowledges", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    body: JSON.stringify({}),
+    body: formData,
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to logout");
+      throw new Error("Failed to post activies");
     }
-    removeCookie("accessToken");
-    removeCookie("refreshToken");
-
     return response.json();
   });
 }
 
-export default async function LogOutAPI() {
+export default async function PostKnowledgesAPI(formData) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await postLogOut(accessToken);
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+      await postKnowledges(accessToken, formData);
 
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 100);
+      alert("작성 완료");
+      window.location.href = "/knowledge?post=전체&search=&page=1&size=8";
     } catch (error) {
       if (refreshToken) {
         try {
@@ -42,24 +40,26 @@ export default async function LogOutAPI() {
             accessToken,
             refreshToken
           );
-          await postLogOut(newAccessToken);
+          await postKnowledges(newAccessToken, formData);
 
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 100);
+          alert("작성 완료");
+          window.location.href = "/knowledge?post=전체&search=&page=1&size=8";
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
+          alert("다시 로그인 해주세요.");
           removeCookie("accessToken");
           removeCookie("refreshToken");
-
           window.location.href = "/";
         }
       } else {
+        alert("다시 로그인 해주세요.");
         removeCookie("accessToken");
         window.location.href = "/";
       }
     }
   } else {
+    alert("다시 로그인 해주세요.");
+    removeCookie("refreshToken");
     window.location.href = "/";
   }
 }

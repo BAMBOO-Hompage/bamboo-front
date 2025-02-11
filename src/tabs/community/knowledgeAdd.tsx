@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
@@ -6,6 +7,8 @@ import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import ReactEditor from "../../components/ReactEditor.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
+
+import PostKnowledgesAPI from "../../api/knowledges/postKnowledgesAPI.tsx";
 import "../../App.css";
 
 export default function KnowledgeAdd() {
@@ -16,28 +19,39 @@ export default function KnowledgeAdd() {
     formState: { errors },
   } = useForm();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [content, setContent] = useState<string>("");
-  const [showImages, setShowImages] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
+  const [showFiles, setShowFiles] = useState<string[]>([]);
 
-  const handleAddImages = (event) => {
-    const imageLists = event.target.files; // 선택한 파일들
-    let fileNameLists: string[] = [...showImages]; // 기존 저장된 파일명들
+  const handleAddFiles = (event) => {
+    const docLists = event.target.files; // 선택한 파일들
+    let fileLists: File[] = [...files];
+    let fileNameLists: string[] = [...showFiles]; // 기존 저장된 파일명들
 
-    for (let i = 0; i < imageLists.length; i++) {
-      const currentFileName: string = imageLists[i].name; // 파일명 가져오기
+    for (let i = 0; i < docLists.length; i++) {
+      const currentFileName: string = docLists[i].name; // 파일명 가져오기
+      fileLists.push(docLists[i]);
       fileNameLists.push(currentFileName);
     }
 
     if (fileNameLists.length > 4) {
-      fileNameLists = fileNameLists.slice(0, 4); // 최대 10개 제한
+      fileLists = fileLists.slice(0, 4);
+      fileNameLists = fileNameLists.slice(0, 4); // 최대 4개 제한
     }
 
-    setShowImages(fileNameLists); // 파일명 리스트 저장
+    setFiles(fileLists);
+    setShowFiles(fileNameLists); // 파일명 리스트 저장
+  };
+
+  const handleDeleteFile = (id) => {
+    setShowFiles(showFiles.filter((_, index) => index !== id));
   };
 
   const onValid = (e) => {
     console.log(
-      e.Category + "\n" + e.Title + "\n" + content + "\n" + showImages,
+      e.Category + "\n" + e.Title + "\n" + content + "\n" + showFiles,
       "onValid"
     );
     alert(
@@ -47,20 +61,32 @@ export default function KnowledgeAdd() {
         e.Title +
         "\n내용 : \n" +
         content +
-        "\n사진 : \n" +
-        showImages
+        "\n파일 : \n" +
+        showFiles
     );
-    window.location.href = "/knowledge";
+    const formData = new FormData();
+    const jsonData = JSON.stringify({
+      title: e.Title,
+      content: content,
+      type: e.Category,
+    });
+
+    formData.append(
+      "request",
+      new Blob([jsonData], { type: "application/json" })
+    );
+    if (files && files.length > 0) {
+      files.forEach((file) => {
+        formData.append("files", file);
+      });
+    }
+
+    PostKnowledgesAPI(formData);
   };
 
   const onInvalid = (e) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
-  };
-
-  // X버튼 클릭 시 이미지 삭제
-  const handleDeleteImage = (id) => {
-    setShowImages(showImages.filter((_, index) => index !== id));
   };
 
   return (
@@ -121,7 +147,7 @@ export default function KnowledgeAdd() {
                     const deleteAdd =
                       window.confirm("작성을 취소하시겠습니까?");
                     if (deleteAdd) {
-                      window.location.href = "/knowledge";
+                      window.history.back();
                     }
                   }}
                 >
@@ -187,7 +213,7 @@ export default function KnowledgeAdd() {
                     }}
                   >
                     <select
-                      defaultValue={String(localStorage.getItem("postList"))}
+                      defaultValue={searchParams.get("post") || undefined}
                       style={{
                         width: "100%",
                         height: "40px",
@@ -223,24 +249,24 @@ export default function KnowledgeAdd() {
                         학습 자료
                       </option>
                       <option
-                        value="기술 트랜드 및 뉴스"
+                        value="기술 트렌드 및 뉴스"
                         style={{
                           background: "#111015",
                           color: "#2CC295",
                           cursor: "pointer",
                         }}
                       >
-                        기술 트랜드 및 뉴스
+                        기술 트렌드 및 뉴스
                       </option>
                       <option
-                        value="커리어 및 취업 뉴스"
+                        value="커리어 및 취업 정보"
                         style={{
                           background: "#111015",
                           color: "#2CC295",
                           cursor: "pointer",
                         }}
                       >
-                        커리어 및 취업 뉴스
+                        커리어 및 취업 정보
                       </option>
                     </select>
                   </div>
@@ -319,7 +345,7 @@ export default function KnowledgeAdd() {
                     fontSize: "16px",
                   }}
                 >
-                  <div>사진 첨부</div>
+                  <div>파일 첨부</div>
                   <label
                     htmlFor="fileInput"
                     style={{
@@ -339,7 +365,7 @@ export default function KnowledgeAdd() {
                       display: "flex",
                       alignItems: "center",
                     }}
-                    onChange={handleAddImages}
+                    onChange={handleAddFiles}
                   >
                     <input
                       type="file"
@@ -348,6 +374,7 @@ export default function KnowledgeAdd() {
                         display: "none",
                       }}
                       multiple
+                      accept=".pdf"
                       {...register("Image", {})}
                     />
                     <img
@@ -355,7 +382,7 @@ export default function KnowledgeAdd() {
                       alt="search"
                       style={{ width: "25px" }}
                     />
-                    &emsp;사진 선택 (최대 4장)
+                    &emsp;첨부 파일 선택 (최대 4개)
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
@@ -366,7 +393,7 @@ export default function KnowledgeAdd() {
                     justifyContent: "right",
                   }}
                 >
-                  {showImages.length !== 0 ? (
+                  {showFiles.length !== 0 ? (
                     <div
                       style={{
                         width: "620px",
@@ -380,7 +407,7 @@ export default function KnowledgeAdd() {
                         overflow: "auto",
                       }}
                     >
-                      {showImages.map((image, id) => (
+                      {showFiles.map((file, id) => (
                         <div
                           key={id}
                           style={{
@@ -396,7 +423,7 @@ export default function KnowledgeAdd() {
                             alt="delete"
                             style={{ width: "16px", cursor: "pointer" }}
                             onClick={() => {
-                              handleDeleteImage(id);
+                              handleDeleteFile(id);
                             }}
                             onMouseEnter={(e) => {
                               (e.target as HTMLImageElement).src =
@@ -407,7 +434,7 @@ export default function KnowledgeAdd() {
                                 "../../img/btn/delete_disabled.png";
                             }}
                           />
-                          &emsp;{image}
+                          &emsp;{file}
                         </div>
                       ))}
                     </div>

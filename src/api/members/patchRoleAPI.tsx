@@ -43,7 +43,6 @@ export default async function PatchPasswordAPI(updatedMembers) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
-          alert("Refresh accessToken");
 
           const newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,

@@ -1,9 +1,9 @@
-import React, { useMemo, useEffect, useRef } from "react";
+import React, { useMemo, useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
 
-// import ImageApi from "../api/imageAPI.tsx";
+import ImageAPI from "../api/imageAPI.tsx";
 
 function ReactModule() {
   return (
@@ -121,29 +121,42 @@ const CustomQuillEditorView = styled.div`
 const ReactEditor = ({ content, setContent }) => {
   const quillRef = useRef<ReactQuill | null>(null);
 
-  // const imageHandler = () => {
-  //   const input = document.createElement("input");
-  //   input.setAttribute("type", "file");
-  //   input.setAttribute("accept", "image/*");
-  //   input.click();
+  const [image, setImage] = useState<File | null>(null);
 
-  //   input.addEventListener("change", async () => {
-  //     const file = input.files?.[0];
+  const imageHandler = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
 
-  //     try {
-  //       const res = await ImageApi({ img: file });
-  //       const imgUrl = res.data.imgUrl;
-  //       if (quillRef.current) {
-  //         const editor = quillRef.current.getEditor();
-  //         const range = editor.getSelection();
-  //         editor.insertEmbed(range.index, "image", reader.result);
-  //         editor.setSelection(range.index + 1);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   });
-  // };
+    input.addEventListener("change", async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+
+      setImage(file);
+
+      try {
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const data = await ImageAPI(formData);
+        const imageUrl = data.result;
+
+        if (quillRef.current) {
+          const editor = quillRef.current.getEditor();
+          const range = editor.getSelection();
+          if (range) {
+            editor.insertEmbed(range.index, "image", imageUrl);
+            editor.setSelection({ index: range.index + 1, length: 0 });
+          } else {
+            console.warn("range is null, unable to insert image.");
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  };
 
   useEffect(() => {
     if (quillRef.current && content) {
@@ -199,7 +212,7 @@ const ReactEditor = ({ content, setContent }) => {
     () => ({
       toolbar: {
         container: "#toolBar",
-        // handlers: { image: imageHandler },
+        handlers: { image: imageHandler },
       },
       clipboard: {
         matchVisual: false,

@@ -3,8 +3,8 @@ import getAccessTokenWithRefreshToken from "./getAccessTokenWithRefreshToken.tsx
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function postActivities(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/main-activities", {
+async function postImage(accessToken, formData) {
+  return fetch(API_SERVER_DOMAIN + "/api/upload", {
     method: "POST",
     headers: {
       Authorization: "Bearer " + accessToken,
@@ -29,12 +29,9 @@ export default async function ImageAPI(formData) {
         console.log(`${key}:`, value);
       }
 
-      await postActivities(accessToken, formData);
+      let data = await postImage(accessToken, formData);
 
-      alert("작성 완료");
-      window.location.href = "/activity";
-
-      return 0;
+      return data;
     } catch (error) {
       if (refreshToken) {
         try {
@@ -46,15 +43,12 @@ export default async function ImageAPI(formData) {
             refreshToken
           );
           console.log(newAccessToken);
-          await postActivities(newAccessToken, formData);
+          let data = await postImage(newAccessToken, formData);
 
-          alert("작성 완료");
-          window.location.href = "/activity";
+          return data;
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
-          alert("다시 로그인 해주세요.");
-          removeCookie("accessToken");
-          removeCookie("refreshToken");
+          alert("이미지 사용에 문제가 생겼습니다.");
           window.location.href = "/";
         }
       } else {

@@ -39,7 +39,6 @@ export default async function PatchMyPageAPI(formData) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
-          alert("Refresh accessToken");
 
           const newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,

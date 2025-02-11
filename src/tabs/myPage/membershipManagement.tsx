@@ -47,7 +47,7 @@ export default function PersonalInfo() {
   };
 
   useEffect(() => {
-    GetMembersAPI(currentPage - 1).then((result) => {
+    GetMembersAPI(currentPage).then((result) => {
       var memberData = result.content;
       setMembersToDisplay(memberData);
       setTotalPages(result.totalPages);

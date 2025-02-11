@@ -19,7 +19,7 @@ type Paper = {
   paperName: string;
   link: string;
   year: string;
-  speaker: { studentId: number; name: string };
+  speaker: { studentId: string; name: string };
   topic: string;
   tagNames: string[];
   content: string;
@@ -45,7 +45,7 @@ export default function AlexandriaPost() {
     paperName: "",
     link: "",
     year: "",
-    speaker: { studentId: 0, name: "" },
+    speaker: { studentId: "", name: "" },
     topic: "",
     tagNames: [],
     content: "",

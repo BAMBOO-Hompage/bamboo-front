@@ -31,7 +31,6 @@ export default async function MyPageAPI() {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
-          alert("Refresh accessToken");
 
           let newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,

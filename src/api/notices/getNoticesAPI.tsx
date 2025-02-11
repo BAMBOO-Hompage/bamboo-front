@@ -3,27 +3,39 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function getMember(accessToken, page) {
-  return fetch(API_SERVER_DOMAIN + `/api/members?page=${page}&size=10`, {
+async function getNotices(accessToken, post, page) {
+  const params = new URLSearchParams();
+
+  if (post && post.trim()) {
+    params.append("type", post.trim());
+  }
+  params.append("page", page.toString());
+  params.append("size", "8");
+
+  return fetch(`${API_SERVER_DOMAIN}/api/notices?${params.toString()}`, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + accessToken,
     },
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to get member");
+      throw new Error("Failed to logout");
     }
     return response.json();
   });
 }
 
-export default async function GetMembersAPI(page) {
+export default async function GetNoticesAPI(post, page) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      let data = await getMember(accessToken, page);
+      if (post === "전체") {
+        post = "";
+      }
+      console.log(post, page);
+      let data = await getNotices(accessToken, post, page);
       console.log(data.result);
 
       return data.result;
@@ -36,7 +48,7 @@ export default async function GetMembersAPI(page) {
             accessToken,
             refreshToken
           );
-          let data = await getMember(newAccessToken, page);
+          let data = await getNotices(newAccessToken, post, page);
           console.log(data.result);
 
           return data.result;

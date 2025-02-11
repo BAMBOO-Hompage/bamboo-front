@@ -1,18 +1,52 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import MDEditor from "@uiw/react-md-editor";
+import dompurify from "dompurify";
 
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
-import NoticeData from "../../mockup_data/notice_data.tsx";
+import GetNoticeAPI from "../../api/notices/getNoticeAPI.tsx";
+import DeleteNoticesAPI from "../../api/notices/deleteNoticesAPI.tsx";
+
 import "../../App.css";
 
-export default function NoticePost() {
-  const noticeData = NoticeData();
+type Post = {
+  noticeId: number;
+  member: { studentId: string; name: string };
+  title: string;
+  content: string;
+  type: string;
+  images: string[];
+  files: string[];
+  comments: string[];
+  createdAt: number[];
+  updatedAt: number[];
+};
 
-  const postId = parseInt(localStorage.getItem("postId") || "0");
-  const currentPost = noticeData.filter((post) => postId === post.id)[0];
+export default function NoticePost() {
+  const sanitizer = dompurify.sanitize;
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [postData, setPostData] = useState<Post>({
+    noticeId: 0,
+    member: { studentId: "", name: "" },
+    title: "",
+    content: "",
+    type: "",
+    images: [],
+    files: [],
+    comments: [],
+    createdAt: [],
+    updatedAt: [],
+  });
+
+  useEffect(() => {
+    GetNoticeAPI(searchParams.get("id")).then((data) => {
+      setPostData(data);
+    });
+  }, [searchParams]);
 
   return (
     <div>
@@ -109,7 +143,7 @@ export default function NoticePost() {
                     color: "#2CC295",
                   }}
                 >
-                  {currentPost.category}
+                  {postData.type}
                 </div>
                 <div style={{ height: "30px" }}>
                   <img
@@ -123,7 +157,7 @@ export default function NoticePost() {
                     onClick={() => {
                       const confirm = window.confirm("정말 삭제하시겠습니까?");
                       if (confirm) {
-                        window.history.back();
+                        DeleteNoticesAPI(postData.noticeId);
                       }
                     }}
                     onMouseOver={(e) => {
@@ -155,17 +189,29 @@ export default function NoticePost() {
                   color: "#fff",
                 }}
               >
-                {currentPost.title}
+                {postData.title}
               </div>
               <div
                 style={{
                   marginBottom: "50px",
                   fontFamily: "Pretendard-Light",
-                  fontSize: "18px",
-                  color: "#fff",
+                  fontSize: "16px",
+                  color: "#777",
                 }}
               >
-                작성 일자 : {currentPost.date}
+                작성자: {postData.member.studentId + " " + postData.member.name}
+                &emsp; 작성 일자 :{" "}
+                {postData.createdAt[0] +
+                  "/" +
+                  postData.createdAt[1] +
+                  "/" +
+                  postData.createdAt[2] +
+                  " " +
+                  postData.createdAt[3] +
+                  ":" +
+                  postData.createdAt[4] +
+                  ":" +
+                  postData.createdAt[5]}
               </div>
               <div>
                 <div
@@ -177,14 +223,17 @@ export default function NoticePost() {
                     lineHeight: "22px",
                   }}
                 >
-                  <MDEditor.Markdown
+                  <div
+                    className="container"
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizer(`${postData.content}`),
+                    }}
                     style={{
-                      backgroundColor: "transparent",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       color: "#fff",
+                      lineHeight: "1.4",
                     }}
-                    source={currentPost.content}
                   />
                 </div>
               </div>

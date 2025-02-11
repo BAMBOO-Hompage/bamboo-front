@@ -4,28 +4,36 @@ import { motion } from "framer-motion";
 
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import NoticeData from "../../mockup_data/notice_data.tsx";
+
+import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
+import GetNoticesAPI from "../../api/notices/getNoticesAPI.tsx";
 
 import "../../App.css";
 
-const postsPerPage = 8;
+type Post = {
+  noticeId: number;
+  member: { studentId: number; name: string };
+  title: string;
+  content: string;
+  type: string;
+  views: number;
+  images: string[];
+  files: string[];
+  comments: string[];
+  createdAt: number[];
+  updatedAt: number[];
+};
+
 const maxVisiblePages = 5;
 
 export default function Notice() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
-  const currentPostList = searchParams.get("postList") || "전체";
+  const postList = searchParams.get("post") || "전체";
 
-  const noticeData = NoticeData();
-
-  const filteredData = noticeData.filter(
-    (post) => currentPostList === "전체" || post.category === currentPostList
-  );
-
-  const totalPages = Math.ceil(filteredData.length / postsPerPage);
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const postsToDisplay = filteredData.slice(startIndex, endIndex);
+  const [checkAuth, setCheckAuth] = useState<number>(1);
+  const [postsToDisplay, setPostsToDisplay] = useState<Post[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   const startPage =
     Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
@@ -34,13 +42,35 @@ export default function Notice() {
   const changePage = (page: number) => {
     if (page < 1) page = 1;
     if (page > totalPages) page = totalPages;
-    setSearchParams({ postList: currentPostList, page: page.toString() });
+    setSearchParams({
+      post: postList,
+      page: page.toString(),
+      size: "8",
+    });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const changePostList = (newPostList: string) => {
-    setSearchParams({ postList: newPostList, page: "1" }); // 카테고리 변경 시 페이지를 1로 초기화
-  };
+  useEffect(() => {
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_ADMIN") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    GetNoticesAPI(postList, currentPage).then((result) => {
+      console.log(result.content);
+      var noticeData = result.content;
+      setPostsToDisplay(noticeData);
+      setTotalPages(result.totalPages);
+      console.log(postsToDisplay, totalPages);
+    });
+  }, [postList, currentPage]);
 
   return (
     <div>
@@ -100,7 +130,7 @@ export default function Notice() {
                     key={category}
                     className="side_tabs"
                     style={
-                      currentPostList === category
+                      postList === category
                         ? {
                             boxSizing: "border-box",
                             color: "#2CC295",
@@ -108,7 +138,14 @@ export default function Notice() {
                           }
                         : {}
                     }
-                    onClick={() => changePostList(category)}
+                    onClick={() => {
+                      setSearchParams({
+                        post: category,
+                        page: "1",
+                        size: "8",
+                      });
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
                   >
                     {category}
                   </div>
@@ -125,7 +162,7 @@ export default function Notice() {
                 duration: 0.5,
                 y: { duration: 0.5 },
               }}
-              key={currentPostList}
+              key={postList}
               style={{
                 position: "relative",
                 width: "820px",
@@ -149,43 +186,54 @@ export default function Notice() {
                     color: "#fff",
                   }}
                 >
-                  {currentPostList}
+                  {postList}
                 </div>
+
+                <Link to={`/noticeAdd?post=${searchParams.get("post")}`}>
+                  <img
+                    src="../../img/btn/edit_enabled.png"
+                    alt="edit"
+                    style={{
+                      width: "30px",
+                      cursor: "pointer",
+                      opacity: "0.8",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "0.8";
+                    }}
+                  />
+                </Link>
               </div>
 
               <div style={{ margin: "40px 0 50px" }}>
-                {postsToDisplay.map((post) => (
-                  <div
-                    key={post.id}
-                    style={{
-                      width: "100%",
-                      height: "110px",
-                      backgroundColor: "#222",
-                      border: "0.5px solid #343434",
-                      borderRadius: "30px",
-                      marginBottom: "30px",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.border = "0.5px solid #777";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.border = "0.5px solid #343434";
-                    }}
-                  >
-                    <div style={{ width: "90%", margin: "0 auto" }}>
-                      <Link
-                        to="/noticePost"
-                        style={{ textDecoration: "none" }}
-                        onClick={() => {
-                          sessionStorage.setItem("postList", currentPostList);
-                          sessionStorage.setItem(
-                            "currentPage",
-                            String(currentPage)
-                          );
-                        }}
-                      >
+                {postsToDisplay.length > 0 ? (
+                  postsToDisplay.map((post) => (
+                    <Link
+                      to={`/noticePost?id=${post.noticeId}`}
+                      key={post.noticeId}
+                      style={{
+                        textDecoration: "none",
+                        width: "100%",
+                        height: "110px",
+                        backgroundColor: "#222",
+                        border: "0.5px solid #343434",
+                        borderRadius: "30px",
+                        marginBottom: "30px",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.border = "0.5px solid #777";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.border = "0.5px solid #343434";
+                      }}
+                    >
+                      <div style={{ width: "90%", margin: "0 auto" }}>
                         <div
                           style={{
                             marginBottom: "5px",
@@ -194,7 +242,7 @@ export default function Notice() {
                             color: "#2CC295",
                           }}
                         >
-                          {post.category}
+                          {post.type}
                         </div>
                         <div
                           style={{
@@ -213,12 +261,37 @@ export default function Notice() {
                             color: "#888",
                           }}
                         >
-                          작성일자 : {post.date}
+                          작성자:{" "}
+                          {post.member.studentId + " " + post.member.name}
+                          &emsp; 작성 일자 :{" "}
+                          {post.createdAt[0] +
+                            "/" +
+                            post.createdAt[1] +
+                            "/" +
+                            post.createdAt[2] +
+                            " " +
+                            post.createdAt[3] +
+                            ":" +
+                            post.createdAt[4] +
+                            ":" +
+                            post.createdAt[5]}
                         </div>
-                      </Link>
-                    </div>
+                      </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div
+                    style={{
+                      color: "#fff",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      textAlign: "center",
+                      padding: "50px 40px",
+                    }}
+                  >
+                    게시물이 없습니다.
                   </div>
-                ))}
+                )}
               </div>
 
               <div

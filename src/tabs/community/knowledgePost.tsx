@@ -1,20 +1,54 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import dompurify from "dompurify";
 
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
-import KnowledgeData from "../../mockup_data/knowledge_data.tsx";
+import GetKnowledgeAPI from "../../api/knowledges/getKnowledgeAPI.tsx";
+import DeleteKnowledgesAPI from "../../api/knowledges/deleteKnowledgesAPI.tsx";
+
 import "../../App.css";
 
-export default function KnowledgePost() {
-  const knowledgeData = KnowledgeData();
+type Post = {
+  knowledgeId: number;
+  member: { studentId: string; name: string };
+  title: string;
+  content: string;
+  type: string;
+  views: number;
+  images: string[];
+  files: string[];
+  comments: string[];
+  createdAt: number[];
+  updatedAt: number[];
+};
 
+export default function KnowledgePost() {
   const sanitizer = dompurify.sanitize;
 
-  const postId = parseInt(localStorage.getItem("postId") || "0");
-  const currentPost = knowledgeData.filter((post) => postId == post.id)[0];
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [postData, setPostData] = useState<Post>({
+    knowledgeId: 0,
+    member: { studentId: "", name: "" },
+    title: "",
+    content: "",
+    type: "",
+    views: 0,
+    images: [],
+    files: [],
+    comments: [],
+    createdAt: [],
+    updatedAt: [],
+  });
+
+  useEffect(() => {
+    GetKnowledgeAPI(searchParams.get("id")).then((data) => {
+      setPostData(data);
+    });
+  }, [searchParams]);
 
   return (
     <div>
@@ -30,15 +64,16 @@ export default function KnowledgePost() {
           }}
           style={{
             width: "100%",
-            height: "1250px",
           }}
         >
           <div
             style={{
               position: "relative",
               width: "1000px",
-              height: "1100px",
-              margin: "100px auto",
+              minHeight: "960px",
+              margin: "0 auto",
+              marginTop: "100px",
+              marginBottom: "150px",
               display: "flex",
             }}
           >
@@ -46,7 +81,7 @@ export default function KnowledgePost() {
               style={{
                 boxSizing: "border-box",
                 width: "180px",
-                height: "100%",
+                minHeight: "100%",
                 borderRight: "1px solid #444",
                 textAlign: "left",
               }}
@@ -111,7 +146,7 @@ export default function KnowledgePost() {
                     color: "#2CC295",
                   }}
                 >
-                  {currentPost.category}
+                  {postData.type}
                 </div>
                 <div style={{ height: "30px" }}>
                   <img
@@ -123,9 +158,10 @@ export default function KnowledgePost() {
                       marginRight: "15px",
                     }}
                     onClick={() => {
-                      const confirm = window.confirm("정말 삭제하시겠습니까?");
+                      const confirm =
+                        window.confirm("게시물을 삭제하시겠습니까?");
                       if (confirm) {
-                        window.history.back();
+                        DeleteKnowledgesAPI(postData.knowledgeId);
                       }
                     }}
                     onMouseOver={(e) => {
@@ -157,23 +193,35 @@ export default function KnowledgePost() {
                   color: "#fff",
                 }}
               >
-                {currentPost.title}
+                {postData.title}
               </div>
               <div
                 style={{
                   marginBottom: "50px",
                   fontFamily: "Pretendard-Light",
-                  fontSize: "18px",
-                  color: "#fff",
+                  fontSize: "16px",
+                  color: "#777",
                 }}
               >
-                작성 일자 : {currentPost.date}
+                작성자: {postData.member.studentId + " " + postData.member.name}
+                &emsp; 작성 일자 :{" "}
+                {postData.createdAt[0] +
+                  "/" +
+                  postData.createdAt[1] +
+                  "/" +
+                  postData.createdAt[2] +
+                  " " +
+                  postData.createdAt[3] +
+                  ":" +
+                  postData.createdAt[4] +
+                  ":" +
+                  postData.createdAt[5]}
               </div>
               <div>
                 <div
                   className="container"
                   dangerouslySetInnerHTML={{
-                    __html: sanitizer(`${currentPost.content}`),
+                    __html: sanitizer(`${postData.content}`),
                   }}
                   style={{
                     fontFamily: "Pretendard-Light",

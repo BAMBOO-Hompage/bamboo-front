@@ -671,6 +671,7 @@ export default function PersonalInfo() {
                       <input
                         type="file"
                         id="fileInput"
+                        accept="image/*"
                         style={{
                           display: "none",
                         }}

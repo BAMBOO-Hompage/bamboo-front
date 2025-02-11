@@ -437,13 +437,16 @@ export default function Nav(props: NavProps) {
               }
             >
               <Link
-                to="/notice?postList=전체&page=1"
+                to="/notice?post=전체&page=1&size=8"
                 style={{ textDecoration: "none" }}
                 onClick={() => sessionStorage.clear()}
               >
                 <div className="hamburger_tabs">공지 사항</div>
               </Link>
-              <Link to="/knowledge" style={{ textDecoration: "none" }}>
+              <Link
+                to="/knowledge?post=전체&search=&page=1&size=8"
+                style={{ textDecoration: "none" }}
+              >
                 <div className="hamburger_tabs">정보 공유</div>
               </Link>
             </div>
@@ -453,7 +456,7 @@ export default function Nav(props: NavProps) {
             <div
               style={{
                 position: "absolute",
-                bottom: "100px",
+                bottom: "80px",
                 left: "30px",
                 minWidth: "100px",
               }}
@@ -466,7 +469,7 @@ export default function Nav(props: NavProps) {
             <div
               style={{
                 position: "absolute",
-                bottom: "100px",
+                bottom: "80px",
                 left: "30px",
                 minWidth: "100px",
               }}
@@ -562,13 +565,16 @@ export default function Nav(props: NavProps) {
             onMouseLeave={() => setCurrentFocus("")}
           >
             <Link
-              to="/notice?postList=전체&page=1"
+              to="/notice?post=전체&page=1&size=8"
               style={{ textDecoration: "none" }}
               onClick={() => sessionStorage.clear()}
             >
               <div className="nav_tabs">공지 사항</div>
             </Link>
-            <Link to="/knowledge" style={{ textDecoration: "none" }}>
+            <Link
+              to="/knowledge?post=전체&search=&page=1&size=8"
+              style={{ textDecoration: "none" }}
+            >
               <div className="nav_tabs">정보 공유</div>
             </Link>
           </div>

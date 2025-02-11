@@ -1115,9 +1115,9 @@ export default function JoinUs(props: JoinUsProps) {
                     lineHeight: "2",
                   }}
                 >
-                  동아리장: 이창민 (010-3369-1051)
+                  동아리장: 김진석 (010-2628-2898)
                   <br />
-                  부동아리장: 김진석 (010-2628-2898)
+                  부동아리장: 유세리 (010-5058-4640)
                 </div>
               </div>
               <div>

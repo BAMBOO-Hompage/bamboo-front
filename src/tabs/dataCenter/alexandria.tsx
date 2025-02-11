@@ -3,7 +3,6 @@ import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
-import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
@@ -32,6 +31,7 @@ export default function Alexandria() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
   const paperList = searchParams.get("tab") || "논문 이름";
@@ -73,7 +73,7 @@ export default function Alexandria() {
   }, []);
 
   useEffect(() => {
-    GetPapersAPI(paperList, searchKeyword, currentPage - 1).then((result) => {
+    GetPapersAPI(paperList, searchKeyword, currentPage).then((result) => {
       var alexandriaData = result.content;
       setPapersToDisplay(alexandriaData);
       setTotalPages(result.totalPages);

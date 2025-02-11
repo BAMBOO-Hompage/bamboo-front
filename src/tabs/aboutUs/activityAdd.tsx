@@ -291,7 +291,10 @@ export default function ActivityAdd() {
                         display: "none",
                       }}
                       multiple
-                      {...register("Image", {})}
+                      accept="image/*"
+                      {...register("Image", {
+                        // required: "사진을 추가해주세요.",
+                      })}
                     />
                     <img
                       src="../../img/btn/search_enabled.png"
