@@ -613,20 +613,22 @@ export default function JoinUs(props: JoinUsProps) {
                   </div>
                 </div>
               </div>
-              <Link to="/activity" style={{ textDecoration: "none" }}>
-                <div
-                  style={{
-                    maxWidth: "1000px",
-                    padding: "0 20px",
-                    margin: "0 auto",
-                    display: "flex",
-                    justifyContent: "right",
-                  }}
-                >
+
+              <div
+                style={{
+                  maxWidth: "1000px",
+                  padding: "0 20px",
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "right",
+                }}
+              >
+                <Link to="/activity" style={{ textDecoration: "none" }}>
                   <div
                     style={{
                       fontFamily: "Pretendard-Light",
                       fontSize: "16px",
+                      color: "#2cc295",
                       width: "150px",
                       marginTop: "40px",
                       marginBottom: "50px",
@@ -635,7 +637,6 @@ export default function JoinUs(props: JoinUsProps) {
                       borderRadius: "20px",
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      color: "#fff",
                       transition: "box-shadow 0.5s ease",
                       animation: hovered
                         ? "shadow-rotate 0.5s linear forwards"
@@ -686,8 +687,8 @@ export default function JoinUs(props: JoinUsProps) {
                   `}
                     </style>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </motion.div>
 
             <motion.div
@@ -724,6 +725,7 @@ export default function JoinUs(props: JoinUsProps) {
                   margin: "0 auto",
                   display: "flex",
                   justifyContent: "space-between",
+                  gap: "10px",
                 }}
               >
                 <div
@@ -731,7 +733,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "22px",
+                    fontSize: "clamp(16px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -762,7 +764,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "22px",
+                    fontSize: "clamp(16px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -793,7 +795,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "22px",
+                    fontSize: "clamp(16px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -824,7 +826,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "22px",
+                    fontSize: "clamp(16px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >

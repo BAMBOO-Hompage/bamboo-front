@@ -217,7 +217,34 @@ export default function KnowledgePost() {
                   ":" +
                   postData.createdAt[5]}
               </div>
-              <div style={{}}>첨부 파일</div>
+              {postData.files.length !== 0 && (
+                <div
+                  style={{
+                    marginBottom: "20px",
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                    color: "#fff",
+                    display: "flex",
+                    justifyContent: "left",
+                  }}
+                >
+                  <div style={{ marginRight: "20px" }}>첨부 파일</div>
+                  <div>
+                    {postData.files.map((file, index) => (
+                      <div key={index} style={{ marginTop: "5px" }}>
+                        <a
+                          href={file}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ textDecoration: "none" }}
+                        >
+                          {file}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div>
                 <div
                   className="container"

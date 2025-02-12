@@ -184,16 +184,16 @@ export default function Main() {
             네트워킹을 통해 동아리원들이 자발적으로 학습하고, 성장할 수 있도록
             지원합니다.
           </div>
-          <Link to="/introduction" style={{ textDecoration: "none" }}>
-            <div
-              style={{
-                maxWidth: "1000px",
-                padding: "0 20px",
-                margin: "0 auto",
-                display: "flex",
-                justifyContent: "right",
-              }}
-            >
+          <div
+            style={{
+              maxWidth: "1000px",
+              padding: "0 20px",
+              margin: "0 auto",
+              display: "flex",
+              justifyContent: "right",
+            }}
+          >
+            <Link to="/introduction" style={{ textDecoration: "none" }}>
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
@@ -221,8 +221,8 @@ export default function Main() {
               >
                 더 알아보기 {">"}
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </motion.div>
 
         <motion.div
@@ -507,16 +507,17 @@ export default function Main() {
               </div>
             </div>
           </div>
-          <Link to="/activity" style={{ textDecoration: "none" }}>
-            <div
-              style={{
-                maxWidth: "1000px",
-                padding: "0 20px",
-                margin: "0 auto",
-                display: "flex",
-                justifyContent: "right",
-              }}
-            >
+
+          <div
+            style={{
+              maxWidth: "1000px",
+              padding: "0 20px",
+              margin: "0 auto",
+              display: "flex",
+              justifyContent: "right",
+            }}
+          >
+            <Link to="/activity" style={{ textDecoration: "none" }}>
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
@@ -544,8 +545,8 @@ export default function Main() {
               >
                 더 알아보기 {">"}
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </motion.div>
 
         <motion.div
@@ -835,14 +836,17 @@ export default function Main() {
               style={{ width: "100%" }}
             />
           </div>
-          <Link to="/joinUs" style={{ textDecoration: "none" }}>
-            <div
-              style={{
-                maxWidth: "1000px",
-                padding: "0 20px",
-                margin: "0 auto",
-              }}
-            >
+
+          <div
+            style={{
+              maxWidth: "1000px",
+              padding: "0 20px",
+              margin: "0 auto",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Link to="/joinUs" style={{ textDecoration: "none" }}>
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
@@ -905,8 +909,8 @@ export default function Main() {
                   `}
                 </style>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </motion.div>
 
         <BottomInfo />

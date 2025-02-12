@@ -586,16 +586,17 @@ export default function Introduction() {
               </div>
             </div>
           </div>
-          <Link to="/activity" style={{ textDecoration: "none" }}>
-            <div
-              style={{
-                maxWidth: "1000px",
-                padding: "0 20px",
-                margin: "0 auto",
-                display: "flex",
-                justifyContent: "right",
-              }}
-            >
+
+          <div
+            style={{
+              maxWidth: "1000px",
+              padding: "0 20px",
+              margin: "0 auto",
+              display: "flex",
+              justifyContent: "right",
+            }}
+          >
+            <Link to="/activity" style={{ textDecoration: "none" }}>
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
@@ -622,8 +623,8 @@ export default function Introduction() {
               >
                 더 알아보기 {">"}
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </motion.div>
 
         <motion.div
@@ -906,14 +907,17 @@ export default function Introduction() {
               style={{ width: "100%" }}
             />
           </div>
-          <Link to="/joinUs" style={{ textDecoration: "none" }}>
-            <div
-              style={{
-                maxWidth: "1000px",
-                padding: "0 20px",
-                margin: "0 auto",
-              }}
-            >
+
+          <div
+            style={{
+              maxWidth: "1000px",
+              padding: "0 20px",
+              margin: "0 auto",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Link to="/joinUs" style={{ textDecoration: "none" }}>
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
@@ -976,8 +980,8 @@ export default function Introduction() {
                   `}
                 </style>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </motion.div>
 
         <BottomInfo />

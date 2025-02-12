@@ -239,261 +239,270 @@ export default function Nav(props: NavProps) {
           height: "100vh",
           backgroundColor: "rgba(0,0,0,0.5)",
         }}
+        onClick={() => setIsMenuActive(!isMenuActive)}
+      ></div>
+      <div
+        className="hamburger"
+        style={{
+          position: "absolute",
+          right: isMenuActive ? "0" : "-280px",
+          width: "280px",
+          height: "100vh",
+          backgroundColor: "#000",
+          opacity: "1",
+          transition: "right 0.3s ease",
+          textAlign: "left",
+        }}
       >
         <div
           style={{
-            position: "absolute",
-            right: isMenuActive ? "0" : "-280px",
-            width: "280px",
-            height: "100%",
-            backgroundColor: "#000",
-            opacity: "1",
-            transition: "right 0.3s ease",
-            textAlign: "left",
+            minWidth: "100px",
+            margin: "40px 50px 0 30px",
           }}
         >
           <div
-            style={{
-              minWidth: "100px",
-              margin: "40px 50px 0 30px",
-            }}
-          >
-            <div
-              className="hamburger_text"
-              style={
-                hamburgerMenu === "aboutUs"
-                  ? {
-                      color: "#2CC295",
-                      textShadow: "0 0 0.1em, 0 0 0.3em",
-                      borderBottom: "2px solid #2cc295",
-                    }
-                  : {}
-              }
-              onClick={() => {
-                if (hamburgerMenu !== "aboutUs") {
-                  setHamburgerMenu("aboutUs");
-                } else {
-                  setHamburgerMenu(undefined);
-                }
-              }}
-            >
-              About Us
-            </div>
-            <div
-              style={{
-                maxHeight: hamburgerMenu === "aboutUs" ? "90px" : "0",
-                overflow: "hidden",
-                transition: "max-height 0.3s ease-out",
-              }}
-            >
-              <Link to="/introduction" style={{ textDecoration: "none" }}>
-                <div className="hamburger_tabs">동아리 소개</div>
-              </Link>
-              <Link
-                to="/activity?year=&page=1"
-                style={{ textDecoration: "none" }}
-              >
-                <div className="hamburger_tabs">주요 활동</div>
-              </Link>
-              <Link to="/joinUs" style={{ textDecoration: "none" }}>
-                <div className="hamburger_tabs">지원 안내</div>
-              </Link>
-            </div>
-          </div>
-          <div
-            style={{
-              minWidth: "100px",
-              margin: "30px 50px 20px 30px",
-            }}
-          >
-            <div
-              className="hamburger_text"
-              style={
-                hamburgerMenu === "study"
-                  ? {
-                      color: "#2CC295",
-                      textShadow: "0 0 0.1em, 0 0 0.3em",
-                      borderBottom: "2px solid #2cc295",
-                    }
-                  : {}
-              }
-              onClick={() => {
-                if (hamburgerMenu !== "study") {
-                  setHamburgerMenu("study");
-                } else {
-                  setHamburgerMenu(undefined);
-                }
-              }}
-            >
-              Study
-            </div>
-            <div
-              style={{
-                maxHeight: hamburgerMenu === "study" ? "90px" : "0",
-                overflow: "hidden",
-                transition: "max-height 0.3s ease-out",
-              }}
-            >
-              <Link to="/curriculumStudy" style={{ textDecoration: "none" }}>
-                <div className="hamburger_tabs">커리큘럼 스터디</div>
-              </Link>
-              <Link to="/selfStudy" style={{ textDecoration: "none" }}>
-                <div className="hamburger_tabs">자율 스터디</div>
-              </Link>
-              <Link to="/studyRecruitment" style={{ textDecoration: "none" }}>
-                <div className="hamburger_tabs">스터디 모집</div>
-              </Link>
-            </div>
-          </div>
-          <div
-            style={{
-              minWidth: "100px",
-              margin: "30px 50px 20px 30px",
-            }}
-          >
-            <div
-              className="hamburger_text"
-              style={
-                hamburgerMenu === "dataCenter"
-                  ? {
-                      color: "#2CC295",
-                      textShadow: "0 0 0.1em, 0 0 0.3em",
-                      borderBottom: "2px solid #2cc295",
-                    }
-                  : {}
-              }
-              onClick={() => {
-                if (hamburgerMenu !== "dataCenter") {
-                  setHamburgerMenu("dataCenter");
-                } else {
-                  setHamburgerMenu(undefined);
-                }
-              }}
-            >
-              Data Center
-            </div>
-            <div
-              style={{
-                maxHeight: hamburgerMenu === "dataCenter" ? "60px" : "0",
-                overflow: "hidden",
-                transition: "max-height 0.3s ease-out",
-              }}
-            >
-              <Link
-                to="/alexandria?tab=&search=&page=1&size=10"
-                style={{ textDecoration: "none" }}
-              >
-                <div className="hamburger_tabs">알렉산드리아 도서관</div>
-              </Link>
-              <Link to="/hallOfFame" style={{ textDecoration: "none" }}>
-                <div className="hamburger_tabs">명예의 전당</div>
-              </Link>
-            </div>
-          </div>
-          <div
-            style={{
-              minWidth: "100px",
-              margin: "30px 50px 20px 30px",
-            }}
-          >
-            <div
-              className="hamburger_text"
-              style={
-                hamburgerMenu === "community"
-                  ? {
-                      color: "#2CC295",
-                      textShadow: "0 0 0.1em, 0 0 0.3em",
-                      borderBottom: "2px solid #2cc295",
-                    }
-                  : {}
-              }
-              onClick={() => {
-                if (hamburgerMenu !== "community") {
-                  setHamburgerMenu("community");
-                } else {
-                  setHamburgerMenu(undefined);
-                }
-              }}
-            >
-              Community
-            </div>
-            <div
-              style={{
-                maxHeight: hamburgerMenu === "community" ? "60px" : "0",
-                overflow: "hidden",
-                transition: "max-height 0.3s ease-out",
-              }}
-            >
-              <Link
-                to="/notice?post=전체&page=1&size=8"
-                style={{ textDecoration: "none" }}
-                onClick={() => sessionStorage.clear()}
-              >
-                <div className="hamburger_tabs">공지 사항</div>
-              </Link>
-              <Link
-                to="/knowledge?post=전체&search=&page=1&size=8"
-                style={{ textDecoration: "none" }}
-              >
-                <div className="hamburger_tabs">정보 공유</div>
-              </Link>
-            </div>
-          </div>
-
-          {checkAuth === 0 ? (
-            <div
-              style={{
-                position: "absolute",
-                bottom: "80px",
-                left: "30px",
-                minWidth: "100px",
-              }}
-            >
-              <Link to="/logIn" style={{ textDecoration: "none" }}>
-                <div className="hamburger_text">Log In</div>
-              </Link>
-            </div>
-          ) : checkAuth === 1 ? (
-            <div
-              style={{
-                position: "absolute",
-                bottom: "80px",
-                left: "30px",
-                minWidth: "100px",
-              }}
-            >
-              <Link
-                to="/personalInfo?edit=&changePassword="
-                style={{ textDecoration: "none" }}
-              >
-                <div
-                  className="hamburger_text"
-                  style={
-                    hamburgerMenu === "myPage"
-                      ? {
-                          color: "#2CC295",
-                          textShadow: "0 0 0.1em, 0 0 0.3em",
-                          borderBottom: "2px solid #2cc295",
-                        }
-                      : {}
+            className="hamburger_text"
+            style={
+              hamburgerMenu === "aboutUs"
+                ? {
+                    color: "#2CC295",
+                    textShadow: "0 0 0.1em, 0 0 0.3em",
+                    borderBottom: "2px solid #2cc295",
                   }
-                >
-                  MyPage
-                </div>
-              </Link>
+                : {}
+            }
+            onClick={() => {
+              if (hamburgerMenu !== "aboutUs") {
+                setHamburgerMenu("aboutUs");
+              } else {
+                setHamburgerMenu(undefined);
+              }
+            }}
+          >
+            About Us
+          </div>
+          <div
+            style={{
+              maxHeight: hamburgerMenu === "aboutUs" ? "110px" : "0",
+              overflow: "hidden",
+              transition: "max-height 0.3s ease-out",
+            }}
+          >
+            <Link to="/introduction" style={{ textDecoration: "none" }}>
+              <div className="hamburger_tabs" style={{ marginTop: "20px" }}>
+                동아리 소개
+              </div>
+            </Link>
+            <Link
+              to="/activity?year=&page=1"
+              style={{ textDecoration: "none" }}
+            >
+              <div className="hamburger_tabs">주요 활동</div>
+            </Link>
+            <Link to="/joinUs" style={{ textDecoration: "none" }}>
+              <div className="hamburger_tabs">지원 안내</div>
+            </Link>
+          </div>
+        </div>
+        <div
+          style={{
+            minWidth: "100px",
+            margin: "30px 50px 20px 30px",
+          }}
+        >
+          <div
+            className="hamburger_text"
+            style={
+              hamburgerMenu === "study"
+                ? {
+                    color: "#2CC295",
+                    textShadow: "0 0 0.1em, 0 0 0.3em",
+                    borderBottom: "2px solid #2cc295",
+                  }
+                : {}
+            }
+            onClick={() => {
+              if (hamburgerMenu !== "study") {
+                setHamburgerMenu("study");
+              } else {
+                setHamburgerMenu(undefined);
+              }
+            }}
+          >
+            Study
+          </div>
+          <div
+            style={{
+              maxHeight: hamburgerMenu === "study" ? "110px" : "0",
+              overflow: "hidden",
+              transition: "max-height 0.3s ease-out",
+            }}
+          >
+            <Link to="/curriculumStudy" style={{ textDecoration: "none" }}>
+              <div className="hamburger_tabs" style={{ marginTop: "20px" }}>
+                커리큘럼 스터디
+              </div>
+            </Link>
+            <Link to="/selfStudy" style={{ textDecoration: "none" }}>
+              <div className="hamburger_tabs">자율 스터디</div>
+            </Link>
+            <Link to="/studyRecruitment" style={{ textDecoration: "none" }}>
+              <div className="hamburger_tabs">스터디 모집</div>
+            </Link>
+          </div>
+        </div>
+        <div
+          style={{
+            minWidth: "100px",
+            margin: "30px 50px 20px 30px",
+          }}
+        >
+          <div
+            className="hamburger_text"
+            style={
+              hamburgerMenu === "dataCenter"
+                ? {
+                    color: "#2CC295",
+                    textShadow: "0 0 0.1em, 0 0 0.3em",
+                    borderBottom: "2px solid #2cc295",
+                  }
+                : {}
+            }
+            onClick={() => {
+              if (hamburgerMenu !== "dataCenter") {
+                setHamburgerMenu("dataCenter");
+              } else {
+                setHamburgerMenu(undefined);
+              }
+            }}
+          >
+            Data Center
+          </div>
+          <div
+            style={{
+              maxHeight: hamburgerMenu === "dataCenter" ? "80px" : "0",
+              overflow: "hidden",
+              transition: "max-height 0.3s ease-out",
+            }}
+          >
+            <Link
+              to="/alexandria?tab=&search=&page=1&size=10"
+              style={{ textDecoration: "none" }}
+            >
+              <div className="hamburger_tabs" style={{ marginTop: "20px" }}>
+                알렉산드리아 도서관
+              </div>
+            </Link>
+            <Link to="/hallOfFame" style={{ textDecoration: "none" }}>
+              <div className="hamburger_tabs">명예의 전당</div>
+            </Link>
+          </div>
+        </div>
+        <div
+          style={{
+            minWidth: "100px",
+            margin: "30px 50px 20px 30px",
+          }}
+        >
+          <div
+            className="hamburger_text"
+            style={
+              hamburgerMenu === "community"
+                ? {
+                    color: "#2CC295",
+                    textShadow: "0 0 0.1em, 0 0 0.3em",
+                    borderBottom: "2px solid #2cc295",
+                  }
+                : {}
+            }
+            onClick={() => {
+              if (hamburgerMenu !== "community") {
+                setHamburgerMenu("community");
+              } else {
+                setHamburgerMenu(undefined);
+              }
+            }}
+          >
+            Community
+          </div>
+          <div
+            style={{
+              maxHeight: hamburgerMenu === "community" ? "80px" : "0",
+              overflow: "hidden",
+              transition: "max-height 0.3s ease-out",
+            }}
+          >
+            <Link
+              to="/notice?post=전체&page=1&size=8"
+              style={{ textDecoration: "none" }}
+              onClick={() => sessionStorage.clear()}
+            >
+              <div className="hamburger_tabs" style={{ marginTop: "20px" }}>
+                공지 사항
+              </div>
+            </Link>
+            <Link
+              to="/knowledge?post=전체&search=&page=1&size=8"
+              style={{ textDecoration: "none" }}
+            >
+              <div className="hamburger_tabs">정보 공유</div>
+            </Link>
+          </div>
+        </div>
+
+        {checkAuth === 0 ? (
+          <div
+            style={{
+              position: "absolute",
+              bottom: "80px",
+              left: "30px",
+              minWidth: "100px",
+            }}
+          >
+            <Link to="/logIn" style={{ textDecoration: "none" }}>
+              <div className="hamburger_text">Log In</div>
+            </Link>
+          </div>
+        ) : checkAuth === 1 ? (
+          <div
+            style={{
+              position: "absolute",
+              bottom: "80px",
+              left: "30px",
+              minWidth: "100px",
+            }}
+          >
+            <Link
+              to="/personalInfo?edit=&changePassword="
+              style={{ textDecoration: "none" }}
+            >
               <div
                 className="hamburger_text"
-                onClick={() => {
-                  LogOutAPI();
-                }}
+                style={
+                  hamburgerMenu === "myPage"
+                    ? {
+                        color: "#2CC295",
+                        textShadow: "0 0 0.1em, 0 0 0.3em",
+                        borderBottom: "2px solid #2cc295",
+                      }
+                    : {}
+                }
               >
-                Log Out
+                MyPage
               </div>
+            </Link>
+            <div
+              className="hamburger_text"
+              onClick={() => {
+                LogOutAPI();
+              }}
+            >
+              Log Out
             </div>
-          ) : (
-            <></>
-          )}
-        </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div
