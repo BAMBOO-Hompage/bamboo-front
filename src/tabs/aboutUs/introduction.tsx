@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import Button from "../../components/button.tsx";
+
+import Snowfall from "../../components/snowfall.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
+
 import "../../App.css";
 
 export default function Introduction() {
@@ -11,6 +13,7 @@ export default function Introduction() {
 
   return (
     <div>
+      <Snowfall />
       <Nav type="aboutUs" />
       <div className="background">
         <motion.div
