@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import Snowfall from "../../components/snowfall.tsx";
 import Button from "../../components/button.tsx";
 
 import PrivacyPolicyData from "../../mockup_data/privacyPolicy_data.tsx";
@@ -20,7 +19,6 @@ export default function Signup() {
 
   return (
     <div>
-      <Snowfall />
       <div
         style={{
           textAlign: "left",

@@ -307,7 +307,7 @@ export default function Nav(props: NavProps) {
         <div
           style={{
             minWidth: "100px",
-            margin: "30px 50px 20px 30px",
+            margin: "20px 50px 20px 30px",
           }}
         >
           <div
@@ -333,9 +333,9 @@ export default function Nav(props: NavProps) {
           </div>
           <div
             style={{
-              maxHeight: hamburgerMenu === "study" ? "110px" : "0",
+              height: hamburgerMenu === "study" ? "110px" : "0",
               overflow: "hidden",
-              transition: "max-height 0.4s ease-out",
+              transition: "height 0.4s ease-out",
             }}
           >
             <Link to="/curriculumStudy" style={{ textDecoration: "none" }}>
@@ -354,7 +354,7 @@ export default function Nav(props: NavProps) {
         <div
           style={{
             minWidth: "100px",
-            margin: "30px 50px 20px 30px",
+            margin: "20px 50px 20px 30px",
           }}
         >
           <div
@@ -380,9 +380,9 @@ export default function Nav(props: NavProps) {
           </div>
           <div
             style={{
-              maxHeight: hamburgerMenu === "dataCenter" ? "80px" : "0",
+              height: hamburgerMenu === "dataCenter" ? "110px" : "0",
               overflow: "hidden",
-              transition: "max-height 0.3s ease-out",
+              transition: "height 0.4s ease-out",
             }}
           >
             <Link
@@ -401,7 +401,7 @@ export default function Nav(props: NavProps) {
         <div
           style={{
             minWidth: "100px",
-            margin: "30px 50px 20px 30px",
+            margin: "20px 50px 20px 30px",
           }}
         >
           <div
@@ -427,9 +427,9 @@ export default function Nav(props: NavProps) {
           </div>
           <div
             style={{
-              maxHeight: hamburgerMenu === "community" ? "80px" : "0",
+              height: hamburgerMenu === "community" ? "110px" : "0",
               overflow: "hidden",
-              transition: "max-height 0.3s ease-out",
+              transition: "height 0.4s ease-out",
             }}
           >
             <Link
@@ -483,7 +483,6 @@ export default function Nav(props: NavProps) {
                     ? {
                         color: "#2CC295",
                         textShadow: "0 0 0.1em, 0 0 0.3em",
-                        borderBottom: "2px solid #2cc295",
                       }
                     : {}
                 }
@@ -496,6 +495,7 @@ export default function Nav(props: NavProps) {
               onClick={() => {
                 LogOutAPI();
               }}
+              style={{ marginTop: "20px" }}
             >
               Log Out
             </div>

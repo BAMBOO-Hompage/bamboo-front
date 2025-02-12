@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import Snowfall from "../../components/snowfall.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
@@ -18,7 +17,6 @@ export default function JoinUs(props: JoinUsProps) {
 
   return (
     <div>
-      <Snowfall />
       <Nav type="aboutUs" />
       <div className="background">
         {props.type === "basic" ? (

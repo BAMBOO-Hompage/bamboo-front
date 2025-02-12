@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import moment from "moment";
 
 import Nav from "../../components/nav.tsx";
-import Snowfall from "../../components/snowfall.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import ImageSlider from "../../components/imageSlider.tsx";
 
@@ -83,7 +82,6 @@ export default function Activity() {
 
   return (
     <div>
-      <Snowfall />
       <Nav type="aboutUs" />
       <div className="background">
         <motion.div

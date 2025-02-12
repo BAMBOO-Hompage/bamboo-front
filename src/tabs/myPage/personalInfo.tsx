@@ -4,7 +4,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import Button from "../../components/button.tsx";
-import Snowfall from "../../components/snowfall.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
@@ -156,7 +155,6 @@ export default function PersonalInfo() {
 
   return (
     <div>
-      <Snowfall />
       <Nav type="myPage" />
       <div className="background">
         <motion.div

@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import moment from "moment";
 
 import Button from "../../components/button.tsx";
-import Snowfall from "../../components/snowfall.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
@@ -74,7 +73,6 @@ export default function ActivityAdd() {
 
   return (
     <div>
-      <Snowfall />
       <Nav type="aboutUs" />
       <div className="background">
         <motion.div

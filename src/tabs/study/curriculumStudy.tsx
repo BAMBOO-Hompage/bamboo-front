@@ -10,6 +10,8 @@ import BottomInfo from "../../components/bottomInfo.tsx";
 import "../../App.css";
 
 export default function CurriculumStudy() {
+  const [hovered, setHovered] = useState(false);
+
   const [cStudyList, setCStudyList] = useState("전체");
   return (
     <div>
@@ -27,8 +29,120 @@ export default function CurriculumStudy() {
             width: "100%",
           }}
         >
-          <LockedPageAuth />
+          {/* <LockedPageAuth /> */}
         </motion.div>
+        <div
+          style={{
+            position: "relative",
+            maxWidth: "1000px",
+            minHeight: "1300px",
+            margin: "100px auto",
+            padding: "0 40px",
+            textAlign: "left",
+          }}
+        >
+          <div
+            style={{
+              marginBottom: "30px",
+              fontFamily: "Pretendard-Bold",
+              fontSize: "30px",
+              color: "#fff",
+              textShadow: "0 0 0.1em, 0 0 0.1em",
+              textAlign: "center",
+            }}
+          >
+            커리큘럼 스터디
+          </div>
+
+          <div
+            style={{ display: "flex", justifyContent: "center", gap: "20px" }}
+          >
+            <div
+              style={{
+                fontFamily: "Pretendard-Light",
+                fontSize: "clamp(14px, 1.8vw, 18px)",
+                width: "180px",
+                padding: "10px",
+                backgroundColor: "#2cc295",
+                borderRadius: "20px",
+                color: "#fff",
+                transition: "box-shadow 0.5s ease",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+            >
+              커리큘럼 스터디
+            </div>
+            <Link
+              to="/selfStudy"
+              style={{
+                textDecoration: "none",
+                fontFamily: "Pretendard-Light",
+                fontSize: "clamp(14px, 1.8vw, 18px)",
+                width: "180px",
+                padding: "10px",
+                backgroundColor: "#111015",
+                borderRadius: "20px",
+                boxShadow:
+                  "inset -10px -10px 30px #242424, inset 10px 10px 30px #000",
+                color: "#fff",
+                transition: "box-shadow 0.5s ease",
+                animation: hovered
+                  ? "shadow-rotate 0.5s linear forwards"
+                  : "shadow-reset 0.5s linear forwards",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              className={hovered ? "rotate-animation" : ""}
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+            >
+              자율 스터디
+              <style>
+                {`
+                    @keyframes shadow-rotate {
+                      0% {
+                        box-shadow: inset -10px -10px 30px #242424, inset 10px 10px 30px #000;
+                      }
+                      25% {
+                        box-shadow: inset -20px 0px 30px #242424, inset 20px 0px 30px #000;
+                      }
+                      50% {
+                        box-shadow: inset -10px 10px 30px #242424, inset 10px -10px 30px #000;
+                       }
+                      75% {
+                        box-shadow: inset 0px 20px 30px #242424, inset 0px -20px 30px #000;
+                      }
+                      100% {
+                        box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
+                      }
+                    }
+                        
+                    @keyframes shadow-reset {
+                      0% {
+                        box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
+                      }
+                      25% {
+                        box-shadow: inset 0px 20px 30px #242424, inset 0px -20px 30px #000;
+                      }
+                      50% {
+                        box-shadow: inset -10px 10px 30px #242424, inset 10px -10px 30px #000;
+                      }
+                      75% {
+                        box-shadow: inset -20px 0px 30px #242424, inset 0px 20px 30px #000;
+                      }
+                      100% {
+                        box-shadow: inset -10px -10px 30px #242424, inset 10px 10px 30px #000;
+                      }
+                    }
+                  `}
+              </style>
+            </Link>
+          </div>
+        </div>
 
         <BottomInfo />
       </div>

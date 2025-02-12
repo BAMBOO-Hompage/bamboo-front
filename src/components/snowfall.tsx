@@ -62,7 +62,7 @@ const Snowfall = () => {
 
     // 눈송이 배열 생성
     const snowflakes: Snowflake[] = [];
-    const maxSnowflakes = 50;
+    const maxSnowflakes = 40;
 
     // 눈송이 생성
     for (let i = 0; i < maxSnowflakes; i++) {
@@ -98,6 +98,8 @@ const Snowfall = () => {
         position: "fixed",
         top: 0,
         left: 0,
+        width: "100%",
+        height: "100vh",
         zIndex: 100,
         pointerEvents: "none",
       }}

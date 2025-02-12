@@ -224,12 +224,13 @@ export default function KnowledgePost() {
                     padding: "20px",
                     backgroundColor: "#222",
                     borderRadius: "20px",
-                    marginBottom: "20px",
+                    marginBottom: "30px",
                     fontFamily: "Pretendard-Light",
                     fontSize: "18px",
                     color: "#fff",
                     display: "flex",
                     justifyContent: "left",
+                    alignItems: "flex-start",
                   }}
                 >
                   <div style={{ width: "100px", marginRight: "20px" }}>
