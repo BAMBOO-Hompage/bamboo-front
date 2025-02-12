@@ -217,7 +217,7 @@ export default function KnowledgePost() {
                   ":" +
                   postData.createdAt[5]}
               </div>
-              <div></div>
+              <div style={{}}>첨부 파일</div>
               <div>
                 <div
                   className="container"

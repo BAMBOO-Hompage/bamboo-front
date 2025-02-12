@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import Snowfall from "../../components/snowfall.tsx";
 import Button from "../../components/button.tsx";
 
 import LogInAPI from "../../api/members/logInAPI.tsx";
@@ -43,6 +44,7 @@ export default function Login() {
 
   return (
     <div>
+      <Snowfall />
       <div
         style={{
           position: "absolute",

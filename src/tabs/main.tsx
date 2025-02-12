@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import Nav from "../components/nav.tsx";
+import Snowfall from "../components/snowfall.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
 
 import HistoryData from "../mockup_data/history_data.tsx";
@@ -21,6 +22,7 @@ export default function Main() {
 
   return (
     <div>
+      <Snowfall />
       <Nav type="main" />
       <div style={{ width: "100%" }}>
         <div

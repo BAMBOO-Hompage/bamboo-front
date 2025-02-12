@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+import Snowfall from "../../components/snowfall.tsx";
 import Button from "../../components/button.tsx";
 
 import VerificationRequestsAPI from "../../api/emails/verificationReauestsAPI.tsx";
@@ -144,6 +145,7 @@ export default function Signup() {
 
   return (
     <div>
+      <Snowfall />
       <div
         style={{
           textAlign: "left",
