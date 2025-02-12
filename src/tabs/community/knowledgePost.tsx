@@ -220,6 +220,9 @@ export default function KnowledgePost() {
               {postData.files.length !== 0 && (
                 <div
                   style={{
+                    width: "100%",
+                    padding: "20px",
+                    backgroundColor: "#222",
                     marginBottom: "20px",
                     fontFamily: "Pretendard-Light",
                     fontSize: "18px",
@@ -228,7 +231,9 @@ export default function KnowledgePost() {
                     justifyContent: "left",
                   }}
                 >
-                  <div style={{ marginRight: "20px" }}>첨부 파일</div>
+                  <div style={{ width: "80px", marginRight: "20px" }}>
+                    첨부 파일
+                  </div>
                   <div>
                     {postData.files.map((file, index) => (
                       <div key={index} style={{ marginTop: "5px" }}>
@@ -236,7 +241,7 @@ export default function KnowledgePost() {
                           href={file}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{ textDecoration: "none" }}
+                          style={{ color: "#fff" }}
                         >
                           {file}
                         </a>

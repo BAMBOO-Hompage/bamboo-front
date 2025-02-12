@@ -285,7 +285,7 @@ export default function Nav(props: NavProps) {
             style={{
               maxHeight: hamburgerMenu === "aboutUs" ? "110px" : "0",
               overflow: "hidden",
-              transition: "max-height 0.3s ease-out",
+              transition: "max-height 0.4s ease-out",
             }}
           >
             <Link to="/introduction" style={{ textDecoration: "none" }}>
@@ -335,7 +335,7 @@ export default function Nav(props: NavProps) {
             style={{
               maxHeight: hamburgerMenu === "study" ? "110px" : "0",
               overflow: "hidden",
-              transition: "max-height 0.3s ease-out",
+              transition: "max-height 0.4s ease-out",
             }}
           >
             <Link to="/curriculumStudy" style={{ textDecoration: "none" }}>
