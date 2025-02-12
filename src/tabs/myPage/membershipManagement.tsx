@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
+import Snowfall from "../../components/snowfall.tsx";
+import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import SelectDeactivateAPI from "../../api/members/selectDeactivateAPI.tsx";
@@ -146,6 +147,7 @@ export default function PersonalInfo() {
 
   return (
     <div>
+      <Snowfall />
       <Nav type="myPage" />
       <div className="background">
         <motion.div

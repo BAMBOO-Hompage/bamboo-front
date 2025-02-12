@@ -223,6 +223,7 @@ export default function KnowledgePost() {
                     width: "100%",
                     padding: "20px",
                     backgroundColor: "#222",
+                    borderRadius: "20px",
                     marginBottom: "20px",
                     fontFamily: "Pretendard-Light",
                     fontSize: "18px",
@@ -231,7 +232,7 @@ export default function KnowledgePost() {
                     justifyContent: "left",
                   }}
                 >
-                  <div style={{ width: "80px", marginRight: "20px" }}>
+                  <div style={{ width: "100px", marginRight: "20px" }}>
                     첨부 파일
                   </div>
                   <div>
