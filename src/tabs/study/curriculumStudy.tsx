@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import StudyCard from "../../components/studyCard.tsx";
-import LockedPageAuth from "../../components/lockedPageAuth.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import "../../App.css";
 
@@ -44,151 +43,160 @@ export default function CurriculumStudy() {
           <div
             style={{
               boxSizing: "border-box",
-              width: "100%",
-              maxWidth: "1000px",
+              width: "1000px",
+              // maxWidth: "1000px",
               minHeight: "1000px",
               borderRadius: "30px",
               position: "absolute",
               top: "176px",
               left: "50%",
               transform: "translate(-50%, 0)",
+              padding: " 0 20px",
               overflow: "hidden",
               zIndex: "-1",
             }}
           >
             <div
               style={{
-                width: "140px",
-                height: "140px",
-                position: "absolute",
-                left: "90px",
-                top: "200px",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
+                boxSizing: "border-box",
+                width: "1000%",
+                minHeight: "100%",
               }}
-            />
-            <div
-              style={{
-                width: "100px",
-                height: "100px",
-                position: "absolute",
-                left: "80px",
-                top: "750px",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "100px",
-                height: "180px",
-                position: "absolute",
-                left: "650px",
-                top: "600px",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "100px",
-                height: "150px",
-                left: "620px",
-                top: "900px",
-                position: "absolute",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "120px",
-                height: "120px",
-                left: "250px",
-                top: "950px",
-                position: "absolute",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "150px",
-                height: "120px",
-                left: "450px",
-                top: "50px",
-                position: "absolute",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "180px",
-                height: "140px",
-                left: "300px",
-                top: "220px",
-                position: "absolute",
-                background: "#297FB8",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "150px",
-                height: "150px",
-                left: "800px",
-                top: "120px",
-                position: "absolute",
-                background: "#297FB8",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "100px",
-                height: "100px",
-                left: "150px",
-                top: "850px",
-                position: "absolute",
-                background: "#297FB8",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "120px",
-                height: "120px",
-                left: "300px",
-                top: "550px",
-                position: "absolute",
-                background: "#297FB8",
-                boxShadow: "300px 300px 300px ",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "150px",
-                height: "200px",
-                left: "800px",
-                top: "500px",
-                position: "absolute",
-                background: "#297FB8",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
+            >
+              <div
+                style={{
+                  width: "140px",
+                  height: "140px",
+                  position: "absolute",
+                  left: "90px",
+                  top: "200px",
+                  background: "#2CC295",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  position: "absolute",
+                  left: "80px",
+                  top: "750px",
+                  background: "#2CC295",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "100px",
+                  height: "180px",
+                  position: "absolute",
+                  left: "650px",
+                  top: "600px",
+                  background: "#2CC295",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "100px",
+                  height: "150px",
+                  left: "620px",
+                  top: "900px",
+                  position: "absolute",
+                  background: "#2CC295",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "120px",
+                  height: "120px",
+                  left: "250px",
+                  top: "950px",
+                  position: "absolute",
+                  background: "#2CC295",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "150px",
+                  height: "120px",
+                  left: "450px",
+                  top: "50px",
+                  position: "absolute",
+                  background: "#2CC295",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "180px",
+                  height: "140px",
+                  left: "300px",
+                  top: "220px",
+                  position: "absolute",
+                  background: "#297FB8",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  left: "800px",
+                  top: "120px",
+                  position: "absolute",
+                  background: "#297FB8",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  left: "150px",
+                  top: "850px",
+                  position: "absolute",
+                  background: "#297FB8",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "120px",
+                  height: "120px",
+                  left: "300px",
+                  top: "550px",
+                  position: "absolute",
+                  background: "#297FB8",
+                  boxShadow: "300px 300px 300px ",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+              <div
+                style={{
+                  width: "150px",
+                  height: "200px",
+                  left: "800px",
+                  top: "500px",
+                  position: "absolute",
+                  background: "#297FB8",
+                  borderRadius: "50%",
+                  filter: "blur(120px)",
+                }}
+              />
+            </div>
           </div>
 
           <div
@@ -199,7 +207,7 @@ export default function CurriculumStudy() {
               margin: "0 auto",
               marginTop: "100px",
               marginBottom: "150px",
-              padding: "0 40px",
+              padding: "0 20px",
               textAlign: "left",
             }}
           >

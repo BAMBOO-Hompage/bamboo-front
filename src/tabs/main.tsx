@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import Nav from "../components/nav.tsx";
+import Snowfall from "../components/snowfall.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
 
 import HistoryData from "../mockup_data/history_data.tsx";
@@ -21,6 +22,7 @@ export default function Main() {
 
   return (
     <div>
+      <Snowfall />
       <Nav type="main" />
       <div style={{ width: "100%" }}>
         <div
@@ -70,6 +72,7 @@ export default function Main() {
             borderRadius: "1171px",
             background: "#2CC295",
             filter: "blur(90px)",
+            willChange: "transform",
             zIndex: "-10",
           }}
         ></div>
@@ -259,6 +262,7 @@ export default function Main() {
                 borderRadius: "1171px",
                 background: "#2CC295",
                 filter: "blur(100px)",
+                willChange: "transform",
               }}
             ></div>
             <div
@@ -269,6 +273,7 @@ export default function Main() {
                 borderRadius: "1171px",
                 background: "#297FB8",
                 filter: "blur(100px)",
+                willChange: "transform",
               }}
             ></div>
           </div>
@@ -576,6 +581,7 @@ export default function Main() {
               borderRadius: "1171px",
               background: "#297FB8",
               filter: "blur(90px)",
+              willChange: "transform",
               zIndex: "-10",
             }}
           ></div>
@@ -809,6 +815,7 @@ export default function Main() {
                 borderRadius: "1171px",
                 background: "#2CC295",
                 filter: "blur(100px)",
+                willChange: "transform",
               }}
             ></div>
             <div
@@ -819,6 +826,7 @@ export default function Main() {
                 borderRadius: "1171px",
                 background: "#297FB8",
                 filter: "blur(100px)",
+                willChange: "transform",
               }}
             ></div>
           </div>

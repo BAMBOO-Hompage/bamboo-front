@@ -4,12 +4,27 @@ import { motion } from "framer-motion";
 
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
-import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
+import StudyCard from "../../components/studyCard.tsx";
+import LockedPageAuth from "../../components/lockedPageAuth.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-
 import "../../App.css";
 
+const study_data = [
+  { id: 1, x: 105, y: 0, width: 190, height: 190, label: "첫 번째 공간" },
+  { id: 2, x: 305, y: 0, width: 190, height: 190, label: "두 번째 공간" },
+  { id: 3, x: 505, y: 0, width: 190, height: 190, label: "세 번째 공간" },
+];
+
 export default function SelfStudy() {
+  const [hovered, setHovered] = useState(false);
+  const [studyHovered, setStudyHovered] = useState<number | null>(null);
+
+  const [cStudyList, setCStudyList] = useState("전체");
+
+  const handleClick = (id) => {
+    alert(`${id} 공간이 클릭되었습니다!`);
+  };
+
   return (
     <div>
       <Nav type="study" />
@@ -26,290 +41,608 @@ export default function SelfStudy() {
             width: "100%",
           }}
         >
-          <LockedPagePrepare />
+          <div
+            style={{
+              boxSizing: "border-box",
+              width: "100%",
+              maxWidth: "1000px",
+              minHeight: "1000px",
+              borderRadius: "30px",
+              position: "absolute",
+              top: "176px",
+              left: "50%",
+              transform: "translate(-50%, 0)",
+              overflow: "hidden",
+              zIndex: "-1",
+            }}
+          >
+            <div
+              style={{
+                width: "140px",
+                height: "140px",
+                position: "absolute",
+                left: "90px",
+                top: "200px",
+                background: "#2CC295",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "100px",
+                height: "100px",
+                position: "absolute",
+                left: "80px",
+                top: "750px",
+                background: "#2CC295",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "100px",
+                height: "180px",
+                position: "absolute",
+                left: "650px",
+                top: "600px",
+                background: "#2CC295",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "100px",
+                height: "150px",
+                left: "620px",
+                top: "900px",
+                position: "absolute",
+                background: "#2CC295",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "120px",
+                height: "120px",
+                left: "250px",
+                top: "950px",
+                position: "absolute",
+                background: "#2CC295",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "150px",
+                height: "120px",
+                left: "450px",
+                top: "50px",
+                position: "absolute",
+                background: "#2CC295",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "180px",
+                height: "140px",
+                left: "300px",
+                top: "220px",
+                position: "absolute",
+                background: "#297FB8",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "150px",
+                height: "150px",
+                left: "800px",
+                top: "120px",
+                position: "absolute",
+                background: "#297FB8",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "100px",
+                height: "100px",
+                left: "150px",
+                top: "850px",
+                position: "absolute",
+                background: "#297FB8",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "120px",
+                height: "120px",
+                left: "300px",
+                top: "550px",
+                position: "absolute",
+                background: "#297FB8",
+                boxShadow: "300px 300px 300px ",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+            <div
+              style={{
+                width: "150px",
+                height: "200px",
+                left: "800px",
+                top: "500px",
+                position: "absolute",
+                background: "#297FB8",
+                borderRadius: "50%",
+                filter: "blur(120px)",
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              maxWidth: "1000px",
+              minHeight: "1000px",
+              margin: "0 auto",
+              marginTop: "100px",
+              marginBottom: "150px",
+              padding: "0 40px",
+              textAlign: "left",
+            }}
+          >
+            <div
+              style={{
+                marginBottom: "50px",
+                fontFamily: "Pretendard-Bold",
+                fontSize: "30px",
+                color: "#fff",
+                textShadow: "0 0 0.1em, 0 0 0.1em",
+                textAlign: "center",
+              }}
+            >
+              자율 스터디
+            </div>
+
+            <div
+              style={{ display: "flex", justifyContent: "center", gap: "20px" }}
+            >
+              <Link
+                to="/curriculumStudy"
+                style={{
+                  textDecoration: "none",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "clamp(14px, 1.8vw, 18px)",
+                  width: "180px",
+                  padding: "10px",
+                  backgroundColor: "#111015",
+                  borderRadius: "20px",
+                  boxShadow:
+                    "inset -10px -10px 30px #242424, inset 10px 10px 30px #000",
+                  color: "#fff",
+                  transition: "box-shadow 0.5s ease",
+                  animation: hovered
+                    ? "shadow-rotate 0.5s linear forwards"
+                    : "shadow-reset 0.5s linear forwards",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className={hovered ? "rotate-animation" : ""}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+              >
+                커리큘럼 스터디
+                <style>
+                  {`
+                    @keyframes shadow-rotate {
+                      0% {
+                        box-shadow: inset -10px -10px 30px #242424, inset 10px 10px 30px #000;
+                      }
+                      25% {
+                        box-shadow: inset -20px 0px 30px #242424, inset 20px 0px 30px #000;
+                      }
+                      50% {
+                        box-shadow: inset -10px 10px 30px #242424, inset 10px -10px 30px #000;
+                       }
+                      75% {
+                        box-shadow: inset 0px 20px 30px #242424, inset 0px -20px 30px #000;
+                      }
+                      100% {
+                        box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
+                      }
+                    }
+                        
+                    @keyframes shadow-reset {
+                      0% {
+                        box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
+                      }
+                      25% {
+                        box-shadow: inset 0px 20px 30px #242424, inset 0px -20px 30px #000;
+                      }
+                      50% {
+                        box-shadow: inset -10px 10px 30px #242424, inset 10px -10px 30px #000;
+                      }
+                      75% {
+                        box-shadow: inset -20px 0px 30px #242424, inset 0px 20px 30px #000;
+                      }
+                      100% {
+                        box-shadow: inset -10px -10px 30px #242424, inset 10px 10px 30px #000;
+                      }
+                    }
+                  `}
+                </style>
+              </Link>
+              <div
+                style={{
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "clamp(14px, 1.8vw, 18px)",
+                  width: "180px",
+                  padding: "10px",
+                  backgroundColor: "#2cc295",
+                  borderRadius: "20px",
+                  color: "#fff",
+                  transition: "box-shadow 0.5s ease",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                자율 스터디
+              </div>
+            </div>
+            <div
+              style={{
+                boxSizing: "border-box",
+                width: "100%",
+                marginTop: "50px",
+                minHeight: "1000px",
+                borderRadius: "30px",
+                position: "relative",
+              }}
+            >
+              <svg
+                width="100%"
+                height="auto"
+                viewBox="0 0 1000 1000"
+                style={{
+                  minHeight: "1000px",
+                  borderRadius: "30px",
+                }}
+              >
+                <defs>
+                  <mask id="hole-mask">
+                    <rect x="0" y="0" width="1000" height="1000" fill="#fff" />
+
+                    <rect x="0" y="0" width="95" height="190" rx="20" ry="20" />
+                    <rect x="0" y="0" width="20" height="190" />
+                    <rect
+                      x="105"
+                      y="0"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="305"
+                      y="0"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="505"
+                      y="0"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="705"
+                      y="0"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="905"
+                      y="0"
+                      width="95"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect x="980" y="0" width="20" height="190" />
+
+                    <rect
+                      x="0"
+                      y="205"
+                      width="95"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect x="0" y="205" width="20" height="190" />
+                    <rect
+                      x="105"
+                      y="205"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="305"
+                      y="205"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="505"
+                      y="205"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="705"
+                      y="205"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="905"
+                      y="205"
+                      width="95"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect x="980" y="205" width="20" height="190" />
+
+                    <rect
+                      x="0"
+                      y="405"
+                      width="95"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect x="0" y="405" width="20" height="190" />
+                    <rect
+                      x="105"
+                      y="405"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="305"
+                      y="405"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="505"
+                      y="405"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="705"
+                      y="405"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="905"
+                      y="405"
+                      width="95"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect x="980" y="405" width="20" height="190" />
+
+                    <rect
+                      x="0"
+                      y="605"
+                      width="95"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect x="0" y="605" width="20" height="190" />
+                    <rect
+                      x="105"
+                      y="605"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="305"
+                      y="605"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="505"
+                      y="605"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="705"
+                      y="605"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="905"
+                      y="605"
+                      width="95"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect x="980" y="605" width="20" height="190" />
+
+                    <rect
+                      x="0"
+                      y="805"
+                      width="95"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect x="0" y="805" width="20" height="190" />
+                    <rect
+                      x="105"
+                      y="805"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="305"
+                      y="805"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="505"
+                      y="805"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="705"
+                      y="805"
+                      width="190"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect
+                      x="905"
+                      y="805"
+                      width="95"
+                      height="190"
+                      rx="20"
+                      ry="20"
+                    />
+                    <rect x="980" y="805" width="20" height="190" />
+                  </mask>
+                </defs>
+                <rect
+                  x="0"
+                  y="0"
+                  width="1000"
+                  height="1000"
+                  fill="#111015"
+                  style={{
+                    minHeight: "1000px",
+                    mask: "url(#hole-mask)",
+                  }}
+                />
+
+                <text
+                  x={95 / 2}
+                  y={190 / 2}
+                  fontFamily="Pretendard-Bold"
+                  fontSize="24"
+                  fill="#2cc295"
+                  textAnchor="middle"
+                  alignmentBaseline="middle"
+                >
+                  PY
+                </text>
+
+                {study_data.map((item) => (
+                  <g
+                    key={item.id}
+                    onMouseEnter={() => setStudyHovered(item.id)}
+                    onMouseLeave={() => setStudyHovered(null)}
+                    onClick={() => handleClick(item.id)}
+                  >
+                    <rect
+                      x={item.x}
+                      y={item.y}
+                      width={item.width}
+                      height={item.height}
+                      fill={
+                        studyHovered === item.id
+                          ? "rgba(255, 255, 255, 0.2)"
+                          : "transparent"
+                      }
+                      stroke={studyHovered === item.id ? "#777" : "none"}
+                      strokeWidth="3"
+                      rx="20"
+                      ry="20"
+                      cursor="pointer"
+                    />
+                    <text
+                      x={item.x + 30}
+                      y={item.y + 40}
+                      fontFamily="Pretendard-Regular"
+                      fontSize="20"
+                      fill="white"
+                      alignmentBaseline="hanging"
+                      cursor="pointer"
+                    >
+                      {`PY_${item.id}`}
+                    </text>
+                  </g>
+                ))}
+              </svg>
+            </div>
+          </div>
         </motion.div>
 
         <BottomInfo />
       </div>
     </div>
-    // <div>
-    //   <Nav type="study" />
-    //   <div className="background">
-    //     <div style={{ height: "200vh", display: "flex", padding: "100px 0" }}>
-    //       <motion.div
-    //         initial={{ opacity: 0, y: 50 }}
-    //         whileInView={{ opacity: 1, y: 0 }}
-    //         viewport={{ once: false }}
-    //         transition={{
-    //           ease: "easeInOut",
-    //           duration: 0.5,
-    //           y: { duration: 0.5 },
-    //         }}
-    //         style={{
-    //           boxSizing: "border-box",
-    //           position: "relative",
-    //           width: "400px",
-    //           borderRight: "1px solid #444",
-    //           textAlign: "left",
-    //         }}
-    //       >
-    //         <div
-    //           style={{
-    //             width: "110px",
-    //             fontFamily: "Pretendard-Bold",
-    //             fontSize: "30px",
-    //             color: "#fff",
-    //             position: "absolute",
-    //             right: "50px",
-    //           }}
-    //         >
-    //           커리큘럼 스터디
-    //           <div
-    //             style={{
-    //               marginTop: "40px",
-    //               fontFamily: "Pretendard-Regular",
-    //               fontSize: "16px",
-    //             }}
-    //           >
-    //             <div
-    //               className="post_tabs"
-    //               style={cStudyList === "전체" ? { color: "#2CC295" } : {}}
-    //               onClick={() => {
-    //                 setCStudyList("전체");
-    //               }}
-    //             >
-    //               전체
-    //             </div>
-    //             <div
-    //               className="post_tabs"
-    //               style={cStudyList === "PY" ? { color: "#2CC295" } : {}}
-    //               onClick={() => {
-    //                 setCStudyList("PY");
-    //               }}
-    //             >
-    //               PY
-    //             </div>
-    //             <div
-    //               className="post_tabs"
-    //               style={cStudyList === "DA" ? { color: "#2CC295" } : {}}
-    //               onClick={() => {
-    //                 setCStudyList("DA");
-    //               }}
-    //             >
-    //               DA
-    //             </div>
-    //             <div
-    //               className="post_tabs"
-    //               style={cStudyList === "ML" ? { color: "#2CC295" } : {}}
-    //               onClick={() => {
-    //                 setCStudyList("ML");
-    //               }}
-    //             >
-    //               ML
-    //             </div>
-    //             <div
-    //               className="post_tabs"
-    //               style={cStudyList === "DL" ? { color: "#2CC295" } : {}}
-    //               onClick={() => {
-    //                 setCStudyList("DL");
-    //               }}
-    //             >
-    //               DL
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </motion.div>
-
-    //       <motion.div
-    //         initial={{ opacity: 0, y: 50 }}
-    //         whileInView={{ opacity: 1, y: 0 }}
-    //         viewport={{ once: false }}
-    //         transition={{
-    //           ease: "easeInOut",
-    //           duration: 0.5,
-    //           y: { duration: 0.5 },
-    //         }}
-    //         style={{
-    //           position: "relative",
-    //           width: "1120px",
-    //           height: "100%",
-    //           textAlign: "left",
-    //         }}
-    //       >
-    //         <div style={{ width: "810px", position: "absolute", left: "60px" }}>
-    //           <div
-    //             style={{
-    //               width: "100%",
-    //               fontFamily: "Pretendard-Bold",
-    //               fontSize: "30px",
-    //               color: "#fff",
-    //               display: "flex",
-    //               justifyContent: "space-between",
-    //               alignItems: "center",
-    //             }}
-    //           >
-    //             PY
-    //           </div>
-    //           <div
-    //             style={{ display: "flex", gap: "15px", margin: "10px 0 30px" }}
-    //           >
-    //             <StudyCard
-    //               img="../../img/Study/PY.jpg"
-    //               title="PY1"
-    //               tags={["Python"]}
-    //               date="매주 수요일"
-    //               authors={["김민우"]}
-    //               link="https://www.notion.so/PY_1-a471f9fd662a49039a87ee9d0c8a80d3"
-    //             />
-    //             <StudyCard
-    //               img="../../img/Study/PY.jpg"
-    //               title="PY2"
-    //               tags={["Python"]}
-    //               date="2024년 2월 28일"
-    //               authors={["김지수", "김민수"]}
-    //               link="https://www.notion.so/PY_2-c7bbe6f930e44fa8a88af67bfc74d4ce"
-    //             />
-    //             <StudyCard
-    //               img="../../img/Study/PY.jpg"
-    //               title="PY3"
-    //               tags={["Python"]}
-    //               date="2024년 2월 28일"
-    //               authors={["이용준", "고대환"]}
-    //               link="https://www.notion.so/PY_4-fbe42c5f7c7c4fb0bbf36c773500c51c"
-    //             />
-    //           </div>
-
-    //           <div
-    //             style={{
-    //               width: "100%",
-    //               fontFamily: "Pretendard-Bold",
-    //               fontSize: "30px",
-    //               color: "#fff",
-    //               display: "flex",
-    //               justifyContent: "space-between",
-    //               alignItems: "center",
-    //             }}
-    //           >
-    //             DA
-    //           </div>
-    //           <div
-    //             style={{ display: "flex", gap: "15px", margin: "10px 0 30px" }}
-    //           >
-    //             <StudyCard
-    //               img="../../img/Study/DA.jpg"
-    //               title="DA1"
-    //               tags={["Python"]}
-    //               date="매주 수요일"
-    //               authors={["김나현, 신은빈"]}
-    //               link="https://www.notion.so/DA_1-1-e4a63eb42a2a40ed9b7da1037e0bf3a7"
-    //             />
-    //             <StudyCard
-    //               img="../../img/Study/DA.jpg"
-    //               title="DA2"
-    //               tags={["Python"]}
-    //               date="2024년 2월 28일"
-    //               authors={["김진석", "이창민"]}
-    //               link="https://www.notion.so/DA_2-545f78b442fa4f66b79d940ecd6a1cc5"
-    //             />
-    //             <StudyCard
-    //               img="../../img/Study/DA.jpg"
-    //               title="DA3"
-    //               tags={["Python"]}
-    //               date="2024년 2월 28일"
-    //               authors={["이용준", "고대환"]}
-    //               link="https://www.notion.so/PY_1-a471f9fd662a49039a87ee9d0c8a80d3"
-    //             />
-    //           </div>
-
-    //           <div
-    //             style={{
-    //               width: "100%",
-    //               fontFamily: "Pretendard-Bold",
-    //               fontSize: "30px",
-    //               color: "#fff",
-    //               display: "flex",
-    //               justifyContent: "space-between",
-    //               alignItems: "center",
-    //             }}
-    //           >
-    //             ML
-    //           </div>
-    //           <div
-    //             style={{ display: "flex", gap: "15px", margin: "10px 0 30px" }}
-    //           >
-    //             <StudyCard
-    //               img="../../img/Study/ML.jpg"
-    //               title="ML1"
-    //               tags={["Python"]}
-    //               date="매주 수요일"
-    //               authors={["김민우"]}
-    //               link="https://www.notion.so/PY_1-a471f9fd662a49039a87ee9d0c8a80d3"
-    //             />
-    //             <StudyCard
-    //               img="../../img/Study/ML.jpg"
-    //               title="ML2"
-    //               tags={["Python"]}
-    //               date="2024년 2월 28일"
-    //               authors={["김지수", "김민수"]}
-    //               link="https://www.notion.so/PY_1-a471f9fd662a49039a87ee9d0c8a80d3"
-    //             />
-    //             <StudyCard
-    //               img="../../img/Study/ML.jpg"
-    //               title="ML3"
-    //               tags={["Python"]}
-    //               date="2024년 2월 28일"
-    //               authors={["이용준", "고대환"]}
-    //               link="https://www.notion.so/PY_1-a471f9fd662a49039a87ee9d0c8a80d3"
-    //             />
-    //           </div>
-
-    //           <div
-    //             style={{
-    //               width: "100%",
-    //               fontFamily: "Pretendard-Bold",
-    //               fontSize: "30px",
-    //               color: "#fff",
-    //               display: "flex",
-    //               justifyContent: "space-between",
-    //               alignItems: "center",
-    //             }}
-    //           >
-    //             DL
-    //           </div>
-    //           <div
-    //             style={{ display: "flex", gap: "15px", margin: "10px 0 30px" }}
-    //           >
-    //             <StudyCard
-    //               img="../../img/Study/DL.jpg"
-    //               title="DL1"
-    //               tags={["Python"]}
-    //               date="매주 수요일"
-    //               authors={["김민우"]}
-    //               link="https://www.notion.so/PY_1-a471f9fd662a49039a87ee9d0c8a80d3"
-    //             />
-    //             <StudyCard
-    //               img="../../img/Study/DL.jpg"
-    //               title="DL2"
-    //               tags={["Python"]}
-    //               date="2024년 2월 28일"
-    //               authors={["김지수", "김민수"]}
-    //               link="https://www.notion.so/PY_1-a471f9fd662a49039a87ee9d0c8a80d3"
-    //             />
-    //             <StudyCard
-    //               img="../../img/Study/DL.jpg"
-    //               title="DL3"
-    //               tags={["Python"]}
-    //               date="2024년 2월 28일"
-    //               authors={["이용준", "고대환"]}
-    //               link="https://www.notion.so/PY_1-a471f9fd662a49039a87ee9d0c8a80d3"
-    //             />
-    //           </div>
-    //         </div>
-    //       </motion.div>
-    //     </div>
-
-    //     <BottomInfo />
-    //   </div>
-    // </div>
   );
 }

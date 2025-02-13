@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/scrollToTop.tsx";
-import Snowfall from "./components/snowfall.tsx";
 
 import LogIn from "./tabs/main/logIn.tsx";
 import PrivacyPolicy from "./tabs/main/privacyPolicy.tsx";
@@ -10,6 +9,8 @@ import Main from "./tabs/main.tsx";
 
 import PersonalInfo from "./tabs/myPage/personalInfo.tsx";
 import MembershipManagement from "./tabs/myPage/membershipManagement.tsx";
+import CreateCurriculum from "./tabs/myPage/createCurriculum.tsx";
+import CreateStudy from "./tabs/myPage/createStudy.tsx";
 
 import Introduction from "./tabs/aboutUs/introduction.tsx";
 import Activity from "./tabs/aboutUs/activity.tsx";
@@ -34,9 +35,8 @@ import HallOfFame from "./tabs/dataCenter/hallOfFame.tsx";
 
 import CurriculumStudy from "./tabs/study/curriculumStudy.tsx";
 import SelfStudy from "./tabs/study/selfStudy.tsx";
+import StudyPost from "./tabs/study/studyPost.tsx";
 import StudyRecruitment from "./tabs/study/studyRecruitment.tsx";
-import Study from "./tabs/study/study.tsx";
-import StudyAdd from "./tabs/study/studyAdd.tsx";
 
 import "./App.css";
 
@@ -45,7 +45,6 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <ScrollToTop />
-        <Snowfall />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/logIn" element={<LogIn />} />
@@ -57,6 +56,8 @@ function App() {
             path="/membershipManagement"
             element={<MembershipManagement />}
           />
+          <Route path="/createCurriculum" element={<CreateCurriculum />} />
+          <Route path="/createStudy" element={<CreateStudy />} />
 
           <Route path="/introduction" element={<Introduction />} />
           <Route path="/joinUs" element={<JoinUs type="inPeriod" />} />
@@ -81,9 +82,8 @@ function App() {
 
           <Route path="/curriculumStudy" element={<CurriculumStudy />} />
           <Route path="/selfStudy" element={<SelfStudy />} />
+          <Route path="/studyPost" element={<StudyPost />} />
           <Route path="/studyRecruitment" element={<StudyRecruitment />} />
-          <Route path="/studyAdd" element={<StudyAdd />} />
-          <Route path="/study" element={<Study />} />
         </Routes>
       </div>
     </BrowserRouter>
