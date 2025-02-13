@@ -307,7 +307,7 @@ export default function Nav(props: NavProps) {
         <div
           style={{
             minWidth: "100px",
-            margin: "20px 50px 20px 30px",
+            margin: "25px 50px 20px 30px",
           }}
         >
           <div
@@ -354,7 +354,7 @@ export default function Nav(props: NavProps) {
         <div
           style={{
             minWidth: "100px",
-            margin: "20px 50px 20px 30px",
+            margin: "25px 50px 20px 30px",
           }}
         >
           <div
@@ -401,7 +401,7 @@ export default function Nav(props: NavProps) {
         <div
           style={{
             minWidth: "100px",
-            margin: "20px 50px 20px 30px",
+            margin: "25px 50px 20px 30px",
           }}
         >
           <div
@@ -495,7 +495,7 @@ export default function Nav(props: NavProps) {
               onClick={() => {
                 LogOutAPI();
               }}
-              style={{ marginTop: "20px" }}
+              style={{ marginTop: "25px" }}
             >
               Log Out
             </div>

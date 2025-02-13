@@ -365,7 +365,12 @@ export default function Alexandria() {
                         overflowWrap: "break-word",
                       }}
                     >
-                      {paper.paperName}
+                      <Link
+                        to={`/alexandriaPost?id=${paper.libraryPostId}`}
+                        style={{ textDecoration: "none", color: "#fff" }}
+                      >
+                        {paper.paperName}
+                      </Link>
                     </div>
                     <div style={{ width: "70px" }}>{paper.year}</div>
                     <div
@@ -437,24 +442,26 @@ export default function Alexandria() {
                             }}
                           />
                         </a>
-                        <img
-                          src="../../img/btn/move.png"
-                          alt="move"
-                          style={{
-                            width: "12px",
-                            cursor: "pointer",
-                            transition: "transform 0.3s ease",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = "scale(1.4)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = "scale(1)";
-                          }}
-                          onClick={() => {
-                            window.location.href = `/alexandriaPost?id=${paper.libraryPostId}`;
-                          }}
-                        />
+                        <Link
+                          to={`/alexandriaPost?id=${paper.libraryPostId}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <img
+                            src="../../img/btn/move.png"
+                            alt="move"
+                            style={{
+                              width: "12px",
+                              cursor: "pointer",
+                              transition: "transform 0.3s ease",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = "scale(1.4)";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = "scale(1)";
+                            }}
+                          />
+                        </Link>
                       </div>
                     </div>
                   </div>

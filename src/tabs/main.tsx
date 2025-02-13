@@ -35,22 +35,23 @@ export default function Main() {
           }}
         >
           <video
+            className="main_1"
             autoPlay
             muted
             loop
             playsInline
-            style={{ width: "100%", height: "100vh", objectFit: "cover" }}
+            style={{ width: "100%", objectFit: "cover" }}
           >
             <source src="../../img/main_background2.mp4" type="video/mp4" />
           </video>
         </div>
         <div
+          className="main_1"
           style={{
             position: "absolute",
             top: "0",
             left: "0",
             width: "100%",
-            height: "100vh",
             border: "none",
             opacity: "0.6",
             backgroundColor: "#000",
@@ -81,9 +82,9 @@ export default function Main() {
             ease: "easeInOut",
             duration: 1,
           }}
+          className="main_1"
           style={{
             width: "100%",
-            height: "100vh",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
