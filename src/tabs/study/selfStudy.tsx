@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import StudyCard from "../../components/studyCard.tsx";
-import LockedPageAuth from "../../components/lockedPageAuth.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import "../../App.css";
 
@@ -15,7 +14,7 @@ const study_data = [
   { id: 3, x: 505, y: 0, width: 190, height: 190, label: "세 번째 공간" },
 ];
 
-export default function SelfStudy() {
+export default function CurriculumStudy() {
   const [hovered, setHovered] = useState(false);
   const [studyHovered, setStudyHovered] = useState<number | null>(null);
 
@@ -43,163 +42,13 @@ export default function SelfStudy() {
         >
           <div
             style={{
-              boxSizing: "border-box",
-              width: "100%",
-              maxWidth: "1000px",
-              minHeight: "1000px",
-              borderRadius: "30px",
-              position: "absolute",
-              top: "176px",
-              left: "50%",
-              transform: "translate(-50%, 0)",
-              overflow: "hidden",
-              zIndex: "-1",
-            }}
-          >
-            <div
-              style={{
-                width: "140px",
-                height: "140px",
-                position: "absolute",
-                left: "90px",
-                top: "200px",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "100px",
-                height: "100px",
-                position: "absolute",
-                left: "80px",
-                top: "750px",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "100px",
-                height: "180px",
-                position: "absolute",
-                left: "650px",
-                top: "600px",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "100px",
-                height: "150px",
-                left: "620px",
-                top: "900px",
-                position: "absolute",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "120px",
-                height: "120px",
-                left: "250px",
-                top: "950px",
-                position: "absolute",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "150px",
-                height: "120px",
-                left: "450px",
-                top: "50px",
-                position: "absolute",
-                background: "#2CC295",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "180px",
-                height: "140px",
-                left: "300px",
-                top: "220px",
-                position: "absolute",
-                background: "#297FB8",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "150px",
-                height: "150px",
-                left: "800px",
-                top: "120px",
-                position: "absolute",
-                background: "#297FB8",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "100px",
-                height: "100px",
-                left: "150px",
-                top: "850px",
-                position: "absolute",
-                background: "#297FB8",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "120px",
-                height: "120px",
-                left: "300px",
-                top: "550px",
-                position: "absolute",
-                background: "#297FB8",
-                boxShadow: "300px 300px 300px ",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-            <div
-              style={{
-                width: "150px",
-                height: "200px",
-                left: "800px",
-                top: "500px",
-                position: "absolute",
-                background: "#297FB8",
-                borderRadius: "50%",
-                filter: "blur(120px)",
-              }}
-            />
-          </div>
-
-          <div
-            style={{
               position: "relative",
               maxWidth: "1000px",
               minHeight: "1000px",
               margin: "0 auto",
               marginTop: "100px",
               marginBottom: "150px",
-              padding: "0 40px",
+              padding: "0 20px",
               textAlign: "left",
             }}
           >
@@ -316,14 +165,24 @@ export default function SelfStudy() {
             >
               <svg
                 width="100%"
-                height="auto"
+                height="1000px" // 높이를 고정
                 viewBox="0 0 1000 1000"
+                preserveAspectRatio="none"
                 style={{
-                  minHeight: "1000px",
                   borderRadius: "30px",
                 }}
               >
                 <defs>
+                  <filter
+                    id="blurFilter"
+                    x="-250%"
+                    y="-250%"
+                    width="500%"
+                    height="500%"
+                  >
+                    <feGaussianBlur stdDeviation="120" />
+                  </filter>
+
                   <mask id="hole-mask">
                     <rect x="0" y="0" width="1000" height="1000" fill="#fff" />
 
@@ -373,16 +232,16 @@ export default function SelfStudy() {
 
                     <rect
                       x="0"
-                      y="205"
+                      y="200"
                       width="95"
                       height="190"
                       rx="20"
                       ry="20"
                     />
-                    <rect x="0" y="205" width="20" height="190" />
+                    <rect x="0" y="200" width="20" height="190" />
                     <rect
                       x="105"
-                      y="205"
+                      y="200"
                       width="190"
                       height="190"
                       rx="20"
@@ -390,7 +249,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="305"
-                      y="205"
+                      y="200"
                       width="190"
                       height="190"
                       rx="20"
@@ -398,7 +257,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="505"
-                      y="205"
+                      y="200"
                       width="190"
                       height="190"
                       rx="20"
@@ -406,7 +265,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="705"
-                      y="205"
+                      y="200"
                       width="190"
                       height="190"
                       rx="20"
@@ -414,26 +273,26 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="905"
-                      y="205"
+                      y="200"
                       width="95"
                       height="190"
                       rx="20"
                       ry="20"
                     />
-                    <rect x="980" y="205" width="20" height="190" />
+                    <rect x="980" y="200" width="20" height="190" />
 
                     <rect
                       x="0"
-                      y="405"
+                      y="400"
                       width="95"
                       height="190"
                       rx="20"
                       ry="20"
                     />
-                    <rect x="0" y="405" width="20" height="190" />
+                    <rect x="0" y="400" width="20" height="190" />
                     <rect
                       x="105"
-                      y="405"
+                      y="400"
                       width="190"
                       height="190"
                       rx="20"
@@ -441,7 +300,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="305"
-                      y="405"
+                      y="400"
                       width="190"
                       height="190"
                       rx="20"
@@ -449,7 +308,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="505"
-                      y="405"
+                      y="400"
                       width="190"
                       height="190"
                       rx="20"
@@ -457,7 +316,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="705"
-                      y="405"
+                      y="400"
                       width="190"
                       height="190"
                       rx="20"
@@ -465,26 +324,26 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="905"
-                      y="405"
+                      y="400"
                       width="95"
                       height="190"
                       rx="20"
                       ry="20"
                     />
-                    <rect x="980" y="405" width="20" height="190" />
+                    <rect x="980" y="400" width="20" height="190" />
 
                     <rect
                       x="0"
-                      y="605"
+                      y="600"
                       width="95"
                       height="190"
                       rx="20"
                       ry="20"
                     />
-                    <rect x="0" y="605" width="20" height="190" />
+                    <rect x="0" y="600" width="20" height="190" />
                     <rect
                       x="105"
-                      y="605"
+                      y="600"
                       width="190"
                       height="190"
                       rx="20"
@@ -492,7 +351,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="305"
-                      y="605"
+                      y="600"
                       width="190"
                       height="190"
                       rx="20"
@@ -500,7 +359,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="505"
-                      y="605"
+                      y="600"
                       width="190"
                       height="190"
                       rx="20"
@@ -508,7 +367,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="705"
-                      y="605"
+                      y="600"
                       width="190"
                       height="190"
                       rx="20"
@@ -516,26 +375,26 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="905"
-                      y="605"
+                      y="600"
                       width="95"
                       height="190"
                       rx="20"
                       ry="20"
                     />
-                    <rect x="980" y="605" width="20" height="190" />
+                    <rect x="980" y="600" width="20" height="190" />
 
                     <rect
                       x="0"
-                      y="805"
+                      y="800"
                       width="95"
                       height="190"
                       rx="20"
                       ry="20"
                     />
-                    <rect x="0" y="805" width="20" height="190" />
+                    <rect x="0" y="800" width="20" height="190" />
                     <rect
                       x="105"
-                      y="805"
+                      y="800"
                       width="190"
                       height="190"
                       rx="20"
@@ -543,7 +402,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="305"
-                      y="805"
+                      y="800"
                       width="190"
                       height="190"
                       rx="20"
@@ -551,7 +410,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="505"
-                      y="805"
+                      y="800"
                       width="190"
                       height="190"
                       rx="20"
@@ -559,7 +418,7 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="705"
-                      y="805"
+                      y="800"
                       width="190"
                       height="190"
                       rx="20"
@@ -567,15 +426,101 @@ export default function SelfStudy() {
                     />
                     <rect
                       x="905"
-                      y="805"
+                      y="800"
                       width="95"
                       height="190"
                       rx="20"
                       ry="20"
                     />
-                    <rect x="980" y="805" width="20" height="190" />
+                    <rect x="980" y="800" width="20" height="190" />
                   </mask>
                 </defs>
+                <circle
+                  cx="150"
+                  cy="220"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="150"
+                  cy="720"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="650"
+                  cy="600"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="650"
+                  cy="750"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="650"
+                  cy="900"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="330"
+                  cy="950"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="550"
+                  cy="50"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+
+                <circle
+                  cx="440"
+                  cy="280"
+                  r="90"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="850"
+                  cy="150"
+                  r="70"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="200"
+                  cy="850"
+                  r="70"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="300"
+                  cy="550"
+                  r="60"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="800"
+                  cy="500"
+                  r="100"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+
                 <rect
                   x="0"
                   y="0"
@@ -603,6 +548,7 @@ export default function SelfStudy() {
                 {study_data.map((item) => (
                   <g
                     key={item.id}
+                    transform="scale(1)"
                     onMouseEnter={() => setStudyHovered(item.id)}
                     onMouseLeave={() => setStudyHovered(null)}
                     onClick={() => handleClick(item.id)}
@@ -627,7 +573,7 @@ export default function SelfStudy() {
                       x={item.x + 30}
                       y={item.y + 40}
                       fontFamily="Pretendard-Regular"
-                      fontSize="20"
+                      fontSize="20px"
                       fill="white"
                       alignmentBaseline="hanging"
                       cursor="pointer"

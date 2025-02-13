@@ -95,7 +95,7 @@ export default function AlexandriaAdd() {
               position: "relative",
               maxWidth: "1000px",
               margin: "100px auto",
-              padding: "0 40px",
+              padding: "0 20px",
               textAlign: "left",
             }}
           >

@@ -98,7 +98,8 @@ export default function AlexandriaPost() {
           <div
             style={{
               position: "relative",
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 20px",
               margin: "0 auto",
               marginTop: "100px",
               marginBottom: "150px",
@@ -196,7 +197,7 @@ export default function AlexandriaPost() {
               >
                 <div
                   style={{
-                    width: "920px",
+                    maxWidth: "920px",
                     minHeight: "40px",
                     padding: "0 20px",
                     marginBottom: "20px",
@@ -209,7 +210,7 @@ export default function AlexandriaPost() {
                 </div>
                 <div
                   style={{
-                    width: "920px",
+                    maxWidth: "920px",
                     height: "40px",
                     padding: "0 20px",
                     marginBottom: "10px",
@@ -220,26 +221,32 @@ export default function AlexandriaPost() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>·&emsp;논문 링크</div>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={paperData.link}
+                  <div style={{ width: "140px", color: "#aaa" }}>
+                    ·&emsp;논문 링크
+                  </div>
+                  <div
                     style={{
-                      width: "760px",
-                      padding: "0 20px",
-                      borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
-                      color: "#fff",
+                      width: "100%",
+                      maxWidth: "760px",
                     }}
                   >
-                    {paperData.link}
-                  </a>
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={paperData.link}
+                      style={{
+                        fontFamily: "Pretendard-Light",
+                        fontSize: "18px",
+                        color: "#fff",
+                      }}
+                    >
+                      {paperData.link}
+                    </a>
+                  </div>
                 </div>
                 <div
                   style={{
-                    width: "920px",
+                    maxWidth: "920px",
                     height: "40px",
                     padding: "0 20px",
                     marginBottom: "10px",
@@ -250,12 +257,13 @@ export default function AlexandriaPost() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>·&emsp;연도</div>
+                  <div style={{ width: "140px", color: "#aaa" }}>
+                    ·&emsp;연도
+                  </div>
                   <div
                     style={{
-                      width: "760px",
-                      padding: "0 20px",
-                      borderRadius: "20px",
+                      width: "100%",
+                      maxWidth: "760px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       color: "#fff",
@@ -266,7 +274,7 @@ export default function AlexandriaPost() {
                 </div>
                 <div
                   style={{
-                    width: "920px",
+                    maxWidth: "920px",
                     height: "40px",
                     padding: "0 20px",
                     marginBottom: "10px",
@@ -277,12 +285,13 @@ export default function AlexandriaPost() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>·&emsp;주제</div>
+                  <div style={{ width: "140px", color: "#aaa" }}>
+                    ·&emsp;주제
+                  </div>
                   <div
                     style={{
-                      width: "760px",
-                      padding: "0 20px",
-                      borderRadius: "20px",
+                      width: "100%",
+                      maxWidth: "760px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       color: "#fff",
@@ -293,7 +302,7 @@ export default function AlexandriaPost() {
                 </div>
                 <div
                   style={{
-                    width: "920px",
+                    maxWidth: "920px",
                     height: "40px",
                     padding: "0 20px",
                     marginBottom: "20px",
@@ -304,12 +313,13 @@ export default function AlexandriaPost() {
                     fontSize: "18px",
                   }}
                 >
-                  <div style={{ color: "#aaa" }}>·&emsp;태그</div>
+                  <div style={{ width: "140px", color: "#aaa" }}>
+                    ·&emsp;태그
+                  </div>
                   <div
                     style={{
-                      width: "760px",
-                      padding: "0 20px",
-                      borderRadius: "20px",
+                      width: "100%",
+                      maxWidth: "760px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       color: "#fff",
