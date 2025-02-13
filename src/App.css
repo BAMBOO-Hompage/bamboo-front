@@ -142,11 +142,11 @@ select {
   align-items: center;
 }
 
-@media screen and (max-width: 500px) {
+/* @media screen and (max-width: 500px) {
   .main_1 {
     height: 800px;
   }
-}
+} */
 
 @media screen and (max-width: 900px) {
   .bottom_info {
