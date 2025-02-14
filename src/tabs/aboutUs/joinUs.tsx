@@ -1031,7 +1031,7 @@ export default function JoinUs(props: JoinUsProps) {
           style={{
             position: "relative",
             width: "100%",
-            minHeight: "730px",
+            minHeight: "900px",
           }}
         >
           <div
@@ -1178,6 +1178,49 @@ export default function JoinUs(props: JoinUsProps) {
                   A. 네, 가능합니다. BAMBOO는 숙달된 경험자가 아니더라도 데이터
                   분석과 인공지능에 대한 관심과 열정 있는 모든 지원자를
                   환영합니다.
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                position: "relative",
+                color: "#fff",
+                width: "100%",
+                minHeight: "110px",
+                padding: "20px 0",
+                backgroundColor: "#111015",
+                borderRadius: "20px",
+                boxShadow:
+                  "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                textAlign: "left",
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "30px",
+              }}
+            >
+              <div style={{ width: "80%", margin: "0 auto" }}>
+                <div
+                  style={{
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                    color: "#2cc295",
+                    lineHeight: "20px",
+                    marginBottom: "25px",
+                  }}
+                >
+                  Q. 동아리 자체 대회에 반드시 참여해야 하나요?
+                </div>
+                <div
+                  style={{
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                    color: "#fff",
+                    lineHeight: "20px",
+                  }}
+                >
+                  A. 네, 맞습니다. 스터디 커리큘럼뿐만 아니라 대회 참여까지가 한
+                  기수의 필수 일정입니다. 스터디와 대회를 모두 완료해야 수료증이
+                  발급됩니다.
                 </div>
               </div>
             </div>
