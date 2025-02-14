@@ -114,7 +114,7 @@ export default function Main() {
           style={{
             position: "relative",
             width: "100%",
-            minHeight: "680px",
+            minHeight: "690px",
           }}
         >
           <div
@@ -162,14 +162,14 @@ export default function Main() {
                 fontSize: "20px",
               }}
             >
-              'BAMBOO'
+              "BAMBOO"
             </span>
-            는 데이터 분석 및 인공지능(AI) 분야에 관심 있는 학생들이 모여 함께
-            학습하고 성장하는 동아리입니다. 우리의 목표는 자발적이고 효율적인
-            스터디를 통해 동아리원들이 해당 분야에서 성공적으로 진출할 수 있는
-            역량을 키우는 것입니다. 또한, 다양한 프로젝트와 공모전에 참여하여
-            실질적인 경험을 쌓고, 이를 통해 진로를 명확히 하는 데 도움을 주고
-            있습니다.
+            는 데이터 분석 및 인공지능(AI) 분야에 관심 있는 휴먼지능정보공학전공
+            학생들이 모여 함께 학습하고 성장하는 유일 학과 동아리입니다. 우리
+            "BAMBOO"의 목표는 자발적이고 효율적인 스터디를 통해 동아리원들이
+            해당 분야에서 성공적으로 진출할 수 있는 역량을 키우는 것입니다.
+            또한, 다양한 프로젝트와 공모전에 참여하여 실질적인 경험을 쌓고, 이를
+            통해 진로를 명확히 하는 데 도움을 주고 있습니다.
             <br />
             <br />
             <span
@@ -179,10 +179,11 @@ export default function Main() {
                 fontSize: "20px",
               }}
             >
-              'BAMBOO'
+              "BAMBOO"
             </span>
-            에 가입하게 되면, 학년과 실력에 따라 학습할 교재를 선택하고, 함께
-            학습할 수 있는 스터디 분반을 구성합니다. 정기적인 스터디, 멘토링 및
+            에 가입하게 되면 모든 동아리원은 한 학기 동안 데이터 분석과 AI 관련
+            필수 커리큘럼을 이수하며, 학습한 내용을 바탕으로 교내외 AI
+            경진대회나 공모전에 참여하게 됩니다. 정기적인 스터디, 멘토링 및
             네트워킹을 통해 동아리원들이 자발적으로 학습하고, 성장할 수 있도록
             지원합니다.
           </div>
@@ -201,8 +202,8 @@ export default function Main() {
                   fontFamily: "Pretendard-Light",
                   fontSize: "18px",
                   width: "150px",
-                  marginTop: "100px",
-                  marginBottom: "80px",
+                  marginTop: "80px",
+                  marginBottom: "70px",
                   padding: "10px",
                   backgroundColor: "#111015",
                   borderRadius: "20px",
@@ -323,7 +324,7 @@ export default function Main() {
                   fontSize: "20px",
                 }}
               >
-                'bamboo'
+                "BAMBOO"
               </span>
               는 정기적인 스터디 뿐만 아니라 데이터 분석 대회, 멘토링 및
               네트워킹 등 다양한 활동을 통해 부원들의 학습 능력 증진을 돕고
@@ -393,7 +394,7 @@ export default function Main() {
                       color: "#2CC295",
                     }}
                   >
-                    #간단한_실습 #자유로운_토론
+                    #맞춤형 학습 #간단한_실습
                   </span>
                 </div>
               </div>
@@ -449,7 +450,7 @@ export default function Main() {
                       color: "#2CC295",
                     }}
                   >
-                    #문제_해결_능력 #경쟁력_향상
+                    #문제_해결_능력 #포트폴리오_작성
                   </span>
                 </div>
               </div>
@@ -505,7 +506,7 @@ export default function Main() {
                       color: "#2CC295",
                     }}
                   >
-                    #선의의_경쟁 #최신_기술_실습
+                    #선후배_네트워킹
                   </span>
                 </div>
               </div>

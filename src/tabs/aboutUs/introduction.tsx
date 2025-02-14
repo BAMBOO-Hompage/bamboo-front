@@ -24,7 +24,7 @@ export default function Introduction() {
           }}
           style={{
             width: "100%",
-            minHeight: "700px",
+            minHeight: "680px",
           }}
         >
           <div
@@ -93,7 +93,7 @@ export default function Introduction() {
               fontSize: "18px",
               color: "#fff",
               maxWidth: "1000px",
-              padding: " 0 20px 60px",
+              padding: " 0 20px 40px",
               margin: "0 auto",
               textAlign: "left",
               lineHeight: "2.3",
@@ -108,9 +108,9 @@ export default function Introduction() {
             >
               'BAMBOO'
             </span>
-            는 빅데이터와 인공지능(AI)에 관심 있는 학생들이 자발적이고
-            체계적으로 학습하며, 다양한 프로젝트와 공모전을 통해 실질적인 경험을
-            쌓을 수 있도록 돕습니다. 함께 성장하며 진로를 명확히 다져보세요.
+            는 빅데이터와 인공지능(AI) 분야의 열정 넘치는 인재들이 모여 체계적인
+            커리큘럼과 실전 프로젝트를 통해 함께 성장하는 전문 학술
+            동아리입니다.
           </div>
         </motion.div>
 
@@ -189,9 +189,9 @@ export default function Introduction() {
                 fontSize: "clamp(14px, 1.8vw, 18px)",
               }}
             >
-              학습 자료
+              학습 자료 및
               <br />
-              공유 및 지원
+              AI 학습 툴 지원
             </div>
             <div
               style={{
@@ -256,7 +256,7 @@ export default function Introduction() {
                 marginBottom: "15px",
               }}
             >
-              "효율적인 학습을 위한 든든한 지원 시스템"
+              "최고의 성장을 위한 BAMBOO만의 지원 시스템"
             </div>
             <div
               style={{
@@ -266,10 +266,10 @@ export default function Introduction() {
                 marginBottom: "30px",
               }}
             >
-              'BAMBOO' 만의 "알렉산드리아 도서관"과 선후배 간의 멘토링 시스템은
-              학습 자료 공유와 학업 지원을 통해 후배들의 성장을 돕습니다. 언제
-              어디서든 비대면으로도 학습할 수 있는 여러가지의 커뮤니티도
-              구축하고 있습니다.
+              "BAMBOO"는 논문 아카이브 '알렉산드리아 도서관'과 체계적인 멘토링
+              시스템을 통해 양질의 학습 자료와 선배들의 노하우를 공유합니다.
+              온/오프라인 학습 플랫폼 구축으로 언제 어디서나 끊김 없는 성장이
+              가능합니다.
             </div>
             <br />
             <div
@@ -399,7 +399,7 @@ export default function Introduction() {
                   fontSize: "20px",
                 }}
               >
-                'bamboo'
+                "BAMBOO"
               </span>
               는 정기적인 스터디 뿐만 아니라 데이터 분석 대회, 멘토링 및
               네트워킹 등 다양한 활동을 통해 부원들의 학습 능력 증진을 돕고
@@ -469,7 +469,7 @@ export default function Introduction() {
                       color: "#2CC295",
                     }}
                   >
-                    #간단한_실습 #자유로운_토론
+                    #맞춤형 학습 #간단한_실습
                   </span>
                 </div>
               </div>
@@ -525,7 +525,7 @@ export default function Introduction() {
                       color: "#2CC295",
                     }}
                   >
-                    #문제_해결_능력 #경쟁력_향상
+                    #문제_해결_능력 #포트폴리오_작성
                   </span>
                 </div>
               </div>
@@ -581,7 +581,7 @@ export default function Introduction() {
                       color: "#2CC295",
                     }}
                   >
-                    #선의의_경쟁 #최신_기술_실습
+                    #선후배_네트워킹
                   </span>
                 </div>
               </div>

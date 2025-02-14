@@ -68,95 +68,131 @@ export default function CurriculumStudy() {
             >
               {study_data.subjectName + "_" + study_data.section}
             </div>
+            <div
+              style={{
+                boxSizing: "border-box",
+                width: "100%",
+                minHeight: "1000px",
+                position: "relative",
+              }}
+            >
+              <svg
+                width="100%"
+                viewBox="0 0 1000 1000"
+                preserveAspectRatio="none"
+                style={{
+                  borderRadius: "20px",
+                  aspectRatio: "1 / 1",
+                }}
+              >
+                <defs>
+                  <filter
+                    id="blurFilter"
+                    x="-250%"
+                    y="-250%"
+                    width="500%"
+                    height="500%"
+                  >
+                    <feGaussianBlur stdDeviation="120" />
+                  </filter>
+                </defs>
+                <circle
+                  cx="150"
+                  cy="220"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="150"
+                  cy="720"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="650"
+                  cy="600"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="650"
+                  cy="750"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="650"
+                  cy="900"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="330"
+                  cy="950"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="550"
+                  cy="50"
+                  r="70"
+                  fill="#2CC295"
+                  filter="url(#blurFilter)"
+                />
+
+                <circle
+                  cx="440"
+                  cy="280"
+                  r="90"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="850"
+                  cy="150"
+                  r="70"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="200"
+                  cy="850"
+                  r="70"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="300"
+                  cy="550"
+                  r="60"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+                <circle
+                  cx="800"
+                  cy="500"
+                  r="100"
+                  fill="#297FB8"
+                  filter="url(#blurFilter)"
+                />
+              </svg>
+            </div>
 
             <div
-              style={{ display: "flex", justifyContent: "center", gap: "20px" }}
-            >
-              <div
-                style={{
-                  fontFamily: "Pretendard-Light",
-                  fontSize: "clamp(14px, 2vw, 18px)",
-                  width: "180px",
-                  padding: "10px",
-                  backgroundColor: "#2cc295",
-                  borderRadius: "20px",
-                  color: "#fff",
-                  transition: "box-shadow 0.5s ease",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-              >
-                커리큘럼 스터디
-              </div>
-              <Link
-                to="/selfStudy"
-                style={{
-                  textDecoration: "none",
-                  fontFamily: "Pretendard-Light",
-                  fontSize: "clamp(14px, 2vw, 18px)",
-                  width: "180px",
-                  padding: "10px",
-                  backgroundColor: "#111015",
-                  borderRadius: "20px",
-                  boxShadow:
-                    "inset -10px -10px 30px #242424, inset 10px 10px 30px #000",
-                  color: "#fff",
-                  transition: "box-shadow 0.5s ease",
-                  animation: hovered
-                    ? "shadow-rotate 0.5s linear forwards"
-                    : "shadow-reset 0.5s linear forwards",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                className={hovered ? "rotate-animation" : ""}
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-              >
-                자율 스터디
-                <style>
-                  {`
-                    @keyframes shadow-rotate {
-                      0% {
-                        box-shadow: inset -10px -10px 30px #242424, inset 10px 10px 30px #000;
-                      }
-                      25% {
-                        box-shadow: inset -20px 0px 30px #242424, inset 20px 0px 30px #000;
-                      }
-                      50% {
-                        box-shadow: inset -10px 10px 30px #242424, inset 10px -10px 30px #000;
-                       }
-                      75% {
-                        box-shadow: inset 0px 20px 30px #242424, inset 0px -20px 30px #000;
-                      }
-                      100% {
-                        box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
-                      }
-                    }
-                        
-                    @keyframes shadow-reset {
-                      0% {
-                        box-shadow: inset 10px 10px 30px #242424, inset -10px -10px 30px #000;
-                      }
-                      25% {
-                        box-shadow: inset 0px 20px 30px #242424, inset 0px -20px 30px #000;
-                      }
-                      50% {
-                        box-shadow: inset -10px 10px 30px #242424, inset 10px -10px 30px #000;
-                      }
-                      75% {
-                        box-shadow: inset -20px 0px 30px #242424, inset 0px 20px 30px #000;
-                      }
-                      100% {
-                        box-shadow: inset -10px -10px 30px #242424, inset 10px 10px 30px #000;
-                      }
-                    }
-                  `}
-                </style>
-              </Link>
-            </div>
+              style={{
+                width: "100%",
+                minHeight: "200px",
+                borderRadius: "20px",
+                backgroundColor: "rgba(17, 16, 21, 0.5)",
+                opacity: "0.2",
+              }}
+            ></div>
           </div>
         </motion.div>
 
