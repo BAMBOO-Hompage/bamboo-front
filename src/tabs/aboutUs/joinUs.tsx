@@ -1001,7 +1001,7 @@ export default function JoinUs(props: JoinUsProps) {
                     marginBottom: "25px",
                   }}
                 >
-                  Q. 프로젝트 관련 경험이 없어도 되나요?
+                  Q. 아닙니다. 프로젝트 관련 경험이 없어도 되나요?
                 </div>
                 <div
                   style={{
@@ -1116,9 +1116,9 @@ export default function JoinUs(props: JoinUsProps) {
                     lineHeight: "2",
                   }}
                 >
-                  동아리장: 김진석 (010-2628-2898)
+                  동아리장: 김진석 (카톡 ID: jinseok_02)
                   <br />
-                  부동아리장: 유세리 (010-5058-4640)
+                  부동아리장: 유세리 (카톡 ID: serih0219)
                 </div>
               </div>
               <div>

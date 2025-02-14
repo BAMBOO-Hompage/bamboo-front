@@ -102,7 +102,7 @@ export default function BottomInfo() {
               lineHeight: "1",
             }}
           >
-            김진석 010-2628-2898
+            김진석 (카톡 ID: jinseok_02)
           </span>
           <br />
           <br />
@@ -116,7 +116,7 @@ export default function BottomInfo() {
               lineHeight: "1",
             }}
           >
-            유세리 010-5058-4640
+            유세리 (카톡 ID: serih0219)
           </span>
         </div>
       </div>
