@@ -197,12 +197,11 @@ export default function AlexandriaPost() {
               >
                 <div
                   style={{
-                    maxWidth: "920px",
+                    maxWidth: "960px",
                     minHeight: "40px",
-                    padding: "0 20px",
                     marginBottom: "20px",
                     fontFamily: "Pretendard-Bold",
-                    fontSize: "28px",
+                    fontSize: "clamp(22px, 3.3vw, 28px)",
                     color: "#fff",
                   }}
                 >
@@ -210,51 +209,46 @@ export default function AlexandriaPost() {
                 </div>
                 <div
                   style={{
-                    maxWidth: "920px",
-                    height: "40px",
-                    padding: "0 20px",
+                    maxWidth: "960px",
+                    minHeight: "40px",
                     marginBottom: "10px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
                   <div style={{ width: "140px", color: "#aaa" }}>
-                    ·&emsp;논문 링크
+                    ·&emsp;논문
                   </div>
-                  <div
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={paperData.link}
                     style={{
+                      display: "block",
                       width: "100%",
-                      maxWidth: "760px",
+                      maxWidth: "850px",
+                      fontFamily: "Pretendard-Light",
+                      color: "#fff",
+                      wordWrap: "break-word",
+                      overflowWrap: "break-word",
                     }}
                   >
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={paperData.link}
-                      style={{
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "18px",
-                        color: "#fff",
-                      }}
-                    >
-                      {paperData.link}
-                    </a>
-                  </div>
+                    {paperData.link}
+                  </a>
                 </div>
                 <div
                   style={{
-                    maxWidth: "920px",
-                    height: "40px",
-                    padding: "0 20px",
+                    maxWidth: "960px",
+                    minHeight: "40px",
                     marginBottom: "10px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
                   <div style={{ width: "140px", color: "#aaa" }}>
@@ -263,9 +257,8 @@ export default function AlexandriaPost() {
                   <div
                     style={{
                       width: "100%",
-                      maxWidth: "760px",
+                      maxWidth: "850px",
                       fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
                       color: "#fff",
                     }}
                   >
@@ -274,15 +267,14 @@ export default function AlexandriaPost() {
                 </div>
                 <div
                   style={{
-                    maxWidth: "920px",
-                    height: "40px",
-                    padding: "0 20px",
+                    maxWidth: "960px",
+                    minHeight: "40px",
                     marginBottom: "10px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
                   <div style={{ width: "140px", color: "#aaa" }}>
@@ -291,9 +283,8 @@ export default function AlexandriaPost() {
                   <div
                     style={{
                       width: "100%",
-                      maxWidth: "760px",
+                      maxWidth: "850px",
                       fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
                       color: "#fff",
                     }}
                   >
@@ -302,15 +293,14 @@ export default function AlexandriaPost() {
                 </div>
                 <div
                   style={{
-                    maxWidth: "920px",
-                    height: "40px",
-                    padding: "0 20px",
+                    maxWidth: "960px",
+                    minHeight: "40px",
                     marginBottom: "20px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
                   <div style={{ width: "140px", color: "#aaa" }}>
@@ -319,9 +309,8 @@ export default function AlexandriaPost() {
                   <div
                     style={{
                       width: "100%",
-                      maxWidth: "760px",
+                      maxWidth: "850px",
                       fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
                       color: "#fff",
                     }}
                   >
@@ -343,7 +332,7 @@ export default function AlexandriaPost() {
                     minHeight: "500px",
                     borderRadius: "30px",
                     border: "none",
-                    padding: "20px",
+                    padding: "20px 0",
                     paddingBottom: "100px",
                   }}
                 >
@@ -354,7 +343,7 @@ export default function AlexandriaPost() {
                     }}
                     style={{
                       fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
+                      fontSize: "clamp(14px, 2vw, 18px)",
                       color: "#fff",
                       lineHeight: "1.4",
                     }}
@@ -370,7 +359,6 @@ export default function AlexandriaPost() {
                 />
                 <form
                   style={{
-                    padding: "0 20px",
                     marginTop: "20px",
                     marginBottom: "40px",
                   }}
@@ -426,7 +414,7 @@ export default function AlexandriaPost() {
                     <textarea
                       style={{
                         fontFamily: "Pretendard-Light",
-                        fontSize: "16px",
+                        fontSize: "clamp(14px, 1.8vw, 16px)",
                         color: "#fff",
                         width: "100%",
                         height: "100%",
@@ -449,13 +437,12 @@ export default function AlexandriaPost() {
                     fontFamily: "Pretendard-Bold",
                     fontSize: "18px",
                     color: "#fff",
-                    padding: "0 20px",
                     marginBottom: "20px",
                   }}
                 >
                   댓글 {"5"}개
                 </div>
-                <div style={{ padding: "0 20px 20px" }}>
+                <div style={{ padding: "0 0 20px" }}>
                   <div
                     style={{
                       marginBottom: "20px",
@@ -540,7 +527,7 @@ export default function AlexandriaPost() {
                     style={{
                       boxSizing: "border-box",
                       width: "100%",
-                      padding: "20px 25px",
+                      padding: "15px 15px",
                       borderRadius: "20px",
                       backgroundColor: "#222",
                     }}
@@ -548,7 +535,7 @@ export default function AlexandriaPost() {
                     <div
                       style={{
                         fontFamily: "Pretendard-ExtraLight",
-                        fontSize: "16px",
+                        fontSize: "clamp(14px, 1.8vw, 16px)",
                         color: "#fff",
                         width: "100%",
                         border: "none",

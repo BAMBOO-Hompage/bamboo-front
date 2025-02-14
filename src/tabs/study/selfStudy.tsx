@@ -14,7 +14,7 @@ const study_data = [
   { id: 3, x: 505, y: 0, width: 190, height: 190, label: "세 번째 공간" },
 ];
 
-export default function CurriculumStudy() {
+export default function SelfStudy() {
   const [hovered, setHovered] = useState(false);
   const [studyHovered, setStudyHovered] = useState<number | null>(null);
 
@@ -73,7 +73,7 @@ export default function CurriculumStudy() {
                 style={{
                   textDecoration: "none",
                   fontFamily: "Pretendard-Light",
-                  fontSize: "clamp(14px, 1.8vw, 18px)",
+                  fontSize: "clamp(14px, 2vw, 18px)",
                   width: "180px",
                   padding: "10px",
                   backgroundColor: "#111015",
@@ -137,7 +137,7 @@ export default function CurriculumStudy() {
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
-                  fontSize: "clamp(14px, 1.8vw, 18px)",
+                  fontSize: "clamp(14px, 2vw, 18px)",
                   width: "180px",
                   padding: "10px",
                   backgroundColor: "#2cc295",

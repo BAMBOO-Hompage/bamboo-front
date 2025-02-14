@@ -1102,7 +1102,7 @@ export default function JoinUs(props: JoinUsProps) {
                   style={{
                     color: "#fff",
                     fontFamily: "Pretendard-Bold",
-                    fontSize: "clamp(26px, 2.2vw, 30px)",
+                    fontSize: "clamp(24px, 3vw, 30px)",
                     marginBottom: "10px",
                   }}
                 >
@@ -1112,7 +1112,7 @@ export default function JoinUs(props: JoinUsProps) {
                   style={{
                     color: "#777",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "clamp(16px, 1.4vw, 18px)",
+                    fontSize: "clamp(16px, 1.8vw, 18px)",
                     lineHeight: "2",
                   }}
                 >

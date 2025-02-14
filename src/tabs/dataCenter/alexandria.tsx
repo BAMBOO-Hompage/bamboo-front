@@ -117,7 +117,7 @@ export default function Alexandria() {
               maxWidth: "1000px",
               minHeight: "1300px",
               margin: "100px auto",
-              padding: "0 40px",
+              padding: "0 20px",
               textAlign: "left",
             }}
           >

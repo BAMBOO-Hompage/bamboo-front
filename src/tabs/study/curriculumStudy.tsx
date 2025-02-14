@@ -20,10 +20,6 @@ export default function CurriculumStudy() {
 
   const [cStudyList, setCStudyList] = useState("전체");
 
-  const handleClick = (id) => {
-    alert(`${id} 공간이 클릭되었습니다!`);
-  };
-
   return (
     <div>
       <Nav type="study" />
@@ -71,7 +67,7 @@ export default function CurriculumStudy() {
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
-                  fontSize: "clamp(14px, 1.8vw, 18px)",
+                  fontSize: "clamp(14px, 2vw, 18px)",
                   width: "180px",
                   padding: "10px",
                   backgroundColor: "#2cc295",
@@ -91,7 +87,7 @@ export default function CurriculumStudy() {
                 style={{
                   textDecoration: "none",
                   fontFamily: "Pretendard-Light",
-                  fontSize: "clamp(14px, 1.8vw, 18px)",
+                  fontSize: "clamp(14px, 2vw, 18px)",
                   width: "180px",
                   padding: "10px",
                   backgroundColor: "#111015",
@@ -165,11 +161,12 @@ export default function CurriculumStudy() {
             >
               <svg
                 width="100%"
-                height="1000px" // 높이를 고정
+                // height="1000px" // 높이를 고정
                 viewBox="0 0 1000 1000"
                 preserveAspectRatio="none"
                 style={{
                   borderRadius: "30px",
+                  aspectRatio: "1 / 1",
                 }}
               >
                 <defs>
@@ -546,41 +543,45 @@ export default function CurriculumStudy() {
                 </text>
 
                 {study_data.map((item) => (
-                  <g
-                    key={item.id}
-                    transform="scale(1)"
-                    onMouseEnter={() => setStudyHovered(item.id)}
-                    onMouseLeave={() => setStudyHovered(null)}
-                    onClick={() => handleClick(item.id)}
+                  <Link
+                    to={`/studyPost?id=${item.id}`}
+                    style={{ textDecoration: "none" }}
                   >
-                    <rect
-                      x={item.x}
-                      y={item.y}
-                      width={item.width}
-                      height={item.height}
-                      fill={
-                        studyHovered === item.id
-                          ? "rgba(255, 255, 255, 0.2)"
-                          : "transparent"
-                      }
-                      stroke={studyHovered === item.id ? "#777" : "none"}
-                      strokeWidth="3"
-                      rx="20"
-                      ry="20"
-                      cursor="pointer"
-                    />
-                    <text
-                      x={item.x + 30}
-                      y={item.y + 40}
-                      fontFamily="Pretendard-Regular"
-                      fontSize="20px"
-                      fill="white"
-                      alignmentBaseline="hanging"
-                      cursor="pointer"
+                    <g
+                      key={item.id}
+                      transform="scale(1)"
+                      onMouseEnter={() => setStudyHovered(item.id)}
+                      onMouseLeave={() => setStudyHovered(null)}
                     >
-                      {`PY_${item.id}`}
-                    </text>
-                  </g>
+                      <rect
+                        x={item.x}
+                        y={item.y}
+                        width={item.width}
+                        height={item.height}
+                        fill={
+                          studyHovered === item.id
+                            ? "rgba(255, 255, 255, 0.2)"
+                            : "transparent"
+                        }
+                        stroke={studyHovered === item.id ? "#777" : "none"}
+                        strokeWidth="3"
+                        rx="20"
+                        ry="20"
+                        cursor="pointer"
+                      />
+                      <text
+                        x={item.x + 30}
+                        y={item.y + 40}
+                        fontFamily="Pretendard-Regular"
+                        fontSize="20px"
+                        fill="white"
+                        alignmentBaseline="hanging"
+                        cursor="pointer"
+                      >
+                        {`PY_${item.id}`}
+                      </text>
+                    </g>
+                  </Link>
                 ))}
               </svg>
             </div>
