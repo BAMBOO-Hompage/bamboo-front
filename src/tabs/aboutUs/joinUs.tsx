@@ -702,7 +702,7 @@ export default function JoinUs(props: JoinUsProps) {
               style={{
                 position: "relative",
                 width: "100%",
-                minHeight: "420px",
+                minHeight: "370px",
               }}
             >
               <div
@@ -715,7 +715,7 @@ export default function JoinUs(props: JoinUsProps) {
                   marginBottom: "70px",
                 }}
               >
-                모집 일정
+                모집 일정(ML, DL, PR)
               </div>
               <div
                 style={{
@@ -736,7 +736,7 @@ export default function JoinUs(props: JoinUsProps) {
                     color: "#fff",
                   }}
                 >
-                  <span>3/3(월) ~ 3/7(금)</span>
+                  <span>2/29(수) ~ 2/23(일)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -767,7 +767,7 @@ export default function JoinUs(props: JoinUsProps) {
                     color: "#fff",
                   }}
                 >
-                  <span>3/10(월)</span>
+                  <span>2/24(월)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -798,7 +798,7 @@ export default function JoinUs(props: JoinUsProps) {
                     color: "#fff",
                   }}
                 >
-                  <span>3/11(화) ~ 3/13(목)</span>
+                  <span>2/26(수) ~ 2/27(목)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -829,7 +829,170 @@ export default function JoinUs(props: JoinUsProps) {
                     color: "#fff",
                   }}
                 >
-                  <span>3/14(금)</span>
+                  <span>3/2(일)</span>
+                  <br />
+                  <img
+                    src="../img/icon/bamboo_list.png"
+                    alt="leaf_list"
+                    style={{
+                      width: "30px",
+                      marginTop: "15px",
+                    }}
+                  />
+                  <br />
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "10px 20px",
+                      backgroundColor: "#222",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    최종 합격자 발표
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              transition={{
+                ease: "easeInOut",
+                duration: 1,
+                y: { duration: 1 },
+              }}
+              style={{
+                position: "relative",
+                width: "100%",
+                minHeight: "420px",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  fontFamily: "Pretendard-Bold",
+                  fontSize: "28px",
+                  color: "#fff",
+                  paddingTop: "90px",
+                  marginBottom: "70px",
+                }}
+              >
+                모집 일정(PY, DA)
+              </div>
+              <div
+                style={{
+                  maxWidth: "1000px",
+                  padding: "0 20px",
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: "10px",
+                }}
+              >
+                <div
+                  style={{
+                    width: "250px",
+                    textAlign: "center",
+                    fontFamily: "Pretendard-SemiBold",
+                    fontSize: "clamp(16px, 2vw, 22px)",
+                    color: "#fff",
+                  }}
+                >
+                  <span>2/28(금) ~ 3/4(수)</span>
+                  <br />
+                  <img
+                    src="../img/icon/bamboo_list.png"
+                    alt="leaf_list"
+                    style={{
+                      width: "30px",
+                      marginTop: "15px",
+                    }}
+                  />
+                  <br />
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "10px 20px",
+                      backgroundColor: "#222",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    서류 모집
+                  </span>
+                </div>
+                <div
+                  style={{
+                    width: "250px",
+                    textAlign: "center",
+                    fontFamily: "Pretendard-SemiBold",
+                    fontSize: "clamp(16px, 2vw, 22px)",
+                    color: "#fff",
+                  }}
+                >
+                  <span>3/5(수)</span>
+                  <br />
+                  <img
+                    src="../img/icon/bamboo_list.png"
+                    alt="leaf_list"
+                    style={{
+                      width: "30px",
+                      marginTop: "15px",
+                    }}
+                  />
+                  <br />
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "10px 20px",
+                      backgroundColor: "#222",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    서류 합격자 발표
+                  </span>
+                </div>
+                <div
+                  style={{
+                    width: "250px",
+                    textAlign: "center",
+                    fontFamily: "Pretendard-SemiBold",
+                    fontSize: "clamp(16px, 2vw, 22px)",
+                    color: "#fff",
+                  }}
+                >
+                  <span>3/6(목) ~ 3/7(금)</span>
+                  <br />
+                  <img
+                    src="../img/icon/bamboo_list.png"
+                    alt="leaf_list"
+                    style={{
+                      width: "30px",
+                      marginTop: "15px",
+                    }}
+                  />
+                  <br />
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "10px 20px",
+                      backgroundColor: "#222",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    면접
+                  </span>
+                </div>
+                <div
+                  style={{
+                    width: "250px",
+                    textAlign: "center",
+                    fontFamily: "Pretendard-SemiBold",
+                    fontSize: "clamp(16px, 2vw, 22px)",
+                    color: "#fff",
+                  }}
+                >
+                  <span>3/8(토)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -969,8 +1132,9 @@ export default function JoinUs(props: JoinUsProps) {
                     lineHeight: "20px",
                   }}
                 >
-                  A. 서류 결과, 최종 결과 모두 합격자 및 탈락자 분 모두에게
-                  연락을 드립니다. 혹시 연락이 오지 않는다면 문의 바랍니다.
+                  A. 아닙니다. 서류 결과, 최종 결과 모두 합격자 및 탈락자 분
+                  모두에게 연락을 드립니다. 혹시 연락이 오지 않는다면 문의
+                  바랍니다.
                 </div>
               </div>
             </div>
@@ -1001,7 +1165,7 @@ export default function JoinUs(props: JoinUsProps) {
                     marginBottom: "25px",
                   }}
                 >
-                  Q. 아닙니다. 프로젝트 관련 경험이 없어도 되나요?
+                  Q. 프로젝트 관련 경험이 없어도 되나요?
                 </div>
                 <div
                   style={{

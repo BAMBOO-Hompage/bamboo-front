@@ -8,11 +8,15 @@ import StudyCard from "../../components/studyCard.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import "../../App.css";
 
-const study_data = [
-  { id: 1, x: 105, y: 0, width: 190, height: 190, label: "첫 번째 공간" },
-  { id: 2, x: 305, y: 0, width: 190, height: 190, label: "두 번째 공간" },
-  { id: 3, x: 505, y: 0, width: 190, height: 190, label: "세 번째 공간" },
-];
+const study_data = {
+  studyId: 1,
+  subjectName: "PY",
+  cohort: 6,
+  isBook: true,
+  section: 1,
+  studyMaster: "202010770",
+  studyMembers: ["202110856", "202010766"],
+};
 
 export default function CurriculumStudy() {
   const [hovered, setHovered] = useState(false);
@@ -57,12 +61,12 @@ export default function CurriculumStudy() {
                 marginBottom: "50px",
                 fontFamily: "Pretendard-Bold",
                 fontSize: "30px",
-                color: "#fff",
+                color: "#2cc295",
                 textShadow: "0 0 0.1em, 0 0 0.1em",
-                textAlign: "center",
+                textAlign: "left",
               }}
             >
-              커리큘럼 스터디
+              {study_data.subjectName + "_" + study_data.section}
             </div>
 
             <div

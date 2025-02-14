@@ -155,17 +155,14 @@ export default function CurriculumStudy() {
                 width: "100%",
                 marginTop: "50px",
                 minHeight: "1000px",
-                borderRadius: "30px",
                 position: "relative",
               }}
             >
               <svg
                 width="100%"
-                // height="1000px" // 높이를 고정
                 viewBox="0 0 1000 1000"
                 preserveAspectRatio="none"
                 style={{
-                  borderRadius: "30px",
                   aspectRatio: "1 / 1",
                 }}
               >
