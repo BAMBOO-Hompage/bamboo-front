@@ -736,7 +736,7 @@ export default function JoinUs(props: JoinUsProps) {
                     color: "#fff",
                   }}
                 >
-                  <span>2/29(수) ~ 2/23(일)</span>
+                  <span>2/19(수) ~ 2/23(일)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
