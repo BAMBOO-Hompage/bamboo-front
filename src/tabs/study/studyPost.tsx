@@ -1,11 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
-import StudyCard from "../../components/studyCard.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
+
+import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
+import GetNoticesAPI from "../../api/notices/getNoticesAPI.tsx";
+
 import "../../App.css";
 
 const study_data = {
@@ -19,6 +22,7 @@ const study_data = {
   studyMembers: [
     { studentNum: "202110856", name: "맹현성" },
     { studentNum: "202010766", name: "김재관" },
+    { studentNum: "202010756", name: "김명건" },
   ],
 };
 
@@ -104,9 +108,53 @@ const subject_data = {
   ],
 };
 
+const maxVisiblePages = 5;
+
 export default function StudyPost() {
   const [expandedSections, setExpandedSections] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
+  const postList = searchParams.get("post") || "Weekly Best";
 
+  const [checkAuth, setCheckAuth] = useState<number>(1);
+  const [postsToDisplay, setPostsToDisplay] = useState<Post[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
+  const startPage =
+    Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
+  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+  const changePage = (page: number) => {
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    setSearchParams({
+      post: postList,
+      page: page.toString(),
+      size: "8",
+    });
+  };
+
+  useEffect(() => {
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_ADMIN") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    // GetNoticesAPI(postList, currentPage).then((result) => {
+    //   console.log(result.content);
+    //   var noticeData = result.content;
+    //   setPostsToDisplay(noticeData);
+    //   setTotalPages(result.totalPages);
+    //   console.log(postsToDisplay, totalPages);
+    // });
+  }, [postList, currentPage]);
   return (
     <div>
       <Nav type="study" />
@@ -123,7 +171,7 @@ export default function StudyPost() {
         >
           <svg
             width="100%"
-            height="1000px"
+            height="800px"
             viewBox="0 0 1000 1000"
             preserveAspectRatio="none"
             style={{
@@ -135,99 +183,30 @@ export default function StudyPost() {
             <defs>
               <filter
                 id="blurFilter"
-                x="-300%"
-                y="-300%"
-                width="600%"
-                height="600%"
+                x="-250%"
+                y="-250%"
+                width="500%"
+                height="500%"
               >
-                <feGaussianBlur stdDeviation="110" />
+                <feGaussianBlur stdDeviation="90" />
               </filter>
             </defs>
-            <circle
-              cx="150"
-              cy="220"
-              r="70"
-              fill="#2CC295"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="150"
-              cy="720"
-              r="70"
-              fill="#2CC295"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="650"
-              cy="600"
-              r="70"
-              fill="#2CC295"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="650"
-              cy="750"
-              r="70"
-              fill="#2CC295"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="650"
-              cy="900"
-              r="70"
-              fill="#2CC295"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="330"
-              cy="950"
-              r="70"
-              fill="#2CC295"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="550"
-              cy="50"
-              r="70"
-              fill="#2CC295"
-              filter="url(#blurFilter)"
-            />
-
-            <circle
-              cx="440"
-              cy="280"
-              r="90"
-              fill="#297FB8"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="850"
-              cy="150"
-              r="70"
-              fill="#297FB8"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="200"
-              cy="850"
-              r="70"
-              fill="#297FB8"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="300"
-              cy="550"
-              r="60"
-              fill="#297FB8"
-              filter="url(#blurFilter)"
-            />
-            <circle
-              cx="800"
-              cy="500"
-              r="100"
-              fill="#297FB8"
-              filter="url(#blurFilter)"
-            />
+            {[
+              { cx: 150, cy: 220, r: 70, fill: "#2CC295" },
+              { cx: 150, cy: 720, r: 70, fill: "#2CC295" },
+              { cx: 650, cy: 600, r: 70, fill: "#2CC295" },
+              { cx: 650, cy: 750, r: 70, fill: "#2CC295" },
+              { cx: 650, cy: 900, r: 70, fill: "#2CC295" },
+              { cx: 330, cy: 950, r: 70, fill: "#2CC295" },
+              { cx: 550, cy: 50, r: 70, fill: "#2CC295" },
+              { cx: 440, cy: 280, r: 90, fill: "#297FB8" },
+              { cx: 850, cy: 150, r: 70, fill: "#297FB8" },
+              { cx: 200, cy: 850, r: 70, fill: "#297FB8" },
+              { cx: 300, cy: 550, r: 60, fill: "#297FB8" },
+              { cx: 800, cy: 500, r: 100, fill: "#297FB8" },
+            ].map((circle, index) => (
+              <circle key={index} {...circle} filter="url(#blurFilter)" />
+            ))}
           </svg>
         </div>
 
@@ -361,6 +340,7 @@ export default function StudyPost() {
                 </div>
               </div>
             </div>
+
             <div
               style={{
                 boxSizing: "border-box",
@@ -404,7 +384,6 @@ export default function StudyPost() {
                 />
               </div>
             </div>
-
             <div
               style={{
                 maxHeight: expandedSections ? "300px" : "0",
@@ -520,6 +499,240 @@ export default function StudyPost() {
               })}
               <div style={{ height: "20px" }}></div>
             </div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: false }}
+              transition={{
+                ease: "easeInOut",
+                duration: 1,
+              }}
+              style={{
+                width: "100%",
+                height: "1450px",
+              }}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  maxWidth: "1000px",
+                  height: "1300px",
+                  margin: "0 auto",
+                  marginTop: "20px",
+                  display: "flex",
+                }}
+              >
+                <div
+                  style={{
+                    boxSizing: "border-box",
+                    width: "clamp(120px, 20vw, 180px)",
+                    height: "100%",
+                    borderRight: "1px solid #444",
+                    textAlign: "left",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "Pretendard-Regular",
+                      fontSize: "18px",
+                    }}
+                  >
+                    {[
+                      "Weekly Best",
+                      study_data.studyMaster.name,
+                      ...study_data.studyMembers.map(
+                        (studyMember) => studyMember.name
+                      ),
+                    ].map((category) => (
+                      <div
+                        key={category}
+                        className="side_tabs"
+                        style={
+                          postList === category
+                            ? {
+                                boxSizing: "border-box",
+                                color: "#2CC295",
+                                borderRight: "1px solid #2cc295",
+                              }
+                            : {}
+                        }
+                        onClick={() => {
+                          setSearchParams({
+                            post: category,
+                            page: "1",
+                            size: "8",
+                          });
+                        }}
+                      >
+                        {category}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{
+                    ease: "easeInOut",
+                    duration: 0.5,
+                    y: { duration: 0.5 },
+                  }}
+                  key={postList}
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    maxWidth: "820px",
+                    height: "100%",
+                    textAlign: "left",
+                    paddingLeft: "clamp(20px, 4vw, 50px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "14px",
+                      color: "#fff",
+                    }}
+                  >
+                    {subject_data.weeklyContents.map((curriculum) => {
+                      return (
+                        <div
+                          key={curriculum.weeklyContentId}
+                          style={{
+                            maxWidth: `${
+                              820 / subject_data.weeklyContents.length - 10
+                            }px`,
+                            padding: "5px 15px",
+                            backgroundColor:
+                              curriculum.week.toString() ===
+                              searchParams.get("page")
+                                ? "#2cc295"
+                                : "rgba(17, 16, 21, 0.5)",
+                            borderRadius: "15px",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            setSearchParams({
+                              post: postList,
+                              page: curriculum.week.toString(),
+                              size: "8",
+                            });
+                          }}
+                        >
+                          {curriculum.week}주차
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div style={{ margin: "40px 0 100px" }}>
+                    {postsToDisplay.length > 0 ? (
+                      postsToDisplay.map((post) => (
+                        <Link
+                          to={`/noticePost?id=${post.noticeId}`}
+                          key={post.noticeId}
+                          style={{
+                            textDecoration: "none",
+                            width: "100%",
+                            height: "110px",
+                            backgroundColor: "#222",
+                            border: "0.5px solid #343434",
+                            borderRadius: "30px",
+                            marginBottom: "30px",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.border = "0.5px solid #777";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.border =
+                              "0.5px solid #343434";
+                          }}
+                        >
+                          <div style={{ width: "90%", margin: "0 auto" }}>
+                            <div
+                              style={{
+                                marginBottom: "5px",
+                                fontFamily: "Pretendard-Regular",
+                                fontSize: "15px",
+                                color: "#2CC295",
+                              }}
+                            >
+                              {post.type}
+                            </div>
+                            <div
+                              style={{
+                                marginBottom: "5px",
+                                fontFamily: "Pretendard-SemiBold",
+                                fontSize: "18px",
+                                color: "#fff",
+                              }}
+                            >
+                              {post.title}
+                            </div>
+                            <div
+                              style={{
+                                fontFamily: "Pretendard-Regular",
+                                fontSize: "15px",
+                                color: "#888",
+                              }}
+                            >
+                              작성자: {post.member.name}
+                              &emsp; 작성 일자:{" "}
+                              {post.createdAt[0] +
+                                "/" +
+                                post.createdAt[1] +
+                                "/" +
+                                post.createdAt[2] +
+                                " " +
+                                post.createdAt[3] +
+                                ":" +
+                                post.createdAt[4] +
+                                ":" +
+                                post.createdAt[5]}
+                            </div>
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
+                      <div
+                        style={{
+                          color: "#fff",
+                          fontFamily: "Pretendard-Light",
+                          fontSize: "18px",
+                          textAlign: "center",
+                          padding: "50px 40px",
+                        }}
+                      >
+                        게시물이 없습니다.
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            <div
+              style={{
+                boxSizing: "border-box",
+                width: "100%",
+                marginTop: "20px",
+                padding: "20px 30px",
+                borderRadius: "20px",
+                backgroundColor: "rgba(17, 16, 21, 0.5)",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            ></div>
           </div>
         </motion.div>
 

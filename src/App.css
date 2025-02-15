@@ -142,11 +142,20 @@ select {
   align-items: center;
 }
 
-/* @media screen and (max-width: 500px) {
-  .main_1 {
-    height: 800px;
+.alexandria_1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+  .alexandria_1 {
+    display: block;
   }
-} */
+  .alexandria_2 {
+    margin-top: 10px;
+  }
+}
 
 @media screen and (max-width: 900px) {
   .bottom_info {
@@ -165,6 +174,9 @@ select {
 
   .joinUs_text {
     display: block;
+  }
+  .joinUs_text2 {
+    margin-top: 10px;
   }
   .joinUs_img {
     display: none;
@@ -248,7 +260,7 @@ select {
 }
 
 .side_tabs {
-  width: 180px;
+  width: clamp(120px, 20vw, 180px);
   color: #fff;
   padding: 8px 0;
 }
@@ -261,31 +273,13 @@ select {
   font-family: Pretendard-Light;
   font-size: 16px;
   color: #fff;
-  margin: 0 10px;
+  margin: 0 8px;
   border: none;
   background-color: transparent;
 }
 .bottom_tabs:hover {
   text-shadow: 0 0 0.1em, 0 0 0.1em;
   cursor: pointer;
-}
-
-.custom-md-editor .w-md-editor-toolbar {
-  background-color: transparent !important;
-  border-radius: 20px 20px 0 0 !important;
-}
-
-.custom-md-editor .w-md-editor-toolbar ul {
-  background-color: transparent !important;
-}
-
-.custom-md-editor.w-md-editor {
-  background-color: transparent !important;
-  border-radius: 20px 20px 20px 20px !important;
-}
-
-.custom-md-editor .w-md-editor-bar {
-  display: none !important;
 }
 
 .container h1,

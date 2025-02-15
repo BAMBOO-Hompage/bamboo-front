@@ -429,91 +429,22 @@ export default function CurriculumStudy() {
                     <rect x="980" y="800" width="20" height="190" />
                   </mask>
                 </defs>
-                <circle
-                  cx="150"
-                  cy="220"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="150"
-                  cy="720"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="650"
-                  cy="600"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="650"
-                  cy="750"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="650"
-                  cy="900"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="330"
-                  cy="950"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="550"
-                  cy="50"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-
-                <circle
-                  cx="440"
-                  cy="280"
-                  r="90"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="850"
-                  cy="150"
-                  r="70"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="200"
-                  cy="850"
-                  r="70"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="300"
-                  cy="550"
-                  r="60"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="800"
-                  cy="500"
-                  r="100"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
+                {[
+                  { cx: 150, cy: 220, r: 70, fill: "#2CC295" },
+                  { cx: 150, cy: 720, r: 70, fill: "#2CC295" },
+                  { cx: 650, cy: 600, r: 70, fill: "#2CC295" },
+                  { cx: 650, cy: 750, r: 70, fill: "#2CC295" },
+                  { cx: 650, cy: 900, r: 70, fill: "#2CC295" },
+                  { cx: 330, cy: 950, r: 70, fill: "#2CC295" },
+                  { cx: 550, cy: 50, r: 70, fill: "#2CC295" },
+                  { cx: 440, cy: 280, r: 90, fill: "#297FB8" },
+                  { cx: 850, cy: 150, r: 70, fill: "#297FB8" },
+                  { cx: 200, cy: 850, r: 70, fill: "#297FB8" },
+                  { cx: 300, cy: 550, r: 60, fill: "#297FB8" },
+                  { cx: 800, cy: 500, r: 100, fill: "#297FB8" },
+                ].map((circle, index) => (
+                  <circle key={index} {...circle} filter="url(#blurFilter)" />
+                ))}
 
                 <rect
                   x="0"

@@ -108,7 +108,6 @@ export default function Alexandria() {
           }}
           style={{
             width: "100%",
-            minHeight: "1450px",
           }}
         >
           <div
@@ -116,7 +115,8 @@ export default function Alexandria() {
               position: "relative",
               maxWidth: "1000px",
               minHeight: "1300px",
-              margin: "100px auto",
+              margin: "0 auto",
+              marginTop: "100px",
               padding: "0 20px",
               textAlign: "left",
             }}
@@ -153,12 +153,10 @@ export default function Alexandria() {
             </div>
 
             <div
+              className="alexandria_1"
               style={{
                 width: "100%",
                 marginBottom: "40px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
               }}
             >
               <form
@@ -227,7 +225,7 @@ export default function Alexandria() {
                 </div>
                 <div
                   style={{
-                    width: "240px",
+                    maxWidth: "200px",
                     height: "40px",
                     borderRadius: "0 20px 20px 0",
                     backgroundColor: "#111015",
@@ -244,7 +242,7 @@ export default function Alexandria() {
                     defaultValue={searchParams.get("search") || ""}
                     placeholder="논문 검색"
                     style={{
-                      width: "200px",
+                      width: "100%",
                       height: "15px",
                       padding: "15px 10px",
                       backgroundColor: "transparent",
@@ -252,6 +250,7 @@ export default function Alexandria() {
                       borderRadius: "10px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
+                      display: "flex",
                     }}
                     {...register("SearchKeyword", {
                       required: "검색어를 입력해주세요.",
@@ -262,6 +261,7 @@ export default function Alexandria() {
                     type="submit"
                     style={{
                       width: "30px",
+                      height: "30px",
                       marginRight: "5px",
                       padding: "0",
                       border: "none",
@@ -272,7 +272,7 @@ export default function Alexandria() {
                       src="../../img/btn/search_disabled.png"
                       alt="search"
                       style={{
-                        width: "100%",
+                        width: "30px",
                         opacity: "0.5",
                         cursor: "pointer",
                         transition: "all 0.3s ease",
@@ -288,8 +288,10 @@ export default function Alexandria() {
                 </div>
               </form>
               <div
+                className="alexandria_2"
                 style={{
                   display: "flex",
+                  justifyContent: "right",
                   alignItems: "center",
                   fontFamily: "Pretendard-Light",
                   fontSize: "18px",
@@ -492,8 +494,8 @@ export default function Alexandria() {
               <div
                 style={{
                   width: "100%",
-                  position: "absolute",
-                  bottom: "0",
+                  marginTop: "100px",
+                  paddingBottom: "100px",
                   display: "flex",
                   justifyContent: "center",
                 }}

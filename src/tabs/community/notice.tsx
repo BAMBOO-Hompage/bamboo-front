@@ -92,7 +92,8 @@ export default function Notice() {
           <div
             style={{
               position: "relative",
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 20px",
               height: "1300px",
               margin: "100px auto",
               display: "flex",
@@ -165,10 +166,11 @@ export default function Notice() {
               key={postList}
               style={{
                 position: "relative",
-                width: "820px",
+                width: "100%",
+                maxWidth: "820px",
                 height: "100%",
                 textAlign: "left",
-                paddingLeft: "50px",
+                paddingLeft: "clamp(20px, 4vw, 50px",
               }}
             >
               <div
@@ -295,7 +297,8 @@ export default function Notice() {
 
               <div
                 style={{
-                  width: "770px",
+                  width: "100%",
+                  maxWidth: "770px",
                   position: "absolute",
                   bottom: "0",
                   display: "flex",

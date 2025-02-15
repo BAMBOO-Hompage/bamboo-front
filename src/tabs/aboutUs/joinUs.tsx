@@ -527,8 +527,8 @@ export default function JoinUs(props: JoinUsProps) {
                     전문성 강화
                   </div>
                   <div
+                    className="joinUs_text2"
                     style={{
-                      marginTop: "10px",
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       color: "#fff",
