@@ -650,7 +650,7 @@ export default function StudyPost() {
                     })}
                   </div>
 
-                  <div style={{ margin: "10px 0 100px" }}>
+                  <div style={{ margin: "10px 0 20px" }}>
                     {subject_data.weeklyContents.map((curriculum) => {
                       if (
                         curriculum.week.toString() === searchParams.get("week")
@@ -687,6 +687,30 @@ export default function StudyPost() {
                               {curriculum.content}
                             </div>
                           </div>
+                        );
+                      } else {
+                        return <></>;
+                      }
+                    })}
+                  </div>
+
+                  <div style={{ margin: "10px 0 20px" }}>
+                    {subject_data.weeklyContents.map((curriculum) => {
+                      if (
+                        curriculum.week.toString() === searchParams.get("week")
+                      ) {
+                        return (
+                          <div
+                            key={curriculum.weeklyContentId}
+                            style={{
+                              maxHeight: "300px",
+                              padding: "20px",
+                              transition: "max-height 0.5s ease",
+                              backgroundColor: "rgba(17, 16, 21, 0.5)",
+                              borderRadius: "20px",
+                              textAlign: "left",
+                            }}
+                          ></div>
                         );
                       } else {
                         return <></>;
