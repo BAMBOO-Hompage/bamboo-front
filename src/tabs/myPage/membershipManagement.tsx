@@ -250,10 +250,11 @@ export default function PersonalInfo() {
               }}
               style={{
                 position: "relative",
-                width: "820px",
+                width: "100%",
+                maxWidth: "820px",
                 minHeight: "100%",
                 textAlign: "left",
-                paddingLeft: "50px",
+                paddingLeft: "clamp(20px, 4vw, 50px)",
               }}
             >
               <div
@@ -349,59 +350,37 @@ export default function PersonalInfo() {
                   fontFamily: "Pretendard-Light",
                   fontSize: "16px",
                   color: "#888",
+                  gap: "10px",
+                  textAlign: "center",
                 }}
               >
                 <div
-                  style={{
-                    width: "70px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
+                  style={{ flexGrow: 1, flexBasis: "60px", minWidth: "30px" }}
                 >
                   선택
                 </div>
                 <div
-                  style={{
-                    width: "120px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
+                  style={{ flexGrow: 2, flexBasis: "80px", minWidth: "50px" }}
                 >
                   등급
                 </div>
                 <div
-                  style={{
-                    width: "180px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
+                  style={{ flexGrow: 3, flexBasis: "120px", minWidth: "80px" }}
                 >
                   학과
                 </div>
                 <div
-                  style={{
-                    width: "120px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
+                  style={{ flexGrow: 2, flexBasis: "100px", minWidth: "70px" }}
                 >
                   학번
                 </div>
                 <div
-                  style={{
-                    width: "80px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
+                  style={{ flexGrow: 1.5, flexBasis: "70px", minWidth: "40px" }}
                 >
                   이름
                 </div>
                 <div
-                  style={{
-                    width: "160px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
+                  style={{ flexGrow: 3, flexBasis: "140px", minWidth: "100px" }}
                 >
                   전화 번호
                 </div>
@@ -418,6 +397,7 @@ export default function PersonalInfo() {
                   <div
                     key={member.id}
                     style={{
+                      position: "relative",
                       width: "100%",
                       height: "50px",
                       marginBottom: "8px",
@@ -431,11 +411,15 @@ export default function PersonalInfo() {
                         ? "linear-gradient(175deg, #142B28 -10%, #111015 50%)"
                         : undefined,
                       borderRadius: "10px",
+                      gap: "10px",
+                      textAlign: "center",
                     }}
                   >
                     <div
                       style={{
-                        width: "70px",
+                        flexGrow: 1,
+                        flexBasis: "60px",
+                        minWidth: "30px",
                         height: "100%",
                         display: "flex",
                         justifyContent: "center",
@@ -455,7 +439,9 @@ export default function PersonalInfo() {
                     </div>
                     <div
                       style={{
-                        width: "120px",
+                        flexGrow: 2,
+                        flexBasis: "80px",
+                        minWidth: "50px",
                         display: "flex",
                         justifyContent: "center",
                       }}
@@ -516,7 +502,9 @@ export default function PersonalInfo() {
                     </div>
                     <div
                       style={{
-                        width: "180px",
+                        flexGrow: 3,
+                        flexBasis: "120px",
+                        minWidth: "80px",
                         display: "flex",
                         justifyContent: "center",
                       }}
@@ -525,7 +513,9 @@ export default function PersonalInfo() {
                     </div>
                     <div
                       style={{
-                        width: "120px",
+                        flexGrow: 2,
+                        flexBasis: "100px",
+                        minWidth: "70px",
                         display: "flex",
                         justifyContent: "center",
                       }}
@@ -534,23 +524,26 @@ export default function PersonalInfo() {
                     </div>
                     <div
                       style={{
-                        width: "80px",
+                        flexGrow: 1.5,
+                        flexBasis: "70px",
+                        minWidth: "50px",
                         display: "flex",
                         justifyContent: "center",
                       }}
                     >
-                      {member.name.slice(0, 2)}*
+                      {member.name}
                     </div>
                     <div
                       style={{
-                        width: "160px",
+                        flexGrow: 3,
+                        flexBasis: "140px",
+                        minWidth: "100px",
                         display: "flex",
                         justifyContent: "center",
                       }}
                     >
-                      010-1234-5678
-                      {/* {member.phone.slice(0, 3)}-{member.phone.slice(3, 7)}-
-              {member.phone.slice(7, 11)} */}
+                      {member.phone.slice(0, 3)}-{member.phone.slice(3, 7)}-
+                      {member.phone.slice(7, 11)}
                     </div>
                   </div>
                 ))}
@@ -558,9 +551,8 @@ export default function PersonalInfo() {
 
               <div
                 style={{
-                  width: "770px",
-                  position: "absolute",
-                  bottom: "0",
+                  width: "100%",
+                  maxWidth: "770px",
                   display: "flex",
                   justifyContent: "center",
                 }}

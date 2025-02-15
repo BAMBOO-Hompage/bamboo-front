@@ -38,7 +38,8 @@ export default function CurriculumManagement() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [isEndActive, setIsEndActive] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
+  const [isEndPopupOpen, setIsEndPopupOpen] = useState(false);
   const [confirmationText, setConfirmationText] = useState("");
   const [cohort, setCohort] = useState(0);
   const [isFirstSemester, setIsFirstSemester] = useState(false);
@@ -59,10 +60,10 @@ export default function CurriculumManagement() {
     );
 
     setCohort(cohort_data.batch);
-  }, [currentDate]);
+  }, []);
 
   const handleEnd = () => {
-    if (confirmationText === "6기 활동 종료") {
+    if (confirmationText === `${cohort}기 활동 종료`) {
       patchCohorts(false);
       const newCohort = cohort + 1;
       setCohort(newCohort);
@@ -75,10 +76,23 @@ export default function CurriculumManagement() {
 
       reset({ End: "" });
       setConfirmationText("");
-      setIsPopupOpen(!isPopupOpen);
+      setIsEndPopupOpen(!isEndPopupOpen);
     } else {
       alert("다시 입력해주세요.");
     }
+  };
+
+  const [curriculumList, setCurriculumList] = useState([
+    { week: 1, content: "" },
+  ]);
+
+  const addCurriculum = () => {
+    const updatedSubjects = [...curriculumList];
+    updatedSubjects.push({
+      week: updatedSubjects.length + 1,
+      content: "",
+    });
+    setCurriculumList(updatedSubjects);
   };
 
   return (
@@ -188,10 +202,11 @@ export default function CurriculumManagement() {
               }}
               style={{
                 position: "relative",
+                width: "100%",
                 maxWidth: "820px",
                 minHeight: "100%",
                 textAlign: "left",
-                paddingLeft: "50px",
+                paddingLeft: "clamp(20px, 4vw, 50px)",
               }}
             >
               <div
@@ -269,10 +284,7 @@ export default function CurriculumManagement() {
                         e.currentTarget.style.opacity = "0.8";
                       }}
                       onClick={() => {
-                        setSearchParams({
-                          edit: "1",
-                          changePassword: "0",
-                        });
+                        setIsAddPopupOpen(!isAddPopupOpen);
                       }}
                     />
                   </div>
@@ -407,15 +419,197 @@ export default function CurriculumManagement() {
                           "-10px -10px 30px #242424, 15px 15px 30px #000";
                       }}
                       onClick={() => {
-                        setIsPopupOpen(!isPopupOpen);
+                        setIsEndPopupOpen(!isEndPopupOpen);
                       }}
                     >
                       활동 종료
                     </div>
                   </div>
                 )}
-                {/* 팝업 컴포넌트 */}
-                {isPopupOpen && (
+
+                {/* 커리큘럼 추가 팝업*/}
+                {isAddPopupOpen && (
+                  <form
+                    style={{
+                      position: "fixed",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: "80%",
+                      maxWidth: "600px",
+                      backgroundColor: "#111015",
+                      padding: "30px 30px 20px",
+                      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                      borderRadius: "10px",
+                      textAlign: "left",
+                      zIndex: 1000,
+                    }}
+                  >
+                    <div style={{ marginBottom: "20px" }}>
+                      <input
+                        id="Subject"
+                        className="title"
+                        type="text"
+                        placeholder="과목을 입력해주세요."
+                        autoComplete="off"
+                        {...register("Subject", {
+                          required: "과목을 입력해주세요.",
+                        })}
+                        style={{
+                          width: "100%",
+                          height: "40px",
+                          backgroundColor: "transparent",
+                          borderRadius: "10px",
+                          fontFamily: "Pretendard-Bold",
+                          fontSize: "28px",
+                        }}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        marginBottom: "10px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        fontFamily: "Pretendard-Regular",
+                        fontSize: "18px",
+                        gap: "10px",
+                      }}
+                    >
+                      <div style={{ width: "80px", color: "#fff" }}>
+                        ·&emsp;교재
+                      </div>
+                      <input
+                        id="Book"
+                        type="text"
+                        placeholder={`교재를 입력해주세요.`}
+                        autoComplete="off"
+                        {...register("Book", {
+                          required: `교재를 입력해주세요.`,
+                        })}
+                        style={{
+                          flex: "1",
+                          width: "150px",
+                          height: "40px",
+                          padding: "0 20px",
+                          backgroundColor: "#111015",
+                          boxShadow:
+                            "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                          borderRadius: "20px",
+                          fontFamily: "Pretendard-Light",
+                          fontSize: "18px",
+                        }}
+                      />
+                    </div>
+                    {curriculumList.map((curriculum, index) => (
+                      <div
+                        key={curriculum.week}
+                        style={{
+                          marginBottom: "10px",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          fontFamily: "Pretendard-Regular",
+                          fontSize: "18px",
+                          gap: "10px",
+                        }}
+                      >
+                        <div style={{ width: "80px", color: "#fff" }}>
+                          ·&emsp;{curriculum.week}주차
+                        </div>
+                        <input
+                          id={`Week${curriculum.week}`}
+                          type="text"
+                          placeholder={`${curriculum.week}주차 내용을 입력해주세요.`}
+                          autoComplete="off"
+                          {...register(`Week${curriculum.week}`, {
+                            required: `${curriculum.week}주차 내용을 입력해주세요.`,
+                          })}
+                          style={{
+                            flex: "1",
+                            width: "150px",
+                            height: "40px",
+                            padding: "0 20px",
+                            backgroundColor: "#111015",
+                            boxShadow:
+                              "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                            borderRadius: "20px",
+                            fontFamily: "Pretendard-Light",
+                            fontSize: "18px",
+                          }}
+                        />
+                        {index === curriculumList.length - 1 && (
+                          <img
+                            src="../img/btn/plus_enabled.png"
+                            alt="plus"
+                            style={{
+                              width: "30px",
+                              opacity: "0.8",
+                              transition: "all 0.3s ease",
+                              cursor: "pointer",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.opacity = "1";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.opacity = "0.8";
+                            }}
+                            onClick={() => {
+                              addCurriculum();
+                            }}
+                          />
+                        )}
+                      </div>
+                    ))}
+                    <div
+                      style={{
+                        width: "100%",
+                        marginTop: "20px",
+                        display: "flex",
+                        justifyContent: "right",
+                        gap: "10px",
+                      }}
+                    >
+                      <Button
+                        type="destructive"
+                        size="small"
+                        title="취소"
+                        onClick={() => {
+                          const deleteEnd = window.confirm(
+                            "커리큘럼 추가를 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
+                          );
+                          if (deleteEnd) {
+                            setCurriculumList([{ week: 1, content: "" }]);
+                            setIsAddPopupOpen(!isAddPopupOpen);
+                          }
+                        }}
+                      />
+                      <Button
+                        type="primary"
+                        size="small"
+                        title="저장"
+                        onClick={() => {}}
+                      />
+                    </div>
+                  </form>
+                )}
+                {isAddPopupOpen && (
+                  <div
+                    style={{
+                      position: "fixed",
+                      top: 0,
+                      left: 0,
+                      padding: "0 20px",
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      zIndex: 999,
+                    }}
+                  />
+                )}
+
+                {/* 활동 종료 팝업*/}
+                {isEndPopupOpen && (
                   <form
                     style={{
                       position: "fixed",
@@ -442,7 +636,7 @@ export default function CurriculumManagement() {
                       }}
                     >
                       <span style={{ color: "#FF5005" }}>
-                        "{`6`}기 활동 종료"
+                        "{cohort}기 활동 종료"
                       </span>
                       를 입력하고 활동 종료 버튼을 눌러주세요.
                       <br />
@@ -471,8 +665,8 @@ export default function CurriculumManagement() {
                         style={{
                           width: "100%",
                           maxWidth: "340px",
+                          padding: "0 20px",
                           height: "40px",
-                          margin: "0 20px",
                           borderRadius: "10px",
                           fontFamily: "Pretendard-Light",
                           fontSize: "18px",
@@ -492,13 +686,9 @@ export default function CurriculumManagement() {
                         size="small"
                         title="취소"
                         onClick={() => {
-                          const deleteEnd =
-                            window.confirm("활동 종료를 취소하시겠습니까?");
-                          if (deleteEnd) {
-                            reset({ End: "" });
-                            setConfirmationText("");
-                            setIsPopupOpen(!isPopupOpen);
-                          }
+                          reset({ End: "" });
+                          setConfirmationText("");
+                          setIsEndPopupOpen(!isEndPopupOpen);
                         }}
                       />
                       <Button
@@ -512,11 +702,10 @@ export default function CurriculumManagement() {
                     </div>
                   </form>
                 )}
-                {/* 팝업 배경 */}
-                {isPopupOpen && (
+                {isEndPopupOpen && (
                   <div
                     onClick={() => {
-                      setIsPopupOpen(!isPopupOpen);
+                      setIsEndPopupOpen(!isEndPopupOpen);
                     }}
                     style={{
                       position: "fixed",

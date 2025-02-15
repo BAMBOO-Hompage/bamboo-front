@@ -170,7 +170,7 @@ export default function Notice() {
                 maxWidth: "820px",
                 height: "100%",
                 textAlign: "left",
-                paddingLeft: "clamp(20px, 4vw, 50px",
+                paddingLeft: "clamp(20px, 4vw, 50px)",
               }}
             >
               <div

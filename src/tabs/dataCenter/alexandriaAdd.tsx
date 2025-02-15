@@ -152,7 +152,6 @@ export default function AlexandriaAdd() {
                     style={{
                       width: "100%",
                       height: "40px",
-                      padding: "0 20px",
                       backgroundColor: "transparent",
                       borderRadius: "10px",
                       fontFamily: "Pretendard-Bold",
@@ -163,18 +162,17 @@ export default function AlexandriaAdd() {
                 <div
                   style={{
                     maxWidth: "920px",
-                    padding: "0 20px",
                     marginBottom: "10px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "18px",
-                    gap: "60px",
+                    gap: "40px",
                   }}
                 >
                   <div style={{ width: "100px", color: "#aaa" }}>
-                    ·&emsp;논문 링크<span style={{ color: "#FF5005" }}>*</span>
+                    ·&emsp;논문<span style={{ color: "#FF5005" }}>*</span>
                   </div>
                   <input
                     id="link"
@@ -201,14 +199,13 @@ export default function AlexandriaAdd() {
                 <div
                   style={{
                     maxWidth: "920px",
-                    padding: "0 20px",
                     marginBottom: "10px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "18px",
-                    gap: "60px",
+                    gap: "40px",
                   }}
                 >
                   <div style={{ width: "100px", color: "#aaa" }}>
@@ -239,14 +236,13 @@ export default function AlexandriaAdd() {
                 <div
                   style={{
                     maxWidth: "920px",
-                    padding: "0 20px",
                     marginBottom: "10px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "18px",
-                    gap: "60px",
+                    gap: "40px",
                   }}
                 >
                   <div style={{ width: "100px", color: "#aaa" }}>
@@ -277,14 +273,13 @@ export default function AlexandriaAdd() {
                 <div
                   style={{
                     maxWidth: "920px",
-                    padding: "0 20px",
                     marginBottom: "20px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontFamily: "Pretendard-Regular",
                     fontSize: "18px",
-                    gap: "60px",
+                    gap: "40px",
                   }}
                 >
                   <div style={{ width: "100px", color: "#aaa" }}>
