@@ -37,10 +37,6 @@ export default function Login() {
     input.value = inputValue;
   };
 
-  const togglePopup = () => {
-    setIsPopupOpen((prev) => !prev);
-  };
-
   return (
     <div>
       <div
@@ -290,7 +286,9 @@ export default function Login() {
                 e.currentTarget.style.fontWeight = "300";
                 e.currentTarget.style.textDecoration = "none";
               }}
-              onClick={togglePopup}
+              onClick={() => {
+                setIsPopupOpen(!isPopupOpen);
+              }}
             >
               비밀번호 찾기
             </div>
@@ -353,7 +351,9 @@ export default function Login() {
               type="primary"
               size="xsmall"
               title="닫기"
-              onClick={togglePopup}
+              onClick={() => {
+                setIsPopupOpen(!isPopupOpen);
+              }}
             />
           </div>
         </div>
@@ -361,7 +361,9 @@ export default function Login() {
       {/* 팝업 배경 */}
       {isPopupOpen && (
         <div
-          onClick={togglePopup}
+          onClick={() => {
+            setIsPopupOpen(!isPopupOpen);
+          }}
           style={{
             position: "fixed",
             top: 0,

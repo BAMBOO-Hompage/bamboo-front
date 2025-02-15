@@ -94,13 +94,13 @@ export default function Activity() {
           }}
           style={{
             width: "100%",
-            height: "1450px",
           }}
         >
           <div
             style={{
               position: "relative",
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 20px",
               height: "1300px",
               margin: "100px auto",
               display: "flex",
@@ -109,8 +109,8 @@ export default function Activity() {
             <div
               style={{
                 boxSizing: "border-box",
-                width: "180px",
-                height: "100%",
+                width: "clamp(120px, 20vw, 180px)",
+                minHeight: "100%",
                 borderRight: "1px solid #444",
                 textAlign: "left",
               }}
@@ -170,7 +170,7 @@ export default function Activity() {
               style={{
                 position: "relative",
                 width: "820px",
-                height: "100%",
+                minHeight: "100%",
                 textAlign: "left",
                 paddingLeft: "50px",
               }}
@@ -340,9 +340,10 @@ export default function Activity() {
 
               <div
                 style={{
-                  width: "770px",
-                  position: "absolute",
-                  bottom: "0",
+                  width: "100%",
+                  maxWidth: "770px",
+                  marginTop: "100px",
+                  paddingBottom: "100px",
                   display: "flex",
                   justifyContent: "center",
                 }}

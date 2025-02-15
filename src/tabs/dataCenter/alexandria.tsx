@@ -108,13 +108,13 @@ export default function Alexandria() {
           }}
           style={{
             width: "100%",
+            minHeight: "1000px",
           }}
         >
           <div
             style={{
               position: "relative",
               maxWidth: "1000px",
-              minHeight: "1300px",
               margin: "0 auto",
               marginTop: "100px",
               padding: "0 20px",

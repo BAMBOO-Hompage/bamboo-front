@@ -11,19 +11,6 @@ import PostPapersAPI from "../../api/library_posts/postPapersAPI.tsx";
 
 import "../../App.css";
 
-const tagData = [
-  "zero",
-  "zero_shot",
-  "ai",
-  "ml",
-  "dl",
-  "react",
-  "typescript",
-  "python",
-  "data",
-  "science",
-];
-
 export default function AlexandriaAdd() {
   const {
     register,

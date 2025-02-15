@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
-import LockedPageAuth from "../../components/lockedPageAuth.tsx";
+import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import "../../App.css";
 
@@ -25,7 +25,7 @@ export default function HallOfFame() {
             width: "100%",
           }}
         >
-          <LockedPageAuth />
+          <LockedPagePrepare />
         </motion.div>
 
         <BottomInfo />

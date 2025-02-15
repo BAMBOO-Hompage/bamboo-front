@@ -10,6 +10,7 @@ import BottomInfo from "../../components/bottomInfo.tsx";
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetNoticesAPI from "../../api/notices/getNoticesAPI.tsx";
 
+import SubjectData from "../../mockup_data/subject_data.tsx";
 import "../../App.css";
 
 const study_data = {
@@ -27,87 +28,7 @@ const study_data = {
   ],
 };
 
-const subject_data = {
-  subjectId: 1,
-  name: "PY",
-  isBook: true,
-  batch: 6,
-  weeklyContents: [
-    {
-      weeklyContentId: 1,
-      subjectName: "PY",
-      content: "OT(스터디 방식,개발환경 설정)",
-      week: 1,
-      startDate: [2025, 3, 11],
-      endDate: [2025, 3, 11],
-    },
-    {
-      weeklyContentId: 2,
-      subjectName: "PY",
-      content:
-        "01장 파이썬이란 무엇인가?02장 파이썬 프로그래밍의 기초, 자료형 -1",
-      week: 2,
-      startDate: [2025, 3, 18],
-      endDate: [2025, 3, 18],
-    },
-    {
-      weeklyContentId: 3,
-      subjectName: "PY",
-      content: "02장 파이썬 프로그래밍의 기초, 자료형 - 2",
-      week: 3,
-      startDate: [2025, 3, 25],
-      endDate: [2025, 3, 25],
-    },
-    {
-      weeklyContentId: 4,
-      subjectName: "PY",
-      content: "02장 파이썬 프로그래밍의 기초, 자료형 - 2",
-      week: 4,
-      startDate: [2025, 3, 25],
-      endDate: [2025, 3, 25],
-    },
-    {
-      weeklyContentId: 5,
-      subjectName: "PY",
-      content: "02장 파이썬 프로그래밍의 기초, 자료형 - 2",
-      week: 5,
-      startDate: [2025, 3, 25],
-      endDate: [2025, 3, 25],
-    },
-    {
-      weeklyContentId: 6,
-      subjectName: "PY",
-      content: "02장 파이썬 프로그래밍의 기초, 자료형 - 2",
-      week: 6,
-      startDate: [2025, 3, 25],
-      endDate: [2025, 3, 25],
-    },
-    {
-      weeklyContentId: 7,
-      subjectName: "PY",
-      content: "02장 파이썬 프로그래밍의 기초, 자료형 - 2",
-      week: 7,
-      startDate: [2025, 3, 25],
-      endDate: [2025, 3, 25],
-    },
-    {
-      weeklyContentId: 8,
-      subjectName: "PY",
-      content: "02장 파이썬 프로그래밍의 기초, 자료형 - 2",
-      week: 8,
-      startDate: [2025, 3, 25],
-      endDate: [2025, 3, 25],
-    },
-    {
-      weeklyContentId: 9,
-      subjectName: "PY",
-      content: "02장 파이썬 프로그래밍의 기초, 자료형 - 2",
-      week: 9,
-      startDate: [2025, 3, 25],
-      endDate: [2025, 3, 25],
-    },
-  ],
-};
+const subject_data = SubjectData()[0];
 
 type Post = {
   noticeId: number;

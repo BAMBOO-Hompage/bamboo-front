@@ -163,7 +163,8 @@ export default function PersonalInfo() {
           <div
             style={{
               position: "relative",
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 20px",
               minHeight: "570px",
               margin: "0 auto",
               marginTop: "100px",
@@ -174,7 +175,7 @@ export default function PersonalInfo() {
             <div
               style={{
                 boxSizing: "border-box",
-                width: "180px",
+                width: "clamp(120px, 20vw, 180px)",
                 minHeight: "100%",
                 borderRight: "1px solid #444",
                 textAlign: "left",
@@ -219,14 +220,25 @@ export default function PersonalInfo() {
                 >
                   회원 관리
                 </div>
-                <div className="side_tabs" onClick={() => {}}>
+                <div
+                  className="side_tabs"
+                  onClick={() => {
+                    window.location.href = "/curriculumManagement";
+                  }}
+                >
                   커리큘럼 관리
                 </div>
-                <div className="side_tabs" onClick={() => {}}>
+                <div
+                  className="side_tabs"
+                  onClick={() => {
+                    window.location.href = "/createStudy";
+                  }}
+                >
                   스터디 생성
                 </div>
               </div>
             </div>
+
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}

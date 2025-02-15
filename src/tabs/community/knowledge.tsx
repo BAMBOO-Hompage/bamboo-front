@@ -106,7 +106,7 @@ export default function Knoledge() {
             <div
               style={{
                 boxSizing: "border-box",
-                width: "180px",
+                width: "clamp(120px, 20vw, 180px)",
                 height: "100%",
                 borderRight: "1px solid #444",
                 textAlign: "left",

@@ -281,7 +281,7 @@ export default function SelfStudy() {
 
                 {study_data.map((item) => (
                   <Link
-                    to={`/studyPost?id=${item.id}`}
+                    to={`/studyPost?id=${item.id}&member=&week=1`}
                     style={{ textDecoration: "none" }}
                   >
                     <g
