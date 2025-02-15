@@ -66,8 +66,8 @@ const Snowfall = () => {
 
     // 눈송이 생성
     for (let i = 0; i < maxSnowflakes; i++) {
-      const size = Math.random() * 3 + 1;
-      const speed = Math.random() * 1 + 0.8;
+      const size = Math.random() * 3 + 1.5;
+      const speed = Math.random() * 2 + 1;
       const x = Math.random() * window.innerWidth;
       const y = Math.random() * window.innerHeight;
       snowflakes.push(new Snowflake(x, y, size, speed));

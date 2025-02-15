@@ -114,7 +114,7 @@ export default function Signup() {
 
             <div
               style={{
-                maxHeight: expandedSections[index] ? "500px" : "0",
+                maxHeight: expandedSections[index] ? "1000px" : "0",
                 overflow: "hidden",
                 transition: "max-height 1s ease",
                 backgroundColor: "#171717",

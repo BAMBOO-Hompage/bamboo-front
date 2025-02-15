@@ -372,7 +372,7 @@ export default function Introduction() {
               <br />
               <span
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Pretendard-Light",
                   fontSize: "16px",
                   color: "#999",
                 }}

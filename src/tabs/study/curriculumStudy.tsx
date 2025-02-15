@@ -169,12 +169,12 @@ export default function CurriculumStudy() {
                 <defs>
                   <filter
                     id="blurFilter"
-                    x="-250%"
-                    y="-250%"
-                    width="500%"
-                    height="500%"
+                    x="-300%"
+                    y="-300%"
+                    width="600%"
+                    height="600%"
                   >
-                    <feGaussianBlur stdDeviation="120" />
+                    <feGaussianBlur stdDeviation="110" />
                   </filter>
 
                   <mask id="hole-mask">

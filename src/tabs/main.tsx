@@ -135,7 +135,7 @@ export default function Main() {
             <br />
             <span
               style={{
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Pretendard-Light",
                 fontSize: "16px",
                 color: "#999",
               }}
@@ -297,7 +297,7 @@ export default function Main() {
               <br />
               <span
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Pretendard-Light",
                   fontSize: "16px",
                   color: "#999",
                 }}
@@ -606,7 +606,7 @@ export default function Main() {
               <br />
               <span
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Pretendard-Light",
                   fontSize: "16px",
                   color: "#999",
                 }}
