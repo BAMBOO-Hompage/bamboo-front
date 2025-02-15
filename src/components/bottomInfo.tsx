@@ -10,6 +10,7 @@ export default function BottomInfo() {
         padding: "30px 0",
         backgroundColor: "#2CC295",
         textAlign: "left",
+        zIndex: "99",
       }}
     >
       <div

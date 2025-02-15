@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
+import MobileBlocker from "../../components/mobileBlocker.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
@@ -44,7 +45,7 @@ const subject_data = {
       weeklyContentId: 2,
       subjectName: "PY",
       content:
-        "01장 파이썬이란 무엇인가?\n02장 파이썬 프로그래밍의 기초, 자료형 -1",
+        "01장 파이썬이란 무엇인가?02장 파이썬 프로그래밍의 기초, 자료형 -1",
       week: 2,
       startDate: [2025, 3, 18],
       endDate: [2025, 3, 18],
@@ -108,31 +109,40 @@ const subject_data = {
   ],
 };
 
+type Post = {
+  noticeId: number;
+  member: { studentId: string; name: string };
+  title: string;
+  content: string;
+  type: string;
+  images: string[];
+  files: string[];
+  comments: string[];
+  createdAt: number[];
+  updatedAt: number[];
+};
+
 const maxVisiblePages = 5;
 
 export default function StudyPost() {
   const [expandedSections, setExpandedSections] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = parseInt(searchParams.get("page") || "1", 10);
+  const currentPage = parseInt(searchParams.get("week") || "1", 10);
   const postList = searchParams.get("post") || "Weekly Best";
 
   const [checkAuth, setCheckAuth] = useState<number>(1);
-  const [postsToDisplay, setPostsToDisplay] = useState<Post[]>([]);
-  const [totalPages, setTotalPages] = useState<number>(1);
-
-  const startPage =
-    Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
-  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-  const changePage = (page: number) => {
-    if (page < 1) page = 1;
-    if (page > totalPages) page = totalPages;
-    setSearchParams({
-      post: postList,
-      page: page.toString(),
-      size: "8",
-    });
-  };
+  const [postData, setPostData] = useState<Post>({
+    noticeId: 0,
+    member: { studentId: "", name: "" },
+    title: "",
+    content: "",
+    type: "",
+    images: [],
+    files: [],
+    comments: [],
+    createdAt: [],
+    updatedAt: [],
+  });
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
@@ -147,6 +157,12 @@ export default function StudyPost() {
   }, []);
 
   useEffect(() => {
+    // GetPaperAPI(searchParams.get("id")).then((data) => {
+    //   setPaperData(data);
+    // });
+  }, [searchParams]);
+
+  useEffect(() => {
     // GetNoticesAPI(postList, currentPage).then((result) => {
     //   console.log(result.content);
     //   var noticeData = result.content;
@@ -159,6 +175,7 @@ export default function StudyPost() {
     <div>
       <Nav type="study" />
       <div className="background">
+        <MobileBlocker />
         <div
           style={{
             boxSizing: "border-box",
@@ -171,13 +188,14 @@ export default function StudyPost() {
         >
           <svg
             width="100%"
-            height="800px"
+            height="700px"
             viewBox="0 0 1000 1000"
             preserveAspectRatio="none"
             style={{
               maxWidth: "1000px",
               borderRadius: "20px",
               aspectRatio: "1 / 1",
+              overflow: "visible",
             }}
           >
             <defs>
@@ -393,8 +411,8 @@ export default function StudyPost() {
                 backgroundColor: "rgba(17, 16, 21, 0.5)",
                 borderTopLeftRadius: "0px",
                 borderTopRightRadius: "0px",
-                borderBottomLeftRadius: "15px",
-                borderBottomRightRadius: "15px",
+                borderBottomLeftRadius: "20px",
+                borderBottomRightRadius: "20px",
                 textAlign: "center",
               }}
             >
@@ -560,7 +578,7 @@ export default function StudyPost() {
                         onClick={() => {
                           setSearchParams({
                             post: category,
-                            page: "1",
+                            week: "1",
                             size: "8",
                           });
                         }}
@@ -612,7 +630,7 @@ export default function StudyPost() {
                             padding: "5px 15px",
                             backgroundColor:
                               curriculum.week.toString() ===
-                              searchParams.get("page")
+                              searchParams.get("week")
                                 ? "#2cc295"
                                 : "rgba(17, 16, 21, 0.5)",
                             borderRadius: "15px",
@@ -621,7 +639,7 @@ export default function StudyPost() {
                           onClick={() => {
                             setSearchParams({
                               post: postList,
-                              page: curriculum.week.toString(),
+                              week: curriculum.week.toString(),
                               size: "8",
                             });
                           }}
@@ -632,107 +650,52 @@ export default function StudyPost() {
                     })}
                   </div>
 
-                  <div style={{ margin: "40px 0 100px" }}>
-                    {postsToDisplay.length > 0 ? (
-                      postsToDisplay.map((post) => (
-                        <Link
-                          to={`/noticePost?id=${post.noticeId}`}
-                          key={post.noticeId}
-                          style={{
-                            textDecoration: "none",
-                            width: "100%",
-                            height: "110px",
-                            backgroundColor: "#222",
-                            border: "0.5px solid #343434",
-                            borderRadius: "30px",
-                            marginBottom: "30px",
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.border = "0.5px solid #777";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.border =
-                              "0.5px solid #343434";
-                          }}
-                        >
-                          <div style={{ width: "90%", margin: "0 auto" }}>
+                  <div style={{ margin: "10px 0 100px" }}>
+                    {subject_data.weeklyContents.map((curriculum) => {
+                      if (
+                        curriculum.week.toString() === searchParams.get("week")
+                      ) {
+                        return (
+                          <div
+                            key={curriculum.weeklyContentId}
+                            style={{
+                              maxHeight: "300px",
+                              padding: "20px",
+                              transition: "max-height 0.5s ease",
+                              backgroundColor: "rgba(17, 16, 21, 0.5)",
+                              borderRadius: "20px",
+                              textAlign: "left",
+                            }}
+                          >
                             <div
                               style={{
-                                marginBottom: "5px",
-                                fontFamily: "Pretendard-Regular",
-                                fontSize: "15px",
-                                color: "#2CC295",
+                                fontFamily: "Pretendard-SemiBold",
+                                fontSize: "clamp(14px, 2vw, 18px)",
+                                color: "#2cc295",
                               }}
                             >
-                              {post.type}
+                              📖 {curriculum.week}주차 학습내용
                             </div>
                             <div
                               style={{
-                                marginBottom: "5px",
-                                fontFamily: "Pretendard-SemiBold",
-                                fontSize: "18px",
+                                marginTop: "5px",
+                                fontFamily: "Pretendard-Light",
+                                fontSize: "clamp(14px, 2vw, 18px)",
                                 color: "#fff",
                               }}
                             >
-                              {post.title}
-                            </div>
-                            <div
-                              style={{
-                                fontFamily: "Pretendard-Regular",
-                                fontSize: "15px",
-                                color: "#888",
-                              }}
-                            >
-                              작성자: {post.member.name}
-                              &emsp; 작성 일자:{" "}
-                              {post.createdAt[0] +
-                                "/" +
-                                post.createdAt[1] +
-                                "/" +
-                                post.createdAt[2] +
-                                " " +
-                                post.createdAt[3] +
-                                ":" +
-                                post.createdAt[4] +
-                                ":" +
-                                post.createdAt[5]}
+                              {curriculum.content}
                             </div>
                           </div>
-                        </Link>
-                      ))
-                    ) : (
-                      <div
-                        style={{
-                          color: "#fff",
-                          fontFamily: "Pretendard-Light",
-                          fontSize: "18px",
-                          textAlign: "center",
-                          padding: "50px 40px",
-                        }}
-                      >
-                        게시물이 없습니다.
-                      </div>
-                    )}
+                        );
+                      } else {
+                        return <></>;
+                      }
+                    })}
                   </div>
                 </motion.div>
               </div>
             </motion.div>
-
-            <div
-              style={{
-                boxSizing: "border-box",
-                width: "100%",
-                marginTop: "20px",
-                padding: "20px 30px",
-                borderRadius: "20px",
-                backgroundColor: "rgba(17, 16, 21, 0.5)",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            ></div>
           </div>
         </motion.div>
 

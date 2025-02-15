@@ -40,10 +40,9 @@ export default function CurriculumStudy() {
             style={{
               position: "relative",
               maxWidth: "1000px",
-              minHeight: "1000px",
               margin: "0 auto",
               marginTop: "100px",
-              marginBottom: "150px",
+              marginBottom: "100px",
               padding: "0 20px",
               textAlign: "left",
             }}
@@ -154,7 +153,6 @@ export default function CurriculumStudy() {
                 boxSizing: "border-box",
                 width: "100%",
                 marginTop: "50px",
-                minHeight: "1000px",
                 position: "relative",
               }}
             >
@@ -180,253 +178,60 @@ export default function CurriculumStudy() {
                   <mask id="hole-mask">
                     <rect x="0" y="0" width="1000" height="1000" fill="#fff" />
 
-                    <rect x="0" y="0" width="95" height="190" rx="20" ry="20" />
-                    <rect x="0" y="0" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="0"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="0"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="0"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="0"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="0"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="0" width="20" height="190" />
-
-                    <rect
-                      x="0"
-                      y="200"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="0" y="200" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="200"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="200"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="200"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="200"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="200"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="200" width="20" height="190" />
-
-                    <rect
-                      x="0"
-                      y="400"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="0" y="400" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="400"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="400"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="400"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="400"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="400"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="400" width="20" height="190" />
-
-                    <rect
-                      x="0"
-                      y="600"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="0" y="600" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="600"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="600"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="600"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="600"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="600"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="600" width="20" height="190" />
-
-                    <rect
-                      x="0"
-                      y="800"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="0" y="800" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="800"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="800"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="800"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="800"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="800"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="800" width="20" height="190" />
+                    {[...Array(5)].map((_, row) => (
+                      <>
+                        <rect
+                          x="0"
+                          y={row * 200}
+                          width="95"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect x="0" y={row * 200} width="20" height="190" />
+                        <rect
+                          x="105"
+                          y={row * 200}
+                          width="190"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect
+                          x="305"
+                          y={row * 200}
+                          width="190"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect
+                          x="505"
+                          y={row * 200}
+                          width="190"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect
+                          x="705"
+                          y={row * 200}
+                          width="190"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect
+                          x="905"
+                          y={row * 200}
+                          width="95"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect x="980" y={row * 200} width="20" height="190" />
+                      </>
+                    ))}
                   </mask>
                 </defs>
                 {[
@@ -453,7 +258,6 @@ export default function CurriculumStudy() {
                   height="1000"
                   fill="#111015"
                   style={{
-                    minHeight: "1000px",
                     mask: "url(#hole-mask)",
                   }}
                 />
@@ -472,7 +276,7 @@ export default function CurriculumStudy() {
 
                 {study_data.map((item) => (
                   <Link
-                    to={`/studyPost?id=${item.id}`}
+                    to={`/studyPost?id=${item.id}&member=&week=1`}
                     style={{ textDecoration: "none" }}
                   >
                     <g

@@ -158,368 +158,103 @@ export default function SelfStudy() {
                 boxSizing: "border-box",
                 width: "100%",
                 marginTop: "50px",
-                minHeight: "1000px",
-                borderRadius: "30px",
                 position: "relative",
               }}
             >
               <svg
                 width="100%"
-                height="1000px" // 높이를 고정
                 viewBox="0 0 1000 1000"
                 preserveAspectRatio="none"
                 style={{
-                  borderRadius: "30px",
+                  aspectRatio: "1 / 1",
                 }}
               >
                 <defs>
                   <filter
                     id="blurFilter"
-                    x="-250%"
-                    y="-250%"
-                    width="500%"
-                    height="500%"
+                    x="-300%"
+                    y="-300%"
+                    width="600%"
+                    height="600%"
                   >
-                    <feGaussianBlur stdDeviation="120" />
+                    <feGaussianBlur stdDeviation="110" />
                   </filter>
 
                   <mask id="hole-mask">
                     <rect x="0" y="0" width="1000" height="1000" fill="#fff" />
 
-                    <rect x="0" y="0" width="95" height="190" rx="20" ry="20" />
-                    <rect x="0" y="0" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="0"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="0"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="0"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="0"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="0"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="0" width="20" height="190" />
-
-                    <rect
-                      x="0"
-                      y="200"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="0" y="200" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="200"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="200"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="200"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="200"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="200"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="200" width="20" height="190" />
-
-                    <rect
-                      x="0"
-                      y="400"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="0" y="400" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="400"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="400"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="400"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="400"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="400"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="400" width="20" height="190" />
-
-                    <rect
-                      x="0"
-                      y="600"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="0" y="600" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="600"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="600"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="600"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="600"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="600"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="600" width="20" height="190" />
-
-                    <rect
-                      x="0"
-                      y="800"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="0" y="800" width="20" height="190" />
-                    <rect
-                      x="105"
-                      y="800"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="305"
-                      y="800"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="505"
-                      y="800"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="705"
-                      y="800"
-                      width="190"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect
-                      x="905"
-                      y="800"
-                      width="95"
-                      height="190"
-                      rx="20"
-                      ry="20"
-                    />
-                    <rect x="980" y="800" width="20" height="190" />
+                    {[...Array(5)].map((_, row) => (
+                      <>
+                        <rect
+                          x="0"
+                          y={row * 200}
+                          width="95"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect x="0" y={row * 200} width="20" height="190" />
+                        <rect
+                          x="105"
+                          y={row * 200}
+                          width="190"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect
+                          x="305"
+                          y={row * 200}
+                          width="190"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect
+                          x="505"
+                          y={row * 200}
+                          width="190"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect
+                          x="705"
+                          y={row * 200}
+                          width="190"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect
+                          x="905"
+                          y={row * 200}
+                          width="95"
+                          height="190"
+                          rx="20"
+                          ry="20"
+                        />
+                        <rect x="980" y={row * 200} width="20" height="190" />
+                      </>
+                    ))}
                   </mask>
                 </defs>
-                <circle
-                  cx="150"
-                  cy="220"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="150"
-                  cy="720"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="650"
-                  cy="600"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="650"
-                  cy="750"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="650"
-                  cy="900"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="330"
-                  cy="950"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="550"
-                  cy="50"
-                  r="70"
-                  fill="#2CC295"
-                  filter="url(#blurFilter)"
-                />
-
-                <circle
-                  cx="440"
-                  cy="280"
-                  r="90"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="850"
-                  cy="150"
-                  r="70"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="200"
-                  cy="850"
-                  r="70"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="300"
-                  cy="550"
-                  r="60"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
-                <circle
-                  cx="800"
-                  cy="500"
-                  r="100"
-                  fill="#297FB8"
-                  filter="url(#blurFilter)"
-                />
+                {[
+                  { cx: 150, cy: 220, r: 70, fill: "#2CC295" },
+                  { cx: 150, cy: 720, r: 70, fill: "#2CC295" },
+                  { cx: 650, cy: 600, r: 70, fill: "#2CC295" },
+                  { cx: 650, cy: 750, r: 70, fill: "#2CC295" },
+                  { cx: 650, cy: 900, r: 70, fill: "#2CC295" },
+                  { cx: 330, cy: 950, r: 70, fill: "#2CC295" },
+                  { cx: 550, cy: 50, r: 70, fill: "#2CC295" },
+                  { cx: 440, cy: 280, r: 90, fill: "#297FB8" },
+                  { cx: 850, cy: 150, r: 70, fill: "#297FB8" },
+                  { cx: 200, cy: 850, r: 70, fill: "#297FB8" },
+                  { cx: 300, cy: 550, r: 60, fill: "#297FB8" },
+                  { cx: 800, cy: 500, r: 100, fill: "#297FB8" },
+                ].map((circle, index) => (
+                  <circle key={index} {...circle} filter="url(#blurFilter)" />
+                ))}
 
                 <rect
                   x="0"
@@ -528,7 +263,6 @@ export default function SelfStudy() {
                   height="1000"
                   fill="#111015"
                   style={{
-                    minHeight: "1000px",
                     mask: "url(#hole-mask)",
                   }}
                 />
@@ -546,41 +280,45 @@ export default function SelfStudy() {
                 </text>
 
                 {study_data.map((item) => (
-                  <g
-                    key={item.id}
-                    transform="scale(1)"
-                    onMouseEnter={() => setStudyHovered(item.id)}
-                    onMouseLeave={() => setStudyHovered(null)}
-                    onClick={() => handleClick(item.id)}
+                  <Link
+                    to={`/studyPost?id=${item.id}`}
+                    style={{ textDecoration: "none" }}
                   >
-                    <rect
-                      x={item.x}
-                      y={item.y}
-                      width={item.width}
-                      height={item.height}
-                      fill={
-                        studyHovered === item.id
-                          ? "rgba(255, 255, 255, 0.2)"
-                          : "transparent"
-                      }
-                      stroke={studyHovered === item.id ? "#777" : "none"}
-                      strokeWidth="3"
-                      rx="20"
-                      ry="20"
-                      cursor="pointer"
-                    />
-                    <text
-                      x={item.x + 30}
-                      y={item.y + 40}
-                      fontFamily="Pretendard-Regular"
-                      fontSize="20px"
-                      fill="white"
-                      alignmentBaseline="hanging"
-                      cursor="pointer"
+                    <g
+                      key={item.id}
+                      transform="scale(1)"
+                      onMouseEnter={() => setStudyHovered(item.id)}
+                      onMouseLeave={() => setStudyHovered(null)}
                     >
-                      {`PY_${item.id}`}
-                    </text>
-                  </g>
+                      <rect
+                        x={item.x}
+                        y={item.y}
+                        width={item.width}
+                        height={item.height}
+                        fill={
+                          studyHovered === item.id
+                            ? "rgba(255, 255, 255, 0.2)"
+                            : "transparent"
+                        }
+                        stroke={studyHovered === item.id ? "#777" : "none"}
+                        strokeWidth="3"
+                        rx="20"
+                        ry="20"
+                        cursor="pointer"
+                      />
+                      <text
+                        x={item.x + 30}
+                        y={item.y + 40}
+                        fontFamily="Pretendard-Regular"
+                        fontSize="20px"
+                        fill="white"
+                        alignmentBaseline="hanging"
+                        cursor="pointer"
+                      >
+                        {`PY_${item.id}`}
+                      </text>
+                    </g>
+                  </Link>
                 ))}
               </svg>
             </div>
