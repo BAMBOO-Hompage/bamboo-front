@@ -167,7 +167,7 @@ export default function Signup() {
           paddingTop: "20vh",
           marginBottom: "60px",
           fontFamily: "Pretendard-ExtraBold",
-          fontSize: "35px",
+          fontSize: "clamp(26px, 3.8vw, 30px)",
         }}
       >
         회원가입
@@ -201,7 +201,7 @@ export default function Signup() {
                 style={{
                   display: "inline-block",
                   fontFamily: "Pretendard-Regular",
-                  fontSize: "18px",
+                  fontSize: "clamp(14px, 2vw, 18px)",
                   color: "#fff",
                   width: "120px",
                   minWidth: "70px",
@@ -451,7 +451,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",
@@ -545,7 +545,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",
@@ -637,7 +637,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",
@@ -726,7 +726,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",
@@ -746,7 +746,7 @@ export default function Signup() {
                     backgroundColor: "transparent",
                     border: "none",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: selectedMajor === "학과 선택" ? "#777" : "#fff",
                     cursor: "pointer",
                   }}
@@ -889,7 +889,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "18px",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",

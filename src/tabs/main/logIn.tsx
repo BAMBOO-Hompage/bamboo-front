@@ -161,7 +161,7 @@ export default function Login() {
                 <div
                   style={{
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "clamp(14px, 1.8vw, 16px)",
+                    fontSize: "clamp(14px, 2vw, 16px)",
                     color: "#777",
                     marginRight: "20px",
                   }}

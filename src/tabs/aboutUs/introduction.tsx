@@ -150,7 +150,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "clamp(14px, 1.8vw, 18px)",
+                fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
               학년별 및 실력별
@@ -168,7 +168,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "clamp(14px, 1.8vw, 18px)",
+                fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
               선후배 간의
@@ -186,7 +186,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "clamp(14px, 1.8vw, 18px)",
+                fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
               학습 자료 및
@@ -204,7 +204,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "clamp(14px, 1.8vw, 18px)",
+                fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
               다양한 대회
@@ -222,7 +222,7 @@ export default function Introduction() {
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Pretendard-Light",
-                fontSize: "clamp(14px, 1.8vw, 18px)",
+                fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
               졸업 선배들과의

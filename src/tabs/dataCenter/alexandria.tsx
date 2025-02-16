@@ -225,7 +225,7 @@ export default function Alexandria() {
                 </div>
                 <div
                   style={{
-                    maxWidth: "200px",
+                    maxWidth: "2550px",
                     height: "40px",
                     borderRadius: "0 20px 20px 0",
                     backgroundColor: "#111015",

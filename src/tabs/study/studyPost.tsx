@@ -232,7 +232,7 @@ export default function StudyPost() {
                 <div
                   style={{
                     fontFamily: "Pretendard-Light",
-                    fontSize: "clamp(16px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#2cc295",
                     marginBottom: "10px",
                   }}
@@ -242,7 +242,7 @@ export default function StudyPost() {
                 <div
                   style={{
                     fontFamily: "Pretendard-Light",
-                    fontSize: "clamp(16px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     marginBottom: "10px",
                     display: "flex",
@@ -253,7 +253,7 @@ export default function StudyPost() {
                 <div
                   style={{
                     fontFamily: "Pretendard-Light",
-                    fontSize: "clamp(16px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     marginBottom: "10px",
                     display: "flex",
@@ -264,7 +264,7 @@ export default function StudyPost() {
                 <div
                   style={{
                     fontFamily: "Pretendard-Light",
-                    fontSize: "clamp(16px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     display: "flex",
                     alignItems: "flex-start",
@@ -302,7 +302,7 @@ export default function StudyPost() {
               <div
                 style={{
                   fontFamily: "Pretendard-Light",
-                  fontSize: "clamp(16px, 2vw, 18px)",
+                  fontSize: "clamp(14px, 2vw, 18px)",
                   color: "#2cc295",
                 }}
               >

@@ -414,7 +414,7 @@ export default function AlexandriaPost() {
                     <textarea
                       style={{
                         fontFamily: "Pretendard-Light",
-                        fontSize: "clamp(14px, 1.8vw, 16px)",
+                        fontSize: "clamp(14px, 2vw, 16px)",
                         color: "#fff",
                         width: "100%",
                         height: "100%",
@@ -535,7 +535,7 @@ export default function AlexandriaPost() {
                     <div
                       style={{
                         fontFamily: "Pretendard-ExtraLight",
-                        fontSize: "clamp(14px, 1.8vw, 16px)",
+                        fontSize: "clamp(14px, 2vw, 16px)",
                         color: "#fff",
                         width: "100%",
                         border: "none",

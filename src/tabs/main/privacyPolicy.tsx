@@ -43,7 +43,7 @@ export default function Signup() {
             paddingTop: "15vh",
             marginBottom: "25px",
             fontFamily: "Pretendard-Bold",
-            fontSize: "30px",
+            fontSize: "clamp(24px, 3.5vw, 30px)",
             color: "#2cc295",
           }}
         >
@@ -53,7 +53,7 @@ export default function Signup() {
           style={{
             marginBottom: "20px",
             fontFamily: "Pretendard-Light",
-            fontSize: "16px",
+            fontSize: "clamp(14px, 2vw, 16px)",
             color: "#fff",
             lineHeight: "1.6",
           }}
@@ -75,7 +75,7 @@ export default function Signup() {
             <div
               style={{
                 backgroundColor: "#171717",
-                padding: "22px 40px",
+                padding: "22px 30px",
                 borderTopLeftRadius: "15px",
                 borderTopRightRadius: "15px",
                 borderBottomLeftRadius: expandedSections[index] ? "0" : "15px",
@@ -90,7 +90,7 @@ export default function Signup() {
               <div
                 style={{
                   fontFamily: "Pretendard-Regular",
-                  fontSize: "18px",
+                  fontSize: "clamp(14px, 2vw, 18px)",
                   color: "#fff",
                 }}
               >
@@ -118,13 +118,13 @@ export default function Signup() {
                 overflow: "hidden",
                 transition: "max-height 1s ease",
                 backgroundColor: "#171717",
-                padding: expandedSections[index] ? "20px 40px 30px" : "0 40px",
+                padding: expandedSections[index] ? "20px 30px 30px" : "0 30px",
                 borderTopLeftRadius: "0px",
                 borderTopRightRadius: "0px",
                 borderBottomLeftRadius: "15px",
                 borderBottomRightRadius: "15px",
                 fontFamily: "Pretendard-Light",
-                fontSize: "16px",
+                fontSize: "clamp(14px, 2vw, 16px)",
                 color: "#fff",
                 lineHeight: "1.5",
                 textAlign: "left",

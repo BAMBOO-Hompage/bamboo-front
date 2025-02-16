@@ -732,7 +732,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "clamp(16px, 2vw, 22px)",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -763,7 +763,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "clamp(16px, 2vw, 22px)",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -794,7 +794,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "clamp(16px, 2vw, 22px)",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -825,7 +825,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "clamp(16px, 2vw, 22px)",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -895,7 +895,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "clamp(16px, 2vw, 22px)",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -926,7 +926,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "clamp(16px, 2vw, 22px)",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -957,7 +957,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "clamp(16px, 2vw, 22px)",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -988,7 +988,7 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "clamp(16px, 2vw, 22px)",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
@@ -1309,7 +1309,7 @@ export default function JoinUs(props: JoinUsProps) {
                   style={{
                     color: "#fff",
                     fontFamily: "Pretendard-Bold",
-                    fontSize: "clamp(24px, 3vw, 30px)",
+                    fontSize: "clamp(24px, 3.5vw, 30px)",
                     marginBottom: "10px",
                   }}
                 >
@@ -1319,7 +1319,7 @@ export default function JoinUs(props: JoinUsProps) {
                   style={{
                     color: "#777",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "clamp(16px, 1.8vw, 18px)",
+                    fontSize: "clamp(14px, 2vw, 18px)",
                     lineHeight: "2",
                   }}
                 >
