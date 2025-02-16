@@ -201,7 +201,7 @@ export default function Signup() {
                 style={{
                   display: "inline-block",
                   fontFamily: "Pretendard-Regular",
-                  fontSize: "clamp(14px, 2vw, 18px)",
+                  fontSize: "clamp(14px, 2.2vw, 18px)",
                   color: "#fff",
                   width: "120px",
                   minWidth: "70px",
@@ -230,7 +230,7 @@ export default function Signup() {
                   width: "100%",
                   maxWidth: "160px",
                   height: "30px",
-                  marginLeft: "20px",
+                  marginLeft: "10px",
                   color: checkedEmail ? "#777" : "#fff",
                 }}
               />
@@ -451,7 +451,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "clamp(14px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",
@@ -477,7 +477,7 @@ export default function Signup() {
                     width: "100%",
                     maxWidth: errorsSignUp.Password ? "290px" : "320px",
                     height: "30px",
-                    margin: "0 20px",
+                    margin: "0 20px 0 10px",
                   }}
                 />
                 {errorsSignUp.Password ? (
@@ -545,7 +545,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "clamp(14px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",
@@ -569,7 +569,7 @@ export default function Signup() {
                     width: "100%",
                     maxWidth: errorsSignUp.RePassword ? "290px" : "320px",
                     height: "30px",
-                    margin: "0 20px",
+                    margin: "0 20px 0 10px",
                   }}
                 />
                 {errorsSignUp.RePassword ? (
@@ -637,7 +637,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "clamp(14px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",
@@ -658,7 +658,7 @@ export default function Signup() {
                     width: "100%",
                     maxWidth: errorsSignUp.Name ? "290px" : "320px",
                     height: "30px",
-                    margin: "0 20px",
+                    margin: "0 20px 0 10px",
                   }}
                 />
                 {errorsSignUp.Name ? (
@@ -726,7 +726,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "clamp(14px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",
@@ -741,12 +741,12 @@ export default function Signup() {
                   style={{
                     width: "100%",
                     maxWidth: errorsSignUp.Major ? "290px" : "320px",
-                    margin: "0 20px",
+                    margin: "0 20px 0 10px",
                     height: "40px",
                     backgroundColor: "transparent",
                     border: "none",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "clamp(14px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: selectedMajor === "학과 선택" ? "#777" : "#fff",
                     cursor: "pointer",
                   }}
@@ -889,7 +889,7 @@ export default function Signup() {
                   style={{
                     display: "inline-block",
                     fontFamily: "Pretendard-Regular",
-                    fontSize: "clamp(14px, 2vw, 18px)",
+                    fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
                     minWidth: "70px",
@@ -919,7 +919,7 @@ export default function Signup() {
                     width: "100%",
                     maxWidth: errorsSignUp.PhoneNum ? "290px" : "320px",
                     height: "30px",
-                    margin: "0 20px",
+                    margin: "0 20px 0 10px",
                   }}
                 />
                 {errorsSignUp.PhoneNum ? (

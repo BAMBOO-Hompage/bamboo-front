@@ -66,13 +66,13 @@ input {
   border: none;
   background-color: transparent;
   font-family: Pretendard-Light;
-  font-size: 18px;
+  font-size: clamp(14px, 2.2vw, 18px);
   color: #fff;
   outline: none;
 }
 input::placeholder {
   font-family: Pretendard-Light;
-  font-size: 18px;
+  font-size: clamp(14px, 2.2vw, 18px);
   color: #777;
 }
 textarea::placeholder {
