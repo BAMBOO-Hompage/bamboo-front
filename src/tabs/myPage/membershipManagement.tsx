@@ -231,10 +231,10 @@ export default function PersonalInfo() {
                 <div
                   className="side_tabs"
                   onClick={() => {
-                    window.location.href = "/createStudy";
+                    window.location.href = "/studyManagement";
                   }}
                 >
-                  스터디 생성
+                  스터디 관리
                 </div>
               </div>
             </div>

@@ -397,7 +397,7 @@ export default function Nav(props: NavProps) {
               <div className="hamburger_tabs">명예의 전당</div>
             </Link>
             <Link to="/hallOfFame" style={{ textDecoration: "none" }}>
-              <div className="hamburger_tabs">운영진</div>
+              <div className="hamburger_tabs">역대 운영진</div>
             </Link>
           </div>
         </div>

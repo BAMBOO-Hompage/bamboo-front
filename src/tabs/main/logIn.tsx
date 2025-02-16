@@ -274,7 +274,7 @@ export default function Login() {
             <div
               style={{
                 fontFamily: "Pretendard-Regular",
-                fontSize: "15px",
+                fontSize: "14px",
                 color: "#777",
                 cursor: "pointer",
               }}
@@ -296,7 +296,7 @@ export default function Login() {
               href="/privacyPolicy"
               style={{
                 fontFamily: "Pretendard-Regular",
-                fontSize: "15px",
+                fontSize: "14px",
                 color: "#777",
                 textDecorationLine: "none",
               }}

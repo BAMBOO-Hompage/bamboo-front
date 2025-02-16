@@ -23,7 +23,7 @@ type Members = {
   role: string;
 };
 
-export default function CreateStudy() {
+export default function StudyManagement() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (
@@ -117,11 +117,53 @@ export default function CreateStudy() {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
-                  스터디 생성
+                  스터디 관리
                 </div>
               </div>
             </div>
-            <LockedPagePrepare />
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              transition={{
+                ease: "easeInOut",
+                duration: 0.5,
+                y: { duration: 0.5 },
+              }}
+              style={{
+                position: "relative",
+                width: "100%",
+                maxWidth: "820px",
+                minHeight: "100%",
+                textAlign: "left",
+                paddingLeft: "clamp(20px, 4vw, 50px)",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "Pretendard-Bold",
+                    fontSize: "30px",
+                    color: "#fff",
+                  }}
+                >
+                  스터디 관리
+                  <span
+                    style={{
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "12px",
+                      color: "#FF5005",
+                    }}
+                  >
+                    test 기간동안만 개방합니다. (활동 종료 제한)
+                  </span>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>

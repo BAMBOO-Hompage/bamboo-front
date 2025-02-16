@@ -92,11 +92,31 @@ export default function StudyPost() {
     //   console.log(postsToDisplay, totalPages);
     // });
   }, [postList, currentPage]);
+
+  // 모바일 제한
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 600);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (isMobile)
+    return (
+      <div>
+        <Nav type="study" />
+        <MobileBlocker />
+      </div>
+    );
+
   return (
     <div>
       <Nav type="study" />
       <div className="background">
-        <MobileBlocker />
         <div
           style={{
             boxSizing: "border-box",

@@ -10,7 +10,7 @@ import Main from "./tabs/main.tsx";
 import PersonalInfo from "./tabs/myPage/personalInfo.tsx";
 import MembershipManagement from "./tabs/myPage/membershipManagement.tsx";
 import CurriculumManagement from "./tabs/myPage/curriculumManagement.tsx";
-import CreateStudy from "./tabs/myPage/createStudy.tsx";
+import StudyManagement from "./tabs/myPage/studyManagement.tsx";
 
 import Introduction from "./tabs/aboutUs/introduction.tsx";
 import Activity from "./tabs/aboutUs/activity.tsx";
@@ -60,7 +60,7 @@ function App() {
             path="/curriculumManagement"
             element={<CurriculumManagement />}
           />
-          <Route path="/createStudy" element={<CreateStudy />} />
+          <Route path="/studyManagement" element={<StudyManagement />} />
 
           <Route path="/introduction" element={<Introduction />} />
           <Route path="/joinUs" element={<JoinUs type="inPeriod" />} />
