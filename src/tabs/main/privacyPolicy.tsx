@@ -43,7 +43,7 @@ export default function Signup() {
             paddingTop: "15vh",
             marginBottom: "25px",
             fontFamily: "Pretendard-Bold",
-            fontSize: "clamp(24px, 3.5vw, 30px)",
+            fontSize: "clamp(24px, 3.8vw, 30px)",
             color: "#2cc295",
           }}
         >

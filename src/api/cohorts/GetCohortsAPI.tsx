@@ -3,63 +3,60 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function postNotices(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/notices", {
-    method: "POST",
+async function GetCohorts(accessToken) {
+  return fetch(`${API_SERVER_DOMAIN}/api/cohorts/all`, {
+    method: "GET",
     headers: {
       Authorization: "Bearer " + accessToken,
     },
-    body: formData,
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to post activies");
+      throw new Error("Failed to logout");
     }
     return response.json();
   });
 }
 
-export default async function PostNoticesAPI(formData) {
+export default async function GetCohortsAPI() {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
-      await postNotices(accessToken, formData);
+      let data = await GetCohorts(accessToken);
+      console.log(data.result);
 
-      alert("작성 완료");
-      window.location.href = "/notice?post=전체&page=1&size=8";
+      return data.result;
     } catch (error) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
 
-          const newAccessToken = await getAccessTokenWithRefreshToken(
+          let newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
-          await postNotices(newAccessToken, formData);
+          let data = await GetCohorts(newAccessToken);
+          console.log(data.result);
 
-          alert("작성 완료");
-          window.location.href = "/nitice?post=전체&page=1&size=8";
+          return data.result;
         } catch (error) {
-          console.error("Failed to refresh accessToken: ", error);
-          alert("다시 로그인 해주세요.");
+          console.error("Failed to refresh access token:", error);
+          alert("다시 로그인해주세요.");
           removeCookie("accessToken");
           removeCookie("refreshToken");
           window.location.href = "/";
         }
       } else {
+        console.error("No RefreshToken");
         alert("다시 로그인 해주세요.");
         removeCookie("accessToken");
         window.location.href = "/";
       }
     }
   } else {
+    console.error("No AccessToken");
     alert("다시 로그인 해주세요.");
-    removeCookie("refreshToken");
     window.location.href = "/";
   }
 }

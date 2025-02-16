@@ -3,13 +3,18 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function postNotices(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/notices", {
+async function postCohorts(accessToken, batch, year, isFirstSemester) {
+  return fetch(API_SERVER_DOMAIN + "/api/cohorts", {
     method: "POST",
     headers: {
+      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    body: formData,
+    body: JSON.stringify({
+      batch: batch,
+      year: year,
+      isFirstSemester: isFirstSemester,
+    }),
   }).then((response) => {
     if (!response.ok) {
       throw new Error("Failed to post activies");
@@ -18,19 +23,16 @@ async function postNotices(accessToken, formData) {
   });
 }
 
-export default async function PostNoticesAPI(formData) {
+export default async function PostCohortsAPI(batch, year, isFirstSemester) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
-      await postNotices(accessToken, formData);
+      await postCohorts(accessToken, batch, year, isFirstSemester);
 
-      alert("작성 완료");
-      window.location.href = "/notice?post=전체&page=1&size=8";
+      alert("새로운 기수의 시작!");
+      window.location.reload();
     } catch (error) {
       if (refreshToken) {
         try {
@@ -40,10 +42,10 @@ export default async function PostNoticesAPI(formData) {
             accessToken,
             refreshToken
           );
-          await postNotices(newAccessToken, formData);
+          await postCohorts(newAccessToken, batch, year, isFirstSemester);
 
-          alert("작성 완료");
-          window.location.href = "/nitice?post=전체&page=1&size=8";
+          alert("새로운 기수의 시작!");
+          window.location.reload();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

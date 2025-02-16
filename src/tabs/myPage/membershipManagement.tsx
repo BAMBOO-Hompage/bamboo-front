@@ -531,7 +531,7 @@ export default function PersonalInfo() {
                         justifyContent: "center",
                       }}
                     >
-                      {member.name}
+                      {member.name.slice(0, 1)}* {member.name.slice(2, 3)}
                     </div>
                     <div
                       style={{
@@ -542,8 +542,9 @@ export default function PersonalInfo() {
                         justifyContent: "center",
                       }}
                     >
-                      {member.phone.slice(0, 3)}-{member.phone.slice(3, 7)}-
-                      {member.phone.slice(7, 11)}
+                      010-1234-5678
+                      {/* {member.phone.slice(0, 3)}-{member.phone.slice(3, 7)}-
+                      {member.phone.slice(7, 11)} */}
                     </div>
                   </div>
                 ))}

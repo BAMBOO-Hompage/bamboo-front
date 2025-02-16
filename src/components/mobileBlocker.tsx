@@ -19,7 +19,7 @@ const MobileBlocker = () => {
       <div
         style={{
           fontFamily: "Pretendard-Bold",
-          fontSize: "clamp(24px, 3.5vw, 30px)",
+          fontSize: "clamp(24px, 3.8vw, 30px)",
           marginBottom: "20px",
         }}
       >
