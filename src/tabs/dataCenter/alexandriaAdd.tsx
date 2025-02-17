@@ -7,7 +7,7 @@ import Button from "../../components/button.tsx";
 import ReactEditor from "../../components/ReactEditor.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
-import PostPapersAPI from "../../api/library_posts/postPapersAPI.tsx";
+import PostPapersAPI from "../../api/library-posts/postPapersAPI.tsx";
 
 import "../../App.css";
 

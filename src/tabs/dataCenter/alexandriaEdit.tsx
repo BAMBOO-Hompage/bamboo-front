@@ -7,7 +7,7 @@ import MDEditor from "@uiw/react-md-editor";
 import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
-import AlexandriaData from "../../mockup_data/alexandria_data.tsx";
+
 import "../../App.css";
 
 export default function AlexandriaEdit() {

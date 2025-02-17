@@ -3,69 +3,64 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function GetSubjects(accessToken, isBook, batch) {
-  const params = new URLSearchParams();
-
-  if (isBook && isBook.trim()) {
-    params.append("커리큘럼 유무", isBook.trim());
-  }
-  params.append("기수", batch.toString());
-  console.log(params.toString());
-
-  return fetch(`${API_SERVER_DOMAIN}/api/subjects?${params.toString()}`, {
-    method: "GET",
+async function patchCohorts(accessToken, cohortId, status) {
+  return fetch(API_SERVER_DOMAIN + `/api/cohorts/${cohortId}`, {
+    method: "PATCH",
     headers: {
+      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
+    body: JSON.stringify({
+      status: status,
+    }),
   }).then((response) => {
+    console.log(response);
     if (!response.ok) {
-      throw new Error("Failed to logout");
+      throw new Error("Failed to patch password");
     }
     return response.json();
   });
 }
 
-export default async function GetSubjectsAPI(isBook, batch) {
+export default async function PatchCohortsAPI(cohortId, status) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      console.log(isBook, batch);
-      let data = await GetSubjects(accessToken, isBook, batch);
-      console.log(data.result);
+      await patchCohorts(accessToken, cohortId, status);
 
-      return data.result;
+      return;
     } catch (error) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
 
-          let newAccessToken = await getAccessTokenWithRefreshToken(
+          const newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
-          let data = await GetSubjects(newAccessToken, isBook, batch);
-          console.log(data.result);
+          console.log(newAccessToken);
 
-          return data.result;
+          await patchCohorts(accessToken, cohortId, status);
+
+          return;
         } catch (error) {
-          console.error("Failed to refresh access token:", error);
-          alert("다시 로그인해주세요.");
+          console.error("Failed to refresh accessToken: ", error);
+          alert("다시 로그인 해주세요.");
           removeCookie("accessToken");
           removeCookie("refreshToken");
           window.location.href = "/";
         }
       } else {
-        console.error("No RefreshToken");
         alert("다시 로그인 해주세요.");
         removeCookie("accessToken");
         window.location.href = "/";
       }
     }
   } else {
-    console.error("No AccessToken");
     alert("다시 로그인 해주세요.");
+    removeCookie("refreshToken");
     window.location.href = "/";
   }
 }

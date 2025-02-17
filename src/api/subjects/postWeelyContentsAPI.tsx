@@ -7,6 +7,7 @@ async function postWeeklyContents(
   accessToken,
   id,
   content,
+  week,
   startDate,
   endDate,
   startPage,
@@ -20,6 +21,7 @@ async function postWeeklyContents(
     },
     body: JSON.stringify({
       content: content,
+      week: week,
       startDate: startDate,
       endDate: endDate,
       startPage: startPage,
@@ -36,6 +38,7 @@ async function postWeeklyContents(
 export default async function PostWeeklyContentsAPI(
   id,
   content,
+  week,
   startDate,
   endDate,
   startPage,
@@ -50,14 +53,14 @@ export default async function PostWeeklyContentsAPI(
         accessToken,
         id,
         content,
+        week,
         startDate,
         endDate,
         startPage,
         endPage
       );
 
-      alert("새로운 기수의 시작!");
-      window.location.reload();
+      return;
     } catch (error) {
       if (refreshToken) {
         try {
@@ -71,14 +74,14 @@ export default async function PostWeeklyContentsAPI(
             newAccessToken,
             id,
             content,
+            week,
             startDate,
             endDate,
             startPage,
             endPage
           );
 
-          alert("새로운 기수의 시작!");
-          window.location.reload();
+          return;
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

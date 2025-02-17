@@ -8,23 +8,44 @@ import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import GetCohortAPI from "../../api/cohorts/GetCohortAPI.tsx";
+import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
 import GetCohortsAPI from "../../api/cohorts/GetCohortsAPI.tsx";
+import PatchCohortsAPI from "../../api/cohorts/PatchCohortsAPI.tsx";
 import PostCohortsAPI from "../../api/cohorts/PostCohortsAPI.tsx";
 import PostSubjectsAPI from "../../api/subjects/postSubjectsAPI.tsx";
 import PostWeeklyContentsAPI from "../../api/subjects/postWeelyContentsAPI.tsx";
+import GetSubjectsAPI from "../../api/subjects/getSubjectsAPI.tsx";
+import DeleteSubjectsAPI from "../../api/subjects/deleteSubjectsAPI.tsx";
 
 import SubjectData from "../../mockup_data/subject_data.tsx";
 
 import "../../App.css";
 
 const subject_data = SubjectData();
-const cohort_data = {
-  cohortId: 1,
-  batch: 6,
-  year: 2025,
-  isFirstSemester: true,
-  isActive: true,
-  subjects: SubjectData(),
+type cohort = {
+  cohortId: number;
+  batch: number;
+  year: number;
+  isFirstSemester: boolean;
+  status: string;
+  subjects: [];
+};
+
+type subject = {
+  subjectId: number;
+  name: string;
+  isBook: boolean;
+  batch: number;
+  weeklyContents: [
+    {
+      weeklyContentId: number;
+      subjectName: string;
+      content: string;
+      week: number;
+      startDate: number[];
+      endDate: number[];
+    }
+  ];
 };
 
 export default function CurriculumManagement() {
@@ -41,43 +62,62 @@ export default function CurriculumManagement() {
 
   const [isEndActive, setIsEndActive] = useState(true);
   const [confirmationText, setConfirmationText] = useState("");
-  const [cohort, setCohort] = useState(0);
-  const [isFirstSemester, setIsFirstSemester] = useState(false);
-  const [subjects, setSubjects] = useState([]);
+  const [cohort, setCohort] = useState<cohort>({
+    cohortId: 0,
+    batch: 0,
+    year: 0,
+    isFirstSemester: true,
+    status: "",
+    subjects: [],
+  });
+  const [subjects, setSubjects] = useState<subject[]>([]);
 
   const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
   const [isEndPopupOpen, setIsEndPopupOpen] = useState(false);
 
   useEffect(() => {
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    GetCohortsAPI().then((result) => {
-      result = result[0];
-      setIsEndActive(
-        result.isActive === true &&
-          (month === 2 || month === 8) &&
-          (year !== result.year ||
-            (result.isFirstSemester === true && month === 8))
-      );
-      setCohort(result.batch);
-    });
+    const fetchData = async () => {
+      try {
+        const cohortResult = await GetCohortLatestAPI();
+        setCohort(cohortResult);
+
+        setIsEndActive(
+          cohortResult.status === "활동 중" &&
+            (currentDate.getMonth() + 1 === 2 ||
+              currentDate.getMonth() + 1 === 8) &&
+            (currentDate.getFullYear() !== cohortResult.year ||
+              (cohortResult.isFirstSemester === true &&
+                currentDate.getMonth() + 1 === 8))
+        );
+
+        const subjectsResult = await GetSubjectsAPI(null, cohortResult.batch);
+        setSubjects(subjectsResult);
+      } catch (error) {
+        console.error("API 호출 중 오류 발생:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleEnd = () => {
-    if (confirmationText === `${cohort}기 활동 종료`) {
-      // PatchCohortsAPI(false).then(() => {
-      //   const newCohort = cohort + 1;
-      //   setCohort(newCohort);
-      //   setIsFirstSemester(currentDate.getMonth() + 1 === 2);
-      //   PostCohortsAPI(cohort, currentDate.getFullYear(), isFirstSemester).then(
-      //     () => {
-      //       reset({ End: "" });
-      //       setConfirmationText("");
-      //       setIsEndPopupOpen(!isEndPopupOpen);
-      //     }
-      //   );
-      // });
-      alert(`${cohort}기 활동 종료`);
+  const handleEnd = async () => {
+    if (confirmationText === `${cohort.batch}기 활동 종료`) {
+      try {
+        await PatchCohortsAPI(cohort.cohortId, "활동 종료");
+        alert(`${cohort.batch}기 활동 종료!\n한 학기돟안 고생 많으셨습니다.`);
+
+        const newCohort = cohort.batch + 1;
+        console.log(currentDate.getMonth() + 1 === 2);
+
+        await PostCohortsAPI(
+          newCohort,
+          currentDate.getFullYear(),
+          currentDate.getMonth() + 1 === 2
+        );
+      } catch (error) {
+        console.error("Error handling cohort end:", error);
+        alert("처리 중 오류가 발생했습니다. 다시 시도해주세요.");
+      }
     } else {
       alert("다시 입력해주세요.");
     }
@@ -108,36 +148,40 @@ export default function CurriculumManagement() {
   };
 
   const onValid = async (e) => {
-    // try {
-    //   const subjectResponse = await PostSubjectsAPI({
-    //     subject: e.Subject,
-    //     book: e.Book,
-    //     isCurriculum: e.Category==="커리큘럼",
-    //     cohort: cohort,
-    //   });
-    //   if (!subjectResponse) {
-    //     alert("과목 생성에 실패했습니다.");
-    //     return;
-    //   }
-    // console.log(subjectResponse)
-    //   const subjectId = subjectResponse.subjectId;
-    //   for (const curriculum of curriculumList) {
-    //     await PostWeeklyContentsAPI({
-    //       subjectId: subjectId,
-    //       week: curriculum.week,
-    //       startDate: e[`StartDate${curriculum.week}`],
-    //       endDate: e[`EndDate${curriculum.week}`],
-    //       startPage: e[`Startpage${curriculum.week}`],
-    //       endPage: e[`EndPage${curriculum.week}`],
-    //       content: e[`Content${curriculum.week}`],
-    //     });
-    //   }
-    //   alert("커리큘럼이 성공적으로 등록되었습니다.");
-    //   setIsAddPopupOpen(false);
-    // } catch (error) {
-    //   console.error("커리큘럼 등록 오류:", error);
-    //   alert("커리큘럼 등록 중 오류가 발생했습니다.");
-    // }
+    try {
+      console.log(e.Subject, e.Book, e.Category);
+
+      const subjectResponse = await PostSubjectsAPI(
+        e.Subject,
+        e.Book,
+        e.Category === "커리큘럼",
+        cohort.batch
+      );
+
+      if (!subjectResponse) {
+        alert("과목 생성에 실패했습니다.");
+        return;
+      }
+      console.log(subjectResponse);
+      const subjectId = subjectResponse.subjectId;
+
+      for (const curriculum of curriculumList) {
+        await PostWeeklyContentsAPI(
+          subjectId,
+          e[`Content${curriculum.week}`],
+          curriculum.week,
+          e[`StartDate${curriculum.week}`],
+          e[`EndDate${curriculum.week}`],
+          e[`Startpage${curriculum.week}`],
+          e[`EndPage${curriculum.week}`]
+        );
+      }
+      alert("커리큘럼이 성공적으로 등록되었습니다.");
+      window.location.reload();
+    } catch (error) {
+      console.error("커리큘럼 등록 오류:", error);
+      alert("커리큘럼 등록 중 오류가 발생했습니다.");
+    }
   };
 
   const onInvalid = (e) => {
@@ -306,7 +350,7 @@ export default function CurriculumManagement() {
                       color: "#2CC295",
                     }}
                   >
-                    {cohort}기 커리큘럼
+                    {cohort.batch}기 커리큘럼
                   </div>
                   <div
                     style={{
@@ -340,9 +384,9 @@ export default function CurriculumManagement() {
                   </div>
                 </div>
 
-                {subject_data.map((subject, index) => (
+                {subjects.map((subject) => (
                   <div
-                    key={index}
+                    key={subject.subjectId}
                     style={{
                       marginBottom: "30px",
                     }}
@@ -405,7 +449,9 @@ export default function CurriculumManagement() {
                             e.currentTarget.style.fontWeight = "300";
                             e.currentTarget.style.textDecoration = "none";
                           }}
-                          onClick={() => {}}
+                          onClick={() => {
+                            DeleteSubjectsAPI(subject.subjectId);
+                          }}
                         >
                           삭제
                         </span>
@@ -679,7 +725,7 @@ export default function CurriculumManagement() {
                               style={{
                                 fontFamily: "Pretendard-Regular",
                                 fontSize: "clamp(14px, 2.2vw, 18px)",
-                                color: "#fff",
+                                color: "#aaa",
                                 width: "80px",
                                 minWidth: "70px",
                                 paddingLeft: "20px",
@@ -760,7 +806,7 @@ export default function CurriculumManagement() {
                               style={{
                                 fontFamily: "Pretendard-Regular",
                                 fontSize: "clamp(14px, 2.2vw, 18px)",
-                                color: "#fff",
+                                color: "#aaa",
                                 width: "80px",
                                 minWidth: "70px",
                                 paddingLeft: "20px",
@@ -812,7 +858,7 @@ export default function CurriculumManagement() {
                               style={{
                                 fontFamily: "Pretendard-Regular",
                                 fontSize: "clamp(14px, 2.2vw, 18px)",
-                                color: "#fff",
+                                color: "#aaa",
                                 minWidth: "80px",
                                 paddingLeft: "20px",
                               }}
@@ -873,9 +919,7 @@ export default function CurriculumManagement() {
                         type="primary"
                         size="small"
                         title="저장"
-                        onClick={() => {
-                          handleSubmit(onValid, onInvalid);
-                        }}
+                        onClick={handleSubmit(onValid, onInvalid)}
                       />
                     </div>
                   </form>
@@ -923,12 +967,14 @@ export default function CurriculumManagement() {
                       }}
                     >
                       <span style={{ color: "#FF5005" }}>
-                        "{cohort}기 활동 종료"
+                        "{cohort.batch}기 활동 종료"
                       </span>
                       를 입력하고 활동 종료 버튼을 눌러주세요.
                       <br />
                       (활동 종료 시 새로운 기수
-                      <span style={{ color: "#FF5005" }}>({cohort + 1}기)</span>
+                      <span style={{ color: "#FF5005" }}>
+                        ({cohort.batch + 1}기)
+                      </span>
                       가 자동 생성됩니다.)
                       <br />
                     </div>

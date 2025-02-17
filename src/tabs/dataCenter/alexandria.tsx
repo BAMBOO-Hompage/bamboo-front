@@ -7,7 +7,7 @@ import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
-import GetPapersAPI from "../../api/library_posts/getPapersAPI.tsx";
+import GetPapersAPI from "../../api/library-posts/getPapersAPI.tsx";
 
 import "../../App.css";
 

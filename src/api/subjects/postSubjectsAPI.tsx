@@ -30,10 +30,10 @@ export default async function PostSubjectsAPI(name, bookName, isBook, batch) {
 
   if (accessToken) {
     try {
-      await postSubjects(accessToken, name, bookName, isBook, batch);
+      let data = await postSubjects(accessToken, name, bookName, isBook, batch);
+      console.log(data.result);
 
-      alert("새로운 기수의 시작!");
-      window.location.reload();
+      return data.result;
     } catch (error) {
       if (refreshToken) {
         try {
@@ -43,10 +43,16 @@ export default async function PostSubjectsAPI(name, bookName, isBook, batch) {
             accessToken,
             refreshToken
           );
-          await postSubjects(newAccessToken, name, bookName, isBook, batch);
+          let data = await postSubjects(
+            newAccessToken,
+            name,
+            bookName,
+            isBook,
+            batch
+          );
+          console.log(data.result);
 
-          alert("새로운 기수의 시작!");
-          window.location.reload();
+          return data.result;
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

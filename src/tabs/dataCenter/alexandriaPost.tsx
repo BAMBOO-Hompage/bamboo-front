@@ -8,8 +8,8 @@ import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
-import GetPaperAPI from "../../api/library_posts/getPaperAPI.tsx";
-import DeletePapersAPI from "../../api/library_posts/deletePapersAPI.tsx";
+import GetPaperAPI from "../../api/library-posts/getPaperAPI.tsx";
+import DeletePapersAPI from "../../api/library-posts/deletePapersAPI.tsx";
 import MyPageAPI from "../../api/members/myPageAPI.tsx";
 
 import "../../App.css";
