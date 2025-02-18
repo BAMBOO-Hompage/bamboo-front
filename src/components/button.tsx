@@ -22,6 +22,8 @@ const ButtonContainer = styled.div<{
   justify-content: center;
   align-items: center;
   display: flex;
+  opacity: 0.8;
+  transition: all 0.3s ease;
   background-color: ${(props) =>
     props.type === "primary"
       ? "#2CC295"
@@ -92,10 +94,11 @@ const ButtonContainer = styled.div<{
       text-align: center;
     `}
     &:hover {
-    & p {
-      transition: all 0.3s ease;
-      text-shadow: 0 0 0.1em, 0 0 0.3em;
-    }
+    opacity: 1;
+    // & p {
+    //   transition: all 0.3s ease;
+    //   text-shadow: 0 0 0.1em, 0 0 0.3em;
+    // }
   }
 `;
 

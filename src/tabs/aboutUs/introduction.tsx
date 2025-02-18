@@ -622,7 +622,7 @@ export default function Introduction() {
                     "-10px -10px 30px #242424, 15px 15px 30px #000";
                 }}
               >
-                더 알아보기 {">"}
+                더 알아보기 ➜
               </div>
             </Link>
           </div>
@@ -940,7 +940,7 @@ export default function Introduction() {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
               >
-                지원 안내 {">"}
+                지원 안내 ➜
                 <style>
                   {`
                     @keyframes shadow-rotate {

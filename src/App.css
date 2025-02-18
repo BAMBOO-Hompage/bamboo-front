@@ -281,6 +281,15 @@ select {
   text-shadow: 0 0 0.1em, 0 0 0.1em;
   cursor: pointer;
 }
+.bottom_btn {
+  display: flex;
+  margin: 0 8px;
+  border: none;
+  background-color: transparent;
+}
+.bottom_btn:hover {
+  cursor: pointer;
+}
 
 .container h1,
 h2,

@@ -230,7 +230,7 @@ export default function Signup() {
                   width: "100%",
                   maxWidth: "160px",
                   height: "30px",
-                  marginLeft: "10px",
+                  margin: "0 10px",
                   color: checkedEmail ? "#777" : "#fff",
                 }}
               />

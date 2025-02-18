@@ -32,6 +32,7 @@ import AlexandriaAdd from "./tabs/dataCenter/alexandriaAdd.tsx";
 import AlexandriaEdit from "./tabs/dataCenter/alexandriaEdit.tsx";
 import AlexandriaPost from "./tabs/dataCenter/alexandriaPost.tsx";
 import HallOfFame from "./tabs/dataCenter/hallOfFame.tsx";
+import Project from "./tabs/dataCenter/project.tsx";
 
 import CurriculumStudy from "./tabs/study/curriculumStudy.tsx";
 import SelfStudy from "./tabs/study/selfStudy.tsx";
@@ -82,6 +83,7 @@ function App() {
           <Route path="/alexandriaPost" element={<AlexandriaPost />} />
           <Route path="/alexandriaEdit" element={<AlexandriaEdit />} />
           <Route path="/hallOfFame" element={<HallOfFame />} />
+          <Route path="/project" element={<Project />} />
 
           <Route path="/curriculumStudy" element={<CurriculumStudy />} />
           <Route path="/selfStudy" element={<SelfStudy />} />

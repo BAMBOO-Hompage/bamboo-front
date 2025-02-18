@@ -645,7 +645,7 @@ export default function JoinUs(props: JoinUsProps) {
                     onMouseEnter={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
                   >
-                    주요 활동 {">"}
+                    주요 활동 ➜
                     <style>
                       {`
                     @keyframes shadow-rotate {

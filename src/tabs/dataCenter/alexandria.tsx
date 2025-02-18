@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
 import Nav from "../../components/nav.tsx";
+import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
@@ -58,27 +59,27 @@ export default function Alexandria() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useEffect(() => {
-    CheckAuthAPI().then((data) => {
-      if (
-        data.role === "ROLE_ADMIN" ||
-        data.role === "ROLE_OPS" ||
-        data.role === "ROLE_MEMBER"
-      ) {
-        setCheckAuth(1);
-      } else {
-        setCheckAuth(0);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   CheckAuthAPI().then((data) => {
+  //     if (
+  //       data.role === "ROLE_ADMIN" ||
+  //       data.role === "ROLE_OPS" ||
+  //       data.role === "ROLE_MEMBER"
+  //     ) {
+  //       setCheckAuth(1);
+  //     } else {
+  //       setCheckAuth(0);
+  //     }
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    GetPapersAPI(paperList, searchKeyword, currentPage).then((result) => {
-      var alexandriaData = result.content;
-      setPapersToDisplay(alexandriaData);
-      setTotalPages(result.totalPages);
-    });
-  }, [paperList, searchKeyword, currentPage]);
+  // useEffect(() => {
+  //   GetPapersAPI(paperList, searchKeyword, currentPage).then((result) => {
+  //     var alexandriaData = result.content;
+  //     setPapersToDisplay(alexandriaData);
+  //     setTotalPages(result.totalPages);
+  //   });
+  // }, [paperList, searchKeyword, currentPage]);
 
   const onValid = (e: any) => {
     console.log(e, "onValid");
@@ -98,7 +99,7 @@ export default function Alexandria() {
     <div>
       <Nav type="dataCenter" />
       <div id="background" className="background">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -546,6 +547,21 @@ export default function Alexandria() {
               <></>
             )}
           </div>
+        </motion.div> */}
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+          }}
+          style={{
+            width: "100%",
+          }}
+        >
+          <LockedPagePrepare />
         </motion.div>
 
         <BottomInfo />

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
+import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
 
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetNoticesAPI from "../../api/notices/getNoticesAPI.tsx";
@@ -50,33 +51,33 @@ export default function Notice() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useEffect(() => {
-    CheckAuthAPI().then((data) => {
-      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
-        setCheckAuth(2);
-      } else if (data.role === "ROLE_ADMIN") {
-        setCheckAuth(1);
-      } else {
-        setCheckAuth(0);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   CheckAuthAPI().then((data) => {
+  //     if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+  //       setCheckAuth(2);
+  //     } else if (data.role === "ROLE_ADMIN") {
+  //       setCheckAuth(1);
+  //     } else {
+  //       setCheckAuth(0);
+  //     }
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    GetNoticesAPI(postList, currentPage).then((result) => {
-      console.log(result.content);
-      var noticeData = result.content;
-      setPostsToDisplay(noticeData);
-      setTotalPages(result.totalPages);
-      console.log(postsToDisplay, totalPages);
-    });
-  }, [postList, currentPage]);
+  // useEffect(() => {
+  //   GetNoticesAPI(postList, currentPage).then((result) => {
+  //     console.log(result.content);
+  //     var noticeData = result.content;
+  //     setPostsToDisplay(noticeData);
+  //     setTotalPages(result.totalPages);
+  //     console.log(postsToDisplay, totalPages);
+  //   });
+  // }, [postList, currentPage]);
 
   return (
     <div>
       <Nav type="community" />
       <div className="background">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -349,6 +350,21 @@ export default function Notice() {
               </div>
             </motion.div>
           </div>
+        </motion.div> */}
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+          }}
+          style={{
+            width: "100%",
+          }}
+        >
+          <LockedPagePrepare />
         </motion.div>
       </div>
       <BottomInfo />

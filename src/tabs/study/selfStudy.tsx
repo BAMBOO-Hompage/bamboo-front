@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
+import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
 import StudyCard from "../../components/studyCard.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 import "../../App.css";
@@ -40,7 +41,7 @@ export default function SelfStudy() {
             width: "100%",
           }}
         >
-          <div
+          {/* <div
             style={{
               position: "relative",
               maxWidth: "1000px",
@@ -322,7 +323,8 @@ export default function SelfStudy() {
                 ))}
               </svg>
             </div>
-          </div>
+          </div> */}
+          <LockedPagePrepare />
         </motion.div>
 
         <BottomInfo />

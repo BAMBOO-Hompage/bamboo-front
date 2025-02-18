@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import Nav from "../components/nav.tsx";
 import Snowfall from "../components/snowfall.tsx";
+import DDayCounter from "../components/dDayCounter.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
 
 import HistoryData from "../mockup_data/history_data.tsx";
@@ -77,7 +78,7 @@ export default function Main() {
           }}
         ></div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -100,6 +101,37 @@ export default function Main() {
               style={{ width: "100%" }}
             />
           </div>
+        </motion.div> */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+          }}
+          className="main_1"
+          style={{
+            position: "relative",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: "500px",
+              padding: "0 12vw",
+              marginTop: "100px",
+            }}
+          >
+            <img
+              src="../../img/main_logo1.png"
+              alt="main_logo"
+              style={{ width: "100%" }}
+            />
+          </div>
+          <DDayCounter />
         </motion.div>
 
         <motion.div
@@ -222,7 +254,7 @@ export default function Main() {
                     "-10px -10px 30px #242424, 15px 15px 30px #000";
                 }}
               >
-                더 알아보기 {">"}
+                더 알아보기 ➜
               </div>
             </Link>
           </div>
@@ -548,7 +580,7 @@ export default function Main() {
                     "-10px -10px 30px #242424, 15px 15px 30px #000";
                 }}
               >
-                더 알아보기 {">"}
+                더 알아보기 ➜
               </div>
             </Link>
           </div>
@@ -876,7 +908,7 @@ export default function Main() {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
               >
-                지원 안내 {">"}
+                지원 안내 ➜
                 <style>
                   {`
                     @keyframes shadow-rotate {

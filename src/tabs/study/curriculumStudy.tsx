@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
+import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
 import StudyCard from "../../components/studyCard.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
+
 import "../../App.css";
 
 const study_data = [
@@ -36,7 +38,8 @@ export default function CurriculumStudy() {
             width: "100%",
           }}
         >
-          <div
+          <LockedPagePrepare />
+          {/* <div
             style={{
               position: "relative",
               maxWidth: "1000px",
@@ -317,7 +320,7 @@ export default function CurriculumStudy() {
                 ))}
               </svg>
             </div>
-          </div>
+          </div> */}
         </motion.div>
 
         <BottomInfo />
