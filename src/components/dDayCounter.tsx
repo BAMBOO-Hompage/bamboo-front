@@ -22,7 +22,7 @@ const DDayCounter = () => {
         const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
         setTimeLeft(
-          `${String(days).padStart(2, "0")}일 ${String(hours).padStart(
+          `${String(days).padStart(1, "0")}일 ${String(hours).padStart(
             2,
             "0"
           )}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
@@ -50,21 +50,21 @@ const DDayCounter = () => {
         alignItems: "center",
       }}
     >
-      <div>
+      <div style={{ width: "1000px", padding: "0 20px" }}>
         <div
           style={{
             marginBottom: "30px",
             fontFamily: "Pretendard-Bold",
-            fontSize: "30px",
+            fontSize: "clamp(24px, 4vw, 30px)",
             color: "#fff",
           }}
         >
-          Homepage Open Left
+          Homapage Opening Left
         </div>
         <div
           style={{
             fontFamily: "Pretendard-Bold",
-            fontSize: "60px",
+            fontSize: "clamp(45px, 7vw, 60px)",
             color: "#2cc295",
           }}
         >

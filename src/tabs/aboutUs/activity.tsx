@@ -85,7 +85,7 @@ export default function Activity() {
     <div>
       <Nav type="aboutUs" />
       <div className="background">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -425,6 +425,21 @@ export default function Activity() {
               </div>
             </motion.div>
           </div>
+        </motion.div> */}
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+          }}
+          style={{
+            width: "100%",
+          }}
+        >
+          <LockedPagePrepare />
         </motion.div>
 
         <BottomInfo />

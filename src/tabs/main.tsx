@@ -725,7 +725,7 @@ export default function Main() {
                               style={{
                                 width: "50px",
                                 textAlign: "left",
-                                paddingLeft: "200px",
+                                paddingLeft: "150px",
                                 marginBottom: "5px",
                               }}
                             >
@@ -746,9 +746,9 @@ export default function Main() {
                             <div
                               style={{
                                 boxSizing: "border-box",
-                                width: "100px",
+                                width: "150px",
                                 height: "30px",
-                                marginLeft: "200px",
+                                marginLeft: "150px",
                                 borderLeft: "1px solid #2cc295",
                               }}
                             ></div>
@@ -773,9 +773,8 @@ export default function Main() {
                             <div
                               style={{
                                 boxSizing: "border-box",
-                                width: "250px",
+                                width: "300px",
                                 height: "30px",
-                                marginLeft: "50px",
                                 borderLeft: "1px solid #2cc295",
                               }}
                             ></div>
@@ -783,7 +782,6 @@ export default function Main() {
                               style={{
                                 width: "150px",
                                 textAlign: "left",
-                                paddingLeft: "50px",
                                 marginTop: "5px",
                               }}
                             >
