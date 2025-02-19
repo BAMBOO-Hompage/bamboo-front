@@ -59,7 +59,7 @@ const DDayCounter = () => {
             color: "#fff",
           }}
         >
-          Homapage Opening Left
+          Home Page Opening Left
         </div>
         <div
           style={{
