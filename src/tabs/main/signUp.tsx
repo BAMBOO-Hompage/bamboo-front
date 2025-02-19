@@ -10,6 +10,20 @@ import SignupAPI from "../../api/members/signUpAPI.tsx";
 
 import "../../App.css";
 
+const majors = [
+  "휴먼지능정보공학전공",
+  "컴퓨터과학전공",
+  "핀테크·빅데이터융합·스마트생산전공",
+  "지능IOT융합전공",
+  "애니메이션전공",
+  "전기공학전공",
+  "한일문화콘텐츠전공",
+  "생명공학전공",
+  "화공신소재전공",
+  "화학에너지공학전공",
+  "기타",
+];
+
 export default function Signup() {
   const {
     register: registerSignUp,
@@ -763,66 +777,19 @@ export default function Signup() {
                   >
                     학과 선택
                   </option>
-                  <option
-                    value="휴먼지능정보공학전공"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    휴먼지능정보공학전공
-                  </option>
-                  <option
-                    value="컴퓨터과학전공"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    컴퓨터과학전공
-                  </option>
-                  <option
-                    value="핀테크·빅데이터융합·스마트생산전공"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    핀테크·빅데이터융합·스마트생산전공
-                  </option>
-                  <option
-                    value="지능IOT융합전공"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    지능IOT융합전공
-                  </option>
-                  <option
-                    value="애니메이션전공"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    애니메이션전공
-                  </option>
-                  <option
-                    value="기타"
-                    style={{
-                      color: "#fff",
-                      background: "#111015",
-                      cursor: "pointer",
-                    }}
-                  >
-                    기타
-                  </option>
+                  {majors.map((major) => (
+                    <option
+                      key={major}
+                      value={major}
+                      style={{
+                        color: "#fff",
+                        background: "#111015",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {major}
+                    </option>
+                  ))}
                 </select>
                 {errorsSignUp.Major ? (
                   <div>
