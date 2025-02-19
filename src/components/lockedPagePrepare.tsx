@@ -22,7 +22,7 @@ export default function LockedPageAuth() {
       <div
         style={{
           fontFamily: "Pretendard-Bold",
-          fontSize: "30px",
+          fontSize: "clamp(24px, 4vw, 30px)",
           marginBottom: "20px",
         }}
       >
