@@ -5,7 +5,7 @@ const DDayCounter = () => {
   const [timeLeft, setTimeLeft] = useState("00일 00:00:00");
 
   useEffect(() => {
-    const targetDate = new Date("2025-03-01T00:00:00+09:00").getTime(); // 숫자로 변환
+    const targetDate = new Date("2025-03-08T00:00:00+09:00").getTime(); // 숫자로 변환
     const interval = setInterval(() => {
       const now = new Date().getTime(); // 숫자로 변환
       const timeDiff = targetDate - now;
