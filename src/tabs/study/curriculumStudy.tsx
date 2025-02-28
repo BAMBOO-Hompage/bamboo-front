@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -8,6 +8,10 @@ import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
 import StudyCard from "../../components/studyCard.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
+import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
+import GetSubjectsAPI from "../../api/subjects/getSubjectsAPI.tsx";
+import GetStudiesAPI from "../../api/studies/getStudiesAPI.tsx";
+
 import "../../App.css";
 
 const study_data = [
@@ -16,11 +20,111 @@ const study_data = [
   { id: 3, x: 505, y: 0, width: 190, height: 190, label: "세 번째 공간" },
 ];
 
+type cohort = {
+  cohortId: number;
+  batch: number;
+  year: number;
+  isFirstSemester: boolean;
+  status: string;
+  subjects: [];
+};
+type subject = {
+  subjectId: number;
+  name: string;
+  isBook: boolean;
+  batch: number;
+  bookName: string;
+  weeklyContents: [
+    {
+      weeklyContentId: number;
+      subjectName: string;
+      content: string;
+      week: number;
+      startDate: number[];
+      endDate: number[];
+    }
+  ];
+};
+type study = {
+  studyId: number;
+  teamName: string;
+  subjectName: string;
+  cohort: cohort;
+  isBook: boolean;
+  section: number;
+  studyMaster: {
+    studentId: string;
+    name: string;
+  };
+  studyMembers: [
+    {
+      studentId: string;
+      name: string;
+    }
+  ];
+  attendances: [
+    {
+      attendanceId: number;
+      week: number;
+      memberId: string;
+      status: string;
+    }
+  ];
+};
+
 export default function CurriculumStudy() {
   const [hovered, setHovered] = useState(false);
   const [studyHovered, setStudyHovered] = useState<number | null>(null);
+  const [cohortLatest, setCohortLatest] = useState<cohort>({
+    cohortId: 0,
+    batch: 0,
+    year: 0,
+    isFirstSemester: true,
+    status: "",
+    subjects: [],
+  });
+  const [selectedCohort, setSelectedCohort] = useState(0);
+  const [subjects, setSubjects] = useState<subject[]>([]);
+  const [studies, setStudies] = useState<any>([]);
+  const [subjectRows, setSubjectRows] = useState({});
 
-  const [cStudyList, setCStudyList] = useState("전체");
+  const calculateRows = (subjectName, filteredStudies) => {
+    return Math.ceil(filteredStudies.length / 4); // 해당 subject에 대한 row 계산
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const cohortResult = await GetCohortLatestAPI();
+        setCohortLatest(cohortResult);
+        setSelectedCohort(cohortResult.batch);
+      } catch (error) {
+        console.error("API 호출 중 오류 발생:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const subjectsResult = await GetSubjectsAPI(true, selectedCohort);
+        setSubjects(subjectsResult);
+
+        const studiesResults = await Promise.all(
+          subjectsResult.map((subject) =>
+            GetStudiesAPI(selectedCohort, subject.subjectId)
+          )
+        );
+        setStudies(studiesResults);
+        console.log(studiesResults);
+      } catch (error) {
+        console.error("API 호출 중 오류 발생:", error);
+      }
+    };
+    fetchData();
+  }, [selectedCohort]);
 
   return (
     <div>
@@ -38,8 +142,7 @@ export default function CurriculumStudy() {
             width: "100%",
           }}
         >
-          <LockedPagePrepare />
-          {/* <div
+          <div
             style={{
               position: "relative",
               maxWidth: "1000px",
@@ -60,7 +163,7 @@ export default function CurriculumStudy() {
                 textAlign: "center",
               }}
             >
-              커리큘럼 스터디
+              정규 스터디
             </div>
 
             <div
@@ -82,7 +185,7 @@ export default function CurriculumStudy() {
                   cursor: "pointer",
                 }}
               >
-                커리큘럼 스터디
+                정규 스터디
               </div>
               <Link
                 to="/selfStudy"
@@ -151,11 +254,46 @@ export default function CurriculumStudy() {
                 </style>
               </Link>
             </div>
+
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "right",
+              }}
+            >
+              <select
+                style={{
+                  width: "80px",
+                  height: "30px",
+                  marginTop: "20px",
+                  marginBottom: "10px",
+                  border: "1px solid #fff",
+                  backgroundColor: "#171717",
+                  color: "#fff",
+                  textAlign: "center",
+                  fontSize: "16px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+                value={selectedCohort}
+                onChange={(e) => setSelectedCohort(Number(e.target.value))}
+              >
+                {Array.from(
+                  { length: cohortLatest.batch - 5 + 1 },
+                  (_, i) => cohortLatest.batch - i
+                ).map((num) => (
+                  <option key={num} value={num}>
+                    {num}기
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div
               style={{
                 boxSizing: "border-box",
                 width: "100%",
-                marginTop: "50px",
                 position: "relative",
               }}
             >
@@ -170,12 +308,12 @@ export default function CurriculumStudy() {
                 <defs>
                   <filter
                     id="blurFilter"
-                    x="-300%"
-                    y="-300%"
-                    width="600%"
-                    height="600%"
+                    x="-250%"
+                    y="-250%"
+                    width="500%"
+                    height="500%"
                   >
-                    <feGaussianBlur stdDeviation="110" />
+                    <feGaussianBlur stdDeviation="90" />
                   </filter>
 
                   <mask id="hole-mask">
@@ -265,62 +403,122 @@ export default function CurriculumStudy() {
                   }}
                 />
 
-                <text
-                  x={95 / 2}
-                  y={190 / 2}
-                  fontFamily="Pretendard-Bold"
-                  fontSize="24"
-                  fill="#2cc295"
-                  textAnchor="middle"
-                  alignmentBaseline="middle"
-                >
-                  PY
-                </text>
+                {subjects.map((subject, subjectIndex) => {
+                  const baseY =
+                    subjectIndex === 0
+                      ? 190 / 2
+                      : subjects
+                          .slice(0, subjectIndex)
+                          .reduce(
+                            (acc, _, idx) =>
+                              acc +
+                              Math.ceil((studies[idx]?.length || 0) / 4) * 200,
+                            190 / 2
+                          );
 
-                {study_data.map((item) => (
-                  <Link
-                    to={`/studyPost?id=${item.id}&member=&week=1`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <g
-                      key={item.id}
-                      transform="scale(1)"
-                      onMouseEnter={() => setStudyHovered(item.id)}
-                      onMouseLeave={() => setStudyHovered(null)}
-                    >
-                      <rect
-                        x={item.x}
-                        y={item.y}
-                        width={item.width}
-                        height={item.height}
-                        fill={
-                          studyHovered === item.id
-                            ? "rgba(255, 255, 255, 0.2)"
-                            : "transparent"
-                        }
-                        stroke={studyHovered === item.id ? "#777" : "none"}
-                        strokeWidth="3"
-                        rx="20"
-                        ry="20"
-                        cursor="pointer"
-                      />
+                  return (
+                    <>
                       <text
-                        x={item.x + 30}
-                        y={item.y + 40}
-                        fontFamily="Pretendard-Regular"
-                        fontSize="20px"
-                        fill="white"
-                        alignmentBaseline="hanging"
-                        cursor="pointer"
+                        x={95 / 2}
+                        y={baseY}
+                        fontFamily="Pretendard-Bold"
+                        fontSize="24"
+                        fill="#2cc295"
+                        textAnchor="middle"
+                        alignmentBaseline="middle"
                       >
-                        {`PY_${item.id}`}
+                        {subject.name}
                       </text>
-                    </g>
-                  </Link>
-                ))}
+
+                      {studies[subjectIndex]?.map((study, studyIndex) => {
+                        console.log(study);
+                        const x = 105 + (studyIndex % 4) * 200;
+                        const y = baseY + Math.floor(studyIndex / 4) * 200;
+
+                        return (
+                          <Link
+                            to={`/studyPost?id=${study.studyId}&member=&week=1`}
+                            style={{ textDecoration: "none" }}
+                            key={study.studyId}
+                          >
+                            <g
+                              transform="scale(1)"
+                              onMouseEnter={() =>
+                                setStudyHovered(study.studyId)
+                              }
+                              onMouseLeave={() => setStudyHovered(null)}
+                            >
+                              <rect
+                                x={x}
+                                y={y - 190 / 2}
+                                width={190}
+                                height={190}
+                                fill={
+                                  studyHovered === study.studyId
+                                    ? "rgba(255, 255, 255, 0.2)"
+                                    : "transparent"
+                                }
+                                stroke={
+                                  studyHovered === study.studyId
+                                    ? "#777"
+                                    : "none"
+                                }
+                                strokeWidth="3"
+                                rx="20"
+                                ry="20"
+                                cursor="pointer"
+                              />
+                              <text
+                                x={x + 30}
+                                y={y - 190 / 2 + 40}
+                                fontFamily="Pretendard-Regular"
+                                fontSize="18px"
+                                fill="#2cc295"
+                                alignmentBaseline="hanging"
+                                cursor="pointer"
+                              >
+                                {`${study.subjectName}_${study.section}`}
+                              </text>
+                              <text
+                                x={x + 30}
+                                y={y - 190 / 2 + 70}
+                                fontFamily="Pretendard-SemiBold"
+                                fontSize="20px"
+                                fill="#fff"
+                                alignmentBaseline="hanging"
+                                cursor="pointer"
+                              >
+                                {`${study.teamName}`}
+                              </text>
+                              <text
+                                x={x + 30}
+                                y={y - 190 / 2 + 150}
+                                fontFamily="Pretendard-Regular"
+                                fontSize="16px"
+                                fill="#777"
+                                alignmentBaseline="hanging"
+                                cursor="pointer"
+                              >
+                                {`${study.studyMaster.name} `}
+                                {study.studyMembers
+                                  .filter(
+                                    (member) =>
+                                      member.studentId !==
+                                      study.studyMaster.studentId
+                                  )
+                                  .map((studyMember) => `${studyMember.name} `)}
+                              </text>
+                            </g>
+                          </Link>
+                        );
+                      })}
+                    </>
+                  );
+                })}
               </svg>
             </div>
-          </div> */}
+          </div>
+          {/* <LockedPagePrepare /> */}
         </motion.div>
 
         <BottomInfo />

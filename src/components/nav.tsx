@@ -340,7 +340,7 @@ export default function Nav(props: NavProps) {
           >
             <Link to="/curriculumStudy" style={{ textDecoration: "none" }}>
               <div className="hamburger_tabs" style={{ marginTop: "20px" }}>
-                커리큘럼 스터디
+                정규 스터디
               </div>
             </Link>
             <Link to="/selfStudy" style={{ textDecoration: "none" }}>
@@ -548,7 +548,7 @@ export default function Nav(props: NavProps) {
             onMouseLeave={() => setCurrentFocus("")}
           >
             <Link to="/curriculumStudy" style={{ textDecoration: "none" }}>
-              <div className="nav_tabs">커리큘럼 스터디</div>
+              <div className="nav_tabs">정규 스터디</div>
             </Link>
             <Link to="/selfStudy" style={{ textDecoration: "none" }}>
               <div className="nav_tabs">자율 스터디</div>

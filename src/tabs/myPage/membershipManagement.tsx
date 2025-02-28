@@ -531,7 +531,7 @@ export default function PersonalInfo() {
                         justifyContent: "center",
                       }}
                     >
-                      {member.name.slice(0, 1)}* {member.name.slice(2, 3)}
+                      {member.name}
                     </div>
                     <div
                       style={{

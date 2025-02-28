@@ -3,8 +3,8 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function deleteSubjects(accessToken, id) {
-  return fetch(API_SERVER_DOMAIN + `/api/subjects/${id}`, {
+async function deleteStudies(accessToken, id) {
+  return fetch(API_SERVER_DOMAIN + `/api/studies/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + accessToken,
@@ -17,13 +17,13 @@ async function deleteSubjects(accessToken, id) {
   });
 }
 
-export default async function DeleteSubjectsAPI(id) {
+export default async function DeleteStudiesAPI(id) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await deleteSubjects(accessToken, id);
+      await deleteStudies(accessToken, id);
 
       alert("삭제 완료");
       window.location.reload();
@@ -38,7 +38,7 @@ export default async function DeleteSubjectsAPI(id) {
             accessToken,
             refreshToken
           );
-          await deleteSubjects(newAccessToken, id);
+          await deleteStudies(newAccessToken, id);
 
           alert("삭제 완료");
           window.location.reload();

@@ -41,7 +41,7 @@ export default function SelfStudy() {
             width: "100%",
           }}
         >
-          {/* <div
+          <div
             style={{
               position: "relative",
               maxWidth: "1000px",
@@ -94,7 +94,7 @@ export default function SelfStudy() {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
               >
-                커리큘럼 스터디
+                정규 스터디
                 <style>
                   {`
                     @keyframes shadow-rotate {
@@ -323,8 +323,8 @@ export default function SelfStudy() {
                 ))}
               </svg>
             </div>
-          </div> */}
-          <LockedPagePrepare />
+          </div>
+          {/* <LockedPagePrepare /> */}
         </motion.div>
 
         <BottomInfo />

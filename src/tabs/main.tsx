@@ -78,7 +78,7 @@ export default function Main() {
           }}
         ></div>
 
-        {/* <motion.div
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -88,6 +88,7 @@ export default function Main() {
           }}
           className="main_1"
           style={{
+            position: "relative",
             width: "100%",
             display: "flex",
             justifyContent: "center",
@@ -101,8 +102,53 @@ export default function Main() {
               style={{ width: "100%" }}
             />
           </div>
-        </motion.div> */}
-        <motion.div
+          <div
+            style={{
+              position: "absolute",
+              bottom: "0",
+              width: "100%",
+              height: "150px",
+              background:
+                "linear-gradient(0deg, #111015 -10%, rgba(255, 255, 255, 0) 100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <motion.div
+              animate={{
+                y: [0, 10, 0], // 위아래 움직임
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity, // 무한 반복
+                ease: "easeInOut",
+              }}
+              style={{
+                position: "absolute",
+                bottom: "30px",
+                width: "100px",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "Pretendard-Regular",
+                  fontSize: "18px",
+                  color: "#fff",
+                  marginBottom: "10px",
+                }}
+              >
+                동아리 안내
+              </div>
+              <img
+                src="../img/icon/scroll.png"
+                alt="scroll"
+                style={{ width: "30px" }}
+              />
+            </motion.div>
+          </div>
+        </motion.div>
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -132,7 +178,7 @@ export default function Main() {
             />
           </div>
           <DDayCounter />
-        </motion.div>
+        </motion.div> */}
 
         <motion.div
           initial={{ opacity: 0, y: 100 }}
@@ -403,7 +449,7 @@ export default function Main() {
                     color: "#fff",
                   }}
                 >
-                  커리큘럼 스터디
+                  정규 스터디
                 </div>
                 <div
                   style={{

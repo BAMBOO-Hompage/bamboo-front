@@ -17,11 +17,8 @@ import PostWeeklyContentsAPI from "../../api/subjects/postWeelyContentsAPI.tsx";
 import GetSubjectsAPI from "../../api/subjects/getSubjectsAPI.tsx";
 import DeleteSubjectsAPI from "../../api/subjects/deleteSubjectsAPI.tsx";
 
-import SubjectData from "../../mockup_data/subject_data.tsx";
-
 import "../../App.css";
 
-const subject_data = SubjectData();
 type cohort = {
   cohortId: number;
   batch: number;
@@ -154,7 +151,7 @@ export default function CurriculumManagement() {
       const subjectResponse = await PostSubjectsAPI(
         e.Subject,
         e.Book,
-        e.Category === "커리큘럼",
+        e.Category === "정규",
         cohort.batch
       );
 
@@ -409,7 +406,16 @@ export default function CurriculumManagement() {
                           alt="leaf_list"
                           style={{ width: "9px" }}
                         />
-                        &emsp;{subject.name}
+                        &emsp;{subject.name}&emsp;
+                        <span
+                          style={{
+                            fontFamily: "Pretendard-Regular",
+                            fontSize: "16px",
+                            color: "#2cc295",
+                          }}
+                        >
+                          ({subject.isBook ? "정규" : "자율"})
+                        </span>
                       </div>
                       <div
                         style={{
@@ -450,7 +456,11 @@ export default function CurriculumManagement() {
                             e.currentTarget.style.textDecoration = "none";
                           }}
                           onClick={() => {
-                            DeleteSubjectsAPI(subject.subjectId);
+                            const confirm =
+                              window.confirm("커리큘럼을 삭제하시겠습니까?");
+                            if (confirm) {
+                              DeleteSubjectsAPI(subject.subjectId);
+                            }
                           }}
                         >
                           삭제
@@ -607,7 +617,7 @@ export default function CurriculumManagement() {
                       </div>
                       <div style={{ width: "100%" }}>
                         <select
-                          defaultValue="커리큘럼"
+                          defaultValue="정규"
                           style={{
                             width: "100%",
                             height: "40px",
@@ -625,10 +635,10 @@ export default function CurriculumManagement() {
                           })}
                         >
                           <option
-                            value="커리큘럼"
+                            value="정규"
                             style={{ background: "#111015", color: "#ddd" }}
                           >
-                            커리큘럼
+                            정규
                           </option>
                           <option
                             value="자율"

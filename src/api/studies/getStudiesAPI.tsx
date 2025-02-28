@@ -3,59 +3,63 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function deleteSubjects(accessToken, id) {
-  return fetch(API_SERVER_DOMAIN + `/api/subjects/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + accessToken,
-    },
-  }).then((response) => {
+async function GetStudies(accessToken, batchId, subjectId) {
+  return fetch(
+    `${API_SERVER_DOMAIN}/api/studies?batchId=${batchId}&subjectId=${subjectId}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  ).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to pdelete activies");
+      throw new Error("Failed to logout");
     }
     return response.json();
   });
 }
 
-export default async function DeleteSubjectsAPI(id) {
+export default async function GetStudiesAPI(batchId, subjectId) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await deleteSubjects(accessToken, id);
+      console.log(batchId, subjectId);
+      let data = await GetStudies(accessToken, batchId, subjectId);
+      console.log(data.result);
 
-      alert("삭제 완료");
-      window.location.reload();
-
-      return 0;
+      return data.result;
     } catch (error) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
 
-          const newAccessToken = await getAccessTokenWithRefreshToken(
+          let newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
-          await deleteSubjects(newAccessToken, id);
+          let data = await GetStudies(newAccessToken, batchId, subjectId);
+          console.log(data.result);
 
-          alert("삭제 완료");
-          window.location.reload();
+          return data.result;
         } catch (error) {
-          console.error("Failed to refresh accessToken: ", error);
-          alert("다시 로그인 해주세요.");
+          console.error("Failed to refresh access token:", error);
+          alert("다시 로그인해주세요.");
           removeCookie("accessToken");
           removeCookie("refreshToken");
           window.location.href = "/";
         }
       } else {
+        console.error("No RefreshToken");
         alert("다시 로그인 해주세요.");
         removeCookie("accessToken");
         window.location.href = "/";
       }
     }
   } else {
+    console.error("No AccessToken");
     alert("다시 로그인 해주세요.");
     window.location.href = "/";
   }
