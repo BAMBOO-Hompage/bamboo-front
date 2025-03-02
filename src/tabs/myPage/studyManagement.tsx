@@ -13,12 +13,7 @@ import GetStudiesAPI from "../../api/studies/getStudiesAPI.tsx";
 import PostStudiesAPI from "../../api/studies/postStudiesAPI.tsx";
 import DeleteStudiesAPI from "../../api/studies/deleteStudiesAPI.tsx";
 
-import SubjectData from "../../mockup_data/subject_data.tsx";
-import StudyData from "../../mockup_data/study_data.tsx";
-
 import "../../App.css";
-
-const study_data = StudyData();
 
 type cohort = {
   cohortId: number;
@@ -476,10 +471,16 @@ export default function StudyManagement() {
                                   minWidth: "80px",
                                 }}
                               >
-                                {/* {study.studyMaster.name}, */}
-                                {study.studyMembers.map((studyMember) => (
-                                  <> {studyMember.name},</>
-                                ))}
+                                {study.studyMaster.name},
+                                {study.studyMembers
+                                  .filter(
+                                    (member) =>
+                                      member.studentId !==
+                                      study.studyMaster.studentId
+                                  )
+                                  .map((studyMember) => (
+                                    <> {studyMember.name},</>
+                                  ))}
                               </div>
                               <div
                                 style={{
@@ -561,282 +562,280 @@ export default function StudyManagement() {
                     </div>
                   ))}
                 </div>
-                {isAddPopupOpen && (
-                  <form
-                    style={{
-                      position: "fixed",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: "80%",
-                      maxWidth: "600px",
-                      maxHeight: "80vh",
-                      overflowY: "auto",
-                      backgroundColor: "#111015",
-                      padding: "30px 30px 20px",
-                      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                      borderRadius: "10px",
-                      textAlign: "left",
-                      zIndex: 1000,
-                    }}
-                  >
-                    <div
-                      style={{
-                        marginBottom: "20px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "80%",
-                          height: "40px",
-                          backgroundColor: "transparent",
-                          borderRadius: "10px",
-                          fontFamily: "Pretendard-Bold",
-                          fontSize: "28px",
-                        }}
-                      >
-                        {selectedSubjectName}
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        marginBottom: "10px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        fontFamily: "Pretendard-Regular",
-                        fontSize: "18px",
-                        gap: "10px",
-                      }}
-                    >
-                      <div style={{ width: "200px", color: "#fff" }}>
-                        ·&emsp;분반
-                      </div>
-                      <div style={{ width: "100%" }}>
-                        <input
-                          id="section"
-                          type="text"
-                          placeholder={`분반을 입력해주세요.`}
-                          autoComplete="off"
-                          {...register("Section", {
-                            required: `분반을 입력해주세요.`,
-                          })}
-                          style={{
-                            flex: "1",
-                            width: "100%",
-                            minWidth: "150px",
-                            height: "40px",
-                            padding: "0 20px",
-                            backgroundColor: "#171717",
-                            borderRadius: "20px",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "18px",
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        marginBottom: "10px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        fontFamily: "Pretendard-Regular",
-                        fontSize: "18px",
-                        gap: "10px",
-                      }}
-                    >
-                      <div style={{ width: "200px", color: "#fff" }}>
-                        ·&emsp;팀이름
-                      </div>
-                      <div style={{ width: "100%" }}>
-                        <input
-                          id="teamName"
-                          type="text"
-                          placeholder={`팀이름을 입력해주세요.`}
-                          autoComplete="off"
-                          {...register("TeamName", {
-                            required: `팀이름을 입력해주세요.`,
-                          })}
-                          style={{
-                            flex: "1",
-                            width: "100%",
-                            minWidth: "150px",
-                            height: "40px",
-                            padding: "0 20px",
-                            backgroundColor: "#171717",
-                            borderRadius: "20px",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "18px",
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        marginBottom: "10px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        fontFamily: "Pretendard-Regular",
-                        fontSize: "18px",
-                        gap: "10px",
-                      }}
-                    >
-                      <div style={{ width: "200px", color: "#fff" }}>
-                        ·&emsp;팀장(학번)
-                      </div>
-                      <div style={{ width: "100%" }}>
-                        <input
-                          id="studyMaster"
-                          type="text"
-                          placeholder={`팀장을 입력해주세요.`}
-                          autoComplete="off"
-                          {...register("StudyMaster", {
-                            required: `팀장을 입력해주세요.`,
-                          })}
-                          style={{
-                            flex: "1",
-                            width: "100%",
-                            minWidth: "150px",
-                            height: "40px",
-                            padding: "0 20px",
-                            backgroundColor: "#171717",
-                            borderRadius: "20px",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "18px",
-                          }}
-                        />
-                      </div>
-                    </div>
-                    {memberInputs.map((member, index) => (
-                      <div
-                        key={index}
-                        style={{
-                          marginBottom: "10px",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          fontFamily: "Pretendard-Regular",
-                          fontSize: "18px",
-                          gap: "10px",
-                        }}
-                      >
-                        {index === 0 ? (
-                          <div style={{ width: "200px", color: "#fff" }}>
-                            ·&emsp;팀원(학번)
-                          </div>
-                        ) : (
-                          <div style={{ width: "200px" }}></div>
-                        )}
-                        <div
-                          style={{
-                            width: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-                          }}
-                        >
-                          <input
-                            id={`studyMember${index}`}
-                            type="text"
-                            placeholder={`팀원을 입력해주세요.`}
-                            autoComplete="off"
-                            {...register(`StudyMember${index}`, {
-                              required: `팀원을 입력해주세요.`,
-                            })}
-                            style={{
-                              flex: "1",
-                              width: "100%",
-                              minWidth: "150px",
-                              height: "40px",
-                              padding: "0 20px",
-                              backgroundColor: "#171717",
-                              borderRadius: "20px",
-                              fontFamily: "Pretendard-Light",
-                              fontSize: "18px",
-                            }}
-                          />
-                          {index === memberInputs.length - 1 && (
-                            <img
-                              src="../img/btn/plus_enabled.png"
-                              alt="plus"
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                opacity: "0.8",
-                                transition: "all 0.3s ease",
-                                cursor: "pointer",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.opacity = "1";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.opacity = "0.8";
-                              }}
-                              onClick={() => {
-                                addMember();
-                              }}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    ))}
-
-                    <div
-                      style={{
-                        width: "100%",
-                        marginTop: "20px",
-                        display: "flex",
-                        justifyContent: "right",
-                        gap: "10px",
-                      }}
-                    >
-                      <Button
-                        type="destructive"
-                        size="small"
-                        title="취소"
-                        onClick={() => {
-                          const deleteEnd = window.confirm(
-                            "스터디 추가를 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
-                          );
-                          if (deleteEnd) {
-                            setMemberInputs([""]);
-                            setIsAddPopupOpen(false);
-                          }
-                        }}
-                      />
-                      <Button
-                        type="primary"
-                        size="small"
-                        title="저장"
-                        onClick={handleSubmit(onValid, onInvalid)}
-                      />
-                    </div>
-                  </form>
-                )}
-                {isAddPopupOpen && (
-                  <div
-                    style={{
-                      position: "fixed",
-                      top: 0,
-                      left: 0,
-                      padding: "0 20px",
-                      width: "100%",
-                      height: "100%",
-                      backgroundColor: "rgba(0, 0, 0, 0.5)",
-                      zIndex: 999,
-                    }}
-                  />
-                )}
               </div>
             </motion.div>
           </div>
         </motion.div>
       </div>
+
+      {isAddPopupOpen && (
+        <form
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            maxWidth: "600px",
+            maxHeight: "80vh",
+            overflowY: "auto",
+            backgroundColor: "#111015",
+            padding: "30px 30px 20px",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            borderRadius: "10px",
+            textAlign: "left",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              marginBottom: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{
+                width: "80%",
+                height: "40px",
+                backgroundColor: "transparent",
+                borderRadius: "10px",
+                fontFamily: "Pretendard-Bold",
+                fontSize: "28px",
+              }}
+            >
+              {selectedSubjectName}
+            </div>
+          </div>
+          <div
+            style={{
+              marginBottom: "10px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontFamily: "Pretendard-Regular",
+              fontSize: "18px",
+              gap: "10px",
+            }}
+          >
+            <div style={{ width: "200px", color: "#fff" }}>·&emsp;분반</div>
+            <div style={{ width: "100%" }}>
+              <input
+                id="section"
+                type="text"
+                placeholder={`분반을 입력해주세요.`}
+                autoComplete="off"
+                {...register("Section", {
+                  required: `분반을 입력해주세요.`,
+                })}
+                style={{
+                  flex: "1",
+                  width: "100%",
+                  minWidth: "150px",
+                  height: "40px",
+                  padding: "0 20px",
+                  backgroundColor: "#171717",
+                  borderRadius: "20px",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "18px",
+                }}
+              />
+            </div>
+          </div>
+          <div
+            style={{
+              marginBottom: "10px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontFamily: "Pretendard-Regular",
+              fontSize: "18px",
+              gap: "10px",
+            }}
+          >
+            <div style={{ width: "200px", color: "#fff" }}>·&emsp;팀이름</div>
+            <div style={{ width: "100%" }}>
+              <input
+                id="teamName"
+                type="text"
+                placeholder={`팀이름을 입력해주세요.`}
+                autoComplete="off"
+                {...register("TeamName", {
+                  required: `팀이름을 입력해주세요.`,
+                })}
+                style={{
+                  flex: "1",
+                  width: "100%",
+                  minWidth: "150px",
+                  height: "40px",
+                  padding: "0 20px",
+                  backgroundColor: "#171717",
+                  borderRadius: "20px",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "18px",
+                }}
+              />
+            </div>
+          </div>
+          <div
+            style={{
+              marginBottom: "10px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontFamily: "Pretendard-Regular",
+              fontSize: "18px",
+              gap: "10px",
+            }}
+          >
+            <div style={{ width: "200px", color: "#fff" }}>
+              ·&emsp;팀장(학번)
+            </div>
+            <div style={{ width: "100%" }}>
+              <input
+                id="studyMaster"
+                type="text"
+                placeholder={`팀장을 입력해주세요.`}
+                autoComplete="off"
+                {...register("StudyMaster", {
+                  required: `팀장을 입력해주세요.`,
+                })}
+                style={{
+                  flex: "1",
+                  width: "100%",
+                  minWidth: "150px",
+                  height: "40px",
+                  padding: "0 20px",
+                  backgroundColor: "#171717",
+                  borderRadius: "20px",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "18px",
+                }}
+              />
+            </div>
+          </div>
+          {memberInputs.map((member, index) => (
+            <div
+              key={index}
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontFamily: "Pretendard-Regular",
+                fontSize: "18px",
+                gap: "10px",
+              }}
+            >
+              {index === 0 ? (
+                <div style={{ width: "200px", color: "#fff" }}>
+                  ·&emsp;팀원(학번)
+                </div>
+              ) : (
+                <div style={{ width: "200px" }}></div>
+              )}
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <input
+                  id={`studyMember${index}`}
+                  type="text"
+                  placeholder={`팀원을 입력해주세요.`}
+                  autoComplete="off"
+                  {...register(`StudyMember${index}`, {
+                    required: `팀원을 입력해주세요.`,
+                  })}
+                  style={{
+                    flex: "1",
+                    width: "100%",
+                    minWidth: "150px",
+                    height: "40px",
+                    padding: "0 20px",
+                    backgroundColor: "#171717",
+                    borderRadius: "20px",
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                  }}
+                />
+                {index === memberInputs.length - 1 && (
+                  <img
+                    src="../img/btn/plus_enabled.png"
+                    alt="plus"
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      opacity: "0.8",
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "0.8";
+                    }}
+                    onClick={() => {
+                      addMember();
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+
+          <div
+            style={{
+              width: "100%",
+              marginTop: "20px",
+              display: "flex",
+              justifyContent: "right",
+              gap: "10px",
+            }}
+          >
+            <Button
+              type="destructive"
+              size="small"
+              title="취소"
+              onClick={() => {
+                const deleteEnd = window.confirm(
+                  "스터디 추가를 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
+                );
+                if (deleteEnd) {
+                  setMemberInputs([""]);
+                  setIsAddPopupOpen(false);
+                }
+              }}
+            />
+            <Button
+              type="primary"
+              size="small"
+              title="저장"
+              onClick={handleSubmit(onValid, onInvalid)}
+            />
+          </div>
+        </form>
+      )}
+      {isAddPopupOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            padding: "0 20px",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 999,
+          }}
+        />
+      )}
+
       <BottomInfo />
     </div>
   );

@@ -37,6 +37,7 @@ import Project from "./tabs/dataCenter/project.tsx";
 import CurriculumStudy from "./tabs/study/curriculumStudy.tsx";
 import SelfStudy from "./tabs/study/selfStudy.tsx";
 import StudyPost from "./tabs/study/studyPost.tsx";
+import StudyAdd from "./tabs/study/studyAdd.tsx";
 import StudyRecruitment from "./tabs/study/studyRecruitment.tsx";
 
 import "./App.css";
@@ -88,6 +89,7 @@ function App() {
           <Route path="/curriculumStudy" element={<CurriculumStudy />} />
           <Route path="/selfStudy" element={<SelfStudy />} />
           <Route path="/studyPost" element={<StudyPost />} />
+          <Route path="/studyAdd" element={<StudyAdd />} />
           <Route path="/studyRecruitment" element={<StudyRecruitment />} />
         </Routes>
       </div>

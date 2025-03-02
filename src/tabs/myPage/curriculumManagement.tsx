@@ -80,7 +80,7 @@ export default function CurriculumManagement() {
 
         setIsEndActive(
           cohortResult.status === "활동 중" &&
-            (currentDate.getMonth() + 1 === 2 ||
+            (currentDate.getMonth() + 1 === 3 ||
               currentDate.getMonth() + 1 === 8) &&
             (currentDate.getFullYear() !== cohortResult.year ||
               (cohortResult.isFirstSemester === true &&
@@ -532,545 +532,538 @@ export default function CurriculumManagement() {
                     </div>
                   </div>
                 )}
-
-                {/* 커리큘럼 추가 팝업*/}
-                {isAddPopupOpen && (
-                  <form
-                    style={{
-                      position: "fixed",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: "80%",
-                      maxWidth: "600px",
-                      maxHeight: "80vh",
-                      overflowY: "auto",
-                      backgroundColor: "#111015",
-                      padding: "30px 30px 20px",
-                      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                      borderRadius: "10px",
-                      textAlign: "left",
-                      zIndex: 1000,
-                    }}
-                  >
-                    <div
-                      style={{
-                        marginBottom: "20px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <input
-                        id="subject"
-                        className="title"
-                        type="text"
-                        placeholder="과목을 입력해주세요."
-                        autoComplete="off"
-                        {...register("Subject", {
-                          required: "과목을 입력해주세요.",
-                        })}
-                        style={{
-                          width: "80%",
-                          height: "40px",
-                          backgroundColor: "transparent",
-                          borderRadius: "10px",
-                          fontFamily: "Pretendard-Bold",
-                          fontSize: "28px",
-                        }}
-                      />
-                      <img
-                        src="../img/btn/plus_enabled.png"
-                        alt="plus"
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          paddingRight: "10px",
-                          opacity: "0.8",
-                          transition: "all 0.3s ease",
-                          cursor: "pointer",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.opacity = "1";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.opacity = "0.8";
-                        }}
-                        onClick={() => {
-                          addCurriculum();
-                        }}
-                      />
-                    </div>
-                    <div
-                      style={{
-                        marginBottom: "10px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        fontFamily: "Pretendard-Regular",
-                        fontSize: "18px",
-                        gap: "10px",
-                      }}
-                    >
-                      <div style={{ width: "80px", color: "#fff" }}>
-                        ·&emsp;분류
-                      </div>
-                      <div style={{ width: "100%" }}>
-                        <select
-                          defaultValue="정규"
-                          style={{
-                            width: "100%",
-                            height: "40px",
-                            padding: "0 20px",
-                            backgroundColor: "#171717",
-                            borderRadius: "20px",
-                            border: "none",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "18px",
-                            color: "#2CC295",
-                            cursor: "pointer",
-                          }}
-                          {...register("Category", {
-                            required: "분류를 선택해주세요.",
-                          })}
-                        >
-                          <option
-                            value="정규"
-                            style={{ background: "#111015", color: "#ddd" }}
-                          >
-                            정규
-                          </option>
-                          <option
-                            value="자율"
-                            style={{
-                              background: "#111015",
-                              color: "#2CC295",
-                              cursor: "pointer",
-                            }}
-                          >
-                            자율
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        marginBottom: "10px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        fontFamily: "Pretendard-Regular",
-                        fontSize: "18px",
-                        gap: "10px",
-                      }}
-                    >
-                      <div style={{ width: "80px", color: "#fff" }}>
-                        ·&emsp;교재
-                      </div>
-                      <div style={{ width: "100%" }}>
-                        <input
-                          id="book"
-                          type="text"
-                          placeholder={`교재를 입력해주세요.`}
-                          autoComplete="off"
-                          {...register("Book", {
-                            required: `교재를 입력해주세요.`,
-                          })}
-                          style={{
-                            flex: "1",
-                            width: "100%",
-                            minWidth: "150px",
-                            height: "40px",
-                            padding: "0 20px",
-                            backgroundColor: "#171717",
-                            borderRadius: "20px",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "18px",
-                          }}
-                        />
-                      </div>
-                    </div>
-                    {curriculumList.map((curriculum, index) => (
-                      <div
-                        key={curriculum.week}
-                        style={{
-                          marginBottom: "10px",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-start",
-                          fontFamily: "Pretendard-Regular",
-                          fontSize: "18px",
-                          gap: "10px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: "80px",
-                            paddingTop: "10px",
-                            color: "#fff",
-                          }}
-                        >
-                          ·&emsp;{curriculum.week}주차
-                        </div>
-                        <div
-                          style={{
-                            width: "100%",
-                            backgroundColor: "#171717",
-                            borderRadius: "20px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "40px",
-                              borderRadius: "20px",
-                              margin: "0 auto",
-                              display: "flex",
-                              alignItems: "center",
-                              position: "relative",
-                            }}
-                          >
-                            <label
-                              htmlFor="period"
-                              style={{
-                                fontFamily: "Pretendard-Regular",
-                                fontSize: "clamp(14px, 2.2vw, 18px)",
-                                color: "#aaa",
-                                width: "80px",
-                                minWidth: "70px",
-                                paddingLeft: "20px",
-                              }}
-                            >
-                              기간 :
-                            </label>
-                            <input
-                              type="date"
-                              style={{
-                                width: "50%",
-                                fontFamily: "Pretendard-Light",
-                                fontSize: "18px",
-                                maxWidth: "160px",
-                              }}
-                              {...register(`StartDate${curriculum.week}`, {
-                                required: "시작일을 입력해주세요.",
-                              })}
-                            />
-                            ~
-                            <input
-                              type="date"
-                              style={{
-                                fontFamily: "Pretendard-Light",
-                                fontSize: "18px",
-                                marginLeft: "20px",
-                                width: "50%",
-                                maxWidth: "160px",
-                              }}
-                              {...register(`EndDate${curriculum.week}`, {
-                                required: "종료일을 입력해주세요.",
-                              })}
-                            />
-                            <img
-                              src="../../img/btn/delete_disabled.png"
-                              alt="delete"
-                              style={{
-                                position: "absolute",
-                                top: "10px",
-                                right: "10px",
-                                width: "25px",
-                                transition: "all 0.3s ease",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                setCurriculumList(
-                                  curriculumList
-                                    .filter((_, i) => i !== index) // 선택한 항목 제거
-                                    .map((curriculum, newIndex) => ({
-                                      ...curriculum,
-                                      week: newIndex + 1,
-                                    }))
-                                );
-                              }}
-                              onMouseEnter={(e) => {
-                                (e.target as HTMLImageElement).src =
-                                  "../../img/btn/delete_enabled.png";
-                              }}
-                              onMouseLeave={(e) => {
-                                (e.target as HTMLImageElement).src =
-                                  "../../img/btn/delete_disabled.png";
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "40px",
-                              borderRadius: "20px",
-                              margin: "0 auto",
-                              display: "flex",
-                              alignItems: "center",
-                              position: "relative",
-                            }}
-                          >
-                            <label
-                              htmlFor="page"
-                              style={{
-                                fontFamily: "Pretendard-Regular",
-                                fontSize: "clamp(14px, 2.2vw, 18px)",
-                                color: "#aaa",
-                                width: "80px",
-                                minWidth: "70px",
-                                paddingLeft: "20px",
-                              }}
-                            >
-                              페이지 :
-                            </label>
-                            <input
-                              type="number"
-                              placeholder="시작페이지 입력"
-                              style={{
-                                fontFamily: "Pretendard-Light",
-                                fontSize: "18px",
-                                maxWidth: "160px",
-                              }}
-                              {...register(`Startpage${curriculum.week}`, {
-                                required: "시작 페이지를 입력해주세요.",
-                              })}
-                            />
-                            ~
-                            <input
-                              type="number"
-                              placeholder="끝페이지 입력"
-                              style={{
-                                overflow: "hidden",
-                                fontFamily: "Pretendard-Light",
-                                fontSize: "18px",
-                                maxWidth: "160px",
-                                marginLeft: "20px",
-                              }}
-                              {...register(`EndPage${curriculum.week}`, {
-                                required: "종료 페이지를 입력해주세요.",
-                              })}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "40px",
-                              borderRadius: "20px",
-                              margin: "0 auto",
-                              display: "flex",
-                              alignItems: "center",
-                              position: "relative",
-                            }}
-                          >
-                            <label
-                              htmlFor="name"
-                              style={{
-                                fontFamily: "Pretendard-Regular",
-                                fontSize: "clamp(14px, 2.2vw, 18px)",
-                                color: "#aaa",
-                                minWidth: "80px",
-                                paddingLeft: "20px",
-                              }}
-                            >
-                              내용 :
-                            </label>
-                            <input
-                              id="content"
-                              placeholder="내용 입력"
-                              type="text"
-                              autoComplete="off"
-                              {...register(`Content${curriculum.week}`, {
-                                required: "내용을 입력해주세요.",
-                              })}
-                              style={{
-                                width: "100%",
-                                height: "30px",
-                                marginRight: "20px",
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                    <div
-                      style={{
-                        width: "100%",
-                        marginTop: "20px",
-                        display: "flex",
-                        justifyContent: "right",
-                        gap: "10px",
-                      }}
-                    >
-                      <Button
-                        type="destructive"
-                        size="small"
-                        title="취소"
-                        onClick={() => {
-                          const deleteEnd = window.confirm(
-                            "커리큘럼 추가를 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
-                          );
-                          if (deleteEnd) {
-                            setCurriculumList([
-                              {
-                                week: 1,
-                                content: "",
-                                startDate: undefined,
-                                endDate: undefined,
-                                startPage: null,
-                                endPage: null,
-                              },
-                            ]);
-                            setIsAddPopupOpen(!isAddPopupOpen);
-                          }
-                        }}
-                      />
-                      <Button
-                        type="primary"
-                        size="small"
-                        title="저장"
-                        onClick={handleSubmit(onValid, onInvalid)}
-                      />
-                    </div>
-                  </form>
-                )}
-                {isAddPopupOpen && (
-                  <div
-                    style={{
-                      position: "fixed",
-                      top: 0,
-                      left: 0,
-                      padding: "0 20px",
-                      width: "100%",
-                      height: "100%",
-                      backgroundColor: "rgba(0, 0, 0, 0.5)",
-                      zIndex: 999,
-                    }}
-                  />
-                )}
-
-                {/* 활동 종료 팝업*/}
-                {isEndPopupOpen && (
-                  <form
-                    style={{
-                      position: "fixed",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: "80%",
-                      maxWidth: "380px",
-                      backgroundColor: "#111015",
-                      padding: "30px 30px 20px",
-                      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                      borderRadius: "10px",
-                      textAlign: "left",
-                      zIndex: 1000,
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily: "Pretendard-Regular",
-                        fontSize: "16px",
-                        color: "#fff",
-                        marginBottom: "10px",
-                        lineHeight: "1.5",
-                      }}
-                    >
-                      <span style={{ color: "#FF5005" }}>
-                        "{cohort.batch}기 활동 종료"
-                      </span>
-                      를 입력하고 활동 종료 버튼을 눌러주세요.
-                      <br />
-                      (활동 종료 시 새로운 기수
-                      <span style={{ color: "#FF5005" }}>
-                        ({cohort.batch + 1}기)
-                      </span>
-                      가 자동 생성됩니다.)
-                      <br />
-                    </div>
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "40px",
-                        backgroundColor: "#111015",
-                        boxShadow:
-                          "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                        borderRadius: "20px",
-                        marginBottom: "20px",
-                      }}
-                    >
-                      <input
-                        id="confirmEnd"
-                        type="text"
-                        placeholder="활동 종료를 확인해주세요."
-                        autoComplete="off"
-                        value={confirmationText}
-                        {...register("End", {
-                          required: "활동 종료를 확인해주세요.",
-                          onChange: (e) => setConfirmationText(e.target.value),
-                        })}
-                        style={{
-                          width: "100%",
-                          maxWidth: "340px",
-                          padding: "0 20px",
-                          height: "40px",
-                          borderRadius: "10px",
-                          fontFamily: "Pretendard-Light",
-                          fontSize: "18px",
-                        }}
-                      />
-                    </div>
-                    <div
-                      style={{
-                        width: "250px",
-                        margin: "0 auto",
-                        display: "flex",
-                        gap: "10px",
-                      }}
-                    >
-                      <Button
-                        type="destructive"
-                        size="small"
-                        title="취소"
-                        onClick={() => {
-                          reset({ End: "" });
-                          setConfirmationText("");
-                          setIsEndPopupOpen(!isEndPopupOpen);
-                        }}
-                      />
-                      <Button
-                        type="primary"
-                        size="small"
-                        title="활동 종료"
-                        onClick={() => {
-                          handleEnd();
-                        }}
-                      />
-                    </div>
-                  </form>
-                )}
-                {isEndPopupOpen && (
-                  <div
-                    onClick={() => {
-                      setIsEndPopupOpen(!isEndPopupOpen);
-                    }}
-                    style={{
-                      position: "fixed",
-                      top: 0,
-                      left: 0,
-                      padding: "0 20px",
-                      width: "100%",
-                      height: "100%",
-                      backgroundColor: "rgba(0, 0, 0, 0.5)",
-                      zIndex: 999,
-                    }}
-                  />
-                )}
               </div>
             </motion.div>
           </div>
         </motion.div>
       </div>
+
+      {isAddPopupOpen && (
+        <form
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            maxWidth: "600px",
+            maxHeight: "80vh",
+            overflowY: "auto",
+            backgroundColor: "#111015",
+            padding: "30px 30px 20px",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            borderRadius: "10px",
+            textAlign: "left",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              marginBottom: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <input
+              id="subject"
+              className="title"
+              type="text"
+              placeholder="과목을 입력해주세요."
+              autoComplete="off"
+              {...register("Subject", {
+                required: "과목을 입력해주세요.",
+              })}
+              style={{
+                width: "80%",
+                height: "40px",
+                backgroundColor: "transparent",
+                borderRadius: "10px",
+                fontFamily: "Pretendard-Bold",
+                fontSize: "28px",
+              }}
+            />
+            <img
+              src="../img/btn/plus_enabled.png"
+              alt="plus"
+              style={{
+                width: "30px",
+                height: "30px",
+                paddingRight: "10px",
+                opacity: "0.8",
+                transition: "all 0.3s ease",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "1";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "0.8";
+              }}
+              onClick={() => {
+                addCurriculum();
+              }}
+            />
+          </div>
+          <div
+            style={{
+              marginBottom: "10px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontFamily: "Pretendard-Regular",
+              fontSize: "18px",
+              gap: "10px",
+            }}
+          >
+            <div style={{ width: "80px", color: "#fff" }}>·&emsp;분류</div>
+            <div style={{ width: "100%" }}>
+              <select
+                defaultValue="정규"
+                style={{
+                  width: "100%",
+                  height: "40px",
+                  padding: "0 20px",
+                  backgroundColor: "#171717",
+                  borderRadius: "20px",
+                  border: "none",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "18px",
+                  color: "#2CC295",
+                  cursor: "pointer",
+                }}
+                {...register("Category", {
+                  required: "분류를 선택해주세요.",
+                })}
+              >
+                <option
+                  value="정규"
+                  style={{ background: "#111015", color: "#ddd" }}
+                >
+                  정규
+                </option>
+                <option
+                  value="자율"
+                  style={{
+                    background: "#111015",
+                    color: "#2CC295",
+                    cursor: "pointer",
+                  }}
+                >
+                  자율
+                </option>
+              </select>
+            </div>
+          </div>
+          <div
+            style={{
+              marginBottom: "10px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontFamily: "Pretendard-Regular",
+              fontSize: "18px",
+              gap: "10px",
+            }}
+          >
+            <div style={{ width: "80px", color: "#fff" }}>·&emsp;교재</div>
+            <div style={{ width: "100%" }}>
+              <input
+                id="book"
+                type="text"
+                placeholder={`교재를 입력해주세요.`}
+                autoComplete="off"
+                {...register("Book", {
+                  required: `교재를 입력해주세요.`,
+                })}
+                style={{
+                  flex: "1",
+                  width: "100%",
+                  minWidth: "150px",
+                  height: "40px",
+                  padding: "0 20px",
+                  backgroundColor: "#171717",
+                  borderRadius: "20px",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "18px",
+                }}
+              />
+            </div>
+          </div>
+          {curriculumList.map((curriculum, index) => (
+            <div
+              key={curriculum.week}
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                fontFamily: "Pretendard-Regular",
+                fontSize: "18px",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  width: "80px",
+                  paddingTop: "10px",
+                  color: "#fff",
+                }}
+              >
+                ·&emsp;{curriculum.week}주차
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  backgroundColor: "#171717",
+                  borderRadius: "20px",
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    height: "40px",
+                    borderRadius: "20px",
+                    margin: "0 auto",
+                    display: "flex",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
+                  <label
+                    htmlFor="period"
+                    style={{
+                      fontFamily: "Pretendard-Regular",
+                      fontSize: "clamp(14px, 2.2vw, 18px)",
+                      color: "#aaa",
+                      width: "80px",
+                      minWidth: "70px",
+                      paddingLeft: "20px",
+                    }}
+                  >
+                    기간 :
+                  </label>
+                  <input
+                    type="date"
+                    style={{
+                      width: "50%",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      maxWidth: "160px",
+                    }}
+                    {...register(`StartDate${curriculum.week}`, {
+                      required: "시작일을 입력해주세요.",
+                    })}
+                  />
+                  ~
+                  <input
+                    type="date"
+                    style={{
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      marginLeft: "20px",
+                      width: "50%",
+                      maxWidth: "160px",
+                    }}
+                    {...register(`EndDate${curriculum.week}`, {
+                      required: "종료일을 입력해주세요.",
+                    })}
+                  />
+                  <img
+                    src="../../img/btn/delete_disabled.png"
+                    alt="delete"
+                    style={{
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      width: "25px",
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setCurriculumList(
+                        curriculumList
+                          .filter((_, i) => i !== index) // 선택한 항목 제거
+                          .map((curriculum, newIndex) => ({
+                            ...curriculum,
+                            week: newIndex + 1,
+                          }))
+                      );
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        "../../img/btn/delete_enabled.png";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        "../../img/btn/delete_disabled.png";
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "40px",
+                    borderRadius: "20px",
+                    margin: "0 auto",
+                    display: "flex",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
+                  <label
+                    htmlFor="page"
+                    style={{
+                      fontFamily: "Pretendard-Regular",
+                      fontSize: "clamp(14px, 2.2vw, 18px)",
+                      color: "#aaa",
+                      width: "80px",
+                      minWidth: "70px",
+                      paddingLeft: "20px",
+                    }}
+                  >
+                    페이지 :
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="시작페이지 입력"
+                    style={{
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      maxWidth: "160px",
+                    }}
+                    {...register(`Startpage${curriculum.week}`, {
+                      required: "시작 페이지를 입력해주세요.",
+                    })}
+                  />
+                  ~
+                  <input
+                    type="number"
+                    placeholder="끝페이지 입력"
+                    style={{
+                      overflow: "hidden",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      maxWidth: "160px",
+                      marginLeft: "20px",
+                    }}
+                    {...register(`EndPage${curriculum.week}`, {
+                      required: "종료 페이지를 입력해주세요.",
+                    })}
+                  />
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "40px",
+                    borderRadius: "20px",
+                    margin: "0 auto",
+                    display: "flex",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
+                  <label
+                    htmlFor="name"
+                    style={{
+                      fontFamily: "Pretendard-Regular",
+                      fontSize: "clamp(14px, 2.2vw, 18px)",
+                      color: "#aaa",
+                      minWidth: "80px",
+                      paddingLeft: "20px",
+                    }}
+                  >
+                    내용 :
+                  </label>
+                  <input
+                    id="content"
+                    placeholder="내용 입력"
+                    type="text"
+                    autoComplete="off"
+                    {...register(`Content${curriculum.week}`, {
+                      required: "내용을 입력해주세요.",
+                    })}
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      marginRight: "20px",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+          <div
+            style={{
+              width: "100%",
+              marginTop: "20px",
+              display: "flex",
+              justifyContent: "right",
+              gap: "10px",
+            }}
+          >
+            <Button
+              type="destructive"
+              size="small"
+              title="취소"
+              onClick={() => {
+                const deleteEnd = window.confirm(
+                  "커리큘럼 추가를 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
+                );
+                if (deleteEnd) {
+                  setCurriculumList([
+                    {
+                      week: 1,
+                      content: "",
+                      startDate: undefined,
+                      endDate: undefined,
+                      startPage: null,
+                      endPage: null,
+                    },
+                  ]);
+                  setIsAddPopupOpen(!isAddPopupOpen);
+                }
+              }}
+            />
+            <Button
+              type="primary"
+              size="small"
+              title="저장"
+              onClick={handleSubmit(onValid, onInvalid)}
+            />
+          </div>
+        </form>
+      )}
+      {isAddPopupOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            padding: "0 20px",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 999,
+          }}
+        />
+      )}
+
+      {isEndPopupOpen && (
+        <form
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            maxWidth: "380px",
+            backgroundColor: "#111015",
+            padding: "30px 30px 20px",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            borderRadius: "10px",
+            textAlign: "left",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "Pretendard-Regular",
+              fontSize: "16px",
+              color: "#fff",
+              marginBottom: "10px",
+              lineHeight: "1.5",
+            }}
+          >
+            <span style={{ color: "#FF5005" }}>
+              "{cohort.batch}기 활동 종료"
+            </span>
+            를 입력하고 활동 종료 버튼을 눌러주세요.
+            <br />
+            (활동 종료 시 새로운 기수
+            <span style={{ color: "#FF5005" }}>({cohort.batch + 1}기)</span>
+            가 자동 생성됩니다.)
+            <br />
+          </div>
+          <div
+            style={{
+              width: "100%",
+              height: "40px",
+              backgroundColor: "#111015",
+              boxShadow:
+                "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+              borderRadius: "20px",
+              marginBottom: "20px",
+            }}
+          >
+            <input
+              id="confirmEnd"
+              type="text"
+              placeholder="활동 종료를 확인해주세요."
+              autoComplete="off"
+              value={confirmationText}
+              {...register("End", {
+                required: "활동 종료를 확인해주세요.",
+                onChange: (e) => setConfirmationText(e.target.value),
+              })}
+              style={{
+                width: "100%",
+                maxWidth: "340px",
+                padding: "0 20px",
+                height: "40px",
+                borderRadius: "10px",
+                fontFamily: "Pretendard-Light",
+                fontSize: "18px",
+              }}
+            />
+          </div>
+          <div
+            style={{
+              width: "250px",
+              margin: "0 auto",
+              display: "flex",
+              gap: "10px",
+            }}
+          >
+            <Button
+              type="destructive"
+              size="small"
+              title="취소"
+              onClick={() => {
+                reset({ End: "" });
+                setConfirmationText("");
+                setIsEndPopupOpen(!isEndPopupOpen);
+              }}
+            />
+            <Button
+              type="primary"
+              size="small"
+              title="활동 종료"
+              onClick={() => {
+                handleEnd();
+              }}
+            />
+          </div>
+        </form>
+      )}
+      {isEndPopupOpen && (
+        <div
+          onClick={() => {
+            setIsEndPopupOpen(!isEndPopupOpen);
+          }}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            padding: "0 20px",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 999,
+          }}
+        />
+      )}
+
       <BottomInfo />
     </div>
   );

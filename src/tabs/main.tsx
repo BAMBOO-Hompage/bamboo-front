@@ -45,7 +45,7 @@ export default function Main() {
             playsInline
             style={{ width: "100%", objectFit: "cover" }}
           >
-            <source src="../../img/main_background2.mp4" type="video/mp4" />
+            <source src="../../img/main_background.mp4" type="video/mp4" />
           </video>
         </div>
         <div

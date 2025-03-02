@@ -41,8 +41,16 @@ export default function Notice() {
   const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
   const changePage = (page: number) => {
-    if (page < 1) page = 1;
-    if (page > totalPages) page = totalPages;
+    if (page < 1) {
+      page = 1;
+      alert("첫 페이지 입니다.");
+      return;
+    }
+    if (page > totalPages) {
+      page = totalPages;
+      alert("마지막 페이지 입니다.");
+      return;
+    }
     setSearchParams({
       post: postList,
       page: page.toString(),
@@ -296,58 +304,94 @@ export default function Notice() {
                 )}
               </div>
 
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: "770px",
-                  position: "absolute",
-                  bottom: "0",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <button className="bottom_tabs" onClick={() => changePage(1)}>
-                  {"<<"}
-                </button>
-                <button
-                  className="bottom_tabs"
-                  onClick={() => changePage(currentPage - 1)}
+              {postsToDisplay.length > 0 ? (
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "770px",
+                    marginTop: "100px",
+                    paddingBottom: "100px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
-                  {"<"}
-                </button>
-                {Array.from(
-                  { length: endPage - startPage + 1 },
-                  (_, i) => startPage + i
-                ).map((page) => (
                   <button
-                    key={page}
-                    className="bottom_tabs"
-                    onClick={() => changePage(page)}
-                    style={
-                      page === currentPage
-                        ? {
-                            textShadow: "0 0 0.1em, 0 0 0.1em",
-                            color: "#2CC295",
-                          }
-                        : {}
-                    }
+                    className="bottom_btn"
+                    style={{}}
+                    onClick={() => changePage(1)}
                   >
-                    {page}
+                    <img
+                      src="../img/btn/pageStart.png"
+                      alt="pageStart"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
                   </button>
-                ))}
-                <button
-                  className="bottom_tabs"
-                  onClick={() => changePage(currentPage + 1)}
-                >
-                  {">"}
-                </button>
-                <button
-                  className="bottom_tabs"
-                  onClick={() => changePage(totalPages)}
-                >
-                  {">>"}
-                </button>
-              </div>
+                  <button
+                    className="bottom_btn"
+                    style={{}}
+                    onClick={() => changePage(currentPage - 1)}
+                  >
+                    <img
+                      src="../img/btn/pagePrev.png"
+                      alt="pagePrev"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
+                  </button>
+                  {Array.from(
+                    { length: endPage - startPage + 1 },
+                    (_, i) => startPage + i
+                  ).map((page) => (
+                    <button
+                      key={page}
+                      className="bottom_tabs"
+                      onClick={() => changePage(page)}
+                      style={
+                        page === currentPage
+                          ? {
+                              textShadow: "0 0 0.1em, 0 0 0.1em",
+                              color: "#2CC295",
+                            }
+                          : {}
+                      }
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  <button
+                    className="bottom_btn"
+                    style={{}}
+                    onClick={() => changePage(currentPage + 1)}
+                  >
+                    <img
+                      src="../img/btn/pageNext.png"
+                      alt="pageNext"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
+                  </button>
+                  <button
+                    className="bottom_btn"
+                    style={{}}
+                    onClick={() => changePage(totalPages)}
+                  >
+                    <img
+                      src="../img/btn/pageEnd.png"
+                      alt="pageNext"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
             </motion.div>
           </div>
         </motion.div>

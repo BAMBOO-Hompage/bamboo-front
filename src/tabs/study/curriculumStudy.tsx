@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
-import StudyCard from "../../components/studyCard.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
@@ -13,12 +12,6 @@ import GetSubjectsAPI from "../../api/subjects/getSubjectsAPI.tsx";
 import GetStudiesAPI from "../../api/studies/getStudiesAPI.tsx";
 
 import "../../App.css";
-
-const study_data = [
-  { id: 1, x: 105, y: 0, width: 190, height: 190, label: "첫 번째 공간" },
-  { id: 2, x: 305, y: 0, width: 190, height: 190, label: "두 번째 공간" },
-  { id: 3, x: 505, y: 0, width: 190, height: 190, label: "세 번째 공간" },
-];
 
 type cohort = {
   cohortId: number;
@@ -86,11 +79,6 @@ export default function CurriculumStudy() {
   const [selectedCohort, setSelectedCohort] = useState(0);
   const [subjects, setSubjects] = useState<subject[]>([]);
   const [studies, setStudies] = useState<any>([]);
-  const [subjectRows, setSubjectRows] = useState({});
-
-  const calculateRows = (subjectName, filteredStudies) => {
-    return Math.ceil(filteredStudies.length / 4); // 해당 subject에 대한 row 계산
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -268,12 +256,12 @@ export default function CurriculumStudy() {
                   height: "30px",
                   marginTop: "20px",
                   marginBottom: "10px",
-                  border: "1px solid #fff",
+                  border: "1px solid #2cc295",
                   backgroundColor: "#171717",
-                  color: "#fff",
+                  color: "#2cc295",
                   textAlign: "center",
                   fontSize: "16px",
-                  borderRadius: "5px",
+                  borderRadius: "10px",
                   cursor: "pointer",
                 }}
                 value={selectedCohort}
@@ -308,12 +296,12 @@ export default function CurriculumStudy() {
                 <defs>
                   <filter
                     id="blurFilter"
-                    x="-250%"
-                    y="-250%"
-                    width="500%"
-                    height="500%"
+                    x="-200%"
+                    y="-200%"
+                    width="400%"
+                    height="400%"
                   >
-                    <feGaussianBlur stdDeviation="90" />
+                    <feGaussianBlur stdDeviation="80" />
                   </filter>
 
                   <mask id="hole-mask">
@@ -450,9 +438,9 @@ export default function CurriculumStudy() {
                             >
                               <rect
                                 x={x}
-                                y={y - 190 / 2}
-                                width={190}
-                                height={190}
+                                y={y - 190 / 2 + 2}
+                                width={190 - 4}
+                                height={190 - 4}
                                 fill={
                                   studyHovered === study.studyId
                                     ? "rgba(255, 255, 255, 0.2)"
@@ -463,10 +451,11 @@ export default function CurriculumStudy() {
                                     ? "#777"
                                     : "none"
                                 }
-                                strokeWidth="3"
+                                strokeWidth="2"
                                 rx="20"
                                 ry="20"
                                 cursor="pointer"
+                                style={{ boxSizing: "border-box" }}
                               />
                               <text
                                 x={x + 30}
@@ -492,7 +481,7 @@ export default function CurriculumStudy() {
                               </text>
                               <text
                                 x={x + 30}
-                                y={y - 190 / 2 + 150}
+                                y={y - 190 / 2 + 140}
                                 fontFamily="Pretendard-Regular"
                                 fontSize="16px"
                                 fill="#777"
@@ -506,6 +495,25 @@ export default function CurriculumStudy() {
                                       member.studentId !==
                                       study.studyMaster.studentId
                                   )
+                                  .slice(0, 1)
+                                  .map((studyMember) => `${studyMember.name} `)}
+                              </text>
+                              <text
+                                x={x + 30}
+                                y={y - 190 / 2 + 160}
+                                fontFamily="Pretendard-Regular"
+                                fontSize="16px"
+                                fill="#777"
+                                alignmentBaseline="hanging"
+                                cursor="pointer"
+                              >
+                                {study.studyMembers
+                                  .filter(
+                                    (member) =>
+                                      member.studentId !==
+                                      study.studyMaster.studentId
+                                  )
+                                  .slice(1, 4)
                                   .map((studyMember) => `${studyMember.name} `)}
                               </text>
                             </g>

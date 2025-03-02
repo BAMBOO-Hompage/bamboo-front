@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 
 import Button from "../../components/button.tsx";
@@ -75,13 +76,23 @@ type study = {
 };
 
 export default function StudyPost() {
-  const [expandedSections, setExpandedSections] = useState(false);
+  const {
+    register,
+    reset,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const postId = searchParams.get("id") || "";
   const currentPage = parseInt(searchParams.get("week") || "1", 10);
-  const postList = searchParams.get("post") || "Weekly Best";
+  const postList = searchParams.get("member") || "Weekly Best";
 
+  const [expandedSections, setExpandedSections] = useState(false);
+  const [isAttendancePopupOpen, setIsAttendancePopupOpen] =
+    useState<boolean>(false);
+  const [checkedMembers, setCheckedMembers] = useState<string[]>([]);
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [myData, setMyData] = useState<MyDataType>({
     studentId: "",
@@ -185,6 +196,37 @@ export default function StudyPost() {
     // });
   }, [postList, currentPage]);
 
+  const onValid = async (e) => {};
+
+  const onInvalid = (e) => {
+    console.log(e, "onInvalid");
+    alert("입력한 정보를 다시 확인해주세요.");
+  };
+
+  const handleCheckboxChange = (studentId: string) => {
+    setCheckedMembers((prev) =>
+      prev.includes(studentId)
+        ? prev.filter((id) => id !== studentId)
+        : [...prev, studentId]
+    );
+  };
+
+  const getCurrentWeek = (selectedSubject) => {
+    const today = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
+    );
+
+    const currentWeek = selectedSubject.weeklyContents.find(
+      ({ startDate, endDate }) => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        return today >= start && today <= end;
+      }
+    );
+
+    return currentWeek ? currentWeek : null;
+  };
+
   // 모바일 제한
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
 
@@ -234,12 +276,12 @@ export default function StudyPost() {
             <defs>
               <filter
                 id="blurFilter"
-                x="-250%"
-                y="-250%"
-                width="500%"
-                height="500%"
+                x="-200%"
+                y="-200%"
+                width="400%"
+                height="400%"
               >
-                <feGaussianBlur stdDeviation="90" />
+                <feGaussianBlur stdDeviation="80" />
               </filter>
             </defs>
             {[
@@ -506,11 +548,23 @@ export default function StudyPost() {
                         }px`,
                       }}
                     >
-                      <img
-                        src="../img/icon/attendance_disabled.png"
-                        alt="attendance"
-                        style={{ width: "100%" }}
-                      />
+                      {postData.attendances.find(
+                        (att) =>
+                          att.week === curriculum.week &&
+                          att.memberId === postData.studyMaster.studentId
+                      )?.status === "출석" ? (
+                        <img
+                          src="../img/icon/attendance_enabled.png"
+                          alt="attendance"
+                          style={{ width: "100%" }}
+                        />
+                      ) : (
+                        <img
+                          src="../img/icon/attendance_disabled.png"
+                          alt="attendance"
+                          style={{ width: "100%" }}
+                        />
+                      )}
                     </div>
                   );
                 })}
@@ -545,18 +599,72 @@ export default function StudyPost() {
                               }px`,
                             }}
                           >
-                            <img
-                              src="../img/icon/attendance_disabled.png"
-                              alt="attendance"
-                              style={{ width: "100%" }}
-                            />
+                            {postData.attendances.find(
+                              (att) =>
+                                att.week === curriculum.week &&
+                                att.memberId === studyMember.studentId
+                            )?.status === "출석" ? (
+                              <img
+                                src="../img/icon/attendance_enabled.png"
+                                alt="attendance"
+                                style={{ width: "100%" }}
+                              />
+                            ) : (
+                              <img
+                                src="../img/icon/attendance_disabled.png"
+                                alt="attendance"
+                                style={{ width: "100%" }}
+                              />
+                            )}
                           </div>
                         );
                       })}
                     </div>
                   );
                 })}
-              <div style={{ height: "20px" }}></div>
+              <div
+                style={{
+                  width: "100%",
+                  marginTop: "20px",
+                  marginBottom: "10px",
+                  display: "flex",
+                  justifyContent: "right",
+                }}
+              >
+                {myData.studentId === postData.studyMaster.studentId ? (
+                  <button
+                    type="button"
+                    style={{
+                      width: "70px",
+                      minWidth: "70px",
+                      fontFamily: "Pretendard-Regular",
+                      fontSize: "12px",
+                      backgroundColor: "#2CC295",
+                      color: "#fff",
+                      textAlign: "center",
+                      borderRadius: "20px",
+                      border: "none",
+                      padding: "5px",
+                      cursor: "pointer",
+                      zIndex: "0",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "0.8";
+                    }}
+                    onClick={() => {
+                      setIsAttendancePopupOpen(true);
+                    }}
+                  >
+                    출석하기
+                  </button>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
 
             <motion.div
@@ -611,8 +719,8 @@ export default function StudyPost() {
                       onClick={() => {
                         setSearchParams({
                           id: postId,
-                          post: "Weekly Best",
-                          week: "1",
+                          member: "Weekly Best",
+                          week: currentPage.toString(),
                         });
                       }}
                     >
@@ -632,8 +740,8 @@ export default function StudyPost() {
                       onClick={() => {
                         setSearchParams({
                           id: postId,
-                          post: postData.studyMaster.studentId,
-                          week: "1",
+                          member: postData.studyMaster.studentId,
+                          week: currentPage.toString(),
                         });
                       }}
                     >
@@ -660,8 +768,8 @@ export default function StudyPost() {
                           onClick={() => {
                             setSearchParams({
                               id: postId,
-                              post: studyMember.studentId,
-                              week: "1",
+                              member: studyMember.studentId,
+                              week: currentPage.toString(),
                             });
                           }}
                         >
@@ -721,7 +829,7 @@ export default function StudyPost() {
                           onClick={() => {
                             setSearchParams({
                               id: postId,
-                              post: postList,
+                              member: postList,
                               week: curriculum.week.toString(),
                             });
                           }}
@@ -753,6 +861,7 @@ export default function StudyPost() {
                               style={{
                                 display: "flex",
                                 justifyContent: "space-between",
+                                alignItems: "flex-end",
                               }}
                             >
                               <div
@@ -765,23 +874,31 @@ export default function StudyPost() {
                                 📖 {curriculum.week}주차 학습내용
                               </div>
                               {myData.studentId === postList ? (
-                                <img
-                                  src="../../img/btn/edit_enabled.png"
-                                  alt="edit"
+                                <Link
+                                  to={`/studyAdd?study=${postData.studyId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
                                   style={{
+                                    textDecoration: "none",
                                     width: "25px",
-                                    cursor: "pointer",
-                                    opacity: "0.8",
-                                    transition: "all 0.3s ease",
+                                    height: "25px",
                                   }}
-                                  onMouseEnter={(e) => {
-                                    e.currentTarget.style.opacity = "1";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.currentTarget.style.opacity = "0.8";
-                                  }}
-                                  onClick={() => {}}
-                                />
+                                >
+                                  <img
+                                    src="../../img/btn/edit_enabled.png"
+                                    alt="edit"
+                                    style={{
+                                      width: "25px",
+                                      cursor: "pointer",
+                                      opacity: "0.8",
+                                      transition: "all 0.3s ease",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.currentTarget.style.opacity = "1";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.currentTarget.style.opacity = "0.8";
+                                    }}
+                                  />
+                                </Link>
                               ) : (
                                 <></>
                               )}
@@ -832,6 +949,236 @@ export default function StudyPost() {
             </motion.div>
           </div>
         </motion.div>
+
+        {isAttendancePopupOpen && (
+          <form
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "80%",
+              maxWidth: "600px",
+              maxHeight: "80vh",
+              overflowY: "auto",
+              backgroundColor: "#111015",
+              padding: "30px 30px 20px",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+              borderRadius: "10px",
+              textAlign: "left",
+              zIndex: 1000,
+            }}
+          >
+            <div
+              style={{
+                marginBottom: "20px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  width: "80%",
+                  height: "40px",
+                  backgroundColor: "transparent",
+                  borderRadius: "10px",
+                  fontFamily: "Pretendard-Bold",
+                  fontSize: "28px",
+                  color: "#2cc295",
+                }}
+              >
+                {getCurrentWeek(selectedSubject).week}주차 출석 체크
+                <span
+                  style={{
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "16px",
+                    color: "#fff",
+                    marginLeft: "10px",
+                  }}
+                >
+                  (
+                  {getCurrentWeek(selectedSubject).startDate[0] +
+                    "/" +
+                    getCurrentWeek(selectedSubject).startDate[1] +
+                    "/" +
+                    getCurrentWeek(selectedSubject).startDate[2] +
+                    " ~ " +
+                    getCurrentWeek(selectedSubject).endDate[0] +
+                    "/" +
+                    getCurrentWeek(selectedSubject).endDate[1] +
+                    "/" +
+                    getCurrentWeek(selectedSubject).endDate[2]}
+                  )
+                </span>
+              </div>
+            </div>
+            <div
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontFamily: "Pretendard-Regular",
+                fontSize: "18px",
+                gap: "10px",
+              }}
+            >
+              <div style={{ display: "flex", alignContent: "center" }}>
+                {postData.studyMaster.name}
+                <label
+                  style={{
+                    marginLeft: "20px",
+                    display: "inline-block",
+                    width: "20px",
+                    height: "20px",
+                    borderRadius: "4px",
+                    border: "2px solid #2cc295",
+                    backgroundColor: checkedMembers.includes(
+                      postData.studyMaster.studentId
+                    )
+                      ? "#2cc295"
+                      : "transparent",
+                    cursor: "pointer",
+                    position: "relative",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={checkedMembers.includes(
+                      postData.studyMaster.studentId
+                    )}
+                    onChange={() =>
+                      handleCheckboxChange(postData.studyMaster.studentId)
+                    }
+                    style={{
+                      opacity: 0,
+                      position: "absolute",
+                      width: "100%",
+                      height: "100%",
+                      cursor: "pointer",
+                    }}
+                  />
+                  {checkedMembers.includes(postData.studyMaster.studentId) && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        color: "white",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      ✔
+                    </span>
+                  )}
+                </label>
+              </div>
+              {postData.studyMembers
+                .filter(
+                  (member) =>
+                    member.studentId !== postData.studyMaster.studentId
+                )
+                .map((studyMember) => (
+                  <div style={{ display: "flex", alignContent: "center" }}>
+                    {studyMember.name}
+                    <label
+                      style={{
+                        marginLeft: "20px",
+                        display: "inline-block",
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "4px",
+                        border: "2px solid #2cc295",
+                        backgroundColor: checkedMembers.includes(
+                          studyMember.studentId
+                        )
+                          ? "#2cc295"
+                          : "transparent",
+                        cursor: "pointer",
+                        position: "relative",
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checkedMembers.includes(studyMember.studentId)}
+                        onChange={() =>
+                          handleCheckboxChange(studyMember.studentId)
+                        }
+                        style={{
+                          opacity: 0,
+                          position: "absolute",
+                          width: "100%",
+                          height: "100%",
+                          cursor: "pointer",
+                        }}
+                      />
+                      {checkedMembers.includes(studyMember.studentId) && (
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            color: "white",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          ✔
+                        </span>
+                      )}
+                    </label>
+                  </div>
+                ))}
+            </div>
+            <div
+              style={{
+                width: "100%",
+                marginTop: "20px",
+                display: "flex",
+                justifyContent: "right",
+                gap: "10px",
+              }}
+            >
+              <Button
+                type="destructive"
+                size="small"
+                title="취소"
+                onClick={() => {
+                  const deleteEnd = window.confirm(
+                    "출석 체크를 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
+                  );
+                  if (deleteEnd) {
+                    setIsAttendancePopupOpen(false);
+                  }
+                }}
+              />
+              <Button
+                type="primary"
+                size="small"
+                title="저장"
+                onClick={handleSubmit(onValid, onInvalid)}
+              />
+            </div>
+          </form>
+        )}
+        {isAttendancePopupOpen && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              padding: "0 20px",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: 999,
+            }}
+          />
+        )}
 
         <BottomInfo />
       </div>

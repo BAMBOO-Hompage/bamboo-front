@@ -503,20 +503,39 @@ export default function Alexandria() {
               <div
                 style={{
                   width: "100%",
+                  maxWidth: "770px",
                   marginTop: "100px",
                   paddingBottom: "100px",
                   display: "flex",
                   justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <button className="bottom_tabs" onClick={() => changePage(1)}>
-                  {"<<"}
+                <button
+                  className="bottom_btn"
+                  style={{}}
+                  onClick={() => changePage(1)}
+                >
+                  <img
+                    src="../img/btn/pageStart.png"
+                    alt="pageStart"
+                    style={{
+                      height: "12px",
+                    }}
+                  />
                 </button>
                 <button
-                  className="bottom_tabs"
+                  className="bottom_btn"
+                  style={{}}
                   onClick={() => changePage(currentPage - 1)}
                 >
-                  {"<"}
+                  <img
+                    src="../img/btn/pagePrev.png"
+                    alt="pagePrev"
+                    style={{
+                      height: "12px",
+                    }}
+                  />
                 </button>
                 {Array.from(
                   { length: endPage - startPage + 1 },
@@ -539,16 +558,30 @@ export default function Alexandria() {
                   </button>
                 ))}
                 <button
-                  className="bottom_tabs"
+                  className="bottom_btn"
+                  style={{}}
                   onClick={() => changePage(currentPage + 1)}
                 >
-                  {">"}
+                  <img
+                    src="../img/btn/pageNext.png"
+                    alt="pageNext"
+                    style={{
+                      height: "12px",
+                    }}
+                  />
                 </button>
                 <button
-                  className="bottom_tabs"
+                  className="bottom_btn"
+                  style={{}}
                   onClick={() => changePage(totalPages)}
                 >
-                  {">>"}
+                  <img
+                    src="../img/btn/pageEnd.png"
+                    alt="pageNext"
+                    style={{
+                      height: "12px",
+                    }}
+                  />
                 </button>
               </div>
             ) : (

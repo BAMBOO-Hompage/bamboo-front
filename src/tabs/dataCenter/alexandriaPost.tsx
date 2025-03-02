@@ -16,10 +16,10 @@ import "../../App.css";
 
 type Paper = {
   libraryPostId: number;
+  member: { studentId: string; name: string };
   paperName: string;
   link: string;
   year: string;
-  speaker: { studentId: string; name: string };
   topic: string;
   tagNames: string[];
   content: string;
@@ -45,7 +45,7 @@ export default function AlexandriaPost() {
     paperName: "",
     link: "",
     year: "",
-    speaker: { studentId: "", name: "" },
+    member: { studentId: "", name: "" },
     topic: "",
     tagNames: [],
     content: "",
@@ -295,7 +295,7 @@ export default function AlexandriaPost() {
                   style={{
                     maxWidth: "960px",
                     minHeight: "40px",
-                    marginBottom: "20px",
+                    marginBottom: "10px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
@@ -317,6 +317,33 @@ export default function AlexandriaPost() {
                     {paperData.tagNames.map((tag) => `#${tag} `)}
                   </div>
                 </div>
+                <div
+                  style={{
+                    maxWidth: "960px",
+                    minHeight: "40px",
+                    marginBottom: "20px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    fontFamily: "Pretendard-Regular",
+                    fontSize: "clamp(14px, 2vw, 18px)",
+                  }}
+                >
+                  <div style={{ width: "140px", color: "#aaa" }}>
+                    ·&emsp;발표자
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      maxWidth: "850px",
+                      fontFamily: "Pretendard-Light",
+                      color: "#fff",
+                    }}
+                  >
+                    {paperData.member.name}
+                  </div>
+                </div>
+
                 <hr
                   style={{
                     width: "100%",
