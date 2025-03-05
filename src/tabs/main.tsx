@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import Nav from "../components/nav.tsx";
 import Snowfall from "../components/snowfall.tsx";
+import CherryBlossom from "../components/cherryBlossom.tsx";
 import DDayCounter from "../components/dDayCounter.tsx";
 import BottomInfo from "../components/bottomInfo.tsx";
 
@@ -23,7 +24,8 @@ export default function Main() {
 
   return (
     <div>
-      <Snowfall />
+      <CherryBlossom />
+      {/* <Snowfall /> */}
       <Nav type="main" />
       <div style={{ width: "100%" }}>
         <div
@@ -56,7 +58,7 @@ export default function Main() {
             left: "0",
             width: "100%",
             border: "none",
-            opacity: "0.6",
+            opacity: "0.3",
             backgroundColor: "#000",
             zIndex: "-1",
           }}

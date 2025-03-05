@@ -75,6 +75,8 @@ type study = {
   ];
 };
 
+const itemsPerPage = 8;
+
 export default function StudyPost() {
   const {
     register,
@@ -153,6 +155,46 @@ export default function StudyPost() {
       },
     ],
   });
+  const [displayWeeks, setDisplayWeeks] = useState([0, itemsPerPage]);
+  const [indexStart, setIndexStart] = useState(0);
+
+  const totalWeeks = selectedSubject.weeklyContents.length;
+
+  const handlePrev1 = () => {
+    if (displayWeeks[0] === 0) {
+      alert("첫 번째 페이지입니다.");
+      return;
+    }
+    setDisplayWeeks([
+      displayWeeks[0] - itemsPerPage,
+      displayWeeks[1] - itemsPerPage,
+    ]);
+  };
+
+  const handleNext1 = () => {
+    if (displayWeeks[1] >= totalWeeks) {
+      alert("마지막 페이지입니다.");
+      return;
+    }
+    setDisplayWeeks([
+      displayWeeks[0] + itemsPerPage,
+      displayWeeks[1] + itemsPerPage,
+    ]);
+  };
+  const handlePrev2 = () => {
+    if (indexStart === 0) {
+      alert("첫 페이지입니다.");
+      return;
+    }
+    setIndexStart((prev) => Math.max(prev - itemsPerPage, 0));
+  };
+  const handleNext2 = () => {
+    if (indexStart + itemsPerPage >= totalWeeks) {
+      alert("마지막 페이지입니다.");
+      return;
+    }
+    setIndexStart((prev) => prev + itemsPerPage);
+  };
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
@@ -505,25 +547,62 @@ export default function StudyPost() {
                   fontFamily: "Pretendard-Light",
                   fontSize: "14px",
                   color: "#2cc295",
-                  gap: "10px",
+                  gap: "5px",
                 }}
               >
                 <div style={{ width: "80px" }}>이름</div>
-                {selectedSubject.weeklyContents.map((curriculum) => {
-                  return (
+                <button
+                  onClick={handlePrev1}
+                  style={{
+                    width: "20px",
+                    height: "15px",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    opacity: displayWeeks[0] === 0 ? 0.3 : 1,
+                  }}
+                >
+                  <img
+                    src="../img/btn/pagePrev.png"
+                    alt="pageNext"
+                    style={{
+                      height: "15px",
+                    }}
+                  />
+                </button>
+                {selectedSubject.weeklyContents
+                  .slice(displayWeeks[0], displayWeeks[1])
+                  .map((curriculum) => (
                     <div
                       key={curriculum.weeklyContentId}
                       style={{
-                        width: `${
-                          920 / selectedSubject.weeklyContents.length - 10
-                        }px`,
+                        width: `${770 / 8}px`,
                       }}
                     >
                       {curriculum.week}주차
                     </div>
-                  );
-                })}
+                  ))}
+                <button
+                  onClick={handleNext1}
+                  style={{
+                    width: "20px",
+                    height: "15px",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    opacity: displayWeeks[1] >= totalWeeks ? 0.3 : 1,
+                  }}
+                >
+                  <img
+                    src="../img/btn/pageNext.png"
+                    alt="pageNext"
+                    style={{
+                      height: "15px",
+                    }}
+                  />
+                </button>
               </div>
+
               <div
                 style={{
                   width: "100%",
@@ -538,14 +617,15 @@ export default function StudyPost() {
                 }}
               >
                 <div style={{ width: "80px" }}>{postData.studyMaster.name}</div>
-                {selectedSubject.weeklyContents.map((curriculum) => {
-                  return (
+                <div style={{ width: "20px" }}></div>
+                {selectedSubject.weeklyContents
+                  .slice(displayWeeks[0], displayWeeks[1])
+                  .map((curriculum) => (
                     <div
                       key={curriculum.weeklyContentId}
                       style={{
-                        width: `${
-                          920 / selectedSubject.weeklyContents.length - 5
-                        }px`,
+                        width: `${770 / 8}px`,
+                        height: "16px",
                       }}
                     >
                       {postData.attendances.find(
@@ -556,72 +636,72 @@ export default function StudyPost() {
                         <img
                           src="../img/icon/attendance_enabled.png"
                           alt="attendance"
-                          style={{ width: "100%" }}
+                          style={{ width: `${770 / 8}px` }}
                         />
                       ) : (
                         <img
                           src="../img/icon/attendance_disabled.png"
                           alt="attendance"
-                          style={{ width: "100%" }}
+                          style={{ width: `100%` }}
                         />
                       )}
                     </div>
-                  );
-                })}
+                  ))}
+                <div style={{ width: "20px" }}></div>
               </div>
               {postData.studyMembers
                 .filter(
                   (member) =>
                     member.studentId !== postData.studyMaster.studentId
                 )
-                .map((studyMember) => {
-                  return (
-                    <div
-                      style={{
-                        width: "100%",
-                        marginBottom: "10px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "14px",
-                        color: "#fff",
-                        gap: "5px",
-                      }}
-                    >
-                      <div style={{ width: "80px" }}>{studyMember.name}</div>
-                      {selectedSubject.weeklyContents.map((curriculum) => {
-                        return (
-                          <div
-                            key={curriculum.weeklyContentId}
-                            style={{
-                              width: `${
-                                920 / selectedSubject.weeklyContents.length - 5
-                              }px`,
-                            }}
-                          >
-                            {postData.attendances.find(
-                              (att) =>
-                                att.week === curriculum.week &&
-                                att.memberId === studyMember.studentId
-                            )?.status === "출석" ? (
-                              <img
-                                src="../img/icon/attendance_enabled.png"
-                                alt="attendance"
-                                style={{ width: "100%" }}
-                              />
-                            ) : (
-                              <img
-                                src="../img/icon/attendance_disabled.png"
-                                alt="attendance"
-                                style={{ width: "100%" }}
-                              />
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
+                .map((studyMember) => (
+                  <div
+                    key={studyMember.studentId}
+                    style={{
+                      width: "100%",
+                      marginBottom: "10px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "14px",
+                      color: "#fff",
+                      gap: "5px",
+                    }}
+                  >
+                    <div style={{ width: "80px" }}>{studyMember.name}</div>
+                    <div style={{ width: "20px" }}></div>
+                    {selectedSubject.weeklyContents
+                      .slice(displayWeeks[0], displayWeeks[1])
+                      .map((curriculum) => (
+                        <div
+                          key={curriculum.weeklyContentId}
+                          style={{
+                            width: `${770 / 8}px`,
+                            height: "16px",
+                          }}
+                        >
+                          {postData.attendances.find(
+                            (att) =>
+                              att.week === curriculum.week &&
+                              att.memberId === postData.studyMaster.studentId
+                          )?.status === "출석" ? (
+                            <img
+                              src="../img/icon/attendance_enabled.png"
+                              alt="attendance"
+                              style={{ width: `100%` }}
+                            />
+                          ) : (
+                            <img
+                              src="../img/icon/attendance_disabled.png"
+                              alt="attendance"
+                              style={{ width: `100%` }}
+                            />
+                          )}
+                        </div>
+                      ))}
+                    <div style={{ width: "20px" }}></div>
+                  </div>
+                ))}
               <div
                 style={{
                   width: "100%",
@@ -800,7 +880,6 @@ export default function StudyPost() {
                 >
                   <div
                     style={{
-                      width: "100%",
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
@@ -809,14 +888,31 @@ export default function StudyPost() {
                       color: "#fff",
                     }}
                   >
-                    {selectedSubject.weeklyContents.map((curriculum) => {
-                      return (
+                    <button
+                      onClick={handlePrev2}
+                      style={{
+                        height: "15px",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        opacity: indexStart === 0 ? 0.3 : 1,
+                      }}
+                    >
+                      <img
+                        src="../img/btn/pagePrev.png"
+                        alt="pageNext"
+                        style={{
+                          height: "15px",
+                        }}
+                      />
+                    </button>
+                    {selectedSubject.weeklyContents
+                      .slice(indexStart, indexStart + itemsPerPage)
+                      .map((curriculum) => (
                         <div
                           key={curriculum.weeklyContentId}
                           style={{
-                            maxWidth: `${
-                              820 / selectedSubject.weeklyContents.length - 10
-                            }px`,
+                            maxWidth: `${820 / itemsPerPage - 10}px`,
                             padding: "5px 15px",
                             backgroundColor:
                               curriculum.week.toString() ===
@@ -828,7 +924,7 @@ export default function StudyPost() {
                           }}
                           onClick={() => {
                             setSearchParams({
-                              id: postId,
+                              id: postData.studyId.toString(),
                               member: postList,
                               week: curriculum.week.toString(),
                             });
@@ -836,8 +932,26 @@ export default function StudyPost() {
                         >
                           {curriculum.week}주차
                         </div>
-                      );
-                    })}
+                      ))}
+                    <button
+                      onClick={handleNext2}
+                      style={{
+                        height: "15px",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        opacity:
+                          indexStart + itemsPerPage >= totalWeeks ? 0.3 : 1,
+                      }}
+                    >
+                      <img
+                        src="../img/btn/pageNext.png"
+                        alt="pageNext"
+                        style={{
+                          height: "15px",
+                        }}
+                      />
+                    </button>
                   </div>
 
                   <div style={{ margin: "10px 0 20px" }}>
@@ -859,9 +973,10 @@ export default function StudyPost() {
                           >
                             <div
                               style={{
+                                height: "25px",
                                 display: "flex",
                                 justifyContent: "space-between",
-                                alignItems: "flex-end",
+                                alignItems: "center",
                               }}
                             >
                               <div
@@ -873,6 +988,37 @@ export default function StudyPost() {
                               >
                                 📖 {curriculum.week}주차 학습내용
                               </div>
+                              {postList === "Weekly Best" &&
+                              myData.studentId ===
+                                postData.studyMaster.studentId ? (
+                                <div
+                                  style={{
+                                    textDecoration: "none",
+                                    width: "25px",
+                                    height: "25px",
+                                  }}
+                                >
+                                  <img
+                                    src="../../img/btn/edit_enabled.png"
+                                    alt="edit"
+                                    style={{
+                                      width: "25px",
+                                      cursor: "pointer",
+                                      opacity: "0.8",
+                                      transition: "all 0.3s ease",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.currentTarget.style.opacity = "1";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.currentTarget.style.opacity = "0.8";
+                                    }}
+                                    onClick={() => {}}
+                                  />
+                                </div>
+                              ) : (
+                                <></>
+                              )}
                               {myData.studentId === postList ? (
                                 <Link
                                   to={`/studyAdd?study=${postData.studyId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}

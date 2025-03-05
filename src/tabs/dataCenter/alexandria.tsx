@@ -503,7 +503,7 @@ export default function Alexandria() {
               <div
                 style={{
                   width: "100%",
-                  maxWidth: "770px",
+                  maxWidth: "1000px",
                   marginTop: "100px",
                   paddingBottom: "100px",
                   display: "flex",

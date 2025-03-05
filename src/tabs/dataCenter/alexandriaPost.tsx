@@ -13,6 +13,7 @@ import DeletePapersAPI from "../../api/library-posts/deletePapersAPI.tsx";
 import MyPageAPI from "../../api/members/myPageAPI.tsx";
 
 import "../../App.css";
+import "../../style/Post.css";
 
 type Paper = {
   libraryPostId: number;
@@ -176,7 +177,9 @@ export default function AlexandriaPost() {
                   type="primary"
                   size="xsmall"
                   title="수정"
-                  onClick={() => {}}
+                  onClick={() => {
+                    window.location.href = `/alexandriaEdit?id=${paperData.libraryPostId}`;
+                  }}
                 />
               </div>
             </div>

@@ -191,30 +191,30 @@ export default function HallOfFame() {
                   fontSize: "18px",
                 }}
               >
-                {Array.from(
-                  { length: cohortLatest.batch - 5 + 1 },
-                  (_, i) => cohortLatest.batch - i
-                ).map((num) => (
-                  <div
-                    key={num}
-                    className="side_tabs"
-                    style={
-                      selectedCohort === num
-                        ? {
-                            boxSizing: "border-box",
-                            color: "#2CC295",
-                            borderRight: "1px solid #2cc295",
-                          }
-                        : {}
-                    }
-                    onClick={() => {
-                      setSearchParams({ cohort: num.toString(), page: "1" });
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                  >
-                    {num}기
-                  </div>
-                ))}
+                <div
+                  className="side_tabs"
+                  style={{
+                    boxSizing: "border-box",
+                    color: "#2CC295",
+                    borderRight: "1px solid #2cc295",
+                  }}
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                >
+                  명예의 전당
+                </div>
+                <div
+                  className="side_tabs"
+                  style={{
+                    boxSizing: "border-box",
+                  }}
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                >
+                  선발 결과
+                </div>
               </div>
             </div>
 
@@ -246,12 +246,14 @@ export default function HallOfFame() {
               >
                 <div
                   style={{
+                    display: "flex",
+                    alignItems: "flex-end",
                     fontFamily: "Pretendard-Bold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
                 >
-                  {selectedCohort}기{" "}
+                  {selectedCohort}기&nbsp;
                   <span
                     style={{
                       fontFamily: "Pretendard-Regular",
@@ -260,8 +262,32 @@ export default function HallOfFame() {
                     }}
                   >
                     ({cohortLatest.year}-
-                    {cohortLatest.isFirstSemester ? "1" : "2"})
+                    {cohortLatest.isFirstSemester ? "1" : "2"})&emsp;
                   </span>
+                  <select
+                    style={{
+                      width: "60px",
+                      height: "25px",
+                      border: "1px solid #2cc295",
+                      backgroundColor: "#171717",
+                      color: "#2cc295",
+                      textAlign: "center",
+                      fontSize: "12px",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                    }}
+                    value={selectedCohort}
+                    onChange={(e) => setSelectedCohort(Number(e.target.value))}
+                  >
+                    {Array.from(
+                      { length: cohortLatest.batch - 5 + 1 },
+                      (_, i) => cohortLatest.batch - i
+                    ).map((num) => (
+                      <option key={num} value={num}>
+                        {num}기
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 {checkAuth === 1 ? (
                   <div

@@ -10,6 +10,7 @@ import GetNoticeAPI from "../../api/notices/getNoticeAPI.tsx";
 import DeleteNoticesAPI from "../../api/notices/deleteNoticesAPI.tsx";
 
 import "../../App.css";
+import "../../style/Post.css";
 
 type Post = {
   noticeId: number;
@@ -156,7 +157,8 @@ export default function NoticePost() {
                       marginRight: "15px",
                     }}
                     onClick={() => {
-                      const confirm = window.confirm("정말 삭제하시겠습니까?");
+                      const confirm =
+                        window.confirm("게시물을 삭제하시겠습니까?");
                       if (confirm) {
                         DeleteNoticesAPI(postData.noticeId);
                       }
@@ -177,7 +179,7 @@ export default function NoticePost() {
                     alt="edit"
                     style={{ width: "30px", cursor: "pointer" }}
                     onClick={() => {
-                      window.location.href = "/noticeEdit";
+                      window.location.href = `/noticeEdit?id=${postData.noticeId}`;
                     }}
                   />
                 </div>
@@ -214,29 +216,54 @@ export default function NoticePost() {
                   ":" +
                   postData.createdAt[5]}
               </div>
-              <div>
+              {postData.files.length !== 0 && (
                 <div
                   style={{
-                    marginBottom: "15px",
+                    width: "100%",
+                    padding: "20px",
+                    backgroundColor: "#222",
+                    borderRadius: "20px",
+                    marginBottom: "30px",
                     fontFamily: "Pretendard-Light",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     color: "#fff",
-                    lineHeight: "22px",
+                    display: "flex",
+                    justifyContent: "left",
+                    alignItems: "flex-start",
                   }}
                 >
-                  <div
-                    className="container"
-                    dangerouslySetInnerHTML={{
-                      __html: sanitizer(`${postData.content}`),
-                    }}
-                    style={{
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
-                      color: "#fff",
-                      lineHeight: "1.4",
-                    }}
-                  />
+                  <div style={{ width: "100px", marginRight: "20px" }}>
+                    첨부 파일
+                  </div>
+                  <div>
+                    {postData.files.map((file, index) => (
+                      <div key={index} style={{ marginTop: "5px" }}>
+                        <a
+                          href={file}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: "#fff" }}
+                        >
+                          {file}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+              )}
+              <div>
+                <div
+                  className="container"
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizer(`${postData.content}`),
+                  }}
+                  style={{
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                    color: "#fff",
+                    lineHeight: "1.4",
+                  }}
+                />
               </div>
             </motion.div>
           </div>

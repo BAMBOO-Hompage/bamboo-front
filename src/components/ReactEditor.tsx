@@ -5,6 +5,8 @@ import styled from "styled-components";
 
 import ImageAPI from "../api/imageAPI.tsx";
 
+import "../style/Editor.css";
+
 function ReactModule() {
   return (
     <>
@@ -230,6 +232,7 @@ const ReactEditor = ({ content, setContent }) => {
         modules={modules}
         formats={formats}
         id="quillContent"
+        className="editor"
         value={content}
         placeholder={"내용을 작성해주세요."}
         onChange={handleTextChange}
