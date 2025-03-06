@@ -52,7 +52,7 @@ export default function ActivityEdit() {
       setActivityData(data);
       setShowImages(data.images || []);
     });
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     if (activityData.title) {
@@ -88,20 +88,19 @@ export default function ActivityEdit() {
     const imageLists = event.target.files; // 선택한 파일들
     let fileLists: File[] = [...images];
     let fileNameLists: string[] = [...showNewImages]; // 기존 저장된 파일명들
+    const currentImageCount = showImages.length + fileLists.length;
 
     for (let i = 0; i < imageLists.length; i++) {
-      const currentFileName: string = imageLists[i].name; // 파일명 가져오기
+      if (currentImageCount + i >= 10) {
+        break; // 최대 10장을 초과하면 추가 중단
+      }
+      const currentFileName = imageLists[i].name; // 파일명 가져오기
       fileLists.push(imageLists[i]);
       fileNameLists.push(currentFileName);
     }
 
-    if (fileNameLists.length > 10) {
-      fileLists = fileLists.slice(0, 10);
-      fileNameLists = fileNameLists.slice(0, 10); // 최대 10개 제한
-    }
-
     setImages(fileLists);
-    setShowNewImages(fileNameLists); // 파일명 리스트 저장
+    setShowNewImages(fileNameLists);
   };
 
   const handleDeleteImage = (id) => {
@@ -158,6 +157,7 @@ export default function ActivityEdit() {
             style={{
               position: "relative",
               width: "1000px",
+              padding: "0 20px",
               height: "850px",
               margin: "100px auto",
               display: "flex",

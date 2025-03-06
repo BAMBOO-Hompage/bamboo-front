@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
@@ -18,12 +18,37 @@ export default function PostAdd() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [content, setContent] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
   const [showFiles, setShowFiles] = useState<string[]>([]);
+
+  // useEffect(() => {
+  //   const handleBeforeUnload = (event) => {
+  //     event.preventDefault();
+  //     event.returnValue = "작성을 취소하시겠습니까"; // 새로고침, 창 닫기 방지
+  //   };
+
+  //   const handlePopState = () => {
+  //     if (!window.confirm("작성을 취소하시겠습니까")) {
+  //       window.history.pushState(null, "", window.location.href); // 강제적으로 페이지 유지
+  //     } else {
+  //       navigate(-1);
+  //     }
+  //   };
+
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  //   window.addEventListener("popstate", handlePopState);
+  //   window.history.pushState(null, "", window.location.href); // 뒤로 가기 시도 시 감지
+
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //     window.removeEventListener("popstate", handlePopState);
+  //   };
+  // }, [navigate]);
 
   const handleAddFiles = (event) => {
     const docLists = event.target.files; // 선택한 파일들

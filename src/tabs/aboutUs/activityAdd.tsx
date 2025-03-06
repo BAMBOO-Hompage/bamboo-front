@@ -92,6 +92,7 @@ export default function ActivityAdd() {
             style={{
               position: "relative",
               width: "1000px",
+              padding: "0 20px",
               height: "850px",
               margin: "100px auto",
               display: "flex",

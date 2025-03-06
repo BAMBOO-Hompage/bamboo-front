@@ -88,7 +88,7 @@ export default function AlexandriaAdd() {
           >
             <div
               style={{
-                marginBottom: "60px",
+                marginBottom: "40px",
                 textAlign: "center",
               }}
             >

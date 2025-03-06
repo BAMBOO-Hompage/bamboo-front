@@ -24,7 +24,6 @@ export default async function ImageAPI(formData) {
 
   if (accessToken) {
     try {
-      // FormData 확인
       for (const [key, value] of formData.entries()) {
         console.log(`${key}:`, value);
       }

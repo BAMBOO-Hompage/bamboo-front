@@ -1,74 +1,131 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import MDEditor from "@uiw/react-md-editor";
-import "react-markdown-editor-lite/lib/index.css";
 
 import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
+import ReactEditor from "../../components/ReactEditor.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
-import KnowledgeData from "../../mockup_data/knowledge_data.tsx";
+import GetKnowledgeAPI from "../../api/knowledges/getKnowledgeAPI.tsx";
+import PatchKnowledgesAPI from "../../api/knowledges/patchKnowledgesAPI.tsx";
+
 import "../../App.css";
 
-export default function KnowledgeEdit() {
+type Post = {
+  KnowledgeId: number;
+  member: { studentId: string; name: string };
+  title: string;
+  content: string;
+  type: string;
+  images: string[];
+  files: string[];
+  comments: string[];
+  createdAt: number[];
+  updatedAt: number[];
+};
+
+export default function PostEdit() {
   const {
     register,
     getValues,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const knowledgeData = KnowledgeData();
+  const [postData, setPostData] = useState<Post>({
+    KnowledgeId: 0,
+    member: { studentId: "", name: "" },
+    title: "",
+    content: "",
+    type: "",
+    images: [],
+    files: [],
+    comments: [],
+    createdAt: [],
+    updatedAt: [],
+  });
+  const [content, setContent] = useState<string>("");
+  const [files, setFiles] = useState<File[]>([]);
+  const [showFiles, setShowFiles] = useState<string[]>([]);
+  const [showNewFiles, setShowNewFiles] = useState<string[]>([]);
 
-  const postId = parseInt(localStorage.getItem("postId") || "0");
-  const editPost = knowledgeData.filter((post) => postId == post.id)[0];
+  useEffect(() => {
+    GetKnowledgeAPI(searchParams.get("id")).then((data) => {
+      setPostData(data);
+      setContent(data.content);
+      setShowFiles(data.files || []);
+    });
+  }, [searchParams]);
 
-  const [content, setContent] = useState<string>(editPost.content);
-  const [showImages, setShowImages] = useState<string[]>([]);
+  useEffect(() => {
+    if (postData.type) {
+      setValue("Category", postData.type);
+    }
+    if (postData.title) {
+      setValue("Title", postData.title);
+    }
+  }, [postData, setValue]);
 
-  const handleAddImages = (event) => {
-    const imageLists = event.target.files; // 선택한 파일들
-    let fileNameLists: string[] = [...showImages]; // 기존 저장된 파일명들
+  const handleAddFiles = (event) => {
+    const docLists = event.target.files; // 선택한 파일들
+    let fileLists: File[] = [...files];
+    let fileNameLists: string[] = [...showNewFiles]; // 기존 저장된 파일명들
 
-    for (let i = 0; i < imageLists.length; i++) {
-      const currentFileName: string = imageLists[i].name; // 파일명 가져오기
+    for (let i = 0; i < docLists.length; i++) {
+      const currentFileName: string = docLists[i].name; // 파일명 가져오기
+      fileLists.push(docLists[i]);
       fileNameLists.push(currentFileName);
     }
 
     if (fileNameLists.length > 4) {
-      fileNameLists = fileNameLists.slice(0, 4); // 최대 10개 제한
+      fileLists = fileLists.slice(0, 4);
+      fileNameLists = fileNameLists.slice(0, 4); // 최대 4개 제한
     }
 
-    setShowImages(fileNameLists); // 파일명 리스트 저장
+    setFiles(fileLists);
+    setShowNewFiles(fileNameLists); // 파일명 리스트 저장
+  };
+
+  const handleDeleteFile = (id) => {
+    setShowFiles(showFiles.filter((_, index) => index !== id));
+  };
+  const handleDeleteNewFile = (id) => {
+    setFiles(files.filter((_, index) => index !== id));
+    setShowNewFiles(showNewFiles.filter((_, index) => index !== id));
   };
 
   const onValid = (e) => {
     console.log(
-      e.Category + "\n" + e.Title + "\n" + content + "\n" + showImages,
+      e.Category + "\n" + e.Title + "\n" + content + "\n" + showFiles,
       "onValid"
     );
-    alert(
-      "카테고리 : " +
-        e.Category +
-        "\n제목 : " +
-        e.Title +
-        "\n내용 : \n" +
-        content +
-        "\n사진 : \n" +
-        showImages
+    const formData = new FormData();
+    const jsonData = JSON.stringify({
+      title: e.Title,
+      content: content,
+      type: e.Category,
+    });
+
+    formData.append(
+      "request",
+      new Blob([jsonData], { type: "application/json" })
     );
-    window.history.back();
+    if (files && files.length > 0) {
+      files.forEach((file) => {
+        formData.append("files", file);
+      });
+    }
+
+    PatchKnowledgesAPI(searchParams.get("id"), showFiles, formData);
   };
 
   const onInvalid = (e) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
-  };
-
-  // X버튼 클릭 시 이미지 삭제
-  const handleDeleteImage = (id) => {
-    setShowImages(showImages.filter((_, index) => index !== id));
   };
 
   return (
@@ -127,13 +184,13 @@ export default function KnowledgeEdit() {
                   className="side_tabs"
                   onClick={() => {
                     const deleteAdd =
-                      window.confirm("수정을 취소하시겠습니까?");
+                      window.confirm("작성을 취소하시겠습니까?");
                     if (deleteAdd) {
                       window.history.back();
                     }
                   }}
                 >
-                  수정 취소
+                  작성 취소
                 </div>
               </div>
             </div>
@@ -163,7 +220,7 @@ export default function KnowledgeEdit() {
                   color: "#fff",
                 }}
               >
-                게시글 수정
+                게시글 작성
               </div>
 
               <form style={{ width: "100%", marginTop: "40px" }}>
@@ -195,7 +252,7 @@ export default function KnowledgeEdit() {
                     }}
                   >
                     <select
-                      defaultValue={editPost.category}
+                      defaultValue={postData.type}
                       style={{
                         width: "100%",
                         height: "40px",
@@ -231,24 +288,24 @@ export default function KnowledgeEdit() {
                         학습 자료
                       </option>
                       <option
-                        value="기술 트랜드 및 뉴스"
+                        value="기술 트렌드 및 뉴스"
                         style={{
                           background: "#111015",
                           color: "#2CC295",
                           cursor: "pointer",
                         }}
                       >
-                        기술 트랜드 및 뉴스
+                        기술 트렌드 및 뉴스
                       </option>
                       <option
-                        value="커리어 및 취업 뉴스"
+                        value="커리어 및 취업 정보"
                         style={{
                           background: "#111015",
                           color: "#2CC295",
                           cursor: "pointer",
                         }}
                       >
-                        커리어 및 취업 뉴스
+                        커리어 및 취업 정보
                       </option>
                     </select>
                   </div>
@@ -269,7 +326,7 @@ export default function KnowledgeEdit() {
                   <input
                     id="title"
                     type="text"
-                    defaultValue={editPost.title}
+                    defaultValue={postData.title}
                     placeholder="제목을 입력해주세요."
                     {...register("Title", {
                       required: "제목을 입력해주세요.",
@@ -312,21 +369,7 @@ export default function KnowledgeEdit() {
                       padding: "20px",
                     }}
                   >
-                    <div data-color-mode="dark">
-                      <MDEditor
-                        height={460}
-                        value={content}
-                        onChange={(text) => {
-                          setContent(text || "");
-                        }}
-                        className="custom-md-editor"
-                        style={{
-                          resize: "none",
-                          backgroundColor: "transparent",
-                          border: "none",
-                        }}
-                      />
-                    </div>
+                    <ReactEditor content={content} setContent={setContent} />
                   </div>
                 </div>
 
@@ -341,7 +384,7 @@ export default function KnowledgeEdit() {
                     fontSize: "16px",
                   }}
                 >
-                  <div>사진 첨부</div>
+                  <div>파일 첨부</div>
                   <label
                     htmlFor="fileInput"
                     style={{
@@ -361,7 +404,7 @@ export default function KnowledgeEdit() {
                       display: "flex",
                       alignItems: "center",
                     }}
-                    onChange={handleAddImages}
+                    onChange={handleAddFiles}
                   >
                     <input
                       type="file"
@@ -374,9 +417,10 @@ export default function KnowledgeEdit() {
                     />
                     <img
                       src="../../img/btn/search_enabled.png"
+                      alt="search"
                       style={{ width: "25px" }}
                     />
-                    &emsp;사진 선택 (최대 4장)
+                    &emsp;첨부 파일 선택 (최대 4개)
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
@@ -387,13 +431,13 @@ export default function KnowledgeEdit() {
                     justifyContent: "right",
                   }}
                 >
-                  {showImages.length !== 0 ? (
+                  {showFiles.length !== 0 || showNewFiles.length !== 0 ? (
                     <div
                       style={{
                         width: "620px",
                         height: "110px",
                         padding: "20px",
-                        marginBottom: "30px",
+                        marginBottom: "20px",
                         backgroundColor: "#111015",
                         boxShadow:
                           "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
@@ -401,7 +445,7 @@ export default function KnowledgeEdit() {
                         overflow: "auto",
                       }}
                     >
-                      {showImages.map((image, id) => (
+                      {showFiles.map((file, id) => (
                         <div
                           key={id}
                           style={{
@@ -414,9 +458,10 @@ export default function KnowledgeEdit() {
                         >
                           <img
                             src="../../img/btn/delete_disabled.png"
+                            alt="delete"
                             style={{ width: "16px", cursor: "pointer" }}
                             onClick={() => {
-                              handleDeleteImage(id);
+                              handleDeleteFile(id);
                             }}
                             onMouseEnter={(e) => {
                               (e.target as HTMLImageElement).src =
@@ -427,7 +472,37 @@ export default function KnowledgeEdit() {
                                 "../../img/btn/delete_disabled.png";
                             }}
                           />
-                          &emsp;{image}
+                          &emsp;{file}
+                        </div>
+                      ))}
+                      {showNewFiles.map((file, id) => (
+                        <div
+                          key={id}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontFamily: "Pretendard-Light",
+                            fontSize: "14px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          <img
+                            src="../../img/btn/delete_disabled.png"
+                            alt="delete"
+                            style={{ width: "16px", cursor: "pointer" }}
+                            onClick={() => {
+                              handleDeleteNewFile(id);
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                "../../img/btn/delete_enabled.png";
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                "../../img/btn/delete_disabled.png";
+                            }}
+                          />
+                          &emsp;{file}
                         </div>
                       ))}
                     </div>
@@ -446,7 +521,7 @@ export default function KnowledgeEdit() {
                   <Button
                     type="primary"
                     size="small"
-                    title="수정 완료"
+                    title="작성 완료"
                     onClick={handleSubmit(onValid, onInvalid)}
                   />
                 </div>

@@ -43,8 +43,16 @@ export default function Knoledge() {
   const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
   const changePage = (page: number) => {
-    if (page < 1) page = 1;
-    if (page > totalPages) page = totalPages;
+    if (page < 1) {
+      page = 1;
+      alert("첫 페이지 입니다.");
+      return;
+    }
+    if (page > totalPages) {
+      page = totalPages;
+      alert("마지막 페이지 입니다.");
+      return;
+    }
     setSearchParams({
       post: postList,
       search: searchKeyword,
@@ -55,33 +63,33 @@ export default function Knoledge() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // useEffect(() => {
-  //   CheckAuthAPI().then((data) => {
-  //     if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
-  //       setCheckAuth(2);
-  //     } else if (data.role === "ROLE_ADMIN") {
-  //       setCheckAuth(1);
-  //     } else {
-  //       setCheckAuth(0);
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_ADMIN") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   GetKnowledgesAPI(postList, searchKeyword, currentPage).then((result) => {
-  //     console.log(result.content);
-  //     var knowledgeData = result.content;
-  //     setPostsToDisplay(knowledgeData);
-  //     setTotalPages(result.totalPages);
-  //     console.log(postsToDisplay, totalPages);
-  //   });
-  // }, [postList, searchKeyword, currentPage]);
+  useEffect(() => {
+    GetKnowledgesAPI(postList, searchKeyword, currentPage).then((result) => {
+      console.log(result.content);
+      var knowledgeData = result.content;
+      setPostsToDisplay(knowledgeData);
+      setTotalPages(result.totalPages);
+      console.log(postsToDisplay, totalPages);
+    });
+  }, [postList, searchKeyword, currentPage]);
 
   return (
     <div>
       <Nav type="community" />
       <div className="background">
-        {/* <motion.div
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -372,20 +380,38 @@ export default function Knoledge() {
                   style={{
                     width: "100%",
                     maxWidth: "770px",
-                    position: "absolute",
-                    bottom: "0",
+                    marginTop: "100px",
+                    paddingBottom: "100px",
                     display: "flex",
                     justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  <button className="bottom_tabs" onClick={() => changePage(1)}>
-                    {"<<"}
+                  <button
+                    className="bottom_btn"
+                    style={{}}
+                    onClick={() => changePage(1)}
+                  >
+                    <img
+                      src="../img/btn/pageStart.png"
+                      alt="pageStart"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
                   </button>
                   <button
-                    className="bottom_tabs"
+                    className="bottom_btn"
+                    style={{}}
                     onClick={() => changePage(currentPage - 1)}
                   >
-                    {"<"}
+                    <img
+                      src="../img/btn/pagePrev.png"
+                      alt="pagePrev"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
                   </button>
                   {Array.from(
                     { length: endPage - startPage + 1 },
@@ -408,16 +434,30 @@ export default function Knoledge() {
                     </button>
                   ))}
                   <button
-                    className="bottom_tabs"
+                    className="bottom_btn"
+                    style={{}}
                     onClick={() => changePage(currentPage + 1)}
                   >
-                    {">"}
+                    <img
+                      src="../img/btn/pageNext.png"
+                      alt="pageNext"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
                   </button>
                   <button
-                    className="bottom_tabs"
+                    className="bottom_btn"
+                    style={{}}
                     onClick={() => changePage(totalPages)}
                   >
-                    {">>"}
+                    <img
+                      src="../img/btn/pageEnd.png"
+                      alt="pageNext"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
                   </button>
                 </div>
               ) : (
@@ -425,9 +465,9 @@ export default function Knoledge() {
               )}
             </motion.div>
           </div>
-        </motion.div> */}
+        </motion.div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -440,7 +480,7 @@ export default function Knoledge() {
           }}
         >
           <LockedPagePrepare />
-        </motion.div>
+        </motion.div> */}
 
         <BottomInfo />
       </div>

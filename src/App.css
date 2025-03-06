@@ -54,6 +54,8 @@
 
 body {
   position: relative;
+  /* background: #fff;
+  color: #000; */
   background: #111015;
   color: #fff;
   text-align: center;
@@ -289,27 +291,4 @@ select {
 }
 .bottom_btn:hover {
   cursor: pointer;
-}
-
-.container h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 16px 0 8px;
-}
-.container p {
-  margin: 8px 0;
-}
-.container ol,
-ul {
-  margin: 8px 0;
-  padding-left: 30px;
-}
-.container li {
-  margin: 8px 0;
-}
-.container img {
-  max-width: 80%;
 }

@@ -3,32 +3,38 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function deleteSubjects(accessToken, id) {
-  return fetch(API_SERVER_DOMAIN + `/api/subjects/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + accessToken,
-    },
-  }).then((response) => {
+async function patchNotices(accessToken, id, fileUrls, formData) {
+  return fetch(
+    API_SERVER_DOMAIN +
+      `/api/notices/${id}?imageUrls=${[]}&fileUrls=${fileUrls}`,
+    {
+      method: "PATCH",
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+      body: formData,
+    }
+  ).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to pdelete activies");
+      throw new Error("Failed to post activies");
     }
     return response.json();
   });
 }
 
-export default async function DeleteSubjectsAPI(id) {
+export default async function PatchNoticesAPI(id, fileUrls, formData) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await deleteSubjects(accessToken, id);
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+      await patchNotices(accessToken, id, fileUrls, formData);
 
-      alert("삭제 완료");
-      window.location.reload();
-
-      return 0;
+      alert("수정 완료");
+      window.history.back();
     } catch (error) {
       if (refreshToken) {
         try {
@@ -38,10 +44,10 @@ export default async function DeleteSubjectsAPI(id) {
             accessToken,
             refreshToken
           );
-          await deleteSubjects(newAccessToken, id);
+          await patchNotices(newAccessToken, id, fileUrls, formData);
 
-          alert("삭제 완료");
-          window.location.reload();
+          alert("수정 완료");
+          window.history.back();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");
@@ -57,6 +63,7 @@ export default async function DeleteSubjectsAPI(id) {
     }
   } else {
     alert("다시 로그인 해주세요.");
+    removeCookie("refreshToken");
     window.location.href = "/";
   }
 }

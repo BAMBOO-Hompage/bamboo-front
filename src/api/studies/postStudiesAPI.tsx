@@ -3,32 +3,66 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function deleteSubjects(accessToken, id) {
-  return fetch(API_SERVER_DOMAIN + `/api/subjects/${id}`, {
-    method: "DELETE",
+async function postStudies(
+  accessToken,
+  subjectId,
+  teamName,
+  cohort,
+  isBook,
+  section,
+  studyMaster,
+  studyMembers
+) {
+  return fetch(API_SERVER_DOMAIN + "/api/studies", {
+    method: "POST",
     headers: {
+      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
+    body: JSON.stringify({
+      subjectId: subjectId,
+      teamName: teamName,
+      cohort: cohort,
+      isBook: isBook,
+      section: section,
+      studyMaster: studyMaster,
+      studyMembers: studyMembers,
+    }),
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to pdelete activies");
+      throw new Error("Failed to post activies");
     }
     return response.json();
   });
 }
 
-export default async function DeleteSubjectsAPI(id) {
+export default async function PostStudiesAPI(
+  subjectId,
+  teamName,
+  cohort,
+  isBook,
+  section,
+  studyMaster,
+  studyMembers
+) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await deleteSubjects(accessToken, id);
+      let data = await postStudies(
+        accessToken,
+        subjectId,
+        teamName,
+        cohort,
+        isBook,
+        section,
+        studyMaster,
+        studyMembers
+      );
+      console.log(data.result);
 
-      alert("삭제 완료");
-      window.location.reload();
-
-      return 0;
+      return data.result;
     } catch (error) {
       if (refreshToken) {
         try {
@@ -38,10 +72,19 @@ export default async function DeleteSubjectsAPI(id) {
             accessToken,
             refreshToken
           );
-          await deleteSubjects(newAccessToken, id);
+          let data = await postStudies(
+            newAccessToken,
+            subjectId,
+            teamName,
+            cohort,
+            isBook,
+            section,
+            studyMaster,
+            studyMembers
+          );
+          console.log(data.result);
 
-          alert("삭제 완료");
-          window.location.reload();
+          return data.result;
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");
@@ -57,6 +100,7 @@ export default async function DeleteSubjectsAPI(id) {
     }
   } else {
     alert("다시 로그인 해주세요.");
+    removeCookie("refreshToken");
     window.location.href = "/";
   }
 }

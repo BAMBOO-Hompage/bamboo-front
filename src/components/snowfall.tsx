@@ -10,20 +10,28 @@ const Snowfall = () => {
     size: number;
     speed: number;
     opacity: number;
+    angle: number; // 좌우 흔들림을 위한 각도
+    angleSpeed: number; // 각도 변화 속도 (눈송이마다 다르게 설정)
 
     constructor(x: number, y: number, size: number, speed: number) {
       this.x = x;
       this.y = y;
       this.size = size;
       this.speed = speed;
-      this.opacity = Math.random() * 0.2 + 0.5; // 눈송이의 불투명도 설정
+      this.opacity = Math.random() * 0.2 + 0.5;
+      this.angle = Math.random() * Math.PI * 2; // 0 ~ 360도 범위에서 랜덤 초기화
+      this.angleSpeed = Math.random() * 0.02 + 0.005; // 눈송이마다 다르게 설정
     }
 
     update() {
       this.y += this.speed;
+      this.x += Math.sin(this.angle) * 1.5; // 좌우 흔들림 효과 적용
+      this.angle += this.angleSpeed; // 각도 업데이트로 지속적인 흔들림 적용
+
       if (this.y > window.innerHeight) {
         this.y = -this.size;
         this.x = Math.random() * window.innerWidth;
+        this.angle = Math.random() * Math.PI * 2;
       }
     }
 

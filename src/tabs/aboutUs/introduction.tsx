@@ -446,7 +446,7 @@ export default function Introduction() {
                     color: "#fff",
                   }}
                 >
-                  커리큘럼 스터디
+                  정규 스터디
                 </div>
                 <div
                   style={{

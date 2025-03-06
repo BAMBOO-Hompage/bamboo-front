@@ -6,8 +6,8 @@ var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 async function GetSubjects(accessToken, isBook, batch) {
   const params = new URLSearchParams();
 
-  if (isBook && isBook.trim()) {
-    params.append("커리큘럼 유무", isBook.trim());
+  if (typeof isBook === "boolean") {
+    params.append("커리큘럼 유무", isBook ? "true" : "false");
   }
   params.append("기수", batch.toString());
   console.log(params.toString());

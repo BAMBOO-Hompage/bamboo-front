@@ -10,6 +10,7 @@ import GetKnowledgeAPI from "../../api/knowledges/getKnowledgeAPI.tsx";
 import DeleteKnowledgesAPI from "../../api/knowledges/deleteKnowledgesAPI.tsx";
 
 import "../../App.css";
+import "../../style/Post.css";
 
 type Post = {
   knowledgeId: number;
@@ -180,7 +181,7 @@ export default function KnowledgePost() {
                     alt="edit"
                     style={{ width: "30px", cursor: "pointer" }}
                     onClick={() => {
-                      window.location.href = "/knowledgeEdit";
+                      window.location.href = `/knowledgeEdit?id=${postData.knowledgeId}`;
                     }}
                   />
                 </div>
