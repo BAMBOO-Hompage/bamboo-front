@@ -157,6 +157,7 @@ export default function StudyPost() {
   });
   const [displayWeeks, setDisplayWeeks] = useState([0, itemsPerPage]);
   const [indexStart, setIndexStart] = useState(0);
+  const [emptySlots, setEmptySlots] = useState(0);
 
   const totalWeeks = selectedSubject.weeklyContents.length;
 
@@ -219,6 +220,8 @@ export default function StudyPost() {
         );
         const subjectResult = await GetSubjectAPI(targetSubject.subjectId);
         setSelectedSubject(subjectResult);
+        const remainder = subjectResult.weeklyContents.length % itemsPerPage;
+        setEmptySlots(remainder === 0 ? 0 : itemsPerPage - remainder);
         console.log(subjectResult);
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
@@ -582,6 +585,22 @@ export default function StudyPost() {
                       {curriculum.week}주차
                     </div>
                   ))}
+                {displayWeeks[1] >= totalWeeks ? (
+                  Array(emptySlots)
+                    .fill(null)
+                    .map((_, i) => (
+                      <div
+                        key={`empty-${i}`}
+                        style={{
+                          width: `${770 / 8}px`,
+                        }}
+                      >
+                        &emsp;&emsp;
+                      </div>
+                    ))
+                ) : (
+                  <></>
+                )}
                 <button
                   onClick={handleNext1}
                   style={{
@@ -636,7 +655,7 @@ export default function StudyPost() {
                         <img
                           src="../img/icon/attendance_enabled.png"
                           alt="attendance"
-                          style={{ width: `${770 / 8}px` }}
+                          style={{ width: `100%` }}
                         />
                       ) : (
                         <img
@@ -647,6 +666,22 @@ export default function StudyPost() {
                       )}
                     </div>
                   ))}
+                {displayWeeks[1] >= totalWeeks ? (
+                  Array(emptySlots)
+                    .fill(null)
+                    .map((_, i) => (
+                      <div
+                        key={`empty-${i}`}
+                        style={{
+                          width: `${770 / 8}px`,
+                        }}
+                      >
+                        &emsp;&emsp;
+                      </div>
+                    ))
+                ) : (
+                  <></>
+                )}
                 <div style={{ width: "20px" }}></div>
               </div>
               {postData.studyMembers
@@ -699,6 +734,22 @@ export default function StudyPost() {
                           )}
                         </div>
                       ))}
+                    {displayWeeks[1] >= totalWeeks ? (
+                      Array(emptySlots)
+                        .fill(null)
+                        .map((_, i) => (
+                          <div
+                            key={`empty-${i}`}
+                            style={{
+                              width: `${770 / 8}px`,
+                            }}
+                          >
+                            &emsp;&emsp;
+                          </div>
+                        ))
+                    ) : (
+                      <></>
+                    )}
                     <div style={{ width: "20px" }}></div>
                   </div>
                 ))}
@@ -908,31 +959,50 @@ export default function StudyPost() {
                     </button>
                     {selectedSubject.weeklyContents
                       .slice(indexStart, indexStart + itemsPerPage)
-                      .map((curriculum) => (
-                        <div
-                          key={curriculum.weeklyContentId}
-                          style={{
-                            maxWidth: `${820 / itemsPerPage - 10}px`,
-                            padding: "5px 15px",
-                            backgroundColor:
-                              curriculum.week.toString() ===
-                              searchParams.get("week")
-                                ? "#2cc295"
-                                : "rgba(17, 16, 21, 0.5)",
-                            borderRadius: "15px",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            setSearchParams({
-                              id: postData.studyId.toString(),
-                              member: postList,
-                              week: curriculum.week.toString(),
-                            });
-                          }}
-                        >
-                          {curriculum.week}주차
-                        </div>
-                      ))}
+                      .map((curriculum) => {
+                        return (
+                          <div
+                            key={curriculum.weeklyContentId}
+                            style={{
+                              maxWidth: `${820 / itemsPerPage - 10}px`,
+                              padding: "5px 15px",
+                              backgroundColor:
+                                curriculum.week.toString() ===
+                                searchParams.get("week")
+                                  ? "#2cc295"
+                                  : "rgba(17, 16, 21, 0.5)",
+                              borderRadius: "15px",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              setSearchParams({
+                                id: postData.studyId.toString(),
+                                member: postList,
+                                week: curriculum.week.toString(),
+                              });
+                            }}
+                          >
+                            {curriculum.week}주차
+                          </div>
+                        );
+                      })}
+                    {indexStart + itemsPerPage >= totalWeeks ? (
+                      Array(emptySlots)
+                        .fill(null)
+                        .map((_, i) => (
+                          <div
+                            key={`empty-${i}`}
+                            style={{
+                              maxWidth: `${820 / itemsPerPage - 10}px`,
+                              padding: "5px 15px",
+                            }}
+                          >
+                            &emsp;&emsp;
+                          </div>
+                        ))
+                    ) : (
+                      <></>
+                    )}
                     <button
                       onClick={handleNext2}
                       style={{

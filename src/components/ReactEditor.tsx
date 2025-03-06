@@ -1,11 +1,14 @@
 import React, { useMemo, useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { UnprivilegedEditor, Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { ImageActions } from "@xeger/quill-image-actions";
 import styled from "styled-components";
 
 import ImageAPI from "../api/imageAPI.tsx";
 
 import "../style/Editor.css";
+
+Quill.register("modules/imageActions", ImageActions);
 
 function ReactModule() {
   return (
@@ -208,13 +211,19 @@ const ReactEditor = ({ content, setContent }) => {
     "script",
     "code-block",
     "clean",
+    "height",
+    "width",
   ];
 
   const modules: {} = useMemo(
     () => ({
+      imageActions: {},
       toolbar: {
         container: "#toolBar",
         handlers: { image: imageHandler },
+        ImageResize: {
+          modules: ["Resize"],
+        },
       },
       clipboard: {
         matchVisual: false,
