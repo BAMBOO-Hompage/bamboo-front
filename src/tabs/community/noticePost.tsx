@@ -6,6 +6,7 @@ import dompurify from "dompurify";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
+import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetNoticeAPI from "../../api/notices/getNoticeAPI.tsx";
 import DeleteNoticesAPI from "../../api/notices/deleteNoticesAPI.tsx";
 
@@ -30,6 +31,7 @@ export default function NoticePost() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [checkAuth, setCheckAuth] = useState<number>(0);
   const [postData, setPostData] = useState<Post>({
     noticeId: 0,
     member: { studentId: "", name: "" },
@@ -48,6 +50,17 @@ export default function NoticePost() {
       setPostData(data);
     });
   }, [searchParams]);
+  useEffect(() => {
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_MEMBER") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+    });
+  }, []);
 
   return (
     <div>
@@ -68,7 +81,8 @@ export default function NoticePost() {
           <div
             style={{
               position: "relative",
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 20px",
               minHeight: "960px",
               margin: "0 auto",
               marginTop: "100px",
@@ -147,42 +161,46 @@ export default function NoticePost() {
                 >
                   {postData.type}
                 </div>
-                <div style={{ height: "30px" }}>
-                  <img
-                    src="../../img/btn/trash_disabled.png"
-                    alt="trash"
-                    style={{
-                      width: "30px",
-                      cursor: "pointer",
-                      marginRight: "15px",
-                    }}
-                    onClick={() => {
-                      const confirm =
-                        window.confirm("게시물을 삭제하시겠습니까?");
-                      if (confirm) {
-                        DeleteNoticesAPI(postData.noticeId);
-                      }
-                    }}
-                    onMouseOver={(e) => {
-                      (
-                        e.target as HTMLImageElement
-                      ).src = `../../img/btn/trash_enabled.png`;
-                    }}
-                    onMouseOut={(e) => {
-                      (
-                        e.target as HTMLImageElement
-                      ).src = `../../img/btn/trash_disabled.png`;
-                    }}
-                  />
-                  <img
-                    src="../../img/btn/edit_enabled.png"
-                    alt="edit"
-                    style={{ width: "30px", cursor: "pointer" }}
-                    onClick={() => {
-                      window.location.href = `/noticeEdit?id=${postData.noticeId}`;
-                    }}
-                  />
-                </div>
+                {checkAuth === 2 ? (
+                  <div style={{ height: "30px" }}>
+                    <img
+                      src="../../img/btn/trash_disabled.png"
+                      alt="trash"
+                      style={{
+                        width: "30px",
+                        cursor: "pointer",
+                        marginRight: "15px",
+                      }}
+                      onClick={() => {
+                        const confirm =
+                          window.confirm("게시물을 삭제하시겠습니까?");
+                        if (confirm) {
+                          DeleteNoticesAPI(postData.noticeId);
+                        }
+                      }}
+                      onMouseOver={(e) => {
+                        (
+                          e.target as HTMLImageElement
+                        ).src = `../../img/btn/trash_enabled.png`;
+                      }}
+                      onMouseOut={(e) => {
+                        (
+                          e.target as HTMLImageElement
+                        ).src = `../../img/btn/trash_disabled.png`;
+                      }}
+                    />
+                    <img
+                      src="../../img/btn/edit_enabled.png"
+                      alt="edit"
+                      style={{ width: "30px", cursor: "pointer" }}
+                      onClick={() => {
+                        window.location.href = `/noticeEdit?id=${postData.noticeId}`;
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div style={{ height: "30px" }}></div>
+                )}
               </div>
               <div
                 style={{

@@ -32,7 +32,7 @@ export default function Notice() {
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
   const postList = searchParams.get("post") || "전체";
 
-  const [checkAuth, setCheckAuth] = useState<number>(1);
+  const [checkAuth, setCheckAuth] = useState<number>(0);
   const [postsToDisplay, setPostsToDisplay] = useState<Post[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
 
@@ -63,7 +63,7 @@ export default function Notice() {
     CheckAuthAPI().then((data) => {
       if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
         setCheckAuth(2);
-      } else if (data.role === "ROLE_ADMIN") {
+      } else if (data.role === "ROLE_MEMBER") {
         setCheckAuth(1);
       } else {
         setCheckAuth(0);
@@ -199,25 +199,39 @@ export default function Notice() {
                 >
                   {postList}
                 </div>
-
-                <Link to={`/noticeAdd?post=${searchParams.get("post")}`}>
-                  <img
-                    src="../../img/btn/edit_enabled.png"
-                    alt="edit"
+                {checkAuth === 2 ? (
+                  <Link
+                    to={`/noticeAdd?post=${searchParams.get("post")}`}
                     style={{
-                      width: "30px",
-                      cursor: "pointer",
-                      opacity: "0.8",
-                      transition: "all 0.3s ease",
+                      display: "flex",
+                      alignItems: "center",
+                      fontFamily: "Pretendard-Light",
+                      fontSize: "18px",
+                      color: "#777",
+                      textDecoration: "none",
                     }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.opacity = "1";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.opacity = "0.8";
-                    }}
-                  />
-                </Link>
+                  >
+                    공지 사항 작성&emsp;
+                    <img
+                      src="../../img/btn/edit_enabled.png"
+                      alt="edit"
+                      style={{
+                        width: "30px",
+                        cursor: "pointer",
+                        opacity: "0.8",
+                        transition: "all 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.opacity = "1";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.opacity = "0.8";
+                      }}
+                    />
+                  </Link>
+                ) : (
+                  <div></div>
+                )}
               </div>
 
               <div style={{ margin: "40px 0 50px" }}>

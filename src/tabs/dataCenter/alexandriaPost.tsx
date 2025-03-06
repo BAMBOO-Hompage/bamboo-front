@@ -8,13 +8,22 @@ import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
+import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetPaperAPI from "../../api/library-posts/getPaperAPI.tsx";
 import DeletePapersAPI from "../../api/library-posts/deletePapersAPI.tsx";
-import MyPageAPI from "../../api/members/myPageAPI.tsx";
 
 import "../../App.css";
 import "../../style/Post.css";
 
+type MyDataType = {
+  studentId: string;
+  email: string;
+  name: string;
+  major: string;
+  phone: string;
+  role: string;
+  profileImageUrl: string;
+};
 type Paper = {
   libraryPostId: number;
   member: { studentId: string; name: string };
@@ -26,21 +35,21 @@ type Paper = {
   content: string;
 };
 
-type MyDataType = {
-  studentId: string;
-  email: string;
-  name: string;
-  major: string;
-  phone: string;
-  role: string;
-  profileImageUrl: string;
-};
-
 export default function AlexandriaPost() {
   const sanitizer = dompurify.sanitize;
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [checkAuth, setCheckAuth] = useState<number>(0);
+  const [myData, setMyData] = useState<MyDataType>({
+    studentId: "",
+    email: "",
+    name: "",
+    major: "",
+    phone: "",
+    role: "",
+    profileImageUrl: "",
+  });
   const [paperData, setPaperData] = useState<Paper>({
     libraryPostId: 0,
     paperName: "",
@@ -52,16 +61,6 @@ export default function AlexandriaPost() {
     content: "",
   });
   const [comment, setComment] = useState("");
-
-  const [myData, setmyData] = useState<MyDataType>({
-    studentId: "",
-    email: "",
-    name: "",
-    major: "",
-    phone: "",
-    role: "",
-    profileImageUrl: "",
-  });
   const [previewImage, setPreviewImage] = useState("");
 
   useEffect(() => {
@@ -71,11 +70,15 @@ export default function AlexandriaPost() {
   }, [searchParams]);
 
   useEffect(() => {
-    MyPageAPI().then((data) => {
-      if (!data.profileImageUrl) {
-        data.profileImageUrl = "../img/icon/base_profile.png";
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_MEMBER") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
       }
-      setmyData(data);
+      setMyData(data);
       setPreviewImage(data.profileImageUrl);
     });
   }, []);
@@ -146,18 +149,23 @@ export default function AlexandriaPost() {
                 justifyContent: "space-between",
               }}
             >
-              <Button
-                type="destructive"
-                size="xsmall"
-                title="삭제"
-                onClick={() => {
-                  const deleteConfirm =
-                    window.confirm("게시물을 삭제하시겠습니까?");
-                  if (deleteConfirm) {
-                    DeletePapersAPI(paperData.libraryPostId);
-                  }
-                }}
-              />
+              {checkAuth === 2 ||
+              myData.studentId === paperData.member.studentId ? (
+                <Button
+                  type="destructive"
+                  size="xsmall"
+                  title="삭제"
+                  onClick={() => {
+                    const deleteConfirm =
+                      window.confirm("게시물을 삭제하시겠습니까?");
+                    if (deleteConfirm) {
+                      DeletePapersAPI(paperData.libraryPostId);
+                    }
+                  }}
+                />
+              ) : (
+                <div></div>
+              )}
               <div
                 style={{
                   display: "flex",
@@ -173,14 +181,19 @@ export default function AlexandriaPost() {
                     window.history.back();
                   }}
                 />
-                <Button
-                  type="primary"
-                  size="xsmall"
-                  title="수정"
-                  onClick={() => {
-                    window.location.href = `/alexandriaEdit?id=${paperData.libraryPostId}`;
-                  }}
-                />
+                {checkAuth === 2 ||
+                myData.studentId === paperData.member.studentId ? (
+                  <Button
+                    type="primary"
+                    size="xsmall"
+                    title="수정"
+                    onClick={() => {
+                      window.location.href = `/alexandriaEdit?id=${paperData.libraryPostId}`;
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
 
