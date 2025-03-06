@@ -268,7 +268,7 @@ export default function CurriculumStudy() {
                 onChange={(e) => setSelectedCohort(Number(e.target.value))}
               >
                 {Array.from(
-                  { length: cohortLatest.batch - 5 + 1 },
+                  { length: cohortLatest.batch - 6 + 1 },
                   (_, i) => cohortLatest.batch - i
                 ).map((num) => (
                   <option key={num} value={num}>

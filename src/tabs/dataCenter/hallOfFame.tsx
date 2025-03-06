@@ -142,7 +142,7 @@ export default function HallOfFame() {
     <div>
       <Nav type="dataCenter" />
       <div className="background">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -572,9 +572,9 @@ export default function HallOfFame() {
               zIndex: 999,
             }}
           />
-        )}
+        )} */}
 
-        {/* <motion.div
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -587,7 +587,7 @@ export default function HallOfFame() {
           }}
         >
           <LockedPagePrepare />
-        </motion.div> */}
+        </motion.div>
 
         <BottomInfo />
       </div>
