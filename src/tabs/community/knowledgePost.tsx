@@ -6,12 +6,22 @@ import dompurify from "dompurify";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
+import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetKnowledgeAPI from "../../api/knowledges/getKnowledgeAPI.tsx";
 import DeleteKnowledgesAPI from "../../api/knowledges/deleteKnowledgesAPI.tsx";
 
 import "../../App.css";
 import "../../style/Post.css";
 
+type MyDataType = {
+  studentId: string;
+  email: string;
+  name: string;
+  major: string;
+  phone: string;
+  role: string;
+  profileImageUrl: string;
+};
 type Post = {
   knowledgeId: number;
   member: { studentId: string; name: string };
@@ -31,6 +41,16 @@ export default function KnowledgePost() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [checkAuth, setCheckAuth] = useState<number>(0);
+  const [myData, setMyData] = useState<MyDataType>({
+    studentId: "",
+    email: "",
+    name: "",
+    major: "",
+    phone: "",
+    role: "",
+    profileImageUrl: "",
+  });
   const [postData, setPostData] = useState<Post>({
     knowledgeId: 0,
     member: { studentId: "", name: "" },
@@ -51,6 +71,19 @@ export default function KnowledgePost() {
     });
   }, [searchParams]);
 
+  useEffect(() => {
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_MEMBER") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+      setMyData(data);
+    });
+  }, []);
+
   return (
     <div>
       <Nav type="community" />
@@ -70,7 +103,8 @@ export default function KnowledgePost() {
           <div
             style={{
               position: "relative",
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 20px",
               minHeight: "960px",
               margin: "0 auto",
               marginTop: "100px",
@@ -149,42 +183,47 @@ export default function KnowledgePost() {
                 >
                   {postData.type}
                 </div>
-                <div style={{ height: "30px" }}>
-                  <img
-                    src="../../img/btn/trash_disabled.png"
-                    alt="trash"
-                    style={{
-                      width: "30px",
-                      cursor: "pointer",
-                      marginRight: "15px",
-                    }}
-                    onClick={() => {
-                      const confirm =
-                        window.confirm("게시물을 삭제하시겠습니까?");
-                      if (confirm) {
-                        DeleteKnowledgesAPI(postData.knowledgeId);
-                      }
-                    }}
-                    onMouseOver={(e) => {
-                      (
-                        e.target as HTMLImageElement
-                      ).src = `../../img/btn/trash_enabled.png`;
-                    }}
-                    onMouseOut={(e) => {
-                      (
-                        e.target as HTMLImageElement
-                      ).src = `../../img/btn/trash_disabled.png`;
-                    }}
-                  />
-                  <img
-                    src="../../img/btn/edit_enabled.png"
-                    alt="edit"
-                    style={{ width: "30px", cursor: "pointer" }}
-                    onClick={() => {
-                      window.location.href = `/knowledgeEdit?id=${postData.knowledgeId}`;
-                    }}
-                  />
-                </div>
+                {checkAuth === 2 ||
+                myData.studentId === postData.member.studentId ? (
+                  <div style={{ height: "30px" }}>
+                    <img
+                      src="../../img/btn/trash_disabled.png"
+                      alt="trash"
+                      style={{
+                        width: "30px",
+                        cursor: "pointer",
+                        marginRight: "15px",
+                      }}
+                      onClick={() => {
+                        const confirm =
+                          window.confirm("게시물을 삭제하시겠습니까?");
+                        if (confirm) {
+                          DeleteKnowledgesAPI(postData.knowledgeId);
+                        }
+                      }}
+                      onMouseOver={(e) => {
+                        (
+                          e.target as HTMLImageElement
+                        ).src = `../../img/btn/trash_enabled.png`;
+                      }}
+                      onMouseOut={(e) => {
+                        (
+                          e.target as HTMLImageElement
+                        ).src = `../../img/btn/trash_disabled.png`;
+                      }}
+                    />
+                    <img
+                      src="../../img/btn/edit_enabled.png"
+                      alt="edit"
+                      style={{ width: "30px", cursor: "pointer" }}
+                      onClick={() => {
+                        window.location.href = `/knowledgeEdit?id=${postData.knowledgeId}`;
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div style={{ height: "30px" }}></div>
+                )}
               </div>
               <div
                 style={{
@@ -221,6 +260,7 @@ export default function KnowledgePost() {
               {postData.files.length !== 0 && (
                 <div
                   style={{
+                    boxSizing: "border-box",
                     width: "100%",
                     padding: "20px",
                     backgroundColor: "#222",
@@ -234,12 +274,12 @@ export default function KnowledgePost() {
                     alignItems: "flex-start",
                   }}
                 >
-                  <div style={{ width: "100px", marginRight: "20px" }}>
+                  <div style={{ width: "150px", marginRight: "20px" }}>
                     첨부 파일
                   </div>
                   <div>
                     {postData.files.map((file, index) => (
-                      <div key={index} style={{ marginTop: "5px" }}>
+                      <div key={index}>
                         <a
                           href={file}
                           target="_blank"

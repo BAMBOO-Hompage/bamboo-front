@@ -109,7 +109,8 @@ export default function KnowledgeAdd() {
           <div
             style={{
               position: "relative",
-              width: "1000px",
+              maxWidth: "1000px",
+              padding: "0 20px",
               height: "1100px",
               margin: "100px auto",
               display: "flex",
