@@ -99,7 +99,6 @@ export default function Knoledge() {
           }}
           style={{
             width: "100%",
-            height: "1450px",
           }}
         >
           <div

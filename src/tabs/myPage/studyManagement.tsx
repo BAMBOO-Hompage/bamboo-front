@@ -478,8 +478,11 @@ export default function StudyManagement() {
                                       member.studentId !==
                                       study.studyMaster.studentId
                                   )
-                                  .map((studyMember) => (
-                                    <> {studyMember.name},</>
+                                  .map((studyMember, index, arr) => (
+                                    <span key={studyMember.studentId}>
+                                      {studyMember.name}
+                                      {index !== arr.length - 1 && ","}
+                                    </span>
                                   ))}
                               </div>
                               <div

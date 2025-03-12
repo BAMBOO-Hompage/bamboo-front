@@ -24,7 +24,7 @@ export default function Main() {
 
   return (
     <div>
-      <CherryBlossom />
+      {/* <CherryBlossom /> */}
       {/* <Snowfall /> */}
       <Nav type="main" />
       <div style={{ width: "100%" }}>

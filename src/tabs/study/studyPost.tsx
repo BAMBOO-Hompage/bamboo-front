@@ -31,22 +31,23 @@ type cohort = {
   status: string;
   subjects: [];
 };
+type weeklyContent = {
+  weeklyContentId: number;
+  subjectName: string;
+  content: string;
+  week: number;
+  startDate: number[];
+  endDate: number[];
+  startPage: 0;
+  endPage: 0;
+};
 type subject = {
   subjectId: number;
   name: string;
+  bookName: string;
   isBook: boolean;
   batch: number;
-  bookName: string;
-  weeklyContents: [
-    {
-      weeklyContentId: number;
-      subjectName: string;
-      content: string;
-      week: number;
-      startDate: number[];
-      endDate: number[];
-    }
-  ];
+  weeklyContents: weeklyContent[];
 };
 type study = {
   studyId: number;
@@ -152,6 +153,8 @@ export default function StudyPost() {
         week: 0,
         startDate: [],
         endDate: [],
+        startPage: 0,
+        endPage: 0,
       },
     ],
   });

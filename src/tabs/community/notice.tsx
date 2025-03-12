@@ -95,7 +95,6 @@ export default function Notice() {
           }}
           style={{
             width: "100%",
-            height: "1450px",
           }}
         >
           <div
