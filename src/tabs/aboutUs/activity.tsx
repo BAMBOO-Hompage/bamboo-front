@@ -109,8 +109,8 @@ export default function Activity() {
             style={{
               position: "relative",
               maxWidth: "1000px",
+              minHeight: "1000px",
               padding: "0 20px",
-              height: "1300px",
               margin: "100px auto",
               display: "flex",
             }}
@@ -353,7 +353,6 @@ export default function Activity() {
                     width: "100%",
                     maxWidth: "770px",
                     marginTop: "100px",
-                    paddingBottom: "100px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
