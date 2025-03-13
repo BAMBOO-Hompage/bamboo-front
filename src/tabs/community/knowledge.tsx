@@ -99,15 +99,14 @@ export default function Knoledge() {
           }}
           style={{
             width: "100%",
-            height: "1450px",
           }}
         >
           <div
             style={{
               position: "relative",
               maxWidth: "1000px",
+              minHeight: "1000px",
               padding: "0 20px",
-              height: "1300px",
               margin: "100px auto",
               display: "flex",
             }}
@@ -116,7 +115,7 @@ export default function Knoledge() {
               style={{
                 boxSizing: "border-box",
                 width: "clamp(120px, 20vw, 180px)",
-                height: "100%",
+                minHeight: "100%",
                 borderRight: "1px solid #444",
                 textAlign: "left",
               }}
@@ -396,7 +395,6 @@ export default function Knoledge() {
                     width: "100%",
                     maxWidth: "770px",
                     marginTop: "100px",
-                    paddingBottom: "100px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",

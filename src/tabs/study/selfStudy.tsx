@@ -494,7 +494,7 @@ export default function SelfStudy() {
                                       member.studentId !==
                                       study.studyMaster.studentId
                                   )
-                                  .slice(0, 1)
+                                  .slice(0, 2)
                                   .map((studyMember) => `${studyMember.name} `)}
                               </text>
                               <text
@@ -512,7 +512,7 @@ export default function SelfStudy() {
                                       member.studentId !==
                                       study.studyMaster.studentId
                                   )
-                                  .slice(1, 4)
+                                  .slice(2, 5)
                                   .map((studyMember) => `${studyMember.name} `)}
                               </text>
                             </g>
