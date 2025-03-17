@@ -11,10 +11,12 @@ import BottomInfo from "../../components/bottomInfo.tsx";
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetSubjectAPI from "../../api/subjects/getSubjectAPI.tsx";
 import GetStudyAPI from "../../api/studies/getStudyAPI.tsx";
+import GetInventoryAPI from "../../api/inventories/getInventroyAPI.tsx";
 
 import "../../App.css";
 
 type MyDataType = {
+  memberId: number;
   studentId: string;
   email: string;
   name: string;
@@ -57,11 +59,13 @@ type study = {
   isBook: boolean;
   section: number;
   studyMaster: {
+    memberId: number;
     studentId: string;
     name: string;
   };
   studyMembers: [
     {
+      memberId: number;
       studentId: string;
       name: string;
     }
@@ -74,6 +78,54 @@ type study = {
       status: string;
     }
   ];
+};
+type Inventory = {
+  inventoryId: number;
+  member: {
+    id: number;
+    studentId: string;
+    email: string;
+    name: string;
+    major: string;
+    phone: string;
+    role: string;
+  };
+  study: {
+    teamName: string;
+    subjectName: string;
+    batch: number;
+    section: number;
+  };
+  title: string;
+  content: string;
+  week: number;
+  award: {
+    awardId: number;
+    study: {
+      studyId: number;
+      teamName: string;
+      subjectName: string;
+      batch: number;
+      section: number;
+      studyMaster: {
+        memberId: number;
+        studentId: string;
+        name: string;
+      };
+      studyMembers: [
+        {
+          memberId: number;
+          studentId: string;
+          name: string;
+        }
+      ];
+    };
+    title: string;
+    batch: number;
+    week: number;
+    startDate: number[];
+    endDate: number[];
+  };
 };
 
 const itemsPerPage = 8;
@@ -98,6 +150,7 @@ export default function StudyPost() {
   const [checkedMembers, setCheckedMembers] = useState<string[]>([]);
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [myData, setMyData] = useState<MyDataType>({
+    memberId: 0,
     studentId: "",
     email: "",
     name: "",
@@ -121,11 +174,13 @@ export default function StudyPost() {
     isBook: true,
     section: 0,
     studyMaster: {
+      memberId: 0,
       studentId: "",
       name: "",
     },
     studyMembers: [
       {
+        memberId: 0,
         studentId: "",
         name: "",
       },
@@ -157,6 +212,54 @@ export default function StudyPost() {
         endPage: 0,
       },
     ],
+  });
+  const [selectedInventory, setSelectedInventory] = useState<Inventory>({
+    inventoryId: 0,
+    member: {
+      id: 0,
+      studentId: "",
+      email: "",
+      name: "",
+      major: "",
+      phone: "",
+      role: "",
+    },
+    study: {
+      teamName: "",
+      subjectName: "",
+      batch: 0,
+      section: 0,
+    },
+    title: "",
+    content: "",
+    week: 0,
+    award: {
+      awardId: 0,
+      study: {
+        studyId: 0,
+        teamName: "",
+        subjectName: "",
+        batch: 0,
+        section: 0,
+        studyMaster: {
+          memberId: 0,
+          studentId: "",
+          name: "",
+        },
+        studyMembers: [
+          {
+            memberId: 0,
+            studentId: "",
+            name: "",
+          },
+        ],
+      },
+      title: "",
+      batch: 0,
+      week: 0,
+      startDate: [],
+      endDate: [],
+    },
   });
   const [displayWeeks, setDisplayWeeks] = useState([0, itemsPerPage]);
   const [indexStart, setIndexStart] = useState(0);
@@ -234,15 +337,12 @@ export default function StudyPost() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // GetNoticesAPI(postList, currentPage).then((result) => {
-    //   console.log(result.content);
-    //   var noticeData = result.content;
-    //   setPostsToDisplay(noticeData);
-    //   setTotalPages(result.totalPages);
-    //   console.log(postsToDisplay, totalPages);
-    // });
-  }, [postList, currentPage]);
+  // useEffect(() => {
+  //   GetInventoryAPI(postList, currentPage).then((result) => {
+  //     var inventoryData = result;
+  //     setSelectedInventory(inventoryData);
+  //   });
+  // }, [postList, currentPage]);
 
   const onValid = async (e) => {};
 
@@ -481,7 +581,7 @@ export default function StudyPost() {
                   <div>
                     개별 파트 분배 후 발표 형식의 스터디 진행
                     <br />
-                    지각비 5만원, 3회 이상 불참시 퇴출.
+                    3회 이상 불참시 퇴출.
                   </div>
                 </div>
               </div>
@@ -765,7 +865,7 @@ export default function StudyPost() {
                   justifyContent: "right",
                 }}
               >
-                {myData.studentId === postData.studyMaster.studentId ? (
+                {myData.memberId === postData.studyMaster.memberId ? (
                   <button
                     type="button"
                     style={{
@@ -863,7 +963,7 @@ export default function StudyPost() {
                     <div
                       className="side_tabs"
                       style={
-                        postList === postData.studyMaster.studentId
+                        parseInt(postList) === postData.studyMaster.memberId
                           ? {
                               boxSizing: "border-box",
                               color: "#2CC295",
@@ -874,7 +974,7 @@ export default function StudyPost() {
                       onClick={() => {
                         setSearchParams({
                           id: postId,
-                          member: postData.studyMaster.studentId,
+                          member: postData.studyMaster.memberId.toString(),
                           week: currentPage.toString(),
                         });
                       }}
@@ -891,7 +991,7 @@ export default function StudyPost() {
                           key={studyMember.studentId}
                           className="side_tabs"
                           style={
-                            postList === studyMember.studentId
+                            parseInt(postList) === studyMember.memberId
                               ? {
                                   boxSizing: "border-box",
                                   color: "#2CC295",
@@ -902,7 +1002,7 @@ export default function StudyPost() {
                           onClick={() => {
                             setSearchParams({
                               id: postId,
-                              member: studyMember.studentId,
+                              member: studyMember.memberId.toString(),
                               week: currentPage.toString(),
                             });
                           }}
@@ -1062,8 +1162,8 @@ export default function StudyPost() {
                                 📖 {curriculum.week}주차 학습내용
                               </div>
                               {postList === "Weekly Best" &&
-                              myData.studentId ===
-                                postData.studyMaster.studentId ? (
+                              myData.memberId ===
+                                postData.studyMaster.memberId ? (
                                 <div
                                   style={{
                                     textDecoration: "none",
@@ -1092,7 +1192,7 @@ export default function StudyPost() {
                               ) : (
                                 <></>
                               )}
-                              {myData.studentId === postList ? (
+                              {myData.memberId === parseInt(postList) ? (
                                 <Link
                                   to={`/studyAdd?study=${postData.studyId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
                                   style={{
