@@ -7,7 +7,7 @@ const MobileBlocker = () => {
       style={{
         maxWidth: "1000px",
         margin: "0 auto",
-        padding: "150px 40px 120px",
+        padding: "200px 20px 150px",
       }}
     >
       <img
