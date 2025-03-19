@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
+import dompurify from "dompurify";
 
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
@@ -131,6 +132,8 @@ type Inventory = {
 const itemsPerPage = 8;
 
 export default function StudyPost() {
+  const sanitizer = dompurify.sanitize;
+
   const {
     register,
     reset,
@@ -213,7 +216,9 @@ export default function StudyPost() {
       },
     ],
   });
-  const [selectedInventory, setSelectedInventory] = useState<Inventory>({
+  const [selectedInventory, setSelectedInventory] = useState<
+    Inventory | undefined
+  >({
     inventoryId: 0,
     member: {
       id: 0,
@@ -337,12 +342,16 @@ export default function StudyPost() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   GetInventoryAPI(postList, currentPage).then((result) => {
-  //     var inventoryData = result;
-  //     setSelectedInventory(inventoryData);
-  //   });
-  // }, [postList, currentPage]);
+  useEffect(() => {
+    if (postList !== "Weekly Best") {
+      GetInventoryAPI(postList, currentPage).then((result) => {
+        var inventoryData = result;
+        setSelectedInventory(inventoryData);
+      });
+    } else {
+      setSelectedInventory(undefined);
+    }
+  }, [postList, currentPage]);
 
   const onValid = async (e) => {};
 
@@ -555,7 +564,7 @@ export default function StudyPost() {
                     display: "flex",
                   }}
                 >
-                  일시:&emsp;<div>{`매주 목요일`}</div>
+                  일시:&emsp;<div>{`매주 화요일 or 목요일`}</div>
                 </div>
                 <div
                   style={{
@@ -1256,7 +1265,24 @@ export default function StudyPost() {
                               borderRadius: "20px",
                               textAlign: "left",
                             }}
-                          ></div>
+                          >
+                            {selectedInventory && (
+                              <div
+                                className="container"
+                                dangerouslySetInnerHTML={{
+                                  __html: sanitizer(
+                                    `${selectedInventory.content}`
+                                  ),
+                                }}
+                                style={{
+                                  fontFamily: "Pretendard-Light",
+                                  fontSize: "clamp(14px, 2vw, 18px)",
+                                  color: "#fff",
+                                  lineHeight: "1.4",
+                                }}
+                              />
+                            )}
+                          </div>
                         );
                       } else {
                         return <></>;

@@ -13,10 +13,16 @@ async function getInventory(accessToken, id, week) {
       },
     }
   ).then((response) => {
-    if (!response.ok) {
-      throw new Error("Failed to logout");
-    }
-    return response.json();
+    return response.json().then((data) => {
+      // 404면 에러 처리를 하지 않고 반환
+      if (response.status === 404 || response.status === 500) {
+        return data;
+      }
+      if (!response.ok) {
+        throw new Error("Failed to logout");
+      }
+      return data;
+    });
   });
 }
 
