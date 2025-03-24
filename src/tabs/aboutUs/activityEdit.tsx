@@ -29,8 +29,12 @@ export default function ActivityEdit() {
     register,
     handleSubmit,
     setValue,
+    setFocus,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+    setFocus("Title");
+  }, [setFocus]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [activityData, setActivityData] = useState<Activity>({

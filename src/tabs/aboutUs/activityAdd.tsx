@@ -15,8 +15,12 @@ export default function ActivityAdd() {
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+    setFocus("Title");
+  }, [setFocus]);
   const [images, setImages] = useState<File[]>([]);
   const [showImages, setShowImages] = useState<string[]>([]);
 

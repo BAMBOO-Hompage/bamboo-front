@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "../../components/button.tsx";
@@ -11,9 +11,14 @@ export default function Login() {
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+    setFocus("StudentNum"); // react-hook-form의 setFocus 함수 사용
+  }, [setFocus]);
 
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const onValid = (e: any) => {
@@ -186,7 +191,7 @@ export default function Login() {
                 <input
                   id="password"
                   placeholder="비밀번호"
-                  type="password"
+                  type={isPasswordVisible ? "text" : "password"}
                   {...register("Password", {
                     required: "이메일 혹은 비밀번호를 확인해주세요.",
                   })}
@@ -200,6 +205,31 @@ export default function Login() {
                     fontSize: "18px",
                   }}
                 />
+                {isPasswordVisible ? (
+                  <img
+                    src="../img/icon/eye_open.png"
+                    alt="eye_open"
+                    color="#777"
+                    style={{
+                      width: "25px",
+                      cursor: "pointer",
+                      marginRight: "20px",
+                    }}
+                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  />
+                ) : (
+                  <img
+                    src="../img/icon/eye_close.png"
+                    alt="eye_close"
+                    color="#777"
+                    style={{
+                      width: "25px",
+                      cursor: "pointer",
+                      marginRight: "20px",
+                    }}
+                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  />
+                )}
               </div>
               <div
                 style={{

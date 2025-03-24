@@ -13,7 +13,7 @@ import PatchRoleAPI from "../../api/members/patchRoleAPI.tsx";
 import "../../App.css";
 
 type Members = {
-  id: number;
+  memberId: number;
   studentId: string;
   email: string;
   name: string;
@@ -91,7 +91,7 @@ export default function PersonalInfo() {
   const handleRoleChange = (id: number, newRole: string) => {
     setMembersToDisplay((prevMembers) =>
       prevMembers.map((member) =>
-        member.id === id ? { ...member, role: newRole } : member
+        member.memberId === id ? { ...member, role: newRole } : member
       )
     );
     // 역할 변경 여부를 true로 설정
@@ -112,10 +112,12 @@ export default function PersonalInfo() {
     const updatedMembers = Object.keys(changedRoles)
       .filter((id) => changedRoles[parseInt(id)])
       .map((id) => {
-        const member = membersToDisplay.find((m) => m.id === parseInt(id));
+        const member = membersToDisplay.find(
+          (m) => m.memberId === parseInt(id)
+        );
         return member
           ? {
-              id: member.id,
+              memberId: member.memberId,
               studentId: member.studentId,
               name: member.name,
               role: member.role,
@@ -130,7 +132,7 @@ export default function PersonalInfo() {
           updatedMembers
             .map(
               (member) =>
-                `ID: ${member.id}, 학번: ${member.studentId}, 이름: ${
+                `ID: ${member.memberId}, 학번: ${member.studentId}, 이름: ${
                   member.name
                 }, 등급: ${roleDescriptions[member.role] || member.role}`
             )
@@ -395,7 +397,7 @@ export default function PersonalInfo() {
               <div style={{ height: "570px", marginBottom: "100px" }}>
                 {membersToDisplay.map((member) => (
                   <div
-                    key={member.id}
+                    key={member.memberId}
                     style={{
                       position: "relative",
                       width: "100%",
@@ -407,7 +409,7 @@ export default function PersonalInfo() {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      background: selectedIds.includes(member.id)
+                      background: selectedIds.includes(member.memberId)
                         ? "linear-gradient(175deg, #142B28 -10%, #111015 50%)"
                         : undefined,
                       borderRadius: "10px",
@@ -428,13 +430,13 @@ export default function PersonalInfo() {
                     >
                       <img
                         src={
-                          selectedIds.includes(member.id)
+                          selectedIds.includes(member.memberId)
                             ? "../img/btn/select_enabled.png"
                             : "../img/btn/select_disabled.png"
                         }
                         alt="select"
                         style={{ width: "25px", cursor: "pointer" }}
-                        onClick={() => toggleSelect(member.id)}
+                        onClick={() => toggleSelect(member.memberId)}
                       />
                     </div>
                     <div
@@ -449,7 +451,7 @@ export default function PersonalInfo() {
                       <select
                         value={member.role}
                         onChange={(e) =>
-                          handleRoleChange(member.id, e.target.value)
+                          handleRoleChange(member.memberId, e.target.value)
                         }
                         style={{
                           width: "80%",
@@ -458,7 +460,9 @@ export default function PersonalInfo() {
                           border: "none",
                           fontFamily: "Pretendard-Light",
                           fontSize: "16px",
-                          color: changedRoles[member.id] ? "#2cc295" : "white",
+                          color: changedRoles[member.memberId]
+                            ? "#2cc295"
+                            : "white",
                           cursor: "pointer",
                         }}
                       >
@@ -542,7 +546,6 @@ export default function PersonalInfo() {
                         justifyContent: "center",
                       }}
                     >
-                      {/* 010-1234-5678 */}
                       {member.phone.slice(0, 3)}-{member.phone.slice(3, 7)}-
                       {member.phone.slice(7, 11)}
                     </div>

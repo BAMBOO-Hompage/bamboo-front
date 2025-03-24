@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
@@ -16,8 +16,12 @@ export default function AlexandriaAdd() {
     register,
     getValues,
     handleSubmit,
+    setFocus,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+    setFocus("Title");
+  }, [setFocus]);
   const [content, setContent] = useState<string>("");
 
   const onValid = (e) => {

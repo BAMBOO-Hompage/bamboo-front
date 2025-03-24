@@ -34,12 +34,16 @@ export default function Signup() {
   const {
     register: registerEmail,
     handleSubmit: handleSubmitEmail,
+    setFocus,
     formState: { errors: errorsEmail },
   } = useForm();
   const {
     register: registerVerification,
     handleSubmit: handleSubmitVerification,
   } = useForm();
+  useEffect(() => {
+    setFocus("StudentNum");
+  }, [setFocus]);
 
   const [validEmail, setValidEmail] = useState(false);
   const [timer, setTimer] = useState(600); // 10분 (초 단위)
@@ -47,6 +51,8 @@ export default function Signup() {
   const [studentNum, setStudentNum] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [checkedEmail, setCheckedEmail] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isRePasswordVisible, setIsRePasswordVisible] = useState(false);
   const [selectedMajor, setSelectedMajor] = useState("학과 선택");
 
   useEffect(() => {
@@ -477,7 +483,7 @@ export default function Signup() {
                 <input
                   id="password"
                   placeholder="비밀번호 입력"
-                  type="password"
+                  type={isPasswordVisible ? "text" : "password"}
                   autoComplete="off"
                   {...registerSignUp("Password", {
                     required: "비밀번호를 입력해주세요.",
@@ -489,11 +495,36 @@ export default function Signup() {
                   })}
                   style={{
                     width: "100%",
-                    maxWidth: errorsSignUp.Password ? "290px" : "320px",
+                    maxWidth: errorsSignUp.Password ? "265px" : "295px",
                     height: "30px",
                     margin: "0 20px 0 10px",
                   }}
                 />
+                {isPasswordVisible ? (
+                  <img
+                    src="../img/icon/eye_open.png"
+                    alt="eye_open"
+                    color="#777"
+                    style={{
+                      width: "25px",
+                      cursor: "pointer",
+                      marginRight: "10px",
+                    }}
+                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  />
+                ) : (
+                  <img
+                    src="../img/icon/eye_close.png"
+                    alt="eye_close"
+                    color="#777"
+                    style={{
+                      width: "25px",
+                      cursor: "pointer",
+                      marginRight: "10px",
+                    }}
+                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  />
+                )}
                 {errorsSignUp.Password ? (
                   <div>
                     <div
@@ -571,7 +602,7 @@ export default function Signup() {
                 <input
                   id="rePassword"
                   placeholder="비밀번호 확인"
-                  type="password"
+                  type={isRePasswordVisible ? "text" : "password"}
                   autoComplete="off"
                   {...registerSignUp("RePassword", {
                     required: "비밀번호를 확인해주세요.",
@@ -581,11 +612,36 @@ export default function Signup() {
                   })}
                   style={{
                     width: "100%",
-                    maxWidth: errorsSignUp.RePassword ? "290px" : "320px",
+                    maxWidth: errorsSignUp.RePassword ? "265px" : "295px",
                     height: "30px",
                     margin: "0 20px 0 10px",
                   }}
                 />
+                {isRePasswordVisible ? (
+                  <img
+                    src="../img/icon/eye_open.png"
+                    alt="eye_open"
+                    color="#777"
+                    style={{
+                      width: "25px",
+                      cursor: "pointer",
+                      marginRight: "10px",
+                    }}
+                    onClick={() => setIsRePasswordVisible(!isRePasswordVisible)}
+                  />
+                ) : (
+                  <img
+                    src="../img/icon/eye_close.png"
+                    alt="eye_close"
+                    color="#777"
+                    style={{
+                      width: "25px",
+                      cursor: "pointer",
+                      marginRight: "10px",
+                    }}
+                    onClick={() => setIsRePasswordVisible(!isRePasswordVisible)}
+                  />
+                )}
                 {errorsSignUp.RePassword ? (
                   <div>
                     <div

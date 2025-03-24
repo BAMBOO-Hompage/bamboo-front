@@ -39,6 +39,8 @@ export default function PersonalInfo() {
   } = useForm();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const edit = searchParams.get("edit") || "0";
+  const changePassword = searchParams.get("changePassword") || "0";
 
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [myData, setmyData] = useState<MyDataType>({
@@ -52,8 +54,9 @@ export default function PersonalInfo() {
   });
   const [previewImage, setPreviewImage] = useState("");
   const [image, setImage] = useState<File>();
-  const edit = searchParams.get("edit") || "0";
-  const changePassword = searchParams.get("changePassword") || "0";
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
+  const [isRePasswordVisible, setIsRePasswordVisible] = useState(false);
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
@@ -1037,19 +1040,9 @@ export default function PersonalInfo() {
                       >
                         현재 비밀번호
                       </label>
-                      <input
-                        id="password"
-                        placeholder=""
-                        type="password"
-                        {...registerChangePassword("Password", {
-                          required: "비밀번호를 입력해주세요.",
-                          pattern: {
-                            value: passwordPattern,
-                            message:
-                              "영어, 숫자, 특수문자 포함 8-24자리를 입력해주세요.",
-                          },
-                        })}
+                      <div
                         style={{
+                          boxSizing: "border-box",
                           width: "200px",
                           height: "40px",
                           padding: "5px 20px",
@@ -1057,8 +1050,52 @@ export default function PersonalInfo() {
                           boxShadow:
                             "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                           borderRadius: "20px",
+                          display: "flex",
+                          alignItems: "center",
                         }}
-                      />
+                      >
+                        <input
+                          id="password"
+                          placeholder=""
+                          type={isPasswordVisible ? "text" : "password"}
+                          {...registerChangePassword("Password", {
+                            required: "비밀번호를 입력해주세요.",
+                            pattern: {
+                              value: passwordPattern,
+                              message:
+                                "영어, 숫자, 특수문자 포함 8-24자리를 입력해주세요.",
+                            },
+                          })}
+                          style={{ width: "100%" }}
+                        />
+                        {isPasswordVisible ? (
+                          <img
+                            src="../img/icon/eye_open.png"
+                            alt="eye_open"
+                            color="#777"
+                            style={{
+                              width: "25px",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              setIsPasswordVisible(!isPasswordVisible)
+                            }
+                          />
+                        ) : (
+                          <img
+                            src="../img/icon/eye_close.png"
+                            alt="eye_close"
+                            color="#777"
+                            style={{
+                              width: "25px",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              setIsPasswordVisible(!isPasswordVisible)
+                            }
+                          />
+                        )}
+                      </div>
                     </div>
                     <div
                       style={{
@@ -1081,19 +1118,9 @@ export default function PersonalInfo() {
                       >
                         새 비밀번호
                       </label>
-                      <input
-                        id="newPassword"
-                        placeholder=""
-                        type="password"
-                        {...registerChangePassword("NewPassword", {
-                          required: "비밀번호를 입력해주세요.",
-                          pattern: {
-                            value: passwordPattern,
-                            message:
-                              "영어, 숫자, 특수문자 포함 8-24자리를 입력해주세요.",
-                          },
-                        })}
+                      <div
                         style={{
+                          boxSizing: "border-box",
                           width: "200px",
                           height: "40px",
                           padding: "5px 20px",
@@ -1101,8 +1128,52 @@ export default function PersonalInfo() {
                           boxShadow:
                             "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                           borderRadius: "20px",
+                          display: "flex",
+                          alignItems: "center",
                         }}
-                      />
+                      >
+                        <input
+                          id="newPassword"
+                          placeholder=""
+                          type={isNewPasswordVisible ? "text" : "password"}
+                          {...registerChangePassword("NewPassword", {
+                            required: "비밀번호를 입력해주세요.",
+                            pattern: {
+                              value: passwordPattern,
+                              message:
+                                "영어, 숫자, 특수문자 포함 8-24자리를 입력해주세요.",
+                            },
+                          })}
+                          style={{ width: "100%" }}
+                        />
+                        {isNewPasswordVisible ? (
+                          <img
+                            src="../img/icon/eye_open.png"
+                            alt="eye_open"
+                            color="#777"
+                            style={{
+                              width: "25px",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              setIsNewPasswordVisible(!isNewPasswordVisible)
+                            }
+                          />
+                        ) : (
+                          <img
+                            src="../img/icon/eye_close.png"
+                            alt="eye_close"
+                            color="#777"
+                            style={{
+                              width: "25px",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              setIsNewPasswordVisible(!isNewPasswordVisible)
+                            }
+                          />
+                        )}
+                      </div>
                     </div>
                     <div
                       style={{
@@ -1124,17 +1195,9 @@ export default function PersonalInfo() {
                       >
                         새 비밀번호 확인
                       </label>
-                      <input
-                        id="reNewPassword"
-                        placeholder=""
-                        type="password"
-                        {...registerChangePassword("ReNewPassword", {
-                          required: "비밀번호를 확인해주세요.",
-                          validate: (value) =>
-                            value === getValuesChangePassword("NewPassword") ||
-                            "비밀번호가 일치하지 않습니다.",
-                        })}
+                      <div
                         style={{
+                          boxSizing: "border-box",
                           width: "200px",
                           height: "40px",
                           padding: "5px 20px",
@@ -1142,8 +1205,53 @@ export default function PersonalInfo() {
                           boxShadow:
                             "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                           borderRadius: "20px",
+                          display: "flex",
+                          alignItems: "center",
                         }}
-                      />
+                      >
+                        <input
+                          id="reNewPassword"
+                          placeholder=""
+                          type={isRePasswordVisible ? "text" : "password"}
+                          {...registerChangePassword("ReNewPassword", {
+                            required: "비밀번호를 확인해주세요.",
+                            validate: (value) =>
+                              value ===
+                                getValuesChangePassword("NewPassword") ||
+                              "비밀번호가 일치하지 않습니다.",
+                          })}
+                          style={{
+                            width: "100%",
+                          }}
+                        />
+                        {isRePasswordVisible ? (
+                          <img
+                            src="../img/icon/eye_open.png"
+                            alt="eye_open"
+                            color="#777"
+                            style={{
+                              width: "25px",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              setIsRePasswordVisible(!isRePasswordVisible)
+                            }
+                          />
+                        ) : (
+                          <img
+                            src="../img/icon/eye_close.png"
+                            alt="eye_close"
+                            color="#777"
+                            style={{
+                              width: "25px",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              setIsRePasswordVisible(!isRePasswordVisible)
+                            }
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                 </form>

@@ -30,8 +30,13 @@ export default function AlexandriaEdit() {
     getValues,
     setValue,
     handleSubmit,
+    setFocus,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+    setFocus("Title");
+  }, [setFocus]);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [paperData, setPaperData] = useState<Paper>({

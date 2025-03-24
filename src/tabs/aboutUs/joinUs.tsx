@@ -51,46 +51,55 @@ export default function JoinUs(props: JoinUsProps) {
 
               <div
                 style={{
-                  width: "1000px",
+                  maxWidth: "1000px",
+                  padding: "0 20px",
                   height: "320px",
                   margin: "0 auto",
                   marginBottom: "60px",
-                  background:
-                    "linear-gradient(320deg, #042222 0%, #0B3F37 100%)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
                 }}
               >
-                <div>
-                  <div
-                    style={{
-                      fontFamily: "Pretendard-Bold",
-                      fontSize: "30px",
-                      color: "#fff",
-                      marginBottom: "30px",
-                    }}
-                  >
-                    6기 모집이 마감되었습니다.
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
-                      color: "#aaa",
-                      lineHeight: "1.5",
-                    }}
-                  >
-                    현재는 신규 회원 모집 기간이 아닙니다.
-                    <br />
-                    다음 학기에 다시 지원해주세요.
+                <div
+                  style={{
+                    width: "100%",
+                    height: "320px",
+                    background:
+                      "linear-gradient(320deg, #042222 0%, #0B3F37 100%)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        fontFamily: "Pretendard-Bold",
+                        fontSize: "30px",
+                        color: "#fff",
+                        marginBottom: "30px",
+                      }}
+                    >
+                      6기 모집이 마감되었습니다.
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "Pretendard-Light",
+                        fontSize: "18px",
+                        color: "#aaa",
+                        lineHeight: "1.5",
+                      }}
+                    >
+                      현재는 신규 회원 모집 기간이 아닙니다.
+                      <br />
+                      다음 학기에 다시 지원해주세요.
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div
                 style={{
-                  width: "1000px",
+                  maxWidth: "1000px",
+                  padding: "0 20px",
                   margin: "0 auto",
                   display: "flex",
                   justifyContent: "space-between",

@@ -366,6 +366,7 @@ export default function Knoledge() {
                             post.createdAt[2] +
                             " " +
                             post.createdAt[3] +
+                            9 +
                             ":" +
                             post.createdAt[4] +
                             ":" +
