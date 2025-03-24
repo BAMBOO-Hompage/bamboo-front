@@ -3,9 +3,10 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function getInventory(accessToken, id, week) {
+async function getInventory(accessToken, studyId, id, week) {
   return fetch(
-    API_SERVER_DOMAIN + `/api/inventories/members/${id}/week/${week}`,
+    API_SERVER_DOMAIN +
+      `/api/inventories/studies/${studyId}/members/${id}/week/${week}`,
     {
       method: "GET",
       headers: {
@@ -26,13 +27,13 @@ async function getInventory(accessToken, id, week) {
   });
 }
 
-export default async function GetInventoryAPI(id, week) {
+export default async function GetInventoryAPI(studyId, id, week) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      let data = await getInventory(accessToken, id, week);
+      let data = await getInventory(accessToken, studyId, id, week);
       console.log(data.result);
 
       return data.result;
@@ -45,15 +46,15 @@ export default async function GetInventoryAPI(id, week) {
             accessToken,
             refreshToken
           );
-          let data = await getInventory(newAccessToken, id, week);
+          let data = await getInventory(newAccessToken, studyId, id, week);
           console.log(data.result);
 
           return data.result;
         } catch (error) {
           console.error("Failed to refresh access token:", error);
           alert("다시 로그인해주세요.");
-          // removeCookie("accessToken");
-          // removeCookie("refreshToken");
+          removeCookie("accessToken");
+          removeCookie("refreshToken");
           window.location.href = "/";
         }
       } else {

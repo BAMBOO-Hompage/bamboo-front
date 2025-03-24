@@ -143,9 +143,9 @@ export default function StudyPost() {
   } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const postId = searchParams.get("id") || "";
-  const currentPage = parseInt(searchParams.get("week") || "1", 10);
+  const postId = parseInt(searchParams.get("id") || "0", 10);
   const postList = searchParams.get("member") || "Weekly Best";
+  const currentPage = parseInt(searchParams.get("week") || "1", 10);
 
   const [expandedSections, setExpandedSections] = useState(false);
   const [isAttendancePopupOpen, setIsAttendancePopupOpen] =
@@ -344,14 +344,14 @@ export default function StudyPost() {
 
   useEffect(() => {
     if (postList !== "Weekly Best") {
-      GetInventoryAPI(postList, currentPage).then((result) => {
+      GetInventoryAPI(postId, postList, currentPage).then((result) => {
         var inventoryData = result;
         setSelectedInventory(inventoryData);
       });
     } else {
       setSelectedInventory(undefined);
     }
-  }, [postList, currentPage]);
+  }, [postId, postList, currentPage]);
 
   const onValid = async (e) => {};
 
@@ -961,7 +961,7 @@ export default function StudyPost() {
                       }
                       onClick={() => {
                         setSearchParams({
-                          id: postId,
+                          id: postId.toString(),
                           member: "Weekly Best",
                           week: currentPage.toString(),
                         });
@@ -982,7 +982,7 @@ export default function StudyPost() {
                       }
                       onClick={() => {
                         setSearchParams({
-                          id: postId,
+                          id: postId.toString(),
                           member: postData.studyMaster.memberId.toString(),
                           week: currentPage.toString(),
                         });
@@ -1010,7 +1010,7 @@ export default function StudyPost() {
                           }
                           onClick={() => {
                             setSearchParams({
-                              id: postId,
+                              id: postId.toString(),
                               member: studyMember.memberId.toString(),
                               week: currentPage.toString(),
                             });
