@@ -435,8 +435,8 @@ export default function StudyPost() {
                 id="blurFilter"
                 x="-200%"
                 y="-200%"
-                width="400%"
-                height="400%"
+                width="450%"
+                height="450%"
               >
                 <feGaussianBlur stdDeviation="80" />
               </filter>

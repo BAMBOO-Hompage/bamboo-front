@@ -134,7 +134,7 @@ export default function StudyManagement() {
         e.TeamName,
         cohort.batch,
         selectedIsBook,
-        e.Section,
+        parseInt(e.Section),
         e.StudyMaster,
         studyMembers
       );
@@ -143,7 +143,7 @@ export default function StudyManagement() {
         e.TeamName,
         cohort.batch,
         selectedIsBook,
-        e.Section,
+        parseInt(e.Section),
         e.StudyMaster,
         studyMembers
       );

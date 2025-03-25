@@ -32,7 +32,7 @@ export default async function PatchPasswordAPI(updatedMembers) {
       console.log(updatedMembers);
 
       for (let i = 0; i < updatedMembers.length; i++) {
-        const memberId = updatedMembers[i].id;
+        const memberId = updatedMembers[i].memberId;
         const role = updatedMembers[i].role;
         await patchRole(accessToken, memberId, role);
       }

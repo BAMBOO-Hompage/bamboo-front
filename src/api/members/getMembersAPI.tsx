@@ -4,7 +4,7 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
 async function getMember(accessToken, page) {
-  return fetch(API_SERVER_DOMAIN + `/api/members?page=${page}&size=10`, {
+  return fetch(API_SERVER_DOMAIN + `/api/members?page=${page}&size=15`, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + accessToken,

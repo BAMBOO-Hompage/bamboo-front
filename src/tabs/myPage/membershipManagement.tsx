@@ -166,11 +166,9 @@ export default function PersonalInfo() {
             style={{
               position: "relative",
               maxWidth: "1000px",
+              minHeight: "1000px",
               padding: "0 20px",
-              minHeight: "570px",
-              margin: "0 auto",
-              marginTop: "100px",
-              marginBottom: "150px",
+              margin: "100px auto",
               display: "flex",
             }}
           >
@@ -394,7 +392,7 @@ export default function PersonalInfo() {
                   border: "none",
                 }}
               />
-              <div style={{ height: "570px", marginBottom: "100px" }}>
+              <div style={{ marginBottom: "100px" }}>
                 {membersToDisplay.map((member) => (
                   <div
                     key={member.memberId}
@@ -553,90 +551,93 @@ export default function PersonalInfo() {
                 ))}
               </div>
 
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: "770px",
-                  marginTop: "100px",
-                  paddingBottom: "100px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <button
-                  className="bottom_btn"
-                  style={{}}
-                  onClick={() => changePage(1)}
+              {membersToDisplay.length > 0 ? (
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "1000px",
+                    marginTop: "100px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
-                  <img
-                    src="../img/btn/pageStart.png"
-                    alt="pageStart"
-                    style={{
-                      height: "12px",
-                    }}
-                  />
-                </button>
-                <button
-                  className="bottom_btn"
-                  style={{}}
-                  onClick={() => changePage(currentPage - 1)}
-                >
-                  <img
-                    src="../img/btn/pagePrev.png"
-                    alt="pagePrev"
-                    style={{
-                      height: "12px",
-                    }}
-                  />
-                </button>
-                {Array.from(
-                  { length: endPage - startPage + 1 },
-                  (_, i) => startPage + i
-                ).map((page) => (
                   <button
-                    key={page}
-                    className="bottom_tabs"
-                    onClick={() => changePage(page)}
-                    style={
-                      page === currentPage
-                        ? {
-                            textShadow: "0 0 0.1em, 0 0 0.1em",
-                            color: "#2CC295",
-                          }
-                        : {}
-                    }
+                    className="bottom_btn"
+                    style={{}}
+                    onClick={() => changePage(1)}
                   >
-                    {page}
+                    <img
+                      src="../img/btn/pageStart.png"
+                      alt="pageStart"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
                   </button>
-                ))}
-                <button
-                  className="bottom_btn"
-                  style={{}}
-                  onClick={() => changePage(currentPage + 1)}
-                >
-                  <img
-                    src="../img/btn/pageNext.png"
-                    alt="pageNext"
-                    style={{
-                      height: "12px",
-                    }}
-                  />
-                </button>
-                <button
-                  className="bottom_btn"
-                  style={{}}
-                  onClick={() => changePage(totalPages)}
-                >
-                  <img
-                    src="../img/btn/pageEnd.png"
-                    alt="pageNext"
-                    style={{
-                      height: "12px",
-                    }}
-                  />
-                </button>
-              </div>
+                  <button
+                    className="bottom_btn"
+                    style={{}}
+                    onClick={() => changePage(currentPage - 1)}
+                  >
+                    <img
+                      src="../img/btn/pagePrev.png"
+                      alt="pagePrev"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
+                  </button>
+                  {Array.from(
+                    { length: endPage - startPage + 1 },
+                    (_, i) => startPage + i
+                  ).map((page) => (
+                    <button
+                      key={page}
+                      className="bottom_tabs"
+                      onClick={() => changePage(page)}
+                      style={
+                        page === currentPage
+                          ? {
+                              textShadow: "0 0 0.1em, 0 0 0.1em",
+                              color: "#2CC295",
+                            }
+                          : {}
+                      }
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  <button
+                    className="bottom_btn"
+                    style={{}}
+                    onClick={() => changePage(currentPage + 1)}
+                  >
+                    <img
+                      src="../img/btn/pageNext.png"
+                      alt="pageNext"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
+                  </button>
+                  <button
+                    className="bottom_btn"
+                    style={{}}
+                    onClick={() => changePage(totalPages)}
+                  >
+                    <img
+                      src="../img/btn/pageEnd.png"
+                      alt="pageNext"
+                      style={{
+                        height: "12px",
+                      }}
+                    />
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
             </motion.div>
           </div>
         </motion.div>

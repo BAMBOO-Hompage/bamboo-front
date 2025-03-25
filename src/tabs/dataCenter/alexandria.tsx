@@ -123,6 +123,7 @@ export default function Alexandria() {
             style={{
               position: "relative",
               maxWidth: "1000px",
+              minHeight: "1000px",
               margin: "100px auto",
               padding: "0 20px",
               textAlign: "left",

@@ -298,8 +298,8 @@ export default function CurriculumStudy() {
                     id="blurFilter"
                     x="-200%"
                     y="-200%"
-                    width="400%"
-                    height="400%"
+                    width="450%"
+                    height="450%"
                   >
                     <feGaussianBlur stdDeviation="80" />
                   </filter>
@@ -437,10 +437,10 @@ export default function CurriculumStudy() {
                               onMouseLeave={() => setStudyHovered(null)}
                             >
                               <rect
-                                x={x}
-                                y={y - 190 / 2 + 2}
-                                width={190 - 4}
-                                height={190 - 4}
+                                x={x + 1}
+                                y={y - 190 / 2 + 1}
+                                width={190 - 2}
+                                height={190 - 2}
                                 fill={
                                   studyHovered === study.studyId
                                     ? "rgba(255, 255, 255, 0.2)"

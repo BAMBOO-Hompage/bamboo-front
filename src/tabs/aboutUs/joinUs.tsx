@@ -221,10 +221,12 @@ export default function JoinUs(props: JoinUsProps) {
               </div>
               <div
                 style={{
-                  width: "1000px",
+                  maxWidth: "1000px",
+                  padding: "0 20px",
                   margin: "0 auto",
                   display: "flex",
                   justifyContent: "space-between",
+                  gap: "10px",
                 }}
               >
                 <div
@@ -232,11 +234,11 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "22px",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
-                  <span>3/3(월) ~ 3/7(금)</span>
+                  <span>2/28(금) ~ 3/4(수)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -244,7 +246,6 @@ export default function JoinUs(props: JoinUsProps) {
                     style={{
                       width: "30px",
                       marginTop: "15px",
-                      opacity: "0.3",
                     }}
                   />
                   <br />
@@ -264,11 +265,11 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "22px",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
-                  <span>3/10(월)</span>
+                  <span>3/5(수)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -276,7 +277,6 @@ export default function JoinUs(props: JoinUsProps) {
                     style={{
                       width: "30px",
                       marginTop: "15px",
-                      opacity: "0.3",
                     }}
                   />
                   <br />
@@ -296,11 +296,11 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "22px",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
-                  <span>3/11(화) ~ 3/13(목)</span>
+                  <span>3/6(목) ~ 3/7(금)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -308,7 +308,6 @@ export default function JoinUs(props: JoinUsProps) {
                     style={{
                       width: "30px",
                       marginTop: "15px",
-                      opacity: "0.3",
                     }}
                   />
                   <br />
@@ -328,11 +327,11 @@ export default function JoinUs(props: JoinUsProps) {
                     width: "250px",
                     textAlign: "center",
                     fontFamily: "Pretendard-SemiBold",
-                    fontSize: "22px",
+                    fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
                 >
-                  <span>3/14(금)</span>
+                  <span>3/8(토)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -340,7 +339,6 @@ export default function JoinUs(props: JoinUsProps) {
                     style={{
                       width: "30px",
                       marginTop: "15px",
-                      opacity: "0.3",
                     }}
                   />
                   <br />
