@@ -13,6 +13,7 @@ import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetSubjectAPI from "../../api/subjects/getSubjectAPI.tsx";
 import GetStudyAPI from "../../api/studies/getStudyAPI.tsx";
 import GetInventoryAPI from "../../api/inventories/getInventroyAPI.tsx";
+import DeleteInventoriesAPI from "../../api/inventories/deleteInventoriesAPI.tsx";
 
 import "../../App.css";
 
@@ -1202,31 +1203,57 @@ export default function StudyPost() {
                                 <></>
                               )}
                               {myData.memberId === parseInt(postList) ? (
-                                <Link
-                                  to={`/studyAdd?study=${postData.studyId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
-                                  style={{
-                                    textDecoration: "none",
-                                    width: "25px",
-                                    height: "25px",
-                                  }}
-                                >
+                                <div>
                                   <img
-                                    src="../../img/btn/edit_enabled.png"
-                                    alt="edit"
+                                    src="../../img/btn/trash_disabled.png"
+                                    alt="delete"
                                     style={{
                                       width: "25px",
+                                      marginRight: "10px",
                                       cursor: "pointer",
                                       opacity: "0.8",
                                       transition: "all 0.3s ease",
                                     }}
+                                    onClick={() => {
+                                      DeleteInventoriesAPI(
+                                        selectedInventory?.inventoryId
+                                      );
+                                    }}
                                     onMouseEnter={(e) => {
-                                      e.currentTarget.style.opacity = "1";
+                                      (e.target as HTMLImageElement).src =
+                                        "../../img/btn/trash_enabled.png";
                                     }}
                                     onMouseLeave={(e) => {
-                                      e.currentTarget.style.opacity = "0.8";
+                                      (e.target as HTMLImageElement).src =
+                                        "../../img/btn/trash_disabled.png";
                                     }}
                                   />
-                                </Link>
+                                  <Link
+                                    to={`/studyAdd?study=${postData.studyId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
+                                    style={{
+                                      textDecoration: "none",
+                                      width: "25px",
+                                      height: "25px",
+                                    }}
+                                  >
+                                    <img
+                                      src="../../img/btn/edit_enabled.png"
+                                      alt="edit"
+                                      style={{
+                                        width: "25px",
+                                        cursor: "pointer",
+                                        opacity: "0.8",
+                                        transition: "all 0.3s ease",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.opacity = "1";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.opacity = "0.8";
+                                      }}
+                                    />
+                                  </Link>
+                                </div>
                               ) : (
                                 <></>
                               )}

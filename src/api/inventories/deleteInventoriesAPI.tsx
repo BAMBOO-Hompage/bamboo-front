@@ -3,34 +3,32 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function postInventories(accessToken, formData) {
-  return fetch(API_SERVER_DOMAIN + "/api/inventories", {
-    method: "POST",
+async function deleteInventories(accessToken, id) {
+  return fetch(API_SERVER_DOMAIN + `/api/inventories/${id}`, {
+    method: "DELETE",
     headers: {
       Authorization: "Bearer " + accessToken,
     },
-    body: formData,
   }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to post activies");
+      throw new Error("Failed to pdelete activies");
     }
     return response.json();
   });
 }
 
-export default async function PostInventoriesAPI(formData) {
+export default async function DeleteInventoriesAPI(id) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
-      await postInventories(accessToken, formData);
+      await deleteInventories(accessToken, id);
 
-      alert("작성 완료");
-      window.history.back();
+      alert("삭제 완료");
+      window.location.reload();
+
+      return 0;
     } catch (error) {
       if (refreshToken) {
         try {
@@ -40,10 +38,10 @@ export default async function PostInventoriesAPI(formData) {
             accessToken,
             refreshToken
           );
-          await postInventories(newAccessToken, formData);
+          await deleteInventories(newAccessToken, id);
 
-          alert("작성 완료");
-          window.history.back();
+          alert("삭제 완료");
+          window.location.reload();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

@@ -66,12 +66,25 @@ export default function StudyAdd() {
     console.log(content);
     const studyId = searchParams.get("study");
     if (studyId !== null) {
-      PostInventoriesAPI(
-        parseInt(studyId),
-        selectedWeeklyContents.content,
-        content,
-        selectedWeeklyContents.week
+      const formData = new FormData();
+      const jsonData = JSON.stringify({
+        studyId: parseInt(studyId),
+        title: selectedWeeklyContents.content,
+        content: content,
+        week: selectedWeeklyContents.week,
+      });
+
+      formData.append(
+        "request",
+        new Blob([jsonData], { type: "application/json" })
       );
+      // if (files && files.length > 0) {
+      //   files.forEach((file) => {
+      //     formData.append("files", file);
+      //   });
+      // }
+
+      PostInventoriesAPI(formData);
     } else {
       console.error("error");
     }
