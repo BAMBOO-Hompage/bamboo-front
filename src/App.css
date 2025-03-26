@@ -292,3 +292,7 @@ select {
 .bottom_btn:hover {
   cursor: pointer;
 }
+
+.react-pdf__Page__textContent {
+  display: none !important;
+}

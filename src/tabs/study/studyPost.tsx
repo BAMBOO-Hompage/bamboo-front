@@ -14,6 +14,7 @@ import GetSubjectAPI from "../../api/subjects/getSubjectAPI.tsx";
 import GetStudyAPI from "../../api/studies/getStudyAPI.tsx";
 import GetInventoryAPI from "../../api/inventories/getInventroyAPI.tsx";
 import DeleteInventoriesAPI from "../../api/inventories/deleteInventoriesAPI.tsx";
+import PostAttendancesAPI from "../../api/attendance/postAttendanceAPI.tsx";
 
 import "../../App.css";
 
@@ -76,7 +77,7 @@ type study = {
     {
       attendanceId: number;
       week: number;
-      memberId: string;
+      studentId: string;
       status: string;
     }
   ];
@@ -195,7 +196,7 @@ export default function StudyPost() {
       {
         attendanceId: 0,
         week: 0,
-        memberId: "",
+        studentId: "",
         status: "",
       },
     ],
@@ -331,6 +332,10 @@ export default function StudyPost() {
       try {
         const studyResult = await GetStudyAPI(searchParams.get("id"));
         setPostData(studyResult);
+        const checkedList = studyResult.attendances
+          .filter((attendance) => attendance.status === "출석")
+          .map((attendance) => attendance.studentId);
+        setCheckedMembers(checkedList);
         const targetSubject = studyResult.cohort.subjects.find(
           (subject) => subject.name === studyResult.subjectName
         );
@@ -358,7 +363,19 @@ export default function StudyPost() {
     }
   }, [postId, postList, currentPage]);
 
-  const onValid = async (e) => {};
+  const onValid = async (e) => {
+    const members = [postData.studyMaster, ...postData.studyMembers];
+    const newAttendances = members.map((member) => ({
+      studentId: member.studentId,
+      status: checkedMembers.includes(member.studentId) ? "출석" : "결석",
+    }));
+
+    PostAttendancesAPI(
+      parseInt(searchParams.get("id") || "0", 10),
+      getCurrentWeek(selectedSubject).week,
+      newAttendances
+    );
+  };
 
   const onInvalid = (e) => {
     console.log(e, "onInvalid");
@@ -767,7 +784,7 @@ export default function StudyPost() {
                       {postData.attendances.find(
                         (att) =>
                           att.week === curriculum.week &&
-                          att.memberId === postData.studyMaster.studentId
+                          att.studentId === postData.studyMaster.studentId
                       )?.status === "출석" ? (
                         <img
                           src="../img/icon/attendance_enabled.png"
@@ -835,7 +852,7 @@ export default function StudyPost() {
                           {postData.attendances.find(
                             (att) =>
                               att.week === curriculum.week &&
-                              att.memberId === postData.studyMaster.studentId
+                              att.studentId === studyMember.studentId
                           )?.status === "출석" ? (
                             <img
                               src="../img/icon/attendance_enabled.png"
@@ -1396,7 +1413,7 @@ export default function StudyPost() {
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: "80%",
-              maxWidth: "600px",
+              maxWidth: "400px",
               maxHeight: "80vh",
               overflowY: "auto",
               backgroundColor: "#111015",
@@ -1418,7 +1435,6 @@ export default function StudyPost() {
               <div
                 style={{
                   width: "80%",
-                  height: "40px",
                   backgroundColor: "transparent",
                   borderRadius: "10px",
                   fontFamily: "Pretendard-Bold",
@@ -1427,12 +1443,12 @@ export default function StudyPost() {
                 }}
               >
                 {getCurrentWeek(selectedSubject).week}주차 출석 체크
+                <br />
                 <span
                   style={{
                     fontFamily: "Pretendard-Light",
                     fontSize: "16px",
                     color: "#fff",
-                    marginLeft: "10px",
                   }}
                 >
                   (
@@ -1454,9 +1470,6 @@ export default function StudyPost() {
             <div
               style={{
                 marginBottom: "10px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
                 fontFamily: "Pretendard-Regular",
                 fontSize: "18px",
                 gap: "10px",
@@ -1520,7 +1533,13 @@ export default function StudyPost() {
                     member.studentId !== postData.studyMaster.studentId
                 )
                 .map((studyMember) => (
-                  <div style={{ display: "flex", alignContent: "center" }}>
+                  <div
+                    style={{
+                      marginTop: "20px",
+                      display: "flex",
+                      alignContent: "center",
+                    }}
+                  >
                     {studyMember.name}
                     <label
                       style={{

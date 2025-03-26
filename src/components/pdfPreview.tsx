@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "../App.css";
 
 // external CDN에서 호출
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.8.69/build/pdf.worker.min.mjs`;
 
 const PDFPreviewComponent = ({ pdfUrl }) => {
-  alert(pdfUrl);
   const [numPages, setNumPages] = useState(null);
 
   const onDocumentLoadSuccess = ({ numPages }) => {
@@ -14,16 +14,82 @@ const PDFPreviewComponent = ({ pdfUrl }) => {
   };
 
   return (
-    <div className="p-4 overflow-y-auto max-h-screen">
-      <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-        {Array.from(new Array(numPages), (el, index) => (
-          <div key={`page_${index + 1}`} className="my-4">
-            <Page pageNumber={index + 1} />
-          </div>
-        ))}
-      </Document>
+    <div
+      className="p-4 flex justify-center"
+      style={{ height: "800px", overflow: "auto" }}
+    >
+      <div className="relative border border-gray-300 bg-white overflow-hidden">
+        <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+          {Array.from(new Array(numPages), (el, index) => (
+            <div
+              key={`page_${index + 1}`}
+              className="my-4"
+              style={{ marginBottom: "20px" }}
+            >
+              <Page
+                pageNumber={index + 1}
+                width={720}
+                className="no-textLayer"
+              />
+            </div>
+          ))}
+        </Document>
+      </div>
     </div>
   );
 };
+
+// const PDFPreviewComponent = ({ pdfUrl }) => {
+//   const [numPages, setNumPages] = useState(null);
+//   const [currentPage, setCurrentPage] = useState(1);
+
+//   const onDocumentLoadSuccess = ({ numPages }) => {
+//     setNumPages(numPages);
+//   };
+
+//   const handlePreviousPage = () => {
+//     if (currentPage > 1) {
+//       setCurrentPage(currentPage - 1);
+//     }
+//   };
+
+//   const handleNextPage = () => {
+//     if (currentPage < numPages) {
+//       setCurrentPage(currentPage + 1);
+//     }
+//   };
+
+//   return (
+//     <div className="p-4">
+//       <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+//         <div className="my-4">
+//           <Page pageNumber={currentPage} />
+//         </div>
+//       </Document>
+
+//       <div className="flex items-center justify-between mt-4">
+//         <button
+//           onClick={handlePreviousPage}
+//           disabled={currentPage === 1}
+//           className="bg-gray-500 text-white py-1 px-3 rounded disabled:bg-gray-300"
+//         >
+//           Previous
+//         </button>
+
+//         <span>
+//           Page {currentPage} of {numPages}
+//         </span>
+
+//         <button
+//           onClick={handleNextPage}
+//           disabled={currentPage === numPages}
+//           className="bg-gray-500 text-white py-1 px-3 rounded disabled:bg-gray-300"
+//         >
+//           Next
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default PDFPreviewComponent;
