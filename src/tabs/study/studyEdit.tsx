@@ -22,7 +22,7 @@ type weeklyContent = {
   endDate: number[];
 };
 
-export default function StudyAdd() {
+export default function StudyEdit() {
   const {
     register,
     getValues,
@@ -41,32 +41,6 @@ export default function StudyAdd() {
       endDate: [],
     });
   const [content, setContent] = useState<string>("");
-  const [files, setFiles] = useState<File[]>([]);
-  const [showFiles, setShowFiles] = useState<string[]>([]);
-
-  const handleAddFiles = (event) => {
-    const docLists = event.target.files; // 선택한 파일들
-    let fileLists: File[] = [...files];
-    let fileNameLists: string[] = [...showFiles]; // 기존 저장된 파일명들
-
-    for (let i = 0; i < docLists.length; i++) {
-      const currentFileName: string = docLists[i].name; // 파일명 가져오기
-      fileLists.push(docLists[i]);
-      fileNameLists.push(currentFileName);
-    }
-
-    if (fileNameLists.length > 1) {
-      fileLists = fileLists.slice(0, 1);
-      fileNameLists = fileNameLists.slice(0, 1); // 최대 4개 제한
-    }
-
-    setFiles(fileLists);
-    setShowFiles(fileNameLists); // 파일명 리스트 저장
-  };
-
-  const handleDeleteFile = (id) => {
-    setShowFiles(showFiles.filter((_, index) => index !== id));
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,11 +78,11 @@ export default function StudyAdd() {
         "request",
         new Blob([jsonData], { type: "application/json" })
       );
-      if (files && files.length > 0) {
-        files.forEach((file) => {
-          formData.append("files", file);
-        });
-      }
+      // if (files && files.length > 0) {
+      //   files.forEach((file) => {
+      //     formData.append("files", file);
+      //   });
+      // }
 
       PostInventoriesAPI(formData);
     } else {
@@ -183,110 +157,6 @@ export default function StudyAdd() {
               }}
             >
               <form>
-                <div
-                  style={{
-                    width: "100%",
-                    marginBottom: "10px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
-                    fontSize: "16px",
-                  }}
-                >
-                  <label
-                    htmlFor="fileInput"
-                    style={{
-                      boxSizing: "border-box",
-                      width: "100%",
-                      height: "40px",
-                      padding: "0 20px",
-                      backgroundColor: "#111015",
-                      border: "none",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
-                      color: "#2CC295",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                    onChange={handleAddFiles}
-                  >
-                    <input
-                      type="file"
-                      id="fileInput"
-                      style={{
-                        display: "none",
-                      }}
-                      accept=".pdf"
-                      {...register("Image", {})}
-                    />
-                    <img
-                      src="../../img/btn/search_enabled.png"
-                      alt="search"
-                      style={{ width: "25px" }}
-                    />
-                    &emsp;첨부 파일 선택 (PDF파일 1개)
-                  </label>
-                  <input type="text" style={{ display: "none" }} />
-                </div>
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "right",
-                  }}
-                >
-                  {showFiles.length !== 0 ? (
-                    <div
-                      style={{
-                        width: "100%",
-                        padding: "20px",
-                        marginBottom: "10px",
-                        backgroundColor: "#111015",
-                        boxShadow:
-                          "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                        borderRadius: "20px",
-                        overflow: "auto",
-                      }}
-                    >
-                      {showFiles.map((file, id) => (
-                        <div
-                          key={id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "16px",
-                          }}
-                        >
-                          <img
-                            src="../../img/btn/delete_disabled.png"
-                            alt="delete"
-                            style={{ width: "20px", cursor: "pointer" }}
-                            onClick={() => {
-                              handleDeleteFile(id);
-                            }}
-                            onMouseEnter={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_enabled.png";
-                            }}
-                            onMouseLeave={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_disabled.png";
-                            }}
-                          />
-                          &emsp;{file}
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
                 <div
                   style={{
                     boxSizing: "border-box",

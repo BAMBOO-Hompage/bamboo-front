@@ -384,6 +384,7 @@ export default function ActivityEdit() {
                         display: "none",
                       }}
                       multiple
+                      accept="image/*"
                       {...register("Image", {})}
                     />
                     <img

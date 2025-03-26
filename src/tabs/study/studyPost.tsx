@@ -101,6 +101,8 @@ type Inventory = {
   title: string;
   content: string;
   week: number;
+  isWeeklyBest: true;
+  fileUrl: string;
   award: {
     awardId: number;
     study: {
@@ -239,6 +241,8 @@ export default function StudyPost() {
     title: "",
     content: "",
     week: 0,
+    isWeeklyBest: true,
+    fileUrl: "",
     award: {
       awardId: 0,
       study: {
@@ -1159,7 +1163,6 @@ export default function StudyPost() {
                                 height: "25px",
                                 display: "flex",
                                 justifyContent: "space-between",
-                                alignItems: "center",
                               }}
                             >
                               <div
@@ -1177,32 +1180,21 @@ export default function StudyPost() {
                                 <div
                                   style={{
                                     textDecoration: "none",
-                                    width: "25px",
                                     height: "25px",
                                   }}
                                 >
-                                  <img
-                                    src="../../img/btn/edit_enabled.png"
-                                    alt="edit"
-                                    style={{
-                                      width: "25px",
-                                      cursor: "pointer",
-                                      opacity: "0.8",
-                                      transition: "all 0.3s ease",
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      e.currentTarget.style.opacity = "1";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.style.opacity = "0.8";
-                                    }}
+                                  <Button
+                                    type="primary"
+                                    size="xsmall"
+                                    title="선택"
                                     onClick={() => {}}
                                   />
                                 </div>
                               ) : (
                                 <></>
                               )}
-                              {myData.memberId === parseInt(postList) ? (
+                              {myData.memberId === parseInt(postList) &&
+                              selectedInventory ? (
                                 <div>
                                   <img
                                     src="../../img/btn/trash_disabled.png"
@@ -1215,9 +1207,15 @@ export default function StudyPost() {
                                       transition: "all 0.3s ease",
                                     }}
                                     onClick={() => {
-                                      DeleteInventoriesAPI(
-                                        selectedInventory?.inventoryId
-                                      );
+                                      const confirm =
+                                        window.confirm(
+                                          "정리본을 삭제하시겠습니까?"
+                                        );
+                                      if (confirm) {
+                                        DeleteInventoriesAPI(
+                                          selectedInventory?.inventoryId
+                                        );
+                                      }
                                     }}
                                     onMouseEnter={(e) => {
                                       (e.target as HTMLImageElement).src =
@@ -1228,6 +1226,35 @@ export default function StudyPost() {
                                         "../../img/btn/trash_disabled.png";
                                     }}
                                   />
+                                  <Link
+                                    to={`/studyEdit?study=${postData.studyId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
+                                    style={{
+                                      textDecoration: "none",
+                                      width: "25px",
+                                      height: "25px",
+                                    }}
+                                  >
+                                    <img
+                                      src="../../img/btn/edit_enabled.png"
+                                      alt="edit"
+                                      style={{
+                                        width: "25px",
+                                        cursor: "pointer",
+                                        opacity: "0.8",
+                                        transition: "all 0.3s ease",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.opacity = "1";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.opacity = "0.8";
+                                      }}
+                                    />
+                                  </Link>
+                                </div>
+                              ) : myData.memberId === parseInt(postList) &&
+                                !selectedInventory ? (
+                                <div>
                                   <Link
                                     to={`/studyAdd?study=${postData.studyId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
                                     style={{
@@ -1258,6 +1285,45 @@ export default function StudyPost() {
                                 <></>
                               )}
                             </div>
+                            {selectedInventory?.fileUrl && (
+                              <div
+                                style={{
+                                  boxSizing: "border-box",
+                                  width: "100%",
+                                  padding: "20px",
+                                  backgroundColor: "#222",
+                                  borderRadius: "20px",
+                                  marginBottom: "30px",
+                                  fontFamily: "Pretendard-Light",
+                                  fontSize: "18px",
+                                  color: "#fff",
+                                  display: "flex",
+                                  justifyContent: "left",
+                                  alignItems: "flex-start",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    width: "150px",
+                                    marginRight: "20px",
+                                  }}
+                                >
+                                  첨부 파일
+                                </div>
+                                <div>
+                                  <div>
+                                    <a
+                                      href={selectedInventory?.fileUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      style={{ color: "#fff" }}
+                                    >
+                                      {selectedInventory?.fileUrl}
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                             <div
                               style={{
                                 marginTop: "10px",

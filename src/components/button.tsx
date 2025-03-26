@@ -80,7 +80,7 @@ const ButtonContainer = styled.div<{
     ${(props) =>
     props.size === "xsmall" &&
     css`
-      height: 30px;
+      height: 25px;
       font-size: 16px;
       width: 80px;
       text-align: center;

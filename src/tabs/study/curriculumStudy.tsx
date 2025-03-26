@@ -483,7 +483,7 @@ export default function CurriculumStudy() {
                                 x={x + 30}
                                 y={y - 190 / 2 + 140}
                                 fontFamily="Pretendard-Regular"
-                                fontSize="16px"
+                                fontSize="15px"
                                 fill="#777"
                                 alignmentBaseline="hanging"
                                 cursor="pointer"
@@ -502,7 +502,7 @@ export default function CurriculumStudy() {
                                 x={x + 30}
                                 y={y - 190 / 2 + 160}
                                 fontFamily="Pretendard-Regular"
-                                fontSize="16px"
+                                fontSize="15px"
                                 fill="#777"
                                 alignmentBaseline="hanging"
                                 cursor="pointer"
