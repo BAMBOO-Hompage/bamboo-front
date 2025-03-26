@@ -106,7 +106,7 @@ export default function StudyAdd() {
       );
       if (files && files.length > 0) {
         files.forEach((file) => {
-          formData.append("files", file);
+          formData.append("file", file);
         });
       }
 

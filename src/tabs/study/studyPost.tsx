@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
+import PDFPreviewComponent from "../../components/pdfPreview.tsx";
 import dompurify from "dompurify";
 
 import Button from "../../components/button.tsx";
@@ -364,7 +365,7 @@ export default function StudyPost() {
   }, [postId, postList, currentPage]);
 
   const onValid = async (e) => {
-    const members = [postData.studyMaster, ...postData.studyMembers];
+    const members = [...postData.studyMembers];
     const newAttendances = members.map((member) => ({
       studentId: member.studentId,
       status: checkedMembers.includes(member.studentId) ? "출석" : "결석",
@@ -942,7 +943,6 @@ export default function StudyPost() {
               }}
               style={{
                 width: "100%",
-                height: "1450px",
               }}
             >
               <div
@@ -1158,7 +1158,7 @@ export default function StudyPost() {
                     </button>
                   </div>
 
-                  <div style={{ margin: "10px 0 20px" }}>
+                  <div style={{ margin: "10px 0 10px" }}>
                     {selectedSubject.weeklyContents.map((curriculum) => {
                       if (
                         curriculum.week.toString() === searchParams.get("week")
@@ -1302,45 +1302,6 @@ export default function StudyPost() {
                                 <></>
                               )}
                             </div>
-                            {selectedInventory?.fileUrl && (
-                              <div
-                                style={{
-                                  boxSizing: "border-box",
-                                  width: "100%",
-                                  padding: "20px",
-                                  backgroundColor: "#222",
-                                  borderRadius: "20px",
-                                  marginBottom: "30px",
-                                  fontFamily: "Pretendard-Light",
-                                  fontSize: "18px",
-                                  color: "#fff",
-                                  display: "flex",
-                                  justifyContent: "left",
-                                  alignItems: "flex-start",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    width: "150px",
-                                    marginRight: "20px",
-                                  }}
-                                >
-                                  첨부 파일
-                                </div>
-                                <div>
-                                  <div>
-                                    <a
-                                      href={selectedInventory?.fileUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      style={{ color: "#fff" }}
-                                    >
-                                      {selectedInventory?.fileUrl}
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
                             <div
                               style={{
                                 marginTop: "10px",
@@ -1358,6 +1319,57 @@ export default function StudyPost() {
                       }
                     })}
                   </div>
+
+                  {selectedInventory?.fileUrl && (
+                    <>
+                      <div
+                        style={{
+                          boxSizing: "border-box",
+                          width: "100%",
+                          padding: "20px",
+                          backgroundColor: "rgba(17, 16, 21, 0.5)",
+                          borderRadius: "20px",
+                          marginBottom: "10px",
+                          fontFamily: "Pretendard-Light",
+                          fontSize: "18px",
+                          color: "#fff",
+                        }}
+                      >
+                        <div
+                          style={{
+                            marginBottom: "20px",
+                            display: "flex",
+                            justifyContent: "left",
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "150px",
+                              marginRight: "20px",
+                            }}
+                          >
+                            첨부 파일
+                          </div>
+                          <div>
+                            <div>
+                              <a
+                                href={selectedInventory?.fileUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: "#fff" }}
+                              >
+                                {selectedInventory?.fileUrl}
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <PDFPreviewComponent
+                          pdfUrl={selectedInventory?.fileUrl}
+                        ></PDFPreviewComponent>
+                      </div>
+                    </>
+                  )}
 
                   <div style={{ margin: "10px 0 20px" }}>
                     {selectedSubject.weeklyContents.map((curriculum) => {

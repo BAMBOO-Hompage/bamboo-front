@@ -26,11 +26,7 @@ const PDFPreviewComponent = ({ pdfUrl }) => {
               className="my-4"
               style={{ marginBottom: "20px" }}
             >
-              <Page
-                pageNumber={index + 1}
-                width={720}
-                className="no-textLayer"
-              />
+              <Page pageNumber={index + 1} width={700} />
             </div>
           ))}
         </Document>

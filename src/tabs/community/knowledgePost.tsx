@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import dompurify from "dompurify";
 
 import Nav from "../../components/nav.tsx";
-import PDFPreviewComponent from "../../components/pdfPreview.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
@@ -289,11 +288,6 @@ export default function KnowledgePost() {
                         >
                           {file}
                         </a>
-                        <div>
-                          <PDFPreviewComponent
-                            pdfUrl={file}
-                          ></PDFPreviewComponent>
-                        </div>
                       </div>
                     ))}
                   </div>
