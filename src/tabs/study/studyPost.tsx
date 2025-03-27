@@ -319,7 +319,7 @@ export default function StudyPost() {
     CheckAuthAPI().then((data) => {
       if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
         setCheckAuth(2);
-      } else if (data.role === "ROLE_ADMIN") {
+      } else if (data.role === "ROLE_MEMBER") {
         setCheckAuth(1);
       } else {
         setCheckAuth(0);
@@ -897,7 +897,9 @@ export default function StudyPost() {
                   justifyContent: "right",
                 }}
               >
-                {myData.memberId === postData.studyMaster.memberId ? (
+                {(getCurrentWeek(selectedSubject) &&
+                  myData.memberId === postData.studyMaster.memberId) ||
+                checkAuth === 2 ? (
                   <button
                     type="button"
                     style={{
