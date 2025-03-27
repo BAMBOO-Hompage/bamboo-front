@@ -419,7 +419,6 @@ export default function CurriculumStudy() {
                       </text>
 
                       {studies[subjectIndex]?.map((study, studyIndex) => {
-                        console.log(study);
                         const x = 105 + (studyIndex % 4) * 200;
                         const y = baseY + Math.floor(studyIndex / 4) * 200;
 

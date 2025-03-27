@@ -16,6 +16,8 @@ import GetStudyAPI from "../../api/studies/getStudyAPI.tsx";
 import GetInventoryAPI from "../../api/inventories/getInventroyAPI.tsx";
 import DeleteInventoriesAPI from "../../api/inventories/deleteInventoriesAPI.tsx";
 import PostAttendancesAPI from "../../api/attendance/postAttendanceAPI.tsx";
+import PostWeeklyBestAPI from "../../api/inventories/postWeeklyBestAPI.tsx";
+import GetWeeklyBestAPI from "../../api/inventories/getWeeklyBestAPI.tsx";
 
 import "../../App.css";
 
@@ -86,7 +88,7 @@ type study = {
 type Inventory = {
   inventoryId: number;
   member: {
-    id: number;
+    memberId: number;
     studentId: string;
     email: string;
     name: string;
@@ -146,6 +148,13 @@ export default function StudyPost() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const {
+    register: registerWeeklyBest,
+    reset: resetWeeklyBest,
+    getValues: getValuesWeeklyBest,
+    handleSubmit: handleSubmitWeeklyBest,
+    formState: { errors: errorsWeeklyBest },
+  } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const postId = parseInt(searchParams.get("id") || "0", 10);
@@ -156,6 +165,14 @@ export default function StudyPost() {
   const [isAttendancePopupOpen, setIsAttendancePopupOpen] =
     useState<boolean>(false);
   const [checkedMembers, setCheckedMembers] = useState<string[]>([]);
+  const [isWeeklyBestPopupOpen, setIsWeeklyBestPopupOpen] =
+    useState<boolean>(false);
+  const [checkedWeeklyBest, setCheckedWeeklyBest] = useState<number[]>([]);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState<boolean>(false);
+
+  const [images, setImages] = useState<File[]>([]);
+  const [showImages, setShowImages] = useState<string[]>([]);
+
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [myData, setMyData] = useState<MyDataType>({
     memberId: 0,
@@ -226,7 +243,7 @@ export default function StudyPost() {
   >({
     inventoryId: 0,
     member: {
-      id: 0,
+      memberId: 0,
       studentId: "",
       email: "",
       name: "",
@@ -289,7 +306,6 @@ export default function StudyPost() {
       displayWeeks[1] - itemsPerPage,
     ]);
   };
-
   const handleNext1 = () => {
     if (displayWeeks[1] >= totalWeeks) {
       alert("마지막 페이지입니다.");
@@ -360,28 +376,15 @@ export default function StudyPost() {
         setSelectedInventory(inventoryData);
       });
     } else {
-      setSelectedInventory(undefined);
+      GetWeeklyBestAPI(postId, currentPage).then((result) => {
+        var inventoryData = result;
+        setSelectedInventory(inventoryData);
+        if (inventoryData) {
+          setCheckedWeeklyBest([inventoryData.member.memberId]);
+        }
+      });
     }
   }, [postId, postList, currentPage]);
-
-  const onValid = async (e) => {
-    const members = [...postData.studyMembers];
-    const newAttendances = members.map((member) => ({
-      studentId: member.studentId,
-      status: checkedMembers.includes(member.studentId) ? "출석" : "결석",
-    }));
-
-    PostAttendancesAPI(
-      parseInt(searchParams.get("id") || "0", 10),
-      getCurrentWeek(selectedSubject).week,
-      newAttendances
-    );
-  };
-
-  const onInvalid = (e) => {
-    console.log(e, "onInvalid");
-    alert("입력한 정보를 다시 확인해주세요.");
-  };
 
   const handleCheckboxChange = (studentId: string) => {
     setCheckedMembers((prev) =>
@@ -389,6 +392,14 @@ export default function StudyPost() {
         ? prev.filter((id) => id !== studentId)
         : [...prev, studentId]
     );
+  };
+
+  const handleWeeklyBestChange = (memberId) => {
+    if (checkedWeeklyBest.includes(memberId)) {
+      setCheckedWeeklyBest([]); // Uncheck if already checked
+    } else {
+      setCheckedWeeklyBest([memberId]); // Make it mutually exclusive
+    }
   };
 
   const getCurrentWeek = (selectedSubject) => {
@@ -405,6 +416,79 @@ export default function StudyPost() {
     );
 
     return currentWeek ? currentWeek : null;
+  };
+  const getCurrentWeekForWeeklyBest = (selectedSubject) => {
+    const today = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
+    );
+
+    const currentWeek = selectedSubject.weeklyContents.find(
+      ({ startDate, endDate }) => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        // startDate 다음 날로 변경
+        start.setDate(start.getDate() + 1);
+        // endDate 다음 날로 변경
+        end.setDate(end.getDate() + 1);
+        return today >= start && today <= end;
+      }
+    );
+
+    return currentWeek ? currentWeek : null;
+  };
+
+  const handleAddImages = (event) => {
+    const imageLists = event.target.files; // 선택한 파일들
+    let fileLists: File[] = [...images];
+    let fileNameLists: string[] = [...showImages]; // 기존 저장된 파일명들
+
+    for (let i = 0; i < imageLists.length; i++) {
+      const currentFileName: string = imageLists[i].name; // 파일명 가져오기
+      fileLists.push(imageLists[i]);
+      fileNameLists.push(currentFileName);
+    }
+
+    if (fileNameLists.length > 1) {
+      fileLists = fileLists.slice(0, 1);
+      fileNameLists = fileNameLists.slice(0, 1); // 최대 1개 제한
+    }
+
+    setImages(fileLists);
+    setShowImages(fileNameLists); // 파일명 리스트 저장
+  };
+  const handleDeleteImage = (id) => {
+    setImages(images.filter((_, index) => index !== id));
+    setShowImages(showImages.filter((_, index) => index !== id));
+  };
+
+  const onValid = async (e) => {
+    const members = [...postData.studyMembers];
+    const newAttendances = members.map((member) => ({
+      studentId: member.studentId,
+      status: checkedMembers.includes(member.studentId) ? "출석" : "결석",
+    }));
+
+    PostAttendancesAPI(
+      parseInt(searchParams.get("id") || "0", 10),
+      getCurrentWeek(selectedSubject).week,
+      newAttendances
+    );
+  };
+  const onInvalid = (e) => {
+    console.log(e, "onInvalid");
+    alert("입력한 정보를 다시 확인해주세요.");
+  };
+
+  const onWeeklyBestValid = async (e) => {
+    PostWeeklyBestAPI(
+      parseInt(searchParams.get("id") || "0", 10),
+      getCurrentWeekForWeeklyBest(selectedSubject).week,
+      checkedWeeklyBest
+    );
+  };
+  const onWeeklyBestInvalid = (e) => {
+    console.log(e, "onInvalid");
+    alert("입력한 정보를 다시 확인해주세요.");
   };
 
   // 모바일 제한
@@ -897,9 +981,9 @@ export default function StudyPost() {
                   justifyContent: "right",
                 }}
               >
-                {(getCurrentWeek(selectedSubject) &&
-                  myData.memberId === postData.studyMaster.memberId) ||
-                checkAuth === 2 ? (
+                {getCurrentWeek(selectedSubject) &&
+                (myData.memberId === postData.studyMaster.memberId ||
+                  checkAuth === 2) ? (
                   <button
                     type="button"
                     style={{
@@ -1193,20 +1277,38 @@ export default function StudyPost() {
                               >
                                 📖 {curriculum.week}주차 학습내용
                               </div>
-                              {postList === "Weekly Best" &&
-                              myData.memberId ===
-                                postData.studyMaster.memberId ? (
-                                <div
-                                  style={{
-                                    textDecoration: "none",
-                                    height: "25px",
-                                  }}
-                                >
+                              {getCurrentWeekForWeeklyBest(selectedSubject) &&
+                              postList === "Weekly Best" &&
+                              (myData.memberId ===
+                                postData.studyMaster.memberId ||
+                                checkAuth === 2) ? (
+                                <div style={{ display: "flex" }}>
+                                  <img
+                                    src="../img/btn/image.png"
+                                    alt="image_btn"
+                                    style={{
+                                      height: "25px",
+                                      marginRight: "10px",
+                                      opacity: "0.8",
+                                      cursor: "pointer",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.currentTarget.style.opacity = "1";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.currentTarget.style.opacity = "0.8";
+                                    }}
+                                    onClick={() => {
+                                      setIsImagePopupOpen(true);
+                                    }}
+                                  />
                                   <Button
                                     type="primary"
                                     size="xsmall"
                                     title="선택"
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                      setIsWeeklyBestPopupOpen(true);
+                                    }}
                                   />
                                 </div>
                               ) : (
@@ -1440,7 +1542,7 @@ export default function StudyPost() {
           >
             <div
               style={{
-                marginBottom: "20px",
+                marginBottom: "30px",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -1461,23 +1563,16 @@ export default function StudyPost() {
                 <span
                   style={{
                     fontFamily: "Pretendard-Light",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     color: "#fff",
                   }}
                 >
-                  (
-                  {getCurrentWeek(selectedSubject).startDate[0] +
-                    "/" +
-                    getCurrentWeek(selectedSubject).startDate[1] +
-                    "/" +
-                    getCurrentWeek(selectedSubject).startDate[2] +
-                    " ~ " +
-                    getCurrentWeek(selectedSubject).endDate[0] +
+                  스터디 날짜 :{" "}
+                  {getCurrentWeek(selectedSubject).endDate[0] +
                     "/" +
                     getCurrentWeek(selectedSubject).endDate[1] +
                     "/" +
-                    getCurrentWeek(selectedSubject).endDate[2]}
-                  )
+                    (getCurrentWeek(selectedSubject).endDate[2] - 1)}
                 </span>
               </div>
             </div>
@@ -1637,6 +1732,413 @@ export default function StudyPost() {
           </form>
         )}
         {isAttendancePopupOpen && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              padding: "0 20px",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: 999,
+            }}
+          />
+        )}
+
+        {isImagePopupOpen && (
+          <form
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "80%",
+              maxWidth: "600px",
+              maxHeight: "80vh",
+              overflowY: "auto",
+              backgroundColor: "#111015",
+              padding: "30px 30px 20px",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+              borderRadius: "10px",
+              textAlign: "left",
+              zIndex: 1000,
+            }}
+          >
+            <div
+              style={{
+                marginBottom: "30px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  width: "80%",
+                  backgroundColor: "transparent",
+                  borderRadius: "10px",
+                  fontFamily: "Pretendard-Bold",
+                  fontSize: "28px",
+                  color: "#2cc295",
+                }}
+              >
+                {getCurrentWeekForWeeklyBest(selectedSubject).week}주차 사진
+                업로드
+                <br />
+                <span
+                  style={{
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "16px",
+                    color: "#fff",
+                  }}
+                >
+                  (
+                  {getCurrentWeekForWeeklyBest(selectedSubject).startDate[0] +
+                    "/" +
+                    getCurrentWeekForWeeklyBest(selectedSubject).startDate[1] +
+                    "/" +
+                    getCurrentWeekForWeeklyBest(selectedSubject).startDate[2] +
+                    " ~ " +
+                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[0] +
+                    "/" +
+                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[1] +
+                    "/" +
+                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[2]}
+                  )
+                </span>
+              </div>
+            </div>
+            <div
+              style={{
+                marginBottom: "10px",
+                fontFamily: "Pretendard-Regular",
+                fontSize: "18px",
+                gap: "10px",
+              }}
+            >
+              <label
+                htmlFor="fileInput"
+                style={{
+                  boxSizing: "border-box",
+                  width: "600px",
+                  height: "40px",
+                  padding: "0 20px",
+                  backgroundColor: "#111015",
+                  border: "none",
+                  boxShadow:
+                    "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                  borderRadius: "20px",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "18px",
+                  color: "#2CC295",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                onChange={handleAddImages}
+              >
+                <input
+                  type="file"
+                  id="fileInput"
+                  style={{
+                    display: "none",
+                  }}
+                  accept="image/*"
+                  {...register("Image", {
+                    // required: "사진을 추가해주세요.",
+                  })}
+                />
+                <img
+                  src="../../img/btn/search_enabled.png"
+                  alt="search"
+                  style={{ width: "25px" }}
+                />
+                &emsp;사진 선택 (1장)
+              </label>
+              <input type="text" style={{ display: "none" }} />
+            </div>
+            <div
+              style={{
+                width: "600px",
+                display: "flex",
+                justifyContent: "left",
+              }}
+            >
+              {showImages.length !== 0 ? (
+                <div
+                  style={{
+                    width: "600px",
+                    padding: "20px",
+                    marginBottom: "30px",
+                    backgroundColor: "#111015",
+                    boxShadow:
+                      "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                    borderRadius: "20px",
+                    overflow: "auto",
+                  }}
+                >
+                  {showImages.map((image, id) => (
+                    <div
+                      key={id}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        fontFamily: "Pretendard-Light",
+                        fontSize: "14px",
+                      }}
+                    >
+                      <img
+                        src="../../img/btn/delete_disabled.png"
+                        alt="delete"
+                        style={{ width: "16px", cursor: "pointer" }}
+                        onClick={() => {
+                          handleDeleteImage(id);
+                        }}
+                        onMouseEnter={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "../../img/btn/delete_enabled.png";
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "../../img/btn/delete_disabled.png";
+                        }}
+                      />
+                      &emsp;{image}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div
+                // style={{
+                //   width: "620px",
+                //   height: "220px",
+                //   padding: "20px",
+                //   marginBottom: "30px",
+                //   backgroundColor: "#111015",
+                //   boxShadow:
+                //     "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                //   borderRadius: "20px",
+                //   overflow: "auto",
+                // }}
+                ></div>
+              )}
+            </div>
+            <div
+              style={{
+                width: "100%",
+                marginTop: "20px",
+                display: "flex",
+                justifyContent: "right",
+                gap: "10px",
+              }}
+            >
+              <Button
+                type="destructive"
+                size="small"
+                title="취소"
+                onClick={() => {
+                  const deleteEnd =
+                    window.confirm("사진 업로드를 취소하시겠습니까?");
+                  if (deleteEnd) {
+                    setIsImagePopupOpen(false);
+                  }
+                }}
+              />
+              <Button
+                type="primary"
+                size="small"
+                title="저장"
+                onClick={() => {}}
+              />
+            </div>
+          </form>
+        )}
+        {isImagePopupOpen && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              padding: "0 20px",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: 999,
+            }}
+          />
+        )}
+
+        {isWeeklyBestPopupOpen && (
+          <form
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "80%",
+              maxWidth: "400px",
+              maxHeight: "80vh",
+              overflowY: "auto",
+              backgroundColor: "#111015",
+              padding: "30px 30px 20px",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+              borderRadius: "10px",
+              textAlign: "left",
+              zIndex: 1000,
+            }}
+          >
+            <div
+              style={{
+                marginBottom: "30px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  width: "80%",
+                  backgroundColor: "transparent",
+                  borderRadius: "10px",
+                  fontFamily: "Pretendard-Bold",
+                  fontSize: "28px",
+                  color: "#2cc295",
+                }}
+              >
+                {getCurrentWeekForWeeklyBest(selectedSubject).week}주차 주간
+                베스트 지정
+                <br />
+                <span
+                  style={{
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "16px",
+                    color: "#fff",
+                  }}
+                >
+                  (
+                  {getCurrentWeekForWeeklyBest(selectedSubject).startDate[0] +
+                    "/" +
+                    getCurrentWeekForWeeklyBest(selectedSubject).startDate[1] +
+                    "/" +
+                    getCurrentWeekForWeeklyBest(selectedSubject).startDate[2] +
+                    " ~ " +
+                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[0] +
+                    "/" +
+                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[1] +
+                    "/" +
+                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[2]}
+                  )
+                </span>
+              </div>
+            </div>
+            <div
+              style={{
+                marginBottom: "10px",
+                fontFamily: "Pretendard-Regular",
+                fontSize: "18px",
+                gap: "10px",
+              }}
+            >
+              {[
+                postData.studyMaster,
+                ...postData.studyMembers.filter(
+                  (member) =>
+                    member.studentId !== postData.studyMaster.studentId
+                ),
+              ].map((member) => (
+                <div
+                  key={member.memberId}
+                  style={{
+                    marginTop: "20px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {member.name}
+                  <label
+                    style={{
+                      marginLeft: "20px",
+                      display: "inline-block",
+                      width: "20px",
+                      height: "20px",
+                      borderRadius: "4px",
+                      border: "2px solid #2cc295",
+                      backgroundColor: checkedWeeklyBest.includes(
+                        member.memberId
+                      )
+                        ? "#2cc295"
+                        : "transparent",
+                      cursor: "pointer",
+                      position: "relative",
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checkedMembers.includes(member.studentId)}
+                      onChange={() => handleWeeklyBestChange(member.memberId)}
+                      style={{
+                        opacity: 0,
+                        position: "absolute",
+                        width: "100%",
+                        height: "100%",
+                        cursor: "pointer",
+                      }}
+                    />
+                    {checkedWeeklyBest.includes(member.memberId) && (
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                          color: "white",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        ✔
+                      </span>
+                    )}
+                  </label>
+                </div>
+              ))}
+            </div>
+            <div
+              style={{
+                width: "100%",
+                marginTop: "20px",
+                display: "flex",
+                justifyContent: "right",
+                gap: "10px",
+              }}
+            >
+              <Button
+                type="destructive"
+                size="small"
+                title="취소"
+                onClick={() => {
+                  const deleteEnd = window.confirm(
+                    "주간 베스트 지정을 취소하시겠습니까?"
+                  );
+                  if (deleteEnd) {
+                    setIsWeeklyBestPopupOpen(false);
+                  }
+                }}
+              />
+              <Button
+                type="primary"
+                size="small"
+                title="저장"
+                onClick={handleSubmitWeeklyBest(
+                  onWeeklyBestValid,
+                  onWeeklyBestInvalid
+                )}
+              />
+            </div>
+          </form>
+        )}
+        {isWeeklyBestPopupOpen && (
           <div
             style={{
               position: "fixed",

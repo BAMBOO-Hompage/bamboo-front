@@ -3,19 +3,19 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function postAttendances(accessToken, studyId, week, attendances) {
-  return fetch(API_SERVER_DOMAIN + "/attendance/mark", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-    body: JSON.stringify({
-      studyId: studyId,
-      week: week,
-      attendances: attendances,
-    }),
-  }).then((response) => {
+async function postWeeklyBest(accessToken, studyId, week, memberId) {
+  return fetch(
+    API_SERVER_DOMAIN +
+      `/api/inventories/weekly-best?studyId=${studyId}&week=${week}&memberId=${memberId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      body: JSON.stringify({}),
+    }
+  ).then((response) => {
     if (!response.ok) {
       throw new Error("Failed to post activies");
     }
@@ -23,16 +23,16 @@ async function postAttendances(accessToken, studyId, week, attendances) {
   });
 }
 
-export default async function PostAttendancesAPI(studyId, week, attendances) {
+export default async function PostWeeklyBestAPI(studyId, week, memberId) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      console.log(studyId, week, attendances);
-      postAttendances(accessToken, studyId, week, attendances);
+      console.log(studyId, week, memberId);
+      await postWeeklyBest(accessToken, studyId, week, memberId);
 
-      alert("출석 완료");
+      alert("작성 완료");
       window.location.reload();
     } catch (error) {
       if (refreshToken) {
@@ -43,9 +43,9 @@ export default async function PostAttendancesAPI(studyId, week, attendances) {
             accessToken,
             refreshToken
           );
-          postAttendances(newAccessToken, studyId, week, attendances);
+          await postWeeklyBest(newAccessToken, studyId, week, memberId);
 
-          alert("출석 완료");
+          alert("작성 완료");
           window.location.reload();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
