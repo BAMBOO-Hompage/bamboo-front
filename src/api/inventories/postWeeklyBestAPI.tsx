@@ -32,7 +32,7 @@ export default async function PostWeeklyBestAPI(studyId, week, memberId) {
       console.log(studyId, week, memberId);
       await postWeeklyBest(accessToken, studyId, week, memberId);
 
-      alert("작성 완료");
+      alert("등록 완료");
       window.location.reload();
     } catch (error) {
       if (refreshToken) {
@@ -45,7 +45,7 @@ export default async function PostWeeklyBestAPI(studyId, week, memberId) {
           );
           await postWeeklyBest(newAccessToken, studyId, week, memberId);
 
-          alert("작성 완료");
+          alert("등록 완료");
           window.location.reload();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);

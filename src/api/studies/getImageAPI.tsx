@@ -13,10 +13,15 @@ async function GetImage(accessToken, studyId, week) {
       },
     }
   ).then((response) => {
-    if (!response.ok) {
-      throw new Error("Failed to logout");
-    }
-    return response.json();
+    return response.json().then((data) => {
+      if (response.status === 404) {
+        return data;
+      }
+      if (!response.ok) {
+        throw new Error("Failed to logout");
+      }
+      return data;
+    });
   });
 }
 

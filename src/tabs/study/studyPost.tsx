@@ -1070,7 +1070,7 @@ export default function StudyPost() {
                 style={{
                   position: "relative",
                   maxWidth: "1000px",
-                  height: "1300px",
+                  minHeight: "1300px",
                   margin: "0 auto",
                   marginTop: "20px",
                   display: "flex",
@@ -1080,7 +1080,7 @@ export default function StudyPost() {
                   style={{
                     boxSizing: "border-box",
                     width: "clamp(120px, 20vw, 180px)",
-                    height: "100%",
+                    minHeight: "100%",
                     borderRight: "1px solid #444",
                     textAlign: "left",
                   }}
@@ -1905,8 +1905,8 @@ export default function StudyPost() {
                     display: "none",
                   }}
                   accept="image/*"
-                  {...register("Image", {
-                    // required: "사진을 추가해주세요.",
+                  {...registerImage("Image", {
+                    required: "사진을 추가해주세요.",
                   })}
                 />
                 <img
