@@ -62,7 +62,8 @@ export default async function PostStudiesAPI(
       );
       console.log(data.result);
 
-      return data.result;
+      alert("스터디가 성공적으로 등록되었습니다.");
+      window.location.reload();
     } catch (error) {
       if (refreshToken) {
         try {
@@ -84,7 +85,8 @@ export default async function PostStudiesAPI(
           );
           console.log(data.result);
 
-          return data.result;
+          alert("스터디가 성공적으로 등록되었습니다.");
+          window.location.reload();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

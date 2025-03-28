@@ -18,6 +18,8 @@ import DeleteInventoriesAPI from "../../api/inventories/deleteInventoriesAPI.tsx
 import PostAttendancesAPI from "../../api/attendance/postAttendanceAPI.tsx";
 import PostWeeklyBestAPI from "../../api/inventories/postWeeklyBestAPI.tsx";
 import GetWeeklyBestAPI from "../../api/inventories/getWeeklyBestAPI.tsx";
+import PatchImageAPI from "../../api/studies/patchImageAPI.tsx";
+import GetImageAPI from "../../api/studies/getImageAPI.tsx";
 
 import "../../App.css";
 
@@ -155,6 +157,13 @@ export default function StudyPost() {
     handleSubmit: handleSubmitWeeklyBest,
     formState: { errors: errorsWeeklyBest },
   } = useForm();
+  const {
+    register: registerImage,
+    reset: resetImage,
+    getValues: getValuesImage,
+    handleSubmit: handleSubmitImage,
+    formState: { errors: errorsImage },
+  } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const postId = parseInt(searchParams.get("id") || "0", 10);
@@ -170,6 +179,7 @@ export default function StudyPost() {
   const [checkedWeeklyBest, setCheckedWeeklyBest] = useState<number[]>([]);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState<boolean>(false);
 
+  const [image, setImage] = useState<string | undefined>();
   const [images, setImages] = useState<File[]>([]);
   const [showImages, setShowImages] = useState<string[]>([]);
 
@@ -375,6 +385,7 @@ export default function StudyPost() {
         var inventoryData = result;
         setSelectedInventory(inventoryData);
       });
+      setImage(undefined);
     } else {
       GetWeeklyBestAPI(postId, currentPage).then((result) => {
         var inventoryData = result;
@@ -382,6 +393,10 @@ export default function StudyPost() {
         if (inventoryData) {
           setCheckedWeeklyBest([inventoryData.member.memberId]);
         }
+      });
+      GetImageAPI(postId, currentPage).then((result) => {
+        var inventoryData = result;
+        setImage(inventoryData);
       });
     }
   }, [postId, postList, currentPage]);
@@ -487,6 +502,26 @@ export default function StudyPost() {
     );
   };
   const onWeeklyBestInvalid = (e) => {
+    console.log(e, "onInvalid");
+    alert("입력한 정보를 다시 확인해주세요.");
+  };
+
+  const onImageValid = async (e) => {
+    const formData = new FormData();
+
+    // 이미지 배열로 추가
+    images.forEach((file) => {
+      formData.append("image", file); // images 배열 형식으로 전송
+    });
+
+    PatchImageAPI(
+      parseInt(searchParams.get("id") || "0", 10),
+      getCurrentWeekForWeeklyBest(selectedSubject).week,
+      formData
+    );
+  };
+
+  const onImageInvalid = (e) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
@@ -1424,6 +1459,31 @@ export default function StudyPost() {
                     })}
                   </div>
 
+                  {image && (
+                    <div
+                      style={{
+                        boxSizing: "border-box",
+                        width: "100%",
+                        padding: "20px",
+                        backgroundColor: "rgba(17, 16, 21, 0.5)",
+                        borderRadius: "20px",
+                        marginBottom: "10px",
+                        fontFamily: "Pretendard-Light",
+                        fontSize: "18px",
+                        color: "#fff",
+                      }}
+                    >
+                      <img
+                        src={image}
+                        alt="week_image"
+                        style={{
+                          width: "100%",
+                          height: "300px",
+                          objectFit: "contain",
+                        }}
+                      />
+                    </div>
+                  )}
                   {selectedInventory?.fileUrl && (
                     <>
                       <div
@@ -1909,19 +1969,7 @@ export default function StudyPost() {
                   ))}
                 </div>
               ) : (
-                <div
-                // style={{
-                //   width: "620px",
-                //   height: "220px",
-                //   padding: "20px",
-                //   marginBottom: "30px",
-                //   backgroundColor: "#111015",
-                //   boxShadow:
-                //     "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                //   borderRadius: "20px",
-                //   overflow: "auto",
-                // }}
-                ></div>
+                <div></div>
               )}
             </div>
             <div
@@ -1949,7 +1997,7 @@ export default function StudyPost() {
                 type="primary"
                 size="small"
                 title="저장"
-                onClick={() => {}}
+                onClick={handleSubmitImage(onImageValid, onImageInvalid)}
               />
             </div>
           </form>

@@ -147,9 +147,6 @@ export default function StudyManagement() {
         e.StudyMaster,
         studyMembers
       );
-
-      alert("스터디가 성공적으로 등록되었습니다.");
-      window.location.reload();
     } catch (error) {
       console.error("스터디 등록 오류:", error);
       alert("스터디 등록 중 오류가 발생했습니다.");

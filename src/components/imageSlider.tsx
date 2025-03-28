@@ -98,7 +98,7 @@ const ImageSlider = ({ images }) => {
                 style={{
                   width: "450px",
                   height: "280px",
-                  objectFit: "cover",
+                  objectFit: "contain",
                 }}
               />
             </div>
