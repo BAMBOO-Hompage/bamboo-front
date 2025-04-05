@@ -13,12 +13,12 @@ import BottomInfo from "../../components/bottomInfo.tsx";
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetSubjectAPI from "../../api/subjects/getSubjectAPI.tsx";
 import GetStudyAPI from "../../api/studies/getStudyAPI.tsx";
-import GetInventoryAPI from "../../api/inventories/getInventroyAPI.tsx";
+import GetInventoryAPI from "../../api/inventories/getInventoryAPI.tsx";
 import DeleteInventoriesAPI from "../../api/inventories/deleteInventoriesAPI.tsx";
 import PostAttendancesAPI from "../../api/attendance/postAttendanceAPI.tsx";
 import PostWeeklyBestAPI from "../../api/inventories/postWeeklyBestAPI.tsx";
 import GetWeeklyBestAPI from "../../api/inventories/getWeeklyBestAPI.tsx";
-import PatchImageAPI from "../../api/studies/patchImageAPI.tsx";
+import PostImageAPI from "../../api/studies/postImageAPI.tsx";
 import GetImageAPI from "../../api/studies/getImageAPI.tsx";
 
 import "../../App.css";
@@ -359,10 +359,6 @@ export default function StudyPost() {
       try {
         const studyResult = await GetStudyAPI(searchParams.get("id"));
         setPostData(studyResult);
-        const checkedList = studyResult.attendances
-          .filter((attendance) => attendance.status === "출석")
-          .map((attendance) => attendance.studentId);
-        setCheckedMembers(checkedList);
         const targetSubject = studyResult.cohort.subjects.find(
           (subject) => subject.name === studyResult.subjectName
         );
@@ -370,6 +366,14 @@ export default function StudyPost() {
         setSelectedSubject(subjectResult);
         const remainder = subjectResult.weeklyContents.length % itemsPerPage;
         setEmptySlots(remainder === 0 ? 0 : itemsPerPage - remainder);
+        const checkedList = studyResult.attendances
+          .filter(
+            (attendance) =>
+              attendance.week === getCurrentWeek(selectedSubject).week &&
+              attendance.status === "출석"
+          )
+          .map((attendance) => attendance.studentId);
+        setCheckedMembers(checkedList);
         console.log(subjectResult);
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
@@ -514,7 +518,7 @@ export default function StudyPost() {
       formData.append("image", file); // images 배열 형식으로 전송
     });
 
-    PatchImageAPI(
+    PostImageAPI(
       parseInt(searchParams.get("id") || "0", 10),
       getCurrentWeekForWeeklyBest(selectedSubject).week,
       formData
@@ -1383,7 +1387,7 @@ export default function StudyPost() {
                                     }}
                                   />
                                   <Link
-                                    to={`/studyEdit?study=${postData.studyId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
+                                    to={`/studyEdit?id=${selectedInventory?.inventoryId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
                                     style={{
                                       textDecoration: "none",
                                       width: "25px",
@@ -1528,9 +1532,11 @@ export default function StudyPost() {
                             </div>
                           </div>
                         </div>
-                        <PDFPreviewComponent
-                          pdfUrl={selectedInventory?.fileUrl}
-                        ></PDFPreviewComponent>
+                        <div>
+                          <PDFPreviewComponent
+                            pdfUrl={selectedInventory?.fileUrl}
+                          />
+                        </div>
                       </div>
                     </>
                   )}

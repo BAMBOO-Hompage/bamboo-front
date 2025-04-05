@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
+import { motion, transform } from "framer-motion";
 
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
@@ -34,6 +34,7 @@ export default function HallOfFame() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
+  const [hovered, setHovered] = useState(false);
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [cohortLatest, setCohortLatest] = useState<cohort>({
     cohortId: 0,
@@ -138,11 +139,34 @@ export default function HallOfFame() {
     alert("입력한 정보를 다시 확인해주세요.");
   };
 
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setVisible(true);
+    }, 1000); // 1초 뒤에 나타남
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div>
       <Nav type="dataCenter" />
-      <div className="background">
-        {/* <motion.div
+      <div className="background" style={{ position: "relative" }}>
+        <img
+          src="../img/hallOfFame.png"
+          alt="hallOfFame"
+          style={{
+            position: "absolute",
+            top: "0",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "100%",
+            maxWidth: "1000px",
+            opacity: visible ? 1 : 0,
+            transition: "opacity 1s ease-in-out",
+          }}
+        />
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -160,7 +184,326 @@ export default function HallOfFame() {
               maxWidth: "1000px",
               padding: "0 20px",
               height: "1300px",
-              margin: "100px auto",
+              margin: "0 auto",
+              paddingTop: "100px",
+              marginBottom: "150px",
+            }}
+          >
+            <div style={{ width: "100%", marginTop: "40px" }}>
+              <img
+                src="../img/hallOfFame_text.png"
+                alt="hallOfFame"
+                style={{ height: "260px", margin: "0 auto" }}
+              />
+            </div>
+            <div style={{ width: "100%", marginTop: "40px" }}>
+              <div
+                style={{
+                  width: "200px",
+                  margin: "0 auto",
+                  padding: "5px 10px",
+                  borderRadius: "15px",
+                  backgroundColor: "rgba(17, 16, 21, 0.5)",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "15px",
+                  color: "#777",
+                }}
+              >
+                1 Week MVP
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  marginTop: "40px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    width: "120px",
+                    height: "120px",
+                    border: "1px solid #fff",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: "90px",
+                      height: "90px",
+                      marginTop: "20px",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "#2CC295";
+                      e.currentTarget.style.filter = "blur(50px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "";
+                    }}
+                  ></div>
+                  PY
+                </div>
+                <div
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    marginTop: "60px",
+                    border: "1px solid #fff",
+                    cursor: "pointer",
+                  }}
+                >
+                  DA
+                </div>
+                <div
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    border: "1px solid #fff",
+                    cursor: "pointer",
+                  }}
+                >
+                  ML
+                </div>
+                <div
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    marginTop: "60px",
+                    border: "1px solid #fff",
+                    cursor: "pointer",
+                  }}
+                >
+                  DL
+                </div>
+                <div
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    border: "1px solid #fff",
+                    cursor: "pointer",
+                  }}
+                >
+                  PR
+                </div>
+              </div>
+              <div
+                style={{
+                  boxSizing: "border-box",
+                  width: "100%",
+                  marginTop: "80px",
+                  padding: "5px 10px",
+                  borderRadius: "15px",
+                  backgroundColor: "rgba(17, 16, 21, 0.5)",
+                  textAlign: "center",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "14px",
+                }}
+              >
+                <div>
+                  깊이 있는 학습과 적극적인 참여로 팀원들에게 영감을 준 이들의
+                  이름이 이곳에 기록됩니다.
+                </div>
+                <div style={{ marginTop: "10px" }}>
+                  bamboo의 발전을 이끌어간 이들의 발자취, 그리고 그들의 노력과
+                  헌신을 기록하고 공유합니다.
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                width: "100%",
+                minHeight: "100px",
+                marginTop: "50px",
+                border: "1px solid #fff",
+                textAlign: "left",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "left",
+                    gap: "10px",
+                  }}
+                >
+                  <select
+                    style={{
+                      width: "60px",
+                      height: "30px",
+                      border: "1px solid #2cc295",
+                      backgroundColor: "#171717",
+                      color: "#2cc295",
+                      textAlign: "center",
+                      fontSize: "12px",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                    }}
+                    value={selectedCohort}
+                    onChange={(e) => setSelectedCohort(Number(e.target.value))}
+                  >
+                    {Array.from(
+                      { length: cohortLatest.batch - 6 + 1 },
+                      (_, i) => cohortLatest.batch - i
+                    ).map((num) => (
+                      <option key={num} value={num}>
+                        {num}기
+                      </option>
+                    ))}
+                  </select>
+                  {checkAuth === 1 ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        fontFamily: "Pretendard-Light",
+                        fontSize: "18px",
+                        color: "#777",
+                      }}
+                    >
+                      <img
+                        src="../../img/btn/edit_enabled.png"
+                        alt="edit"
+                        style={{
+                          width: "30px",
+                          cursor: "pointer",
+                          opacity: "0.8",
+                          transition: "all 0.3s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.opacity = "1";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.opacity = "0.8";
+                        }}
+                        onClick={() => {
+                          setIsAddPopupOpen(true);
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
+                <Link to="/" style={{ textDecoration: "none" }}>
+                  <div
+                    style={{
+                      fontFamily: "Pretendard-Regular",
+                      fontSize: "16px",
+                      width: "150px",
+                      padding: "10px 0",
+                      backgroundColor: "#111015",
+                      borderRadius: "20px",
+                      boxShadow:
+                        "-10px -10px 30px #242424, 15px 15px 30px #000",
+                      color: "#2CC295",
+                      transition: "all 0.3s ease",
+                      textAlign: "center",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.target as HTMLDivElement).style.transform =
+                        "scale(1.05)";
+                      (e.target as HTMLDivElement).style.boxShadow =
+                        "-15px -15px 40px rgba(36, 36, 36, 0.5), 20px 20px 40px rgba(0, 0, 0, 0.7)"; // 그림자 효과 강하게
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.target as HTMLDivElement).style.transform = "scale(1)";
+                      (e.target as HTMLDivElement).style.boxShadow =
+                        "-10px -10px 30px #242424, 15px 15px 30px #000";
+                    }}
+                  >
+                    현 황
+                  </div>
+                </Link>
+              </div>
+              <div>
+                <div
+                  style={{
+                    width: "100%",
+                    marginTop: "30px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "16px",
+                    color: "#888",
+                    textAlign: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      flexGrow: 1,
+                      flexBasis: "120px",
+                      minWidth: "60px",
+                    }}
+                  >
+                    주차
+                  </div>
+                  <div
+                    style={{
+                      flexGrow: 2,
+                      flexBasis: "220px",
+                      minWidth: "20px",
+                    }}
+                  >
+                    PY
+                  </div>
+                  <div
+                    style={{
+                      flexGrow: 2,
+                      flexBasis: "220px",
+                      minWidth: "80px",
+                    }}
+                  >
+                    DA
+                  </div>
+                  <div
+                    style={{
+                      flexGrow: 2,
+                      flexBasis: "220px",
+                      minWidth: "30px",
+                    }}
+                  >
+                    ML
+                  </div>
+                  <div
+                    style={{
+                      flexGrow: 2,
+                      flexBasis: "220px",
+                      minWidth: "30px",
+                    }}
+                  >
+                    DL
+                  </div>
+                </div>
+                <hr
+                  style={{
+                    height: "1px",
+                    background: "#666",
+                    border: "none",
+                  }}
+                />
+                <div></div>
+              </div>
+            </div>
+          </div>
+          {/* <div
+            style={{
+              position: "relative",
+              maxWidth: "1000px",
+              padding: "0 20px",
+              height: "1300px",
+              margin: "0 auto",
+              paddingTop: "100px",
+              marginBottom: "150px",
               display: "flex",
             }}
           >
@@ -420,7 +763,7 @@ export default function HallOfFame() {
                 <></>
               )}
             </motion.div>
-          </div>
+          </div> */}
         </motion.div>
 
         {isAddPopupOpen && (
@@ -572,9 +915,9 @@ export default function HallOfFame() {
               zIndex: 999,
             }}
           />
-        )} */}
+        )}
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
@@ -587,7 +930,7 @@ export default function HallOfFame() {
           }}
         >
           <LockedPagePrepare />
-        </motion.div>
+        </motion.div> */}
 
         <BottomInfo />
       </div>

@@ -450,7 +450,7 @@ export default function StudyManagement() {
                                   minWidth: "60px",
                                 }}
                               >
-                                {study.isBook ? "커리큘럼" : "자율"}
+                                {study.isBook ? "정규" : "자율"}
                               </div>
                               <div
                                 style={{

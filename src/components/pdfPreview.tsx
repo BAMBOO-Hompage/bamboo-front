@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "react-pdf/dist/esm/Page/TextLayer.css";
 import "../App.css";
 
 // external CDN에서 호출
@@ -14,21 +15,15 @@ const PDFPreviewComponent = ({ pdfUrl }) => {
   };
 
   return (
-    <div
-      className="p-4 flex justify-center"
-      style={{ height: "800px", overflow: "auto" }}
-    >
+    <div style={{ height: "700px", overflow: "auto" }}>
       <div className="relative border border-gray-300 bg-white overflow-hidden">
         <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-          {Array.from(new Array(numPages), (el, index) => (
-            <div
-              key={`page_${index + 1}`}
-              className="my-4"
-              style={{ marginBottom: "20px" }}
-            >
-              <Page pageNumber={index + 1} width={700} />
-            </div>
-          ))}
+          {numPages &&
+            Array.from(new Array(numPages), (_, index) => (
+              <div key={`page_${index + 1}`} style={{ marginBottom: "16px" }}>
+                <Page pageNumber={index + 1} width={700} />
+              </div>
+            ))}
         </Document>
       </div>
     </div>

@@ -35,7 +35,6 @@ export default async function ImageAPI(formData) {
       if (refreshToken) {
         try {
           console.error("accessToken expiration: ", error);
-          alert("Refresh accessToken");
 
           const newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
@@ -48,7 +47,6 @@ export default async function ImageAPI(formData) {
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("이미지 사용에 문제가 생겼습니다.");
-          window.location.href = "/";
         }
       } else {
         alert("다시 로그인 해주세요.");
