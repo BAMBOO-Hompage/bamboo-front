@@ -366,14 +366,6 @@ export default function StudyPost() {
         setSelectedSubject(subjectResult);
         const remainder = subjectResult.weeklyContents.length % itemsPerPage;
         setEmptySlots(remainder === 0 ? 0 : itemsPerPage - remainder);
-        const checkedList = studyResult.attendances
-          .filter(
-            (attendance) =>
-              attendance.week === getCurrentWeek(selectedSubject).week &&
-              attendance.status === "출석"
-          )
-          .map((attendance) => attendance.studentId);
-        setCheckedMembers(checkedList);
         console.log(subjectResult);
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
@@ -425,7 +417,6 @@ export default function StudyPost() {
     const today = new Date(
       new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
     );
-
     const currentWeek = selectedSubject.weeklyContents.find(
       ({ startDate, endDate }) => {
         const start = new Date(startDate);
@@ -433,14 +424,12 @@ export default function StudyPost() {
         return today >= start && today <= end;
       }
     );
-
     return currentWeek ? currentWeek : null;
   };
   const getCurrentWeekForWeeklyBest = (selectedSubject) => {
     const today = new Date(
       new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
     );
-
     const currentWeek = selectedSubject.weeklyContents.find(
       ({ startDate, endDate }) => {
         const start = new Date(startDate);
@@ -452,7 +441,6 @@ export default function StudyPost() {
         return today >= start && today <= end;
       }
     );
-
     return currentWeek ? currentWeek : null;
   };
 
@@ -1047,6 +1035,15 @@ export default function StudyPost() {
                       e.currentTarget.style.opacity = "0.8";
                     }}
                     onClick={() => {
+                      const checkedList = postData.attendances
+                        .filter(
+                          (attendance) =>
+                            attendance.week ===
+                              getCurrentWeek(selectedSubject).week &&
+                            attendance.status === "출석"
+                        )
+                        .map((attendance) => attendance.studentId);
+                      setCheckedMembers(checkedList);
                       setIsAttendancePopupOpen(true);
                     }}
                   >

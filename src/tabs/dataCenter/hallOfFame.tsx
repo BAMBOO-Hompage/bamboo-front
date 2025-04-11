@@ -10,6 +10,12 @@ import BottomInfo from "../../components/bottomInfo.tsx";
 
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
+import GetStudyAPI from "../../api/studies/getStudyAPI.tsx";
+import GetWeeklyBestAPI from "../../api/inventories/getWeeklyBestAPI.tsx";
+import PostAwardsAPI from "../../api/awards/postAwardsAPI.tsx";
+import GetAwardsAPI from "../../api/awards/getAwardsAPI.tsx";
+import GetAwardLatestAPI from "../../api/awards/getAwardLatestAPI.tsx";
+
 import "../../App.css";
 
 type cohort = {
@@ -20,8 +26,98 @@ type cohort = {
   status: string;
   subjects: [];
 };
-
-const maxVisiblePages = 5;
+type study = {
+  studyId: number;
+  teamName: string;
+  subjectName: string;
+  cohort: cohort;
+  isBook: boolean;
+  section: number;
+  studyMaster: {
+    memberId: number;
+    studentId: string;
+    name: string;
+  };
+  studyMembers: [
+    {
+      memberId: number;
+      studentId: string;
+      name: string;
+    }
+  ];
+  attendances: [
+    {
+      attendanceId: number;
+      week: number;
+      studentId: string;
+      status: string;
+    }
+  ];
+};
+type Inventory = {
+  inventoryId: number;
+  member: {
+    memberId: number;
+    studentId: string;
+    email: string;
+    name: string;
+    major: string;
+    phone: string;
+    role: string;
+  };
+  study: {
+    teamName: string;
+    subjectName: string;
+    batch: number;
+    section: number;
+  };
+  title: string;
+  content: string;
+  week: number;
+  isWeeklyBest: true;
+  fileUrl: string;
+  award: {
+    awardId: number;
+    study: {
+      studyId: number;
+      teamName: string;
+      subjectName: string;
+      batch: number;
+      section: number;
+      studyMaster: {
+        memberId: number;
+        studentId: string;
+        name: string;
+      };
+      studyMembers: [
+        {
+          memberId: number;
+          studentId: string;
+          name: string;
+        }
+      ];
+    };
+    title: string;
+    batch: number;
+    week: number;
+    startDate: number[];
+    endDate: number[];
+  };
+};
+type Award = {
+  awardId: number;
+  member: {
+    studentId: string;
+    name: string;
+  };
+  study: {
+    studyId: number;
+    subjectName: string;
+    section: number;
+  };
+  batch: number;
+  week: number;
+};
 
 export default function HallOfFame() {
   const {
@@ -32,7 +128,6 @@ export default function HallOfFame() {
     formState: { errors },
   } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
   const [hovered, setHovered] = useState(false);
   const [checkAuth, setCheckAuth] = useState<number>(1);
@@ -45,34 +140,98 @@ export default function HallOfFame() {
     subjects: [],
   });
   const [selectedCohort, setSelectedCohort] = useState(0);
+  const [groupedAwards, setGroupedAwards] = useState([]);
+  const [curriculumSubjects, setCurriculumSubjects] = useState([]);
   const [isAddPopupOpen, setIsAddPopupOpen] = useState<boolean>(false);
   const [urlInput, setUrlInput] = useState("");
-  const [urlParams, setUrlParams] = useState({ id: "", member: "", week: "" });
-  const [postsToDisplay, setPostsToDisplay] = useState<[]>([]);
-  const [totalPages, setTotalPages] = useState<number>(1);
-
-  const startPage =
-    Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
-  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-  const changePage = (page: number) => {
-    if (page < 1) {
-      page = 1;
-      alert("첫 페이지 입니다.");
-      return;
-    }
-    if (page > totalPages) {
-      page = totalPages;
-      alert("마지막 페이지 입니다.");
-      return;
-    }
-    setSearchParams({
-      cohort: selectedCohort.toString(),
-      page: page.toString(),
-      size: "3",
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const [urlParams, setUrlParams] = useState({ id: "", week: "" });
+  const [selectedStudy, setSelectedStudy] = useState<study>({
+    studyId: 0,
+    teamName: "",
+    subjectName: "",
+    cohort: {
+      cohortId: 0,
+      batch: 0,
+      year: 0,
+      isFirstSemester: true,
+      status: "",
+      subjects: [],
+    },
+    isBook: true,
+    section: 0,
+    studyMaster: {
+      memberId: 0,
+      studentId: "",
+      name: "",
+    },
+    studyMembers: [
+      {
+        memberId: 0,
+        studentId: "",
+        name: "",
+      },
+    ],
+    attendances: [
+      {
+        attendanceId: 0,
+        week: 0,
+        studentId: "",
+        status: "",
+      },
+    ],
+  });
+  const [selectedInventory, setSelectedInventory] = useState<
+    Inventory | undefined
+  >({
+    inventoryId: 0,
+    member: {
+      memberId: 0,
+      studentId: "",
+      email: "",
+      name: "",
+      major: "",
+      phone: "",
+      role: "",
+    },
+    study: {
+      teamName: "",
+      subjectName: "",
+      batch: 0,
+      section: 0,
+    },
+    title: "",
+    content: "",
+    week: 0,
+    isWeeklyBest: true,
+    fileUrl: "",
+    award: {
+      awardId: 0,
+      study: {
+        studyId: 0,
+        teamName: "",
+        subjectName: "",
+        batch: 0,
+        section: 0,
+        studyMaster: {
+          memberId: 0,
+          studentId: "",
+          name: "",
+        },
+        studyMembers: [
+          {
+            memberId: 0,
+            studentId: "",
+            name: "",
+          },
+        ],
+      },
+      title: "",
+      batch: 0,
+      week: 0,
+      startDate: [],
+      endDate: [],
+    },
+  });
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
@@ -90,6 +249,9 @@ export default function HallOfFame() {
         const cohortResult = await GetCohortLatestAPI();
         setCohortLatest(cohortResult);
         setSelectedCohort(cohortResult.batch);
+        setCurriculumSubjects(
+          cohortResult.subjects.filter((subject) => subject.isBook === true)
+        );
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
       }
@@ -99,38 +261,48 @@ export default function HallOfFame() {
   }, []);
 
   useEffect(() => {
-    // GetActivitiesAPI(selectedYear, currentPage).then((result) => {
-    //   var activityData = result.content;
-    //   setPostsToDisplay(activityData);
-    //   setTotalPages(result.totalPages);
+    // GetAwardsAPI(selectedCohort).then((result) => {
+    //   const awardsData = result.content;
+    //   // 1. week별로 데이터를 묶는다
+    //   const grouped = awardsData.reduce((acc, curr) => {
+    //     const week = curr.week;
+    //     if (!acc[week]) {
+    //       acc[week] = [];
+    //     }
+    //     acc[week].push(curr);
+    //     return acc;
+    //   }, {});
+    //   // 2. week를 오름차순으로 정렬하고 이중 리스트로 변환
+    //   const sortedGrouped = Object.keys(grouped)
+    //     .sort((a, b) => Number(a) - Number(b)) // week는 숫자
+    //     .map((week) => grouped[week]);
+    //   setGroupedAwards(sortedGrouped);
     // });
-  }, [selectedCohort, currentPage]);
+  }, [selectedCohort]);
 
   const onValid = async (e) => {
     const inputUrl = e.URL;
     setUrlInput(inputUrl);
-
     try {
       const url = new URL(inputUrl);
-
       // 1. 도메인/studyPost 경로인지 확인
       if (!url.pathname.startsWith("/studyPost")) {
-        alert("올바른 스터디 URL이 아닙니다.");
-        setUrlParams({ id: "", member: "", week: "" });
+        alert("올바른 URL을 입력해주세요.");
+        setUrlParams({ id: "", week: "" });
         return;
       }
-
       // 2. URL 파라미터에서 id, member, week 추출
       const searchParams = new URLSearchParams(url.search);
       const id = searchParams.get("id") || "";
-      const member = searchParams.get("member") || "";
       const week = searchParams.get("week") || "";
-
-      // 3. 상태 업데이트
-      setUrlParams({ id, member, week });
+      const studyResult = await GetStudyAPI(id);
+      setSelectedStudy(studyResult);
+      const inventoryResult = await GetWeeklyBestAPI(id, week);
+      setSelectedInventory(inventoryResult);
+      setUrlParams({ id, week });
     } catch (error) {
       alert("올바른 URL을 입력해주세요.");
-      setUrlParams({ id: "", member: "", week: "" });
+      setUrlParams({ id: "", week: "" });
     }
   };
 
@@ -139,11 +311,12 @@ export default function HallOfFame() {
     alert("입력한 정보를 다시 확인해주세요.");
   };
 
+  // 조명 효과
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(true);
-    }, 1000); // 1초 뒤에 나타남
+    }, 300);
 
     return () => clearTimeout(timer);
   }, []);
@@ -209,7 +382,7 @@ export default function HallOfFame() {
                   color: "#777",
                 }}
               >
-                1 Week MVP
+                BEST OF THE WEEK
               </div>
               <div
                 style={{
@@ -219,76 +392,41 @@ export default function HallOfFame() {
                   justifyContent: "space-between",
                 }}
               >
-                <div
-                  style={{
-                    position: "relative",
-                    width: "120px",
-                    height: "120px",
-                    border: "1px solid #fff",
-                  }}
-                >
+                {curriculumSubjects?.map((subject, index) => (
                   <div
+                    key={subject.subjectId}
                     style={{
-                      position: "absolute",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      width: "90px",
-                      height: "90px",
-                      marginTop: "20px",
-                      cursor: "pointer",
+                      position: "relative",
+                      width: "120px",
+                      height: "120px",
+                      border: "1px solid #fff",
+                      marginTop: index % 2 !== 0 ? "60px" : undefined,
                     }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#2CC295";
-                      e.currentTarget.style.filter = "blur(50px)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "";
-                    }}
-                  ></div>
-                  PY
-                </div>
-                <div
-                  style={{
-                    width: "120px",
-                    height: "120px",
-                    marginTop: "60px",
-                    border: "1px solid #fff",
-                    cursor: "pointer",
-                  }}
-                >
-                  DA
-                </div>
-                <div
-                  style={{
-                    width: "120px",
-                    height: "120px",
-                    border: "1px solid #fff",
-                    cursor: "pointer",
-                  }}
-                >
-                  ML
-                </div>
-                <div
-                  style={{
-                    width: "120px",
-                    height: "120px",
-                    marginTop: "60px",
-                    border: "1px solid #fff",
-                    cursor: "pointer",
-                  }}
-                >
-                  DL
-                </div>
-                <div
-                  style={{
-                    width: "120px",
-                    height: "120px",
-                    border: "1px solid #fff",
-                    cursor: "pointer",
-                  }}
-                >
-                  PR
-                </div>
+                  >
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: "120px",
+                        height: "50px",
+                        marginTop: "40px",
+                        cursor: "pointer",
+                        zIndex: "1",
+                        border: "1px solid #fff",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "#2CC295";
+                        e.currentTarget.style.filter = "blur(40px)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "";
+                        e.currentTarget.style.filter = "";
+                      }}
+                    ></div>
+                    <div style={{ zIndex: "100" }}>{subject.name}</div>
+                  </div>
+                ))}
               </div>
               <div
                 style={{
@@ -447,42 +585,18 @@ export default function HallOfFame() {
                   >
                     주차
                   </div>
-                  <div
-                    style={{
-                      flexGrow: 2,
-                      flexBasis: "220px",
-                      minWidth: "20px",
-                    }}
-                  >
-                    PY
-                  </div>
-                  <div
-                    style={{
-                      flexGrow: 2,
-                      flexBasis: "220px",
-                      minWidth: "80px",
-                    }}
-                  >
-                    DA
-                  </div>
-                  <div
-                    style={{
-                      flexGrow: 2,
-                      flexBasis: "220px",
-                      minWidth: "30px",
-                    }}
-                  >
-                    ML
-                  </div>
-                  <div
-                    style={{
-                      flexGrow: 2,
-                      flexBasis: "220px",
-                      minWidth: "30px",
-                    }}
-                  >
-                    DL
-                  </div>
+                  {curriculumSubjects?.map((subject, index) => (
+                    <div
+                      key={subject.subjectId}
+                      style={{
+                        flexGrow: 2,
+                        flexBasis: "220px",
+                        minWidth: "80px",
+                      }}
+                    >
+                      {subject.name}
+                    </div>
+                  ))}
                 </div>
                 <hr
                   style={{
@@ -495,275 +609,6 @@ export default function HallOfFame() {
               </div>
             </div>
           </div>
-          {/* <div
-            style={{
-              position: "relative",
-              maxWidth: "1000px",
-              padding: "0 20px",
-              height: "1300px",
-              margin: "0 auto",
-              paddingTop: "100px",
-              marginBottom: "150px",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                boxSizing: "border-box",
-                width: "clamp(120px, 20vw, 180px)",
-                minHeight: "100%",
-                borderRight: "1px solid #444",
-                textAlign: "left",
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: "Pretendard-Bold",
-                  fontSize: "30px",
-                  color: "#fff",
-                  textShadow: "0 0 0.1em, 0 0 0.1em",
-                }}
-              >
-                명예의 전당
-              </div>
-
-              <div
-                style={{
-                  marginTop: "40px",
-                  fontFamily: "Pretendard-Regular",
-                  fontSize: "18px",
-                }}
-              >
-                <div
-                  className="side_tabs"
-                  style={{
-                    boxSizing: "border-box",
-                    color: "#2CC295",
-                    borderRight: "1px solid #2cc295",
-                  }}
-                  onClick={() => {
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  명예의 전당
-                </div>
-                <div
-                  className="side_tabs"
-                  style={{
-                    boxSizing: "border-box",
-                  }}
-                  onClick={() => {
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  선발 결과
-                </div>
-              </div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{
-                ease: "easeInOut",
-                duration: 0.5,
-                y: { duration: 0.5 },
-              }}
-              key={selectedCohort}
-              style={{
-                position: "relative",
-                width: "820px",
-                minHeight: "100%",
-                textAlign: "left",
-                paddingLeft: "50px",
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-end",
-                    fontFamily: "Pretendard-Bold",
-                    fontSize: "30px",
-                    color: "#fff",
-                  }}
-                >
-                  {selectedCohort}기&nbsp;
-                  <span
-                    style={{
-                      fontFamily: "Pretendard-Regular",
-                      fontSize: "18px",
-                      color: "#fff",
-                    }}
-                  >
-                    ({cohortLatest.year}-
-                    {cohortLatest.isFirstSemester ? "1" : "2"})&emsp;
-                  </span>
-                  <select
-                    style={{
-                      width: "60px",
-                      height: "25px",
-                      border: "1px solid #2cc295",
-                      backgroundColor: "#171717",
-                      color: "#2cc295",
-                      textAlign: "center",
-                      fontSize: "12px",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                    }}
-                    value={selectedCohort}
-                    onChange={(e) => setSelectedCohort(Number(e.target.value))}
-                  >
-                    {Array.from(
-                      { length: cohortLatest.batch - 5 + 1 },
-                      (_, i) => cohortLatest.batch - i
-                    ).map((num) => (
-                      <option key={num} value={num}>
-                        {num}기
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {checkAuth === 1 ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
-                      color: "#777",
-                    }}
-                  >
-                    명예의 전당 선정&emsp;
-                    <img
-                      src="../../img/btn/edit_enabled.png"
-                      alt="edit"
-                      style={{
-                        width: "30px",
-                        cursor: "pointer",
-                        opacity: "0.8",
-                        transition: "all 0.3s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.opacity = "1";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.opacity = "0.8";
-                      }}
-                      onClick={() => {
-                        setIsAddPopupOpen(true);
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-              </div>
-
-              <div
-                style={{
-                  width: "100%",
-                }}
-              ></div>
-
-              {postsToDisplay.length > 0 ? (
-                <div
-                  style={{
-                    width: "100%",
-                    maxWidth: "770px",
-                    marginTop: "100px",
-                    paddingBottom: "100px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <button
-                    className="bottom_btn"
-                    style={{}}
-                    onClick={() => changePage(1)}
-                  >
-                    <img
-                      src="../img/btn/pageStart.png"
-                      alt="pageStart"
-                      style={{
-                        height: "12px",
-                      }}
-                    />
-                  </button>
-                  <button
-                    className="bottom_btn"
-                    style={{}}
-                    onClick={() => changePage(currentPage - 1)}
-                  >
-                    <img
-                      src="../img/btn/pagePrev.png"
-                      alt="pagePrev"
-                      style={{
-                        height: "12px",
-                      }}
-                    />
-                  </button>
-                  {Array.from(
-                    { length: endPage - startPage + 1 },
-                    (_, i) => startPage + i
-                  ).map((page) => (
-                    <button
-                      key={page}
-                      className="bottom_tabs"
-                      onClick={() => changePage(page)}
-                      style={
-                        page === currentPage
-                          ? {
-                              textShadow: "0 0 0.1em, 0 0 0.1em",
-                              color: "#2CC295",
-                            }
-                          : {}
-                      }
-                    >
-                      {page}
-                    </button>
-                  ))}
-                  <button
-                    className="bottom_btn"
-                    style={{}}
-                    onClick={() => changePage(currentPage + 1)}
-                  >
-                    <img
-                      src="../img/btn/pageNext.png"
-                      alt="pageNext"
-                      style={{
-                        height: "12px",
-                      }}
-                    />
-                  </button>
-                  <button
-                    className="bottom_btn"
-                    style={{}}
-                    onClick={() => changePage(totalPages)}
-                  >
-                    <img
-                      src="../img/btn/pageEnd.png"
-                      alt="pageNext"
-                      style={{
-                        height: "12px",
-                      }}
-                    />
-                  </button>
-                </div>
-              ) : (
-                <></>
-              )}
-            </motion.div>
-          </div> */}
         </motion.div>
 
         {isAddPopupOpen && (
@@ -853,22 +698,28 @@ export default function HallOfFame() {
               <div
                 style={{
                   marginTop: "10px",
-                  padding: "10px",
+                  padding: "20px",
                   backgroundColor: "#222",
                   borderRadius: "10px",
                   color: "#fff",
                   fontSize: "16px",
                 }}
               >
-                <p>
-                  📌 <strong>ID:</strong> {urlParams.id}
-                </p>
-                <p>
-                  👤 <strong>Member:</strong> {urlParams.member}
-                </p>
-                <p>
-                  📅 <strong>Week:</strong> {urlParams.week}
-                </p>
+                <div style={{ marginBottom: "10px" }}>
+                  <strong>📌 기수 :</strong> {selectedStudy.cohort.batch}
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <strong>📖 과목 :</strong> {selectedStudy.subjectName}
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <strong>🎖️ 분반 :</strong> {selectedStudy.section}
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <strong>📅 주차 :</strong> {urlParams.week}
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <strong>👤 회원 :</strong> {selectedInventory?.member.name}
+                </div>
               </div>
             )}
             <div
@@ -889,6 +740,9 @@ export default function HallOfFame() {
                     "명예의 전당 선정을 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
                   );
                   if (deleteEnd) {
+                    setUrlInput("");
+                    setUrlParams({ id: "", week: "" });
+                    reset({ URL: "" });
                     setIsAddPopupOpen(false);
                   }
                 }}
@@ -897,7 +751,28 @@ export default function HallOfFame() {
                 type="primary"
                 size="small"
                 title="저장"
-                onClick={() => {}}
+                onClick={() => {
+                  if (urlInput) {
+                    if (
+                      curriculumSubjects.some(
+                        (subject) => subject.name === selectedStudy.subjectName
+                      )
+                    ) {
+                      PostAwardsAPI(
+                        urlParams.week,
+                        selectedStudy.cohort.batch,
+                        selectedInventory?.inventoryId,
+                        selectedStudy.subjectName,
+                        selectedStudy.section,
+                        selectedInventory?.member.memberId
+                      );
+                    } else {
+                      alert("정규 스터디만 등록 가능합니다.");
+                    }
+                  } else {
+                    alert("정보 확인을 진행해주세요.");
+                  }
+                }}
               />
             </div>
           </form>

@@ -24,20 +24,16 @@ export default async function checkAuth() {
   if (accessToken) {
     try {
       let data = await getMyPage(accessToken);
-      console.log(data.result);
 
       return data.result;
     } catch (error) {
       if (refreshToken) {
         try {
-          console.error("accessToken expiration: ", error);
-
           let newAccessToken = await getAccessTokenWithRefreshToken(
             accessToken,
             refreshToken
           );
           let data = await getMyPage(newAccessToken);
-          console.log(data.result);
 
           return data.result;
         } catch (error) {

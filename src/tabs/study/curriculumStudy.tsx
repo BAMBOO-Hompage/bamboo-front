@@ -287,10 +287,10 @@ export default function CurriculumStudy() {
             >
               <svg
                 width="100%"
-                viewBox="0 0 1000 1000"
+                viewBox="0 0 1000 1200"
                 preserveAspectRatio="none"
                 style={{
-                  aspectRatio: "1 / 1",
+                  aspectRatio: "1 / 1.2",
                 }}
               >
                 <defs>
@@ -305,9 +305,9 @@ export default function CurriculumStudy() {
                   </filter>
 
                   <mask id="hole-mask">
-                    <rect x="0" y="0" width="1000" height="1000" fill="#fff" />
+                    <rect x="0" y="0" width="1000" height="1200" fill="#fff" />
 
-                    {[...Array(5)].map((_, row) => (
+                    {[...Array(6)].map((_, row) => (
                       <>
                         <rect
                           x="0"
@@ -384,7 +384,7 @@ export default function CurriculumStudy() {
                   x="0"
                   y="0"
                   width="1000"
-                  height="1000"
+                  height="1200"
                   fill="#111015"
                   style={{
                     mask: "url(#hole-mask)",
