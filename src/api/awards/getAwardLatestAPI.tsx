@@ -3,7 +3,7 @@ var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 export default async function GetAwardsAPI(batch) {
   try {
     const response = await fetch(
-      API_SERVER_DOMAIN + `/api/awards/awards/latest?batch=${batch}`,
+      API_SERVER_DOMAIN + `/api/awards/awards/${batch}/latest`,
       {
         method: "GET",
         headers: {

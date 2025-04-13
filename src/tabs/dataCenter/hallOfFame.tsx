@@ -141,6 +141,7 @@ export default function HallOfFame() {
   });
   const [selectedCohort, setSelectedCohort] = useState(0);
   const [groupedAwards, setGroupedAwards] = useState([]);
+  const [awardsLatest, setAwardsLatest] = useState([]);
   const [curriculumSubjects, setCurriculumSubjects] = useState([]);
   const [isAddPopupOpen, setIsAddPopupOpen] = useState<boolean>(false);
   const [urlInput, setUrlInput] = useState("");
@@ -261,8 +262,37 @@ export default function HallOfFame() {
   }, []);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const awardsLatestResult = await GetAwardLatestAPI(selectedCohort);
+        setAwardsLatest(awardsLatestResult);
+        const awardsResult = await GetAwardsAPI(selectedCohort);
+        // 1. week별로 데이터를 묶는다
+        const grouped = awardsResult.reduce((acc, curr) => {
+          const week = curr.week;
+          if (!acc[week]) {
+            acc[week] = [];
+          }
+          acc[week].push(curr);
+          return acc;
+        }, {});
+        console.log(grouped);
+        // 2. 전체 주차 범위 구하기
+        const allWeeks = Array.from(
+          { length: Math.max(...awardsResult.map((a) => a.week)) },
+          (_, i) => i + 1
+        );
+        // 3. 빠진 주차도 포함한 리스트로 만들기
+        const sortedGrouped = allWeeks.map((week) => grouped[week] ?? []);
+        setGroupedAwards(sortedGrouped);
+      } catch (error) {
+        console.error("API 호출 중 오류 발생:", error);
+      }
+    };
+
+    fetchData();
     // GetAwardsAPI(selectedCohort).then((result) => {
-    //   const awardsData = result.content;
+    //   const awardsData = result;
     //   // 1. week별로 데이터를 묶는다
     //   const grouped = awardsData.reduce((acc, curr) => {
     //     const week = curr.week;
@@ -399,32 +429,70 @@ export default function HallOfFame() {
                       position: "relative",
                       width: "120px",
                       height: "120px",
-                      border: "1px solid #fff",
                       marginTop: index % 2 !== 0 ? "60px" : undefined,
                     }}
                   >
-                    <div
-                      style={{
-                        position: "absolute",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        width: "120px",
-                        height: "50px",
-                        marginTop: "40px",
-                        cursor: "pointer",
-                        zIndex: "1",
-                        border: "1px solid #fff",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "#2CC295";
-                        e.currentTarget.style.filter = "blur(40px)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "";
-                        e.currentTarget.style.filter = "";
-                      }}
-                    ></div>
-                    <div style={{ zIndex: "100" }}>{subject.name}</div>
+                    {awardsLatest.filter(
+                      (award) => award.study.subjectName === subject.name
+                    ).length > 0 ? (
+                      <>
+                        <div style={{ marginTop: "40px", textAlign: "left" }}>
+                          {awardsLatest
+                            .filter(
+                              (award) =>
+                                award.study.subjectName === subject.name
+                            )
+                            .map((award, index) => (
+                              <div key={index}>
+                                <Link
+                                  to={`/studyPost?id=${
+                                    award.study.studyId
+                                  }&member=${7}&week=${award.week}`}
+                                  style={{
+                                    position: "absolute",
+                                    left: "50%",
+                                    transform: "translateX(-50%)",
+                                    width: "120px",
+                                    height: "50px",
+                                    cursor: "pointer",
+                                    zIndex: "1",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.background =
+                                      "#2CC295";
+                                    e.currentTarget.style.filter = "blur(40px)";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = "";
+                                    e.currentTarget.style.filter = "";
+                                  }}
+                                ></Link>
+                                <div
+                                  style={{
+                                    fontFamily: "Pretendard-SemiBold",
+                                    fontSize: "20px",
+                                    color: "#2cc295",
+                                  }}
+                                >
+                                  {award.study.subjectName}_
+                                  {award.study.section}
+                                </div>
+                                <div
+                                  style={{
+                                    fontFamily: "Pretendard-SemiBold",
+                                    fontSize: "20px",
+                                    color: "#fff",
+                                  }}
+                                >
+                                  {award.member.name}
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      </>
+                    ) : (
+                      <div style={{ zIndex: "100" }}>{subject.name}</div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -456,7 +524,6 @@ export default function HallOfFame() {
                 width: "100%",
                 minHeight: "100px",
                 marginTop: "50px",
-                border: "1px solid #fff",
                 textAlign: "left",
               }}
             >
@@ -603,9 +670,71 @@ export default function HallOfFame() {
                     height: "1px",
                     background: "#666",
                     border: "none",
+                    margin: "8px 0",
                   }}
                 />
-                <div></div>
+
+                {groupedAwards.map((awards, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      width: "100%",
+                      marginBottom: "8px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontFamily: "Pretendard-Regular",
+                      fontSize: "15px",
+                      color: "#fff",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        flexGrow: 1,
+                        flexBasis: "120px",
+                        minWidth: "60px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {index + 1}
+                    </div>
+                    {/* 과목별 award 표시 */}
+                    {curriculumSubjects.map((subject) => {
+                      const matchedAward = awards.find(
+                        (award) => award.study.subjectName === subject.name
+                      );
+                      return (
+                        <div
+                          key={subject.subjectId}
+                          style={{
+                            flexGrow: 2,
+                            flexBasis: "220px",
+                            minWidth: "80px",
+                          }}
+                        >
+                          {matchedAward ? (
+                            <Link
+                              to={`/studyPost?id=${
+                                matchedAward.study.studyId
+                              }&member=${7}&week=${matchedAward.week}`}
+                              style={{ color: "#fff", textDecoration: "none" }}
+                            >
+                              <div style={{ color: "#2cc295" }}>
+                                {matchedAward.study.subjectName}_
+                                {matchedAward.study.section}
+                              </div>
+                              <div>{matchedAward.member.name}</div>
+                            </Link>
+                          ) : (
+                            <div></div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
