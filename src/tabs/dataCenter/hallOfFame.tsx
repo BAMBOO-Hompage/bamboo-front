@@ -443,7 +443,7 @@ export default function HallOfFame() {
                                 award.study.subjectName === subject.name
                             )
                             .map((award, index) => (
-                              <div key={index}>
+                              <div key={index} style={{ position: "relative" }}>
                                 <Link
                                   to={`/studyPost?id=${award.study.studyId}&member=${award.member.memberId}&week=${award.week}`}
                                   style={{
@@ -451,10 +451,13 @@ export default function HallOfFame() {
                                     left: "50%",
                                     marginTop: "30px",
                                     transform: "translateX(-50%)",
-                                    width: "100%",
-                                    height: "60px",
+                                    width: "80%",
+                                    height: "40px",
                                     cursor: "pointer",
-                                    zIndex: "1",
+                                    // background: "transparent",
+                                    background: "#2cc295",
+                                    filter: "blur(40px)",
+                                    zIndex: 1,
                                   }}
                                   onMouseEnter={(e) => {
                                     e.currentTarget.style.background =
@@ -468,9 +471,11 @@ export default function HallOfFame() {
                                 ></Link>
                                 <div
                                   style={{
+                                    position: "relative",
                                     display: "flex",
                                     justifyContent: "space-between",
                                     alignItems: "flex-end",
+                                    zIndex: 2,
                                   }}
                                 >
                                   <div style={{ paddingBottom: "10px" }}>
@@ -778,7 +783,7 @@ export default function HallOfFame() {
                               <div>{matchedAward.member.name}</div>
                             </Link>
                           ) : (
-                            <div></div>
+                            <div>-</div>
                           )}
                         </div>
                       );
