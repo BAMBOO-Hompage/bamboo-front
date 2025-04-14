@@ -416,7 +416,7 @@ export default function PersonalInfo() {
                       style={{
                         width: "200px",
                         height: "200px",
-                        objectFit: "contain",
+                        objectFit: "cover",
                         borderRadius: "100px",
                       }}
                     />
@@ -651,7 +651,7 @@ export default function PersonalInfo() {
                       style={{
                         width: "200px",
                         height: "200px",
-                        objectFit: "contain",
+                        objectFit: "cover",
                         borderRadius: "100px",
                       }}
                     />

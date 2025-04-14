@@ -59,7 +59,7 @@ export default async function PostAwardsAPI(
       );
 
       alert("작성 완료");
-      window.history.back();
+      window.location.reload();
     } catch (error) {
       if (refreshToken) {
         try {
@@ -80,7 +80,7 @@ export default async function PostAwardsAPI(
           );
 
           alert("작성 완료");
-          window.history.back();
+          window.location.reload();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

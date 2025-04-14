@@ -417,7 +417,7 @@ export default function HallOfFame() {
               <div
                 style={{
                   width: "100%",
-                  marginTop: "40px",
+                  marginTop: "20px",
                   display: "flex",
                   justifyContent: "space-between",
                 }}
@@ -427,16 +427,16 @@ export default function HallOfFame() {
                     key={subject.subjectId}
                     style={{
                       position: "relative",
-                      width: "120px",
-                      height: "120px",
-                      marginTop: index % 2 !== 0 ? "60px" : undefined,
+                      width: "150px",
+                      height: "150px",
+                      marginTop: index % 2 !== 0 ? "100px" : undefined,
                     }}
                   >
                     {awardsLatest.filter(
                       (award) => award.study.subjectName === subject.name
                     ).length > 0 ? (
                       <>
-                        <div style={{ marginTop: "40px", textAlign: "left" }}>
+                        <div style={{ marginTop: "20px", textAlign: "left" }}>
                           {awardsLatest
                             .filter(
                               (award) =>
@@ -445,15 +445,14 @@ export default function HallOfFame() {
                             .map((award, index) => (
                               <div key={index}>
                                 <Link
-                                  to={`/studyPost?id=${
-                                    award.study.studyId
-                                  }&member=${7}&week=${award.week}`}
+                                  to={`/studyPost?id=${award.study.studyId}&member=${award.member.memberId}&week=${award.week}`}
                                   style={{
                                     position: "absolute",
                                     left: "50%",
+                                    marginTop: "30px",
                                     transform: "translateX(-50%)",
-                                    width: "120px",
-                                    height: "50px",
+                                    width: "100%",
+                                    height: "60px",
                                     cursor: "pointer",
                                     zIndex: "1",
                                   }}
@@ -469,29 +468,80 @@ export default function HallOfFame() {
                                 ></Link>
                                 <div
                                   style={{
-                                    fontFamily: "Pretendard-SemiBold",
-                                    fontSize: "20px",
-                                    color: "#2cc295",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "flex-end",
                                   }}
                                 >
-                                  {award.study.subjectName}_
-                                  {award.study.section}
-                                </div>
-                                <div
-                                  style={{
-                                    fontFamily: "Pretendard-SemiBold",
-                                    fontSize: "20px",
-                                    color: "#fff",
-                                  }}
-                                >
-                                  {award.member.name}
+                                  <div style={{ paddingBottom: "10px" }}>
+                                    <div
+                                      style={{
+                                        fontFamily: "Pretendard-SemiBold",
+                                        fontSize: "16px",
+                                        color: "#2cc295",
+                                      }}
+                                    >
+                                      {award.study.subjectName}_
+                                      {award.study.section}
+                                    </div>
+                                    <div
+                                      style={{
+                                        fontFamily: "Pretendard-SemiBold",
+                                        fontSize: "20px",
+                                        color: "#fff",
+                                      }}
+                                    >
+                                      {award.member.name}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    {award.member.profileImageUrl ? (
+                                      <>
+                                        <img
+                                          src={award.member.profileImageUrl}
+                                          alt="profileImg"
+                                          style={{
+                                            width: "90px",
+                                            height: "90px",
+                                            borderRadius: "50%",
+                                            fill: "contain",
+                                          }}
+                                        />
+                                      </>
+                                    ) : (
+                                      <>
+                                        <img
+                                          src="../img/icon/base_profile.png"
+                                          alt="profileImg"
+                                          style={{
+                                            width: "80px",
+                                            height: "80px",
+                                            borderRadius: "50%",
+                                            objectFit: "cover",
+                                          }}
+                                        />
+                                      </>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
                             ))}
                         </div>
                       </>
                     ) : (
-                      <div style={{ zIndex: "100" }}>{subject.name}</div>
+                      <>
+                        <div style={{ marginTop: "60px", textAlign: "left" }}>
+                          <div
+                            style={{
+                              fontFamily: "Pretendard-SemiBold",
+                              fontSize: "20px",
+                              color: "#fff",
+                            }}
+                          >
+                            {subject.name} 미정
+                          </div>
+                        </div>
+                      </>
                     )}
                   </div>
                 ))}
@@ -500,7 +550,7 @@ export default function HallOfFame() {
                 style={{
                   boxSizing: "border-box",
                   width: "100%",
-                  marginTop: "80px",
+                  marginTop: "50px",
                   padding: "5px 10px",
                   borderRadius: "15px",
                   backgroundColor: "rgba(17, 16, 21, 0.5)",
@@ -679,9 +729,11 @@ export default function HallOfFame() {
                     key={index}
                     style={{
                       width: "100%",
+                      height: "40px",
                       marginBottom: "8px",
                       display: "flex",
                       justifyContent: "space-between",
+                      alignItems: "center",
                       fontFamily: "Pretendard-Regular",
                       fontSize: "15px",
                       color: "#fff",
@@ -716,9 +768,7 @@ export default function HallOfFame() {
                         >
                           {matchedAward ? (
                             <Link
-                              to={`/studyPost?id=${
-                                matchedAward.study.studyId
-                              }&member=${7}&week=${matchedAward.week}`}
+                              to={`/studyPost?id=${matchedAward.study.studyId}&member=${matchedAward.member.memberId}&week=${matchedAward.week}`}
                               style={{ color: "#fff", textDecoration: "none" }}
                             >
                               <div style={{ color: "#2cc295" }}>
