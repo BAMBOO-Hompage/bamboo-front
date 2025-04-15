@@ -653,9 +653,10 @@ export default function AlexandriaPost() {
                         답글 달기
                       </span>
                       &nbsp;&nbsp;|&nbsp;&nbsp; */}
-                            {checkAuth === 2 ||
+                            {/* checkAuth === 2 ||
                             myData.studentId ===
-                              paperComment.member.studentId ? (
+                              paperComment.member.studentId */}
+                            {checkAuth === 2 ? (
                               <>
                                 <span
                                   style={{
