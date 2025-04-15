@@ -129,7 +129,7 @@ export default function HallOfFame() {
   } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [hovered, setHovered] = useState(false);
+  const [hovered, setHovered] = useState("");
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [cohortLatest, setCohortLatest] = useState<cohort>({
     cohortId: 0,
@@ -257,7 +257,6 @@ export default function HallOfFame() {
         console.error("API 호출 중 오류 발생:", error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -454,19 +453,12 @@ export default function HallOfFame() {
                                     width: "80%",
                                     height: "40px",
                                     cursor: "pointer",
-                                    // background: "transparent",
-                                    background: "#2cc295",
+                                    background:
+                                      hovered === award.awardId
+                                        ? "#2cc295"
+                                        : "transparent",
                                     filter: "blur(40px)",
                                     zIndex: 1,
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.currentTarget.style.background =
-                                      "#2CC295";
-                                    e.currentTarget.style.filter = "blur(40px)";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = "";
-                                    e.currentTarget.style.filter = "";
                                   }}
                                 ></Link>
                                 <div
@@ -475,7 +467,14 @@ export default function HallOfFame() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     alignItems: "flex-end",
+                                    cursor: "pointer",
                                     zIndex: 2,
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    setHovered(award.awardId);
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    setHovered("");
                                   }}
                                 >
                                   <div style={{ paddingBottom: "10px" }}>
@@ -593,7 +592,7 @@ export default function HallOfFame() {
                   style={{
                     display: "flex",
                     justifyContent: "left",
-                    gap: "10px",
+                    gap: "20px",
                   }}
                 >
                   <select
@@ -654,7 +653,7 @@ export default function HallOfFame() {
                     <div></div>
                   )}
                 </div>
-                <Link to="/" style={{ textDecoration: "none" }}>
+                <Link to="#" style={{ textDecoration: "none" }}>
                   <div
                     style={{
                       fontFamily: "Pretendard-Regular",

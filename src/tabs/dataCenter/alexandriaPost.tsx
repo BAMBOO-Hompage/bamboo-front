@@ -11,11 +11,15 @@ import BottomInfo from "../../components/bottomInfo.tsx";
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetPaperAPI from "../../api/library-posts/getPaperAPI.tsx";
 import DeletePapersAPI from "../../api/library-posts/deletePapersAPI.tsx";
+import PostPaperCommentsAPI from "../../api/library-posts/postPaperCommentsAPI.tsx";
+import GetPaperCommentsAPI from "../../api/library-posts/getPaperCommentsAPI.tsx";
+import DeletePaperCommentsAPI from "../../api/library-posts/deletePaperCommentsAPI.tsx";
 
 import "../../App.css";
 import "../../style/Post.css";
 
 type MyDataType = {
+  memberId: number;
   studentId: string;
   email: string;
   name: string;
@@ -35,13 +39,17 @@ type Paper = {
   content: string;
 };
 
+const maxVisiblePages = 5;
+
 export default function AlexandriaPost() {
   const sanitizer = dompurify.sanitize;
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = parseInt(searchParams.get("commentPage") || "1", 10);
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
   const [myData, setMyData] = useState<MyDataType>({
+    memberId: 0,
     studentId: "",
     email: "",
     name: "",
@@ -62,11 +70,47 @@ export default function AlexandriaPost() {
   });
   const [comment, setComment] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+  const [paperCommentsToDisplay, setPaperCommentsToDisplay] = useState([]);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
+  const startPage =
+    Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
+  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+  const changePage = (page: number) => {
+    if (page < 1) {
+      page = 1;
+      alert("첫 페이지 입니다.");
+      return;
+    }
+    if (page > totalPages) {
+      page = totalPages;
+      alert("마지막 페이지 입니다.");
+      return;
+    }
+    setSearchParams({
+      id: paperData.libraryPostId.toString(),
+      page: page.toString(),
+      size: "20",
+    });
+  };
 
   useEffect(() => {
-    GetPaperAPI(searchParams.get("id")).then((data) => {
-      setPaperData(data);
-    });
+    const fetchData = async () => {
+      try {
+        const paperResult = await GetPaperAPI(searchParams.get("id"));
+        setPaperData(paperResult);
+        const paperCommentsResult = await GetPaperCommentsAPI(
+          searchParams.get("id"),
+          currentPage
+        );
+        setPaperCommentsToDisplay(paperCommentsResult);
+      } catch (error) {
+        console.error("API 호출 중 오류 발생:", error);
+      }
+    };
+
+    fetchData();
   }, [searchParams]);
 
   useEffect(() => {
@@ -82,6 +126,20 @@ export default function AlexandriaPost() {
       setPreviewImage(data.profileImageUrl);
     });
   }, []);
+
+  const postComments = async () => {
+    try {
+      await PostPaperCommentsAPI(paperData.libraryPostId, comment);
+      const paperCommentsResult = await GetPaperCommentsAPI(
+        searchParams.get("id"),
+        currentPage
+      );
+      setPaperCommentsToDisplay(paperCommentsResult);
+      setComment("");
+    } catch (error) {
+      console.error("API 호출 중 오류 발생:", error);
+    }
+  };
 
   return (
     <div>
@@ -400,118 +458,184 @@ export default function AlexandriaPost() {
                     height: "2px",
                   }}
                 />
-                <form
-                  style={{
-                    marginTop: "20px",
-                    marginBottom: "40px",
-                  }}
-                >
-                  <div
+                {checkAuth >= 1 ? (
+                  <form
                     style={{
-                      marginBottom: "10px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
+                      marginTop: "20px",
+                      marginBottom: "40px",
                     }}
                   >
                     <div
                       style={{
-                        fontFamily: "Pretendard-Bold",
-                        fontSize: "16px",
-                        color: "#fff",
+                        marginBottom: "10px",
                         display: "flex",
+                        justifyContent: "space-between",
                         alignItems: "center",
                       }}
                     >
-                      <img
-                        src={previewImage}
-                        alt="profile"
+                      <div
                         style={{
-                          width: "30px",
-                          height: "30px",
-                          borderRadius: "50%",
-                          marginRight: "10px",
+                          fontFamily: "Pretendard-Bold",
+                          fontSize: "16px",
+                          color: "#fff",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={previewImage}
+                          alt="profile"
+                          style={{
+                            width: "30px",
+                            height: "30px",
+                            borderRadius: "50%",
+                            marginRight: "10px",
+                            objectFit: "cover",
+                          }}
+                        />
+                        {myData.major}_{myData.name}
+                      </div>
+                      <div style={{ display: comment.trim() ? "" : "none" }}>
+                        <Button
+                          type="primary"
+                          size="small"
+                          title="댓글 등록"
+                          onClick={() => {
+                            if (comment) {
+                              postComments();
+                            } else {
+                              alert("내용을 작성해주세요.");
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        boxSizing: "border-box",
+                        width: "100%",
+                        height: "120px",
+                        padding: "10px 15px",
+                        borderRadius: "20px",
+                        backgroundColor: "#222",
+                      }}
+                    >
+                      <textarea
+                        style={{
+                          fontFamily: "Pretendard-Light",
+                          fontSize: "clamp(14px, 2vw, 16px)",
+                          color: "#fff",
+                          width: "100%",
+                          height: "100%",
+                          border: "none",
+                          background: "transparent",
+                          resize: "none",
+                          outline: "none",
+                          lineHeight: "1.4",
+                        }}
+                        placeholder="댓글을 작성해주세요."
+                        value={comment}
+                        onChange={(e) => {
+                          setComment(e.target.value);
                         }}
                       />
-                      {myData.major}_{myData.name}
                     </div>
-                    <div style={{ display: comment.trim() ? "" : "none" }}>
-                      <Button
-                        type="primary"
-                        size="small"
-                        title="댓글 등록"
-                        onClick={() => {}}
-                      />
-                    </div>
-                  </div>
+                  </form>
+                ) : (
                   <div
                     style={{
-                      boxSizing: "border-box",
-                      width: "100%",
-                      height: "120px",
-                      padding: "10px 15px",
-                      borderRadius: "20px",
-                      backgroundColor: "#222",
+                      marginTop: "20px",
+                      marginBottom: "40px",
                     }}
                   >
-                    <textarea
+                    <div
                       style={{
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "clamp(14px, 2vw, 16px)",
-                        color: "#fff",
+                        boxSizing: "border-box",
                         width: "100%",
-                        height: "100%",
-                        border: "none",
-                        background: "transparent",
-                        resize: "none",
-                        outline: "none",
-                        lineHeight: "1.4",
-                      }}
-                      placeholder="댓글을 작성해주세요."
-                      value={comment}
-                      onChange={(e) => {
-                        setComment(e.target.value);
-                      }}
-                    />
-                  </div>
-                </form>
-                <div
-                  style={{
-                    fontFamily: "Pretendard-Bold",
-                    fontSize: "18px",
-                    color: "#fff",
-                    marginBottom: "20px",
-                  }}
-                >
-                  댓글 {"5"}개
-                </div>
-                <div style={{ padding: "0 0 20px" }}>
-                  <div
-                    style={{
-                      marginBottom: "20px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily: "Pretendard-SemiBold",
-                        fontSize: "16px",
-                        color: "#fff",
+                        height: "120px",
+                        padding: "10px 15px",
+                        borderRadius: "20px",
+                        backgroundColor: "#222",
                       }}
                     >
-                      <img src="#" style={{ marginRight: "20px" }} />
-                      {"휴먼지능정보공학전공_맹의현"}
+                      <div
+                        style={{
+                          fontFamily: "Pretendard-Light",
+                          fontSize: "clamp(14px, 2vw, 16px)",
+                          color: "#777",
+                          width: "100%",
+                          height: "100%",
+                          border: "none",
+                          background: "transparent",
+                          resize: "none",
+                          outline: "none",
+                          lineHeight: "1.4",
+                        }}
+                      >
+                        일반회원 이상만 작성 가능합니다.
+                      </div>
                     </div>
+                  </div>
+                )}
+
+                {paperCommentsToDisplay.length > 0 ? (
+                  <>
                     <div
                       style={{
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "14px",
-                        color: "#777",
+                        fontFamily: "Pretendard-Bold",
+                        fontSize: "18px",
+                        color: "#fff",
+                        marginBottom: "20px",
                       }}
                     >
-                      <span
+                      댓글
+                    </div>
+                    {paperCommentsToDisplay.map((paperComment) => (
+                      <div
+                        key={paperComment.commentId}
+                        style={{ padding: "0 0 20px" }}
+                      >
+                        <div
+                          style={{
+                            marginBottom: "20px",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: "Pretendard-SemiBold",
+                              fontSize: "16px",
+                              color: "#fff",
+                              display: "flex",
+                              justifyContent: "right",
+                              alignItems: "center",
+                            }}
+                          >
+                            <img
+                              src={paperComment.member.profileImageUrl}
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                                borderRadius: "50%",
+                                marginRight: "10px",
+                                objectFit: "cover",
+                              }}
+                            />
+                            <div>
+                              {paperComment.member.major}_
+                              {paperComment.member.name}
+                            </div>
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: "Pretendard-Light",
+                              fontSize: "14px",
+                              color: "#777",
+                            }}
+                          >
+                            {/* <span
                         style={{
                           cursor: "pointer",
                         }}
@@ -528,71 +652,185 @@ export default function AlexandriaPost() {
                       >
                         답글 달기
                       </span>
-                      &nbsp;&nbsp;|&nbsp;&nbsp;
-                      <span
-                        style={{
-                          cursor: "pointer",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.fontWeight = "600";
-                          e.currentTarget.style.textDecoration =
-                            "underline #777";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.fontWeight = "300";
-                          e.currentTarget.style.textDecoration = "none";
-                        }}
-                        onClick={() => {}}
-                      >
-                        수정
-                      </span>
-                      &nbsp;&nbsp;|&nbsp;&nbsp;
-                      <span
-                        style={{
-                          cursor: "pointer",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.fontWeight = "600";
-                          e.currentTarget.style.textDecoration =
-                            "underline #777";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.fontWeight = "300";
-                          e.currentTarget.style.textDecoration = "none";
-                        }}
-                        onClick={() => {}}
-                      >
-                        삭제
-                      </span>
-                    </div>
-                  </div>
+                      &nbsp;&nbsp;|&nbsp;&nbsp; */}
+                            {checkAuth === 2 ||
+                            myData.studentId ===
+                              paperComment.member.studentId ? (
+                              <>
+                                <span
+                                  style={{
+                                    cursor: "pointer",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.fontWeight = "600";
+                                    e.currentTarget.style.textDecoration =
+                                      "underline #777";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.fontWeight = "300";
+                                    e.currentTarget.style.textDecoration =
+                                      "none";
+                                  }}
+                                  onClick={() => {}}
+                                >
+                                  수정
+                                </span>
+                                &nbsp;&nbsp;|&nbsp;&nbsp;
+                                <span
+                                  style={{
+                                    cursor: "pointer",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.fontWeight = "600";
+                                    e.currentTarget.style.textDecoration =
+                                      "underline #777";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.fontWeight = "300";
+                                    e.currentTarget.style.textDecoration =
+                                      "none";
+                                  }}
+                                  onClick={() => {
+                                    const deleteConfirm =
+                                      window.confirm(
+                                        "댓글을 삭제하시겠습니까?"
+                                      );
+                                    if (deleteConfirm) {
+                                      DeletePaperCommentsAPI(
+                                        paperData.libraryPostId,
+                                        paperComment.commentId
+                                      );
+                                    }
+                                  }}
+                                >
+                                  삭제
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            boxSizing: "border-box",
+                            width: "100%",
+                            padding: "15px 15px",
+                            borderRadius: "20px",
+                            backgroundColor: "#222",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: "Pretendard-ExtraLight",
+                              fontSize: "clamp(14px, 2vw, 16px)",
+                              color: "#fff",
+                              width: "100%",
+                              border: "none",
+                              background: "transparent",
+                              resize: "none",
+                              outline: "none",
+                              lineHeight: "1.4",
+                            }}
+                          >
+                            {paperComment.content}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <div style={{ paddingBottom: "30px" }}></div>
+                )}
+
+                {paperCommentsToDisplay.length > 0 ? (
                   <div
                     style={{
-                      boxSizing: "border-box",
                       width: "100%",
-                      padding: "15px 15px",
-                      borderRadius: "20px",
-                      backgroundColor: "#222",
+                      maxWidth: "1000px",
+                      marginTop: "50px",
+                      paddingBottom: "30px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
-                    <div
-                      style={{
-                        fontFamily: "Pretendard-ExtraLight",
-                        fontSize: "clamp(14px, 2vw, 16px)",
-                        color: "#fff",
-                        width: "100%",
-                        border: "none",
-                        background: "transparent",
-                        resize: "none",
-                        outline: "none",
-                        lineHeight: "1.4",
-                      }}
+                    <button
+                      className="bottom_btn"
+                      style={{}}
+                      onClick={() => changePage(1)}
                     >
-                      {`이 논문은 중요한 주제를 다루고 있으며, 연구 질문이 명확하게 설정되어 있어 학문적 기여도가 높습니다. 저자는 기존 문헌을 잘 정리하고, 연구의 필요성을 잘 설명하였습니다. 또한, 실험 설계와 데이터 수집이 신중하게 이루어진 점도 긍정적으로 평가할 수 있습니다.
-그러나 몇 가지 개선점이 눈에 띕니다. 첫째, 연구 방법론에서 사용된 통계 분석 기법에 대한 설명이 부족하여, 결과의 신뢰성에 대한 확신을 가지기 어렵습니다. 특히, 변수 간의 상관관계 분석에서 사용된 방법이 보다 구체적으로 설명될 필요가 있습니다. 둘째, 실험 결과에 대한 해석이 다소 주관적으로 보이며, 대안적 설명 가능성을 충분히 고려하지 않은 점이 아쉽습니다.`}
-                    </div>
+                      <img
+                        src="../img/btn/pageStart.png"
+                        alt="pageStart"
+                        style={{
+                          height: "12px",
+                        }}
+                      />
+                    </button>
+                    <button
+                      className="bottom_btn"
+                      style={{}}
+                      onClick={() => changePage(currentPage - 1)}
+                    >
+                      <img
+                        src="../img/btn/pagePrev.png"
+                        alt="pagePrev"
+                        style={{
+                          height: "12px",
+                        }}
+                      />
+                    </button>
+                    {Array.from(
+                      { length: endPage - startPage + 1 },
+                      (_, i) => startPage + i
+                    ).map((page) => (
+                      <button
+                        key={page}
+                        className="bottom_tabs"
+                        onClick={() => changePage(page)}
+                        style={
+                          page === currentPage
+                            ? {
+                                textShadow: "0 0 0.1em, 0 0 0.1em",
+                                color: "#2CC295",
+                              }
+                            : {}
+                        }
+                      >
+                        {page}
+                      </button>
+                    ))}
+                    <button
+                      className="bottom_btn"
+                      style={{}}
+                      onClick={() => changePage(currentPage + 1)}
+                    >
+                      <img
+                        src="../img/btn/pageNext.png"
+                        alt="pageNext"
+                        style={{
+                          height: "12px",
+                        }}
+                      />
+                    </button>
+                    <button
+                      className="bottom_btn"
+                      style={{}}
+                      onClick={() => changePage(totalPages)}
+                    >
+                      <img
+                        src="../img/btn/pageEnd.png"
+                        alt="pageNext"
+                        style={{
+                          height: "12px",
+                        }}
+                      />
+                    </button>
                   </div>
-                </div>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
