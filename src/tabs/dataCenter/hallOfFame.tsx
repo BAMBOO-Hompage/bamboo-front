@@ -443,8 +443,7 @@ export default function HallOfFame() {
                             )
                             .map((award, index) => (
                               <div key={index} style={{ position: "relative" }}>
-                                <Link
-                                  to={`/studyPost?id=${award.study.studyId}&member=${award.member.memberId}&week=${award.week}`}
+                                <div
                                   style={{
                                     position: "absolute",
                                     left: "50%",
@@ -460,8 +459,9 @@ export default function HallOfFame() {
                                     filter: "blur(40px)",
                                     zIndex: 1,
                                   }}
-                                ></Link>
-                                <div
+                                ></div>
+                                <Link
+                                  to={`/studyPost?id=${award.study.studyId}&member=${award.member.memberId}&week=${award.week}`}
                                   style={{
                                     position: "relative",
                                     display: "flex",
@@ -469,6 +469,7 @@ export default function HallOfFame() {
                                     alignItems: "flex-end",
                                     cursor: "pointer",
                                     zIndex: 2,
+                                    textDecoration: "none",
                                   }}
                                   onMouseEnter={(e) => {
                                     setHovered(award.awardId);
@@ -527,7 +528,7 @@ export default function HallOfFame() {
                                       </>
                                     )}
                                   </div>
-                                </div>
+                                </Link>
                               </div>
                             ))}
                         </div>

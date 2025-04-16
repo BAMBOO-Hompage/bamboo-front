@@ -458,11 +458,266 @@ export default function AlexandriaPost() {
                     height: "2px",
                   }}
                 />
+
+                {paperCommentsToDisplay.length > 0 ? (
+                  <>
+                    <div
+                      style={{
+                        fontFamily: "Pretendard-Bold",
+                        fontSize: "18px",
+                        color: "#fff",
+                        marginTop: "40px",
+                        marginBottom: "30px",
+                      }}
+                    >
+                      댓글
+                    </div>
+                    {paperCommentsToDisplay.map((paperComment) => (
+                      <div
+                        key={paperComment.commentId}
+                        style={{ padding: "0 0 20px" }}
+                      >
+                        <div
+                          style={{
+                            marginBottom: "10px",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: "Pretendard-SemiBold",
+                              fontSize: "16px",
+                              color: "#fff",
+                              display: "flex",
+                              justifyContent: "right",
+                              alignItems: "center",
+                            }}
+                          >
+                            <img
+                              src={paperComment.member.profileImageUrl}
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                                borderRadius: "50%",
+                                marginRight: "10px",
+                                objectFit: "cover",
+                              }}
+                            />
+                            <div>
+                              {paperComment.member.major}_
+                              {paperComment.member.name}
+                            </div>
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: "Pretendard-Light",
+                              fontSize: "14px",
+                              color: "#777",
+                            }}
+                          >
+                            {/* <span
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.fontWeight = "600";
+                          e.currentTarget.style.textDecoration =
+                            "underline #777";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.fontWeight = "300";
+                          e.currentTarget.style.textDecoration = "none";
+                        }}
+                        onClick={() => {}}
+                      >
+                        답글 달기
+                      </span>
+                      &nbsp;&nbsp;|&nbsp;&nbsp; */}
+                            {checkAuth === 2 ||
+                            myData.studentId ===
+                              paperComment.member.studentId ? (
+                              <>
+                                <span
+                                  style={{
+                                    cursor: "pointer",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.fontWeight = "600";
+                                    e.currentTarget.style.textDecoration =
+                                      "underline #777";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.fontWeight = "300";
+                                    e.currentTarget.style.textDecoration =
+                                      "none";
+                                  }}
+                                  onClick={() => {}}
+                                >
+                                  수정
+                                </span>
+                                &nbsp;&nbsp;|&nbsp;&nbsp;
+                                <span
+                                  style={{
+                                    cursor: "pointer",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.fontWeight = "600";
+                                    e.currentTarget.style.textDecoration =
+                                      "underline #777";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.fontWeight = "300";
+                                    e.currentTarget.style.textDecoration =
+                                      "none";
+                                  }}
+                                  onClick={() => {
+                                    const deleteConfirm =
+                                      window.confirm(
+                                        "댓글을 삭제하시겠습니까?"
+                                      );
+                                    if (deleteConfirm) {
+                                      DeletePaperCommentsAPI(
+                                        paperData.libraryPostId,
+                                        paperComment.commentId
+                                      );
+                                    }
+                                  }}
+                                >
+                                  삭제
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            boxSizing: "border-box",
+                            width: "100%",
+                            padding: "15px 15px",
+                            borderRadius: "20px",
+                            backgroundColor: "#222",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: "Pretendard-ExtraLight",
+                              fontSize: "clamp(14px, 2vw, 16px)",
+                              color: "#fff",
+                              width: "100%",
+                              border: "none",
+                              background: "transparent",
+                              resize: "none",
+                              outline: "none",
+                              lineHeight: "1.4",
+                            }}
+                          >
+                            {paperComment.content}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <div style={{ paddingBottom: "30px" }}></div>
+                )}
+
+                {paperCommentsToDisplay.length > 0 ? (
+                  <div
+                    style={{
+                      width: "100%",
+                      maxWidth: "1000px",
+                      marginTop: "40px",
+                      marginBottom: "40px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <button
+                      className="bottom_btn"
+                      style={{}}
+                      onClick={() => changePage(1)}
+                    >
+                      <img
+                        src="../img/btn/pageStart.png"
+                        alt="pageStart"
+                        style={{
+                          height: "12px",
+                        }}
+                      />
+                    </button>
+                    <button
+                      className="bottom_btn"
+                      style={{}}
+                      onClick={() => changePage(currentPage - 1)}
+                    >
+                      <img
+                        src="../img/btn/pagePrev.png"
+                        alt="pagePrev"
+                        style={{
+                          height: "12px",
+                        }}
+                      />
+                    </button>
+                    {Array.from(
+                      { length: endPage - startPage + 1 },
+                      (_, i) => startPage + i
+                    ).map((page) => (
+                      <button
+                        key={page}
+                        className="bottom_tabs"
+                        onClick={() => changePage(page)}
+                        style={
+                          page === currentPage
+                            ? {
+                                textShadow: "0 0 0.1em, 0 0 0.1em",
+                                color: "#2CC295",
+                              }
+                            : {}
+                        }
+                      >
+                        {page}
+                      </button>
+                    ))}
+                    <button
+                      className="bottom_btn"
+                      style={{}}
+                      onClick={() => changePage(currentPage + 1)}
+                    >
+                      <img
+                        src="../img/btn/pageNext.png"
+                        alt="pageNext"
+                        style={{
+                          height: "12px",
+                        }}
+                      />
+                    </button>
+                    <button
+                      className="bottom_btn"
+                      style={{}}
+                      onClick={() => changePage(totalPages)}
+                    >
+                      <img
+                        src="../img/btn/pageEnd.png"
+                        alt="pageNext"
+                        style={{
+                          height: "12px",
+                        }}
+                      />
+                    </button>
+                  </div>
+                ) : (
+                  <></>
+                )}
+
                 {checkAuth >= 1 ? (
                   <form
                     style={{
-                      marginTop: "20px",
-                      marginBottom: "40px",
+                      paddingBottom: "40px",
                     }}
                   >
                     <div
@@ -576,261 +831,6 @@ export default function AlexandriaPost() {
                       </div>
                     </div>
                   </div>
-                )}
-
-                {paperCommentsToDisplay.length > 0 ? (
-                  <>
-                    <div
-                      style={{
-                        fontFamily: "Pretendard-Bold",
-                        fontSize: "18px",
-                        color: "#fff",
-                        marginBottom: "20px",
-                      }}
-                    >
-                      댓글
-                    </div>
-                    {paperCommentsToDisplay.map((paperComment) => (
-                      <div
-                        key={paperComment.commentId}
-                        style={{ padding: "0 0 20px" }}
-                      >
-                        <div
-                          style={{
-                            marginBottom: "20px",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              fontFamily: "Pretendard-SemiBold",
-                              fontSize: "16px",
-                              color: "#fff",
-                              display: "flex",
-                              justifyContent: "right",
-                              alignItems: "center",
-                            }}
-                          >
-                            <img
-                              src={paperComment.member.profileImageUrl}
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                borderRadius: "50%",
-                                marginRight: "10px",
-                                objectFit: "cover",
-                              }}
-                            />
-                            <div>
-                              {paperComment.member.major}_
-                              {paperComment.member.name}
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              fontFamily: "Pretendard-Light",
-                              fontSize: "14px",
-                              color: "#777",
-                            }}
-                          >
-                            {/* <span
-                        style={{
-                          cursor: "pointer",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.fontWeight = "600";
-                          e.currentTarget.style.textDecoration =
-                            "underline #777";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.fontWeight = "300";
-                          e.currentTarget.style.textDecoration = "none";
-                        }}
-                        onClick={() => {}}
-                      >
-                        답글 달기
-                      </span>
-                      &nbsp;&nbsp;|&nbsp;&nbsp; */}
-                            {/* checkAuth === 2 ||
-                            myData.studentId ===
-                              paperComment.member.studentId */}
-                            {checkAuth === 2 ? (
-                              <>
-                                <span
-                                  style={{
-                                    cursor: "pointer",
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.currentTarget.style.fontWeight = "600";
-                                    e.currentTarget.style.textDecoration =
-                                      "underline #777";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.currentTarget.style.fontWeight = "300";
-                                    e.currentTarget.style.textDecoration =
-                                      "none";
-                                  }}
-                                  onClick={() => {}}
-                                >
-                                  수정
-                                </span>
-                                &nbsp;&nbsp;|&nbsp;&nbsp;
-                                <span
-                                  style={{
-                                    cursor: "pointer",
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.currentTarget.style.fontWeight = "600";
-                                    e.currentTarget.style.textDecoration =
-                                      "underline #777";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.currentTarget.style.fontWeight = "300";
-                                    e.currentTarget.style.textDecoration =
-                                      "none";
-                                  }}
-                                  onClick={() => {
-                                    const deleteConfirm =
-                                      window.confirm(
-                                        "댓글을 삭제하시겠습니까?"
-                                      );
-                                    if (deleteConfirm) {
-                                      DeletePaperCommentsAPI(
-                                        paperData.libraryPostId,
-                                        paperComment.commentId
-                                      );
-                                    }
-                                  }}
-                                >
-                                  삭제
-                                </span>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                          </div>
-                        </div>
-                        <div
-                          style={{
-                            boxSizing: "border-box",
-                            width: "100%",
-                            padding: "15px 15px",
-                            borderRadius: "20px",
-                            backgroundColor: "#222",
-                          }}
-                        >
-                          <div
-                            style={{
-                              fontFamily: "Pretendard-ExtraLight",
-                              fontSize: "clamp(14px, 2vw, 16px)",
-                              color: "#fff",
-                              width: "100%",
-                              border: "none",
-                              background: "transparent",
-                              resize: "none",
-                              outline: "none",
-                              lineHeight: "1.4",
-                            }}
-                          >
-                            {paperComment.content}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </>
-                ) : (
-                  <div style={{ paddingBottom: "30px" }}></div>
-                )}
-
-                {paperCommentsToDisplay.length > 0 ? (
-                  <div
-                    style={{
-                      width: "100%",
-                      maxWidth: "1000px",
-                      marginTop: "50px",
-                      paddingBottom: "30px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <button
-                      className="bottom_btn"
-                      style={{}}
-                      onClick={() => changePage(1)}
-                    >
-                      <img
-                        src="../img/btn/pageStart.png"
-                        alt="pageStart"
-                        style={{
-                          height: "12px",
-                        }}
-                      />
-                    </button>
-                    <button
-                      className="bottom_btn"
-                      style={{}}
-                      onClick={() => changePage(currentPage - 1)}
-                    >
-                      <img
-                        src="../img/btn/pagePrev.png"
-                        alt="pagePrev"
-                        style={{
-                          height: "12px",
-                        }}
-                      />
-                    </button>
-                    {Array.from(
-                      { length: endPage - startPage + 1 },
-                      (_, i) => startPage + i
-                    ).map((page) => (
-                      <button
-                        key={page}
-                        className="bottom_tabs"
-                        onClick={() => changePage(page)}
-                        style={
-                          page === currentPage
-                            ? {
-                                textShadow: "0 0 0.1em, 0 0 0.1em",
-                                color: "#2CC295",
-                              }
-                            : {}
-                        }
-                      >
-                        {page}
-                      </button>
-                    ))}
-                    <button
-                      className="bottom_btn"
-                      style={{}}
-                      onClick={() => changePage(currentPage + 1)}
-                    >
-                      <img
-                        src="../img/btn/pageNext.png"
-                        alt="pageNext"
-                        style={{
-                          height: "12px",
-                        }}
-                      />
-                    </button>
-                    <button
-                      className="bottom_btn"
-                      style={{}}
-                      onClick={() => changePage(totalPages)}
-                    >
-                      <img
-                        src="../img/btn/pageEnd.png"
-                        alt="pageNext"
-                        style={{
-                          height: "12px",
-                        }}
-                      />
-                    </button>
-                  </div>
-                ) : (
-                  <></>
                 )}
               </div>
             </div>
