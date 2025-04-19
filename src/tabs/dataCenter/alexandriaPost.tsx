@@ -38,6 +38,7 @@ type Paper = {
   topic: string;
   tagNames: string[];
   content: string;
+  commentCount: number;
 };
 
 const maxVisiblePages = 5;
@@ -68,6 +69,7 @@ export default function AlexandriaPost() {
     topic: "",
     tagNames: [],
     content: "",
+    commentCount: 0,
   });
   const [comment, setComment] = useState("");
   const [openReply, setOpenReply] = useState("");
@@ -485,10 +487,10 @@ export default function AlexandriaPost() {
                         fontSize: "18px",
                         color: "#fff",
                         marginTop: "40px",
-                        marginBottom: "30px",
+                        marginBottom: "20px",
                       }}
                     >
-                      댓글
+                      댓글 {paperData.commentCount}개
                     </div>
                     {paperCommentsToDisplay.map((paperComment) => (
                       <div
@@ -626,9 +628,8 @@ export default function AlexandriaPost() {
                           style={{
                             boxSizing: "border-box",
                             width: "100%",
-                            padding: "15px 15px",
+                            padding: "0 30px",
                             borderRadius: "20px",
-                            backgroundColor: "#222",
                           }}
                         >
                           <div
@@ -851,9 +852,8 @@ export default function AlexandriaPost() {
                                   style={{
                                     boxSizing: "border-box",
                                     width: "100%",
-                                    padding: "15px 15px",
+                                    padding: "0 30px",
                                     borderRadius: "20px",
-                                    backgroundColor: "#222",
                                   }}
                                 >
                                   <div
@@ -869,6 +869,9 @@ export default function AlexandriaPost() {
                                       lineHeight: "1.4",
                                     }}
                                   >
+                                    <span style={{ color: "#2cc295" }}>
+                                      @{paperComment.member.name}
+                                    </span>{" "}
                                     {paperReply.content}
                                   </div>
                                 </div>
