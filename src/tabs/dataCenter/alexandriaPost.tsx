@@ -15,6 +15,7 @@ import PostPaperCommentsAPI from "../../api/library-posts/postPaperCommentsAPI.t
 import PostPaperRepliesAPI from "../../api/library-posts/postPaperRepliesAPI.tsx";
 import GetPaperCommentsAPI from "../../api/library-posts/getPaperCommentsAPI.tsx";
 import DeletePaperCommentsAPI from "../../api/library-posts/deletePaperCommentsAPI.tsx";
+import PutPaperCommentsAPI from "../../api/library-posts/putPaperCommentsAPI.tsx";
 
 import "../../App.css";
 import "../../style/Post.css";
@@ -72,8 +73,10 @@ export default function AlexandriaPost() {
     commentCount: 0,
   });
   const [comment, setComment] = useState("");
-  const [openReply, setOpenReply] = useState("");
+  const [openReply, setOpenReply] = useState(0);
   const [reply, setReply] = useState("");
+  const [openCommentEdit, setOpenCommentEdit] = useState(0);
+  const [commentEdit, setCommentEdit] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [paperCommentsToDisplay, setPaperCommentsToDisplay] = useState([]);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -145,7 +148,6 @@ export default function AlexandriaPost() {
       console.error("API 호출 중 오류 발생:", error);
     }
   };
-
   const postReplies = async (parentId) => {
     try {
       await PostPaperRepliesAPI(paperData.libraryPostId, parentId, reply);
@@ -154,8 +156,25 @@ export default function AlexandriaPost() {
         currentPage
       );
       setPaperCommentsToDisplay(paperCommentsResult);
-      setOpenReply("");
+      setOpenReply(0);
       setReply("");
+    } catch (error) {
+      console.error("API 호출 중 오류 발생:", error);
+    }
+  };
+  const putComments = async (commentId) => {
+    try {
+      await PutPaperCommentsAPI(
+        paperData.libraryPostId,
+        commentId,
+        commentEdit
+      );
+      const paperCommentsResult = await GetPaperCommentsAPI(
+        searchParams.get("id"),
+        currentPage
+      );
+      setPaperCommentsToDisplay(paperCommentsResult);
+      setComment("");
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
     }
@@ -495,162 +514,268 @@ export default function AlexandriaPost() {
                     {paperCommentsToDisplay.map((paperComment) => (
                       <div
                         key={paperComment.commentId}
-                        style={{ padding: "10px 0 10px" }}
+                        style={{ padding: "15px 0 0" }}
                       >
-                        <div
-                          style={{
-                            marginBottom: "10px",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              fontFamily: "Pretendard-SemiBold",
-                              fontSize: "16px",
-                              color: "#fff",
-                              display: "flex",
-                              justifyContent: "right",
-                              alignItems: "center",
-                            }}
-                          >
-                            <img
-                              src={paperComment.member.profileImageUrl}
-                              alt="profile"
+                        {paperComment.commentId === openCommentEdit ? (
+                          <form>
+                            <div
                               style={{
-                                width: "30px",
-                                height: "30px",
-                                borderRadius: "50%",
-                                marginRight: "10px",
-                                objectFit: "cover",
+                                marginBottom: "10px",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
                               }}
-                            />
-                            <div>
-                              {paperComment.member.major}_
-                              {paperComment.member.name}
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              fontFamily: "Pretendard-Light",
-                              fontSize: "14px",
-                              color: "#777",
-                            }}
-                          >
-                            {checkAuth >= 1 ? (
-                              <span
+                            >
+                              <div
                                 style={{
-                                  cursor: "pointer",
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.fontWeight = "600";
-                                  e.currentTarget.style.textDecoration =
-                                    "underline #777";
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.fontWeight = "300";
-                                  e.currentTarget.style.textDecoration = "none";
-                                }}
-                                onClick={() => {
-                                  if (paperComment.commentId === openReply) {
-                                    setOpenReply("");
-                                  } else {
-                                    setOpenReply(paperComment.commentId);
-                                  }
+                                  fontFamily: "Pretendard-Bold",
+                                  fontSize: "16px",
+                                  color: "#fff",
+                                  display: "flex",
+                                  alignItems: "center",
                                 }}
                               >
-                                답글 달기
-                              </span>
-                            ) : (
-                              <></>
-                            )}
-                            {checkAuth === 2 ||
-                            myData.studentId ===
-                              paperComment.member.studentId ? (
-                              <>
-                                &nbsp;&nbsp;|&nbsp;&nbsp;
-                                <span
+                                <img
+                                  src={previewImage}
+                                  alt="profile"
                                   style={{
-                                    cursor: "pointer",
+                                    width: "30px",
+                                    height: "30px",
+                                    borderRadius: "50%",
+                                    marginRight: "10px",
+                                    objectFit: "cover",
                                   }}
-                                  onMouseEnter={(e) => {
-                                    e.currentTarget.style.fontWeight = "600";
-                                    e.currentTarget.style.textDecoration =
-                                      "underline #777";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.currentTarget.style.fontWeight = "300";
-                                    e.currentTarget.style.textDecoration =
-                                      "none";
-                                  }}
-                                  onClick={() => {}}
-                                >
-                                  수정
-                                </span>
-                                &nbsp;&nbsp;|&nbsp;&nbsp;
-                                <span
-                                  style={{
-                                    cursor: "pointer",
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.currentTarget.style.fontWeight = "600";
-                                    e.currentTarget.style.textDecoration =
-                                      "underline #777";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.currentTarget.style.fontWeight = "300";
-                                    e.currentTarget.style.textDecoration =
-                                      "none";
-                                  }}
+                                />
+                                {myData.major}_{myData.name}
+                              </div>
+                              <div
+                                style={{
+                                  display: commentEdit.trim() ? "" : "none",
+                                }}
+                              >
+                                <Button
+                                  type="primary"
+                                  size="small"
+                                  title="댓글 등록"
                                   onClick={() => {
-                                    const deleteConfirm =
-                                      window.confirm(
-                                        "댓글을 삭제하시겠습니까?"
-                                      );
-                                    if (deleteConfirm) {
-                                      DeletePaperCommentsAPI(
-                                        paperData.libraryPostId,
-                                        paperComment.commentId
-                                      );
+                                    if (commentEdit) {
+                                      putComments(paperComment.commentId);
+                                      setOpenCommentEdit(0);
+                                    } else {
+                                      alert("내용을 작성해주세요.");
                                     }
                                   }}
-                                >
-                                  삭제
-                                </span>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                          </div>
-                        </div>
-                        <div
-                          style={{
-                            boxSizing: "border-box",
-                            width: "100%",
-                            padding: "0 30px",
-                            borderRadius: "20px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              fontFamily: "Pretendard-ExtraLight",
-                              fontSize: "clamp(14px, 2vw, 16px)",
-                              color: "#fff",
-                              width: "100%",
-                              border: "none",
-                              background: "transparent",
-                              resize: "none",
-                              outline: "none",
-                              lineHeight: "1.4",
-                            }}
-                          >
-                            {paperComment.content}
-                          </div>
-                        </div>
+                                />
+                              </div>
+                            </div>
+                            <div
+                              style={{
+                                boxSizing: "border-box",
+                                width: "100%",
+                                height: "120px",
+                                padding: "10px 15px",
+                                borderRadius: "20px",
+                                backgroundColor: "#222",
+                              }}
+                            >
+                              <textarea
+                                style={{
+                                  fontFamily: "Pretendard-Light",
+                                  fontSize: "clamp(14px, 2vw, 16px)",
+                                  color: "#fff",
+                                  width: "100%",
+                                  height: "100%",
+                                  border: "none",
+                                  background: "transparent",
+                                  resize: "none",
+                                  outline: "none",
+                                  lineHeight: "1.4",
+                                }}
+                                placeholder="답글을 작성해주세요."
+                                value={commentEdit}
+                                onChange={(e) => {
+                                  setCommentEdit(e.target.value);
+                                }}
+                              />
+                            </div>
+                          </form>
+                        ) : (
+                          <>
+                            <div
+                              style={{
+                                marginBottom: "10px",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  fontFamily: "Pretendard-SemiBold",
+                                  fontSize: "16px",
+                                  color: "#fff",
+                                  display: "flex",
+                                  justifyContent: "right",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <img
+                                  src={paperComment.member.profileImageUrl}
+                                  alt="profile"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    borderRadius: "50%",
+                                    marginRight: "10px",
+                                    objectFit: "cover",
+                                  }}
+                                />
+                                <div>
+                                  {paperComment.member.major}_
+                                  {paperComment.member.name}
+                                </div>
+                              </div>
+                              <div
+                                style={{
+                                  fontFamily: "Pretendard-Light",
+                                  fontSize: "14px",
+                                  color: "#777",
+                                }}
+                              >
+                                {checkAuth >= 1 ? (
+                                  <span
+                                    style={{
+                                      cursor: "pointer",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.currentTarget.style.fontWeight = "600";
+                                      e.currentTarget.style.textDecoration =
+                                        "underline #777";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.currentTarget.style.fontWeight = "300";
+                                      e.currentTarget.style.textDecoration =
+                                        "none";
+                                    }}
+                                    onClick={() => {
+                                      if (
+                                        paperComment.commentId === openReply
+                                      ) {
+                                        setOpenReply(0);
+                                      } else {
+                                        setOpenReply(paperComment.commentId);
+                                      }
+                                    }}
+                                  >
+                                    답글 달기
+                                  </span>
+                                ) : (
+                                  <></>
+                                )}
+                                {myData.studentId ===
+                                paperComment.member.studentId ? (
+                                  <>
+                                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <span
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.fontWeight =
+                                          "600";
+                                        e.currentTarget.style.textDecoration =
+                                          "underline #777";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.fontWeight =
+                                          "300";
+                                        e.currentTarget.style.textDecoration =
+                                          "none";
+                                      }}
+                                      onClick={() => {
+                                        setCommentEdit(paperComment.content);
+                                        setOpenCommentEdit(
+                                          paperComment.commentId
+                                        );
+                                      }}
+                                    >
+                                      수정
+                                    </span>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                                {checkAuth === 2 ||
+                                myData.studentId ===
+                                  paperComment.member.studentId ? (
+                                  <>
+                                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <span
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.fontWeight =
+                                          "600";
+                                        e.currentTarget.style.textDecoration =
+                                          "underline #777";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.fontWeight =
+                                          "300";
+                                        e.currentTarget.style.textDecoration =
+                                          "none";
+                                      }}
+                                      onClick={() => {
+                                        const deleteConfirm =
+                                          window.confirm(
+                                            "댓글을 삭제하시겠습니까?"
+                                          );
+                                        if (deleteConfirm) {
+                                          DeletePaperCommentsAPI(
+                                            paperData.libraryPostId,
+                                            paperComment.commentId
+                                          );
+                                        }
+                                      }}
+                                    >
+                                      삭제
+                                    </span>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                              </div>
+                            </div>
+                            <div
+                              style={{
+                                boxSizing: "border-box",
+                                width: "100%",
+                                padding: "0 30px",
+                                borderRadius: "20px",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  fontFamily: "Pretendard-ExtraLight",
+                                  fontSize: "clamp(14px, 2vw, 16px)",
+                                  color: "#fff",
+                                  width: "100%",
+                                  border: "none",
+                                  background: "transparent",
+                                  resize: "none",
+                                  outline: "none",
+                                  lineHeight: "1.4",
+                                }}
+                              >
+                                {paperComment.content}
+                              </div>
+                            </div>
+                          </>
+                        )}
                         {paperComment.commentId === openReply ? (
                           <form
-                            style={{ padding: "10px 0 0", marginLeft: "50px" }}
+                            style={{ padding: "15px 0 0", marginLeft: "50px" }}
                           >
                             <div
                               style={{
@@ -741,140 +866,245 @@ export default function AlexandriaPost() {
                               <div
                                 key={paperReply.commentId}
                                 style={{
-                                  padding: "10px 0 0",
+                                  padding: "15px 0 0",
                                   marginLeft: "50px",
                                 }}
                               >
-                                <div
-                                  style={{
-                                    marginBottom: "10px",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <div
-                                    style={{
-                                      fontFamily: "Pretendard-SemiBold",
-                                      fontSize: "16px",
-                                      color: "#fff",
-                                      display: "flex",
-                                      justifyContent: "right",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <img
-                                      src={paperReply.member.profileImageUrl}
-                                      alt="profile"
+                                {paperReply.commentId === openCommentEdit ? (
+                                  <form>
+                                    <div
                                       style={{
-                                        width: "30px",
-                                        height: "30px",
-                                        borderRadius: "50%",
-                                        marginRight: "10px",
-                                        objectFit: "cover",
+                                        marginBottom: "10px",
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
                                       }}
-                                    />
-                                    <div>
-                                      {paperReply.member.major}_
-                                      {paperReply.member.name}
-                                    </div>
-                                  </div>
-                                  <div
-                                    style={{
-                                      fontFamily: "Pretendard-Light",
-                                      fontSize: "14px",
-                                      color: "#777",
-                                    }}
-                                  >
-                                    {checkAuth === 2 ||
-                                    myData.studentId ===
-                                      paperReply.member.studentId ? (
-                                      <>
-                                        <span
+                                    >
+                                      <div
+                                        style={{
+                                          fontFamily: "Pretendard-Bold",
+                                          fontSize: "16px",
+                                          color: "#fff",
+                                          display: "flex",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <img
+                                          src={previewImage}
+                                          alt="profile"
                                           style={{
-                                            cursor: "pointer",
+                                            width: "30px",
+                                            height: "30px",
+                                            borderRadius: "50%",
+                                            marginRight: "10px",
+                                            objectFit: "cover",
                                           }}
-                                          onMouseEnter={(e) => {
-                                            e.currentTarget.style.fontWeight =
-                                              "600";
-                                            e.currentTarget.style.textDecoration =
-                                              "underline #777";
-                                          }}
-                                          onMouseLeave={(e) => {
-                                            e.currentTarget.style.fontWeight =
-                                              "300";
-                                            e.currentTarget.style.textDecoration =
-                                              "none";
-                                          }}
-                                          onClick={() => {}}
-                                        >
-                                          수정
-                                        </span>
-                                        &nbsp;&nbsp;|&nbsp;&nbsp;
-                                        <span
-                                          style={{
-                                            cursor: "pointer",
-                                          }}
-                                          onMouseEnter={(e) => {
-                                            e.currentTarget.style.fontWeight =
-                                              "600";
-                                            e.currentTarget.style.textDecoration =
-                                              "underline #777";
-                                          }}
-                                          onMouseLeave={(e) => {
-                                            e.currentTarget.style.fontWeight =
-                                              "300";
-                                            e.currentTarget.style.textDecoration =
-                                              "none";
-                                          }}
+                                        />
+                                        {myData.major}_{myData.name}
+                                      </div>
+                                      <div
+                                        style={{
+                                          display: commentEdit.trim()
+                                            ? ""
+                                            : "none",
+                                        }}
+                                      >
+                                        <Button
+                                          type="primary"
+                                          size="small"
+                                          title="댓글 등록"
                                           onClick={() => {
-                                            const deleteConfirm =
-                                              window.confirm(
-                                                "댓글을 삭제하시겠습니까?"
-                                              );
-                                            if (deleteConfirm) {
-                                              DeletePaperCommentsAPI(
-                                                paperData.libraryPostId,
-                                                paperReply.commentId
-                                              );
+                                            if (commentEdit) {
+                                              putComments(paperReply.commentId);
+                                              setOpenCommentEdit(0);
+                                            } else {
+                                              alert("내용을 작성해주세요.");
                                             }
                                           }}
-                                        >
-                                          삭제
-                                        </span>
-                                      </>
-                                    ) : (
-                                      <></>
-                                    )}
-                                  </div>
-                                </div>
-                                <div
-                                  style={{
-                                    boxSizing: "border-box",
-                                    width: "100%",
-                                    padding: "0 30px",
-                                    borderRadius: "20px",
-                                  }}
-                                >
-                                  <div
-                                    style={{
-                                      fontFamily: "Pretendard-ExtraLight",
-                                      fontSize: "clamp(14px, 2vw, 16px)",
-                                      color: "#fff",
-                                      width: "100%",
-                                      border: "none",
-                                      background: "transparent",
-                                      resize: "none",
-                                      outline: "none",
-                                      lineHeight: "1.4",
-                                    }}
-                                  >
-                                    <span style={{ color: "#2cc295" }}>
-                                      @{paperComment.member.name}
-                                    </span>{" "}
-                                    {paperReply.content}
-                                  </div>
-                                </div>
+                                        />
+                                      </div>
+                                    </div>
+                                    <div
+                                      style={{
+                                        boxSizing: "border-box",
+                                        width: "100%",
+                                        height: "120px",
+                                        padding: "10px 15px",
+                                        borderRadius: "20px",
+                                        backgroundColor: "#222",
+                                      }}
+                                    >
+                                      <textarea
+                                        style={{
+                                          fontFamily: "Pretendard-Light",
+                                          fontSize: "clamp(14px, 2vw, 16px)",
+                                          color: "#fff",
+                                          width: "100%",
+                                          height: "100%",
+                                          border: "none",
+                                          background: "transparent",
+                                          resize: "none",
+                                          outline: "none",
+                                          lineHeight: "1.4",
+                                        }}
+                                        placeholder="답글을 작성해주세요."
+                                        value={commentEdit}
+                                        onChange={(e) => {
+                                          setCommentEdit(e.target.value);
+                                        }}
+                                      />
+                                    </div>
+                                  </form>
+                                ) : (
+                                  <>
+                                    <div
+                                      style={{
+                                        marginBottom: "10px",
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <div
+                                        style={{
+                                          fontFamily: "Pretendard-SemiBold",
+                                          fontSize: "16px",
+                                          color: "#fff",
+                                          display: "flex",
+                                          justifyContent: "right",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <img
+                                          src={
+                                            paperReply.member.profileImageUrl
+                                          }
+                                          alt="profile"
+                                          style={{
+                                            width: "30px",
+                                            height: "30px",
+                                            borderRadius: "50%",
+                                            marginRight: "10px",
+                                            objectFit: "cover",
+                                          }}
+                                        />
+                                        <div>
+                                          {paperReply.member.major}_
+                                          {paperReply.member.name}
+                                        </div>
+                                      </div>
+                                      <div
+                                        style={{
+                                          fontFamily: "Pretendard-Light",
+                                          fontSize: "14px",
+                                          color: "#777",
+                                        }}
+                                      >
+                                        {myData.studentId ===
+                                        paperReply.member.studentId ? (
+                                          <>
+                                            <span
+                                              style={{
+                                                cursor: "pointer",
+                                              }}
+                                              onMouseEnter={(e) => {
+                                                e.currentTarget.style.fontWeight =
+                                                  "600";
+                                                e.currentTarget.style.textDecoration =
+                                                  "underline #777";
+                                              }}
+                                              onMouseLeave={(e) => {
+                                                e.currentTarget.style.fontWeight =
+                                                  "300";
+                                                e.currentTarget.style.textDecoration =
+                                                  "none";
+                                              }}
+                                              onClick={() => {
+                                                setCommentEdit(
+                                                  paperReply.content
+                                                );
+                                                setOpenCommentEdit(
+                                                  paperReply.commentId
+                                                );
+                                              }}
+                                            >
+                                              수정
+                                            </span>
+                                          </>
+                                        ) : (
+                                          <></>
+                                        )}
+                                        {checkAuth === 2 ||
+                                        myData.studentId ===
+                                          paperReply.member.studentId ? (
+                                          <>
+                                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                                            <span
+                                              style={{
+                                                cursor: "pointer",
+                                              }}
+                                              onMouseEnter={(e) => {
+                                                e.currentTarget.style.fontWeight =
+                                                  "600";
+                                                e.currentTarget.style.textDecoration =
+                                                  "underline #777";
+                                              }}
+                                              onMouseLeave={(e) => {
+                                                e.currentTarget.style.fontWeight =
+                                                  "300";
+                                                e.currentTarget.style.textDecoration =
+                                                  "none";
+                                              }}
+                                              onClick={() => {
+                                                const deleteConfirm =
+                                                  window.confirm(
+                                                    "댓글을 삭제하시겠습니까?"
+                                                  );
+                                                if (deleteConfirm) {
+                                                  DeletePaperCommentsAPI(
+                                                    paperData.libraryPostId,
+                                                    paperReply.commentId
+                                                  );
+                                                }
+                                              }}
+                                            >
+                                              삭제
+                                            </span>
+                                          </>
+                                        ) : (
+                                          <></>
+                                        )}
+                                      </div>
+                                    </div>
+                                    <div
+                                      style={{
+                                        boxSizing: "border-box",
+                                        width: "100%",
+                                        padding: "0 30px",
+                                        borderRadius: "20px",
+                                      }}
+                                    >
+                                      <div
+                                        style={{
+                                          fontFamily: "Pretendard-ExtraLight",
+                                          fontSize: "clamp(14px, 2vw, 16px)",
+                                          color: "#fff",
+                                          width: "100%",
+                                          border: "none",
+                                          background: "transparent",
+                                          resize: "none",
+                                          outline: "none",
+                                          lineHeight: "1.4",
+                                        }}
+                                      >
+                                        <span style={{ color: "#2cc295" }}>
+                                          @{paperComment.member.name}
+                                        </span>{" "}
+                                        {paperReply.content}
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             ))}
                           </>
