@@ -131,7 +131,11 @@ export default function AlexandriaPost() {
         setCheckAuth(0);
       }
       setMyData(data);
-      setPreviewImage(data.profileImageUrl);
+      if (!data.profileImageUrl) {
+        setPreviewImage("../img/icon/base_profile.png");
+      } else {
+        setPreviewImage(data.profileImageUrl);
+      }
     });
   }, []);
 
@@ -620,7 +624,11 @@ export default function AlexandriaPost() {
                                 }}
                               >
                                 <img
-                                  src={paperComment.member.profileImageUrl}
+                                  src={
+                                    paperComment.member.profileImageUrl
+                                      ? paperComment.member.profileImageUrl
+                                      : "../img/icon/base_profile.png"
+                                  }
                                   alt="profile"
                                   style={{
                                     width: "30px",
@@ -978,6 +986,9 @@ export default function AlexandriaPost() {
                                         <img
                                           src={
                                             paperReply.member.profileImageUrl
+                                              ? paperReply.member
+                                                  .profileImageUrl
+                                              : "../img/icon/base_profile.png"
                                           }
                                           alt="profile"
                                           style={{
