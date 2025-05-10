@@ -10,7 +10,7 @@ import BottomInfo from "../../components/bottomInfo.tsx";
 
 import GetSubjectAPI from "../../api/subjects/getSubjectAPI.tsx";
 import GetInventorybyIdAPI from "../../api/inventories/getInventorbyIdAPI.tsx";
-import PostInventoriesAPI from "../../api/inventories/postInventoriesAPI.tsx";
+import PatchInventoriesAPI from "../../api/inventories/patchInventoriesAPI.tsx";
 
 import "../../App.css";
 
@@ -146,29 +146,35 @@ export default function StudyEdit() {
   const [content, setContent] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
   const [showFiles, setShowFiles] = useState<string[]>([]);
+  const [showNewFiles, setShowNewFiles] = useState<string[]>([]);
 
   const handleAddFiles = (event) => {
     const docLists = event.target.files; // 선택한 파일들
     let fileLists: File[] = [...files];
-    let fileNameLists: string[] = [...showFiles]; // 기존 저장된 파일명들
+    let fileNameLists: string[] = [...showNewFiles]; // 기존 저장된 파일명들
+    const currentFileCount = showFiles.length + fileLists.length;
+    console.log(currentFileCount);
 
     for (let i = 0; i < docLists.length; i++) {
+      if (currentFileCount + i >= 1) {
+        break;
+      }
       const currentFileName: string = docLists[i].name; // 파일명 가져오기
       fileLists.push(docLists[i]);
       fileNameLists.push(currentFileName);
     }
 
-    if (fileNameLists.length > 1) {
-      fileLists = fileLists.slice(0, 1);
-      fileNameLists = fileNameLists.slice(0, 1); // 최대 4개 제한
-    }
-
     setFiles(fileLists);
-    setShowFiles(fileNameLists); // 파일명 리스트 저장
+    setShowNewFiles(fileNameLists); // 파일명 리스트 저장
   };
-
   const handleDeleteFile = (id) => {
     setShowFiles(showFiles.filter((_, index) => index !== id));
+  };
+  const handleDeleteNewFile = (id) => {
+    setFiles(files.filter((_, index) => index !== id));
+    setShowNewFiles(showNewFiles.filter((_, index) => index !== id));
+    console.log(files);
+    console.log(showFiles);
   };
 
   useEffect(() => {
@@ -195,35 +201,31 @@ export default function StudyEdit() {
     GetInventorybyIdAPI(searchParams.get("id")).then((data) => {
       setSelectedInventory(data);
       setContent(data.content);
+      setShowFiles([data.fileUrl]);
     });
   }, [searchParams]);
 
   const onValid = (e) => {
     console.log(content);
-    const studyId = searchParams.get("study");
-    if (studyId !== null) {
-      const formData = new FormData();
-      const jsonData = JSON.stringify({
-        studyId: parseInt(studyId),
-        title: selectedWeeklyContents.content,
-        content: content,
-        week: selectedWeeklyContents.week,
+    const inventoryId = searchParams.get("id");
+
+    const formData = new FormData();
+    const jsonData = JSON.stringify({
+      title: selectedWeeklyContents.content,
+      content: content,
+      week: selectedWeeklyContents.week,
+    });
+    formData.append(
+      "request",
+      new Blob([jsonData], { type: "application/json" })
+    );
+    if (files && files.length > 0) {
+      files.forEach((file) => {
+        formData.append("file", file);
       });
-
-      formData.append(
-        "request",
-        new Blob([jsonData], { type: "application/json" })
-      );
-      if (files && files.length > 0) {
-        files.forEach((file) => {
-          formData.append("file", file);
-        });
-      }
-
-      PostInventoriesAPI(formData);
-    } else {
-      console.error("error");
     }
+
+    PatchInventoriesAPI(inventoryId, formData);
   };
 
   const onInvalid = (e) => {
@@ -350,7 +352,7 @@ export default function StudyEdit() {
                     justifyContent: "right",
                   }}
                 >
-                  {showFiles.length !== 0 ? (
+                  {showFiles.length !== 0 || showNewFiles.length !== 0 ? (
                     <div
                       style={{
                         width: "100%",
@@ -379,6 +381,35 @@ export default function StudyEdit() {
                             style={{ width: "20px", cursor: "pointer" }}
                             onClick={() => {
                               handleDeleteFile(id);
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                "../../img/btn/delete_enabled.png";
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                "../../img/btn/delete_disabled.png";
+                            }}
+                          />
+                          &emsp;{file}
+                        </div>
+                      ))}
+                      {showNewFiles.map((file, id) => (
+                        <div
+                          key={id}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontFamily: "Pretendard-Light",
+                            fontSize: "16px",
+                          }}
+                        >
+                          <img
+                            src="../../img/btn/delete_disabled.png"
+                            alt="delete"
+                            style={{ width: "20px", cursor: "pointer" }}
+                            onClick={() => {
+                              handleDeleteNewFile(id);
                             }}
                             onMouseEnter={(e) => {
                               (e.target as HTMLImageElement).src =

@@ -274,12 +274,19 @@ export default function KnowledgePost() {
                     alignItems: "flex-start",
                   }}
                 >
-                  <div style={{ width: "150px", marginRight: "20px" }}>
+                  <div style={{ minWidth: "80px", marginRight: "20px" }}>
                     첨부 파일
                   </div>
                   <div>
                     {postData.files.map((file, index) => (
-                      <div key={index}>
+                      <div
+                        key={index}
+                        style={{
+                          marginBottom:
+                            index !== postData.files.length - 1 ? "10px" : "0",
+                        }}
+                      >
+                        ·&emsp;
                         <a
                           href={file}
                           target="_blank"

@@ -237,7 +237,8 @@ export default function NoticePost() {
               {postData.files.length !== 0 && (
                 <div
                   style={{
-                    width: "100%",
+                    boxSizing: "border-box",
+                    width: "770px",
                     padding: "20px",
                     backgroundColor: "#222",
                     borderRadius: "20px",
@@ -250,12 +251,19 @@ export default function NoticePost() {
                     alignItems: "flex-start",
                   }}
                 >
-                  <div style={{ width: "100px", marginRight: "20px" }}>
+                  <div style={{ minWidth: "80px", marginRight: "20px" }}>
                     첨부 파일
                   </div>
                   <div>
                     {postData.files.map((file, index) => (
-                      <div key={index} style={{ marginTop: "5px" }}>
+                      <div
+                        key={index}
+                        style={{
+                          marginBottom:
+                            index !== postData.files.length - 1 ? "10px" : "0",
+                        }}
+                      >
+                        ·&emsp;
                         <a
                           href={file}
                           target="_blank"

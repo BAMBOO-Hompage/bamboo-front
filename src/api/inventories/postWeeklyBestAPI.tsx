@@ -16,8 +16,11 @@ async function postWeeklyBest(accessToken, studyId, week, memberId) {
       body: JSON.stringify({}),
     }
   ).then((response) => {
-    if (!response.ok) {
-      throw new Error("Failed to post activies");
+    if (!response.ok && response.status !== 404) {
+      throw new Error("Failed to post activities");
+    }
+    if (response.status === 404) {
+      return null;
     }
     return response.json();
   });
@@ -30,10 +33,19 @@ export default async function PostWeeklyBestAPI(studyId, week, memberId) {
   if (accessToken) {
     try {
       console.log(studyId, week, memberId);
-      await postWeeklyBest(accessToken, studyId, week, memberId);
+      const weeklyBestResult = await postWeeklyBest(
+        accessToken,
+        studyId,
+        week,
+        memberId
+      );
 
-      alert("등록 완료");
-      window.location.reload();
+      if (!weeklyBestResult) {
+        alert("정리본이 등록되지 않은 학생입니다.");
+      } else {
+        alert("등록 완료");
+        window.location.reload();
+      }
     } catch (error) {
       if (refreshToken) {
         try {
@@ -43,10 +55,19 @@ export default async function PostWeeklyBestAPI(studyId, week, memberId) {
             accessToken,
             refreshToken
           );
-          await postWeeklyBest(newAccessToken, studyId, week, memberId);
+          const weeklyBestResult = await postWeeklyBest(
+            newAccessToken,
+            studyId,
+            week,
+            memberId
+          );
 
-          alert("등록 완료");
-          window.location.reload();
+          if (!weeklyBestResult) {
+            alert("정리본이 등록되지 않은 학생입니다.");
+          } else {
+            alert("등록 완료");
+            window.location.reload();
+          }
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

@@ -14,6 +14,7 @@ export default function LogInAPI(studentId: number, password: string) {
     }),
   })
     .then(async (response) => {
+      console.log(response);
       if (!response.ok) {
         throw new Error("LogIn failed");
       }

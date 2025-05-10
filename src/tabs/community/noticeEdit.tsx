@@ -32,8 +32,12 @@ export default function PostEdit() {
     getValues,
     handleSubmit,
     setValue,
+    setFocus,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+    setFocus("Title");
+  }, [setFocus]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [postData, setPostData] = useState<Post>({
@@ -48,6 +52,8 @@ export default function PostEdit() {
     createdAt: [],
     updatedAt: [],
   });
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>("카테고리 선택");
   const [content, setContent] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
   const [showFiles, setShowFiles] = useState<string[]>([]);
@@ -58,6 +64,7 @@ export default function PostEdit() {
       setPostData(data);
       setContent(data.content);
       setShowFiles(data.files || []);
+      setSelectedCategory(data.type);
     });
   }, [searchParams]);
 
@@ -70,26 +77,28 @@ export default function PostEdit() {
     }
   }, [postData, setValue]);
 
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
   const handleAddFiles = (event) => {
     const docLists = event.target.files; // 선택한 파일들
     let fileLists: File[] = [...files];
     let fileNameLists: string[] = [...showNewFiles]; // 기존 저장된 파일명들
+    const currentImageCount = showFiles.length + fileLists.length;
 
     for (let i = 0; i < docLists.length; i++) {
+      if (currentImageCount + i >= 4) {
+        break;
+      }
       const currentFileName: string = docLists[i].name; // 파일명 가져오기
       fileLists.push(docLists[i]);
       fileNameLists.push(currentFileName);
     }
 
-    if (fileNameLists.length > 4) {
-      fileLists = fileLists.slice(0, 4);
-      fileNameLists = fileNameLists.slice(0, 4); // 최대 4개 제한
-    }
-
     setFiles(fileLists);
     setShowNewFiles(fileNameLists); // 파일명 리스트 저장
   };
-
   const handleDeleteFile = (id) => {
     setShowFiles(showFiles.filter((_, index) => index !== id));
   };
@@ -116,7 +125,7 @@ export default function PostEdit() {
     );
     if (files && files.length > 0) {
       files.forEach((file) => {
-        formData.append("files", file);
+        formData.append("newFiles", file);
       });
     }
 
@@ -262,13 +271,17 @@ export default function PostEdit() {
                         border: "none",
                         fontFamily: "Pretendard-Light",
                         fontSize: "18px",
-                        color: "#2CC295",
+                        color:
+                          selectedCategory === "카테고리 선택"
+                            ? "#777"
+                            : "#2CC295",
                         cursor: "pointer",
                       }}
                       {...register("Category", {
                         required: "카테고리를 선택해주세요.",
                         validate: (value) =>
                           value !== "전체" || "카테고리를 선택해주세요.",
+                        onChange: handleCategoryChange,
                       })}
                     >
                       <option
@@ -334,34 +347,6 @@ export default function PostEdit() {
                       fontSize: "18px",
                     }}
                   />
-                </div>
-
-                <div
-                  style={{
-                    width: "100%",
-                    marginBottom: "20px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontFamily: "Pretendard-Light",
-                    fontSize: "18px",
-                  }}
-                >
-                  <div>내용</div>
-                  <div
-                    style={{
-                      boxSizing: "border-box",
-                      width: "660px",
-                      height: "500px",
-                      borderRadius: "20px",
-                      border: "none",
-                      backgroundColor: "#111015",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      padding: "20px",
-                    }}
-                  >
-                    <ReactEditor content={content} setContent={setContent} />
-                  </div>
                 </div>
 
                 <div
@@ -463,7 +448,7 @@ export default function PostEdit() {
                                 "../../img/btn/delete_disabled.png";
                             }}
                           />
-                          &emsp;{file}
+                          &emsp;<div>{file}</div>
                         </div>
                       ))}
                       {showNewFiles.map((file, id) => (
@@ -493,13 +478,41 @@ export default function PostEdit() {
                                 "../../img/btn/delete_disabled.png";
                             }}
                           />
-                          &emsp;{file}
+                          &emsp;<div>{file}</div>
                         </div>
                       ))}
                     </div>
                   ) : (
                     <div></div>
                   )}
+                </div>
+
+                <div
+                  style={{
+                    width: "100%",
+                    marginBottom: "20px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                  }}
+                >
+                  <div>내용</div>
+                  <div
+                    style={{
+                      boxSizing: "border-box",
+                      width: "660px",
+                      height: "500px",
+                      borderRadius: "20px",
+                      border: "none",
+                      backgroundColor: "#111015",
+                      boxShadow:
+                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                      padding: "20px",
+                    }}
+                  >
+                    <ReactEditor content={content} setContent={setContent} />
+                  </div>
                 </div>
 
                 <div

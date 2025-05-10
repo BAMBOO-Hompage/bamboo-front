@@ -811,7 +811,7 @@ export default function Signup() {
                   style={{
                     width: "100%",
                     maxWidth: errorsSignUp.Major ? "290px" : "320px",
-                    margin: "0 20px 0 10px",
+                    margin: "0 10px",
                     height: "40px",
                     backgroundColor: "transparent",
                     border: "none",

@@ -392,11 +392,30 @@ export default function HallOfFame() {
             }}
           >
             <div style={{ width: "100%", marginTop: "40px" }}>
-              <img
-                src="../img/hallOfFame_text.png"
-                alt="hallOfFame"
-                style={{ height: "260px", margin: "0 auto" }}
-              />
+              <div
+                style={{
+                  margin: "0 auto",
+                  fontFamily: "Pretendard-ExtraBold",
+                  fontSize: "70px",
+                  color: "#2cc295",
+                }}
+              >
+                HALL
+                <br />
+                OF
+                <br />
+                FAME
+              </div>
+              <div
+                style={{
+                  margin: "0 auto",
+                  fontFamily: "Pretendard-Light",
+                  fontSize: "20px",
+                  color: "#fff",
+                }}
+              >
+                명예의 전당
+              </div>
             </div>
             <div style={{ width: "100%", marginTop: "40px" }}>
               <div

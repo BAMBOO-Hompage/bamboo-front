@@ -48,7 +48,7 @@ export default function AlexandriaPost() {
   const sanitizer = dompurify.sanitize;
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = parseInt(searchParams.get("commentPage") || "1", 10);
+  // const currentPage = parseInt(searchParams.get("commentPage") || "1", 10);
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
   const [myData, setMyData] = useState<MyDataType>({
@@ -80,6 +80,7 @@ export default function AlexandriaPost() {
   const [previewImage, setPreviewImage] = useState("");
   const [paperCommentsToDisplay, setPaperCommentsToDisplay] = useState([]);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const startPage =
     Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
@@ -96,11 +97,7 @@ export default function AlexandriaPost() {
       alert("마지막 페이지 입니다.");
       return;
     }
-    setSearchParams({
-      id: paperData.libraryPostId.toString(),
-      page: page.toString(),
-      size: "20",
-    });
+    setCurrentPage(page);
   };
 
   useEffect(() => {

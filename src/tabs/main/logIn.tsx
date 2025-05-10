@@ -14,6 +14,7 @@ export default function Login() {
     setFocus,
     formState: { errors },
   } = useForm();
+
   useEffect(() => {
     setFocus("StudentNum"); // react-hook-form의 setFocus 함수 사용
   }, [setFocus]);
@@ -193,7 +194,7 @@ export default function Login() {
                   placeholder="비밀번호"
                   type={isPasswordVisible ? "text" : "password"}
                   {...register("Password", {
-                    required: "이메일 혹은 비밀번호를 확인해주세요.",
+                    required: "학번 혹은 비밀번호를 확인해주세요.",
                   })}
                   style={{
                     width: "100%",

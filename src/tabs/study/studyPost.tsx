@@ -176,7 +176,7 @@ export default function StudyPost() {
   const [checkedMembers, setCheckedMembers] = useState<string[]>([]);
   const [isWeeklyBestPopupOpen, setIsWeeklyBestPopupOpen] =
     useState<boolean>(false);
-  const [checkedWeeklyBest, setCheckedWeeklyBest] = useState<number[]>([]);
+  const [checkedWeeklyBest, setCheckedWeeklyBest] = useState<number>();
   const [isImagePopupOpen, setIsImagePopupOpen] = useState<boolean>(false);
 
   const [image, setImage] = useState<string | undefined>();
@@ -387,7 +387,7 @@ export default function StudyPost() {
         var inventoryData = result;
         setSelectedInventory(inventoryData);
         if (inventoryData) {
-          setCheckedWeeklyBest([inventoryData.member.memberId]);
+          setCheckedWeeklyBest(inventoryData.member.memberId);
         }
       });
       GetImageAPI(postId, currentPage).then((result) => {
@@ -406,10 +406,10 @@ export default function StudyPost() {
   };
 
   const handleWeeklyBestChange = (memberId) => {
-    if (checkedWeeklyBest.includes(memberId)) {
-      setCheckedWeeklyBest([]); // Uncheck if already checked
+    if (checkedWeeklyBest === memberId) {
+      setCheckedWeeklyBest(0); // Uncheck if already checked
     } else {
-      setCheckedWeeklyBest([memberId]); // Make it mutually exclusive
+      setCheckedWeeklyBest(memberId); // Make it mutually exclusive
     }
   };
 
@@ -419,8 +419,9 @@ export default function StudyPost() {
     );
     const currentWeek = selectedSubject.weeklyContents.find(
       ({ startDate, endDate }) => {
-        const start = new Date(startDate);
+        const start = new Date(endDate);
         const end = new Date(endDate);
+        end.setHours(23, 59, 59, 999);
         return today >= start && today <= end;
       }
     );
@@ -432,12 +433,10 @@ export default function StudyPost() {
     );
     const currentWeek = selectedSubject.weeklyContents.find(
       ({ startDate, endDate }) => {
-        const start = new Date(startDate);
+        const start = new Date(endDate);
         const end = new Date(endDate);
-        // startDate 다음 날로 변경
-        start.setDate(start.getDate() + 1);
-        // endDate 다음 날로 변경
         end.setDate(end.getDate() + 1);
+        end.setHours(23, 59, 59, 999);
         return today >= start && today <= end;
       }
     );
@@ -445,27 +444,19 @@ export default function StudyPost() {
   };
 
   const handleAddImages = (event) => {
-    const imageLists = event.target.files; // 선택한 파일들
-    let fileLists: File[] = [...images];
-    let fileNameLists: string[] = [...showImages]; // 기존 저장된 파일명들
+    const imageLists = [...event.target.files]; // 선택한 파일들
+    const formData = new FormData();
 
-    for (let i = 0; i < imageLists.length; i++) {
-      const currentFileName: string = imageLists[i].name; // 파일명 가져오기
-      fileLists.push(imageLists[i]);
-      fileNameLists.push(currentFileName);
-    }
+    // 이미지 배열로 추가
+    imageLists.forEach((file) => {
+      formData.append("image", file); // images 배열 형식으로 전송
+    });
 
-    if (fileNameLists.length > 1) {
-      fileLists = fileLists.slice(0, 1);
-      fileNameLists = fileNameLists.slice(0, 1); // 최대 1개 제한
-    }
-
-    setImages(fileLists);
-    setShowImages(fileNameLists); // 파일명 리스트 저장
-  };
-  const handleDeleteImage = (id) => {
-    setImages(images.filter((_, index) => index !== id));
-    setShowImages(showImages.filter((_, index) => index !== id));
+    PostImageAPI(
+      parseInt(searchParams.get("id") || "0", 10),
+      getCurrentWeekForWeeklyBest(selectedSubject).week,
+      formData
+    );
   };
 
   const onValid = async (e) => {
@@ -487,11 +478,15 @@ export default function StudyPost() {
   };
 
   const onWeeklyBestValid = async (e) => {
-    PostWeeklyBestAPI(
-      parseInt(searchParams.get("id") || "0", 10),
-      getCurrentWeekForWeeklyBest(selectedSubject).week,
-      checkedWeeklyBest
-    );
+    if (selectedInventory?.member.memberId === checkedWeeklyBest) {
+      alert("이미 Weekly Best로 지정된 학생입니다.");
+    } else {
+      PostWeeklyBestAPI(
+        parseInt(searchParams.get("id") || "0", 10),
+        getCurrentWeekForWeeklyBest(selectedSubject).week,
+        checkedWeeklyBest
+      );
+    }
   };
   const onWeeklyBestInvalid = (e) => {
     console.log(e, "onInvalid");
@@ -724,7 +719,11 @@ export default function StudyPost() {
                   <div>
                     개별 파트 분배 후 발표 형식의 스터디 진행
                     <br />
-                    3회 이상 불참시 퇴출.
+                    3회 이상 불참시 퇴출
+                    <br />
+                    출석은 스터디 당일에 가능
+                    <br />
+                    Weekly Best는 스터디 다음날까지 지정
                   </div>
                 </div>
               </div>
@@ -1314,30 +1313,49 @@ export default function StudyPost() {
                                 📖 {curriculum.week}주차 학습내용
                               </div>
                               {getCurrentWeekForWeeklyBest(selectedSubject) &&
+                              getCurrentWeekForWeeklyBest(selectedSubject)
+                                .week === curriculum.week &&
                               postList === "Weekly Best" &&
                               (myData.memberId ===
                                 postData.studyMaster.memberId ||
                                 checkAuth === 2) ? (
                                 <div style={{ display: "flex" }}>
-                                  <img
-                                    src="../img/btn/image.png"
-                                    alt="image_btn"
+                                  <label
+                                    htmlFor="fileInput"
                                     style={{
                                       height: "25px",
                                       marginRight: "10px",
-                                      opacity: "0.8",
                                       cursor: "pointer",
                                     }}
-                                    onMouseEnter={(e) => {
-                                      e.currentTarget.style.opacity = "1";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.style.opacity = "0.8";
-                                    }}
-                                    onClick={() => {
-                                      setIsImagePopupOpen(true);
-                                    }}
-                                  />
+                                    onChange={handleAddImages}
+                                  >
+                                    <input
+                                      type="file"
+                                      id="fileInput"
+                                      style={{
+                                        display: "none",
+                                      }}
+                                      accept="image/*"
+                                    />
+                                    <img
+                                      src="../img/btn/image.png"
+                                      alt="image_btn"
+                                      style={{
+                                        height: "25px",
+                                        opacity: "0.8",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.opacity = "1";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.opacity = "0.8";
+                                      }}
+                                      // onClick={() => {
+                                      //   setIsImagePopupOpen(true);
+                                      // }}
+                                    />
+                                  </label>
+
                                   <Button
                                     type="primary"
                                     size="xsmall"
@@ -1809,217 +1827,6 @@ export default function StudyPost() {
           />
         )}
 
-        {isImagePopupOpen && (
-          <form
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "80%",
-              maxWidth: "600px",
-              maxHeight: "80vh",
-              overflowY: "auto",
-              backgroundColor: "#111015",
-              padding: "30px 30px 20px",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              borderRadius: "10px",
-              textAlign: "left",
-              zIndex: 1000,
-            }}
-          >
-            <div
-              style={{
-                marginBottom: "30px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  width: "80%",
-                  backgroundColor: "transparent",
-                  borderRadius: "10px",
-                  fontFamily: "Pretendard-Bold",
-                  fontSize: "28px",
-                  color: "#2cc295",
-                }}
-              >
-                {getCurrentWeekForWeeklyBest(selectedSubject).week}주차 사진
-                업로드
-                <br />
-                <span
-                  style={{
-                    fontFamily: "Pretendard-Light",
-                    fontSize: "16px",
-                    color: "#fff",
-                  }}
-                >
-                  (
-                  {getCurrentWeekForWeeklyBest(selectedSubject).startDate[0] +
-                    "/" +
-                    getCurrentWeekForWeeklyBest(selectedSubject).startDate[1] +
-                    "/" +
-                    getCurrentWeekForWeeklyBest(selectedSubject).startDate[2] +
-                    " ~ " +
-                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[0] +
-                    "/" +
-                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[1] +
-                    "/" +
-                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[2]}
-                  )
-                </span>
-              </div>
-            </div>
-            <div
-              style={{
-                marginBottom: "10px",
-                fontFamily: "Pretendard-Regular",
-                fontSize: "18px",
-                gap: "10px",
-              }}
-            >
-              <label
-                htmlFor="fileInput"
-                style={{
-                  boxSizing: "border-box",
-                  width: "600px",
-                  height: "40px",
-                  padding: "0 20px",
-                  backgroundColor: "#111015",
-                  border: "none",
-                  boxShadow:
-                    "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                  borderRadius: "20px",
-                  fontFamily: "Pretendard-Light",
-                  fontSize: "18px",
-                  color: "#2CC295",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-                onChange={handleAddImages}
-              >
-                <input
-                  type="file"
-                  id="fileInput"
-                  style={{
-                    display: "none",
-                  }}
-                  accept="image/*"
-                  {...registerImage("Image", {
-                    required: "사진을 추가해주세요.",
-                  })}
-                />
-                <img
-                  src="../../img/btn/search_enabled.png"
-                  alt="search"
-                  style={{ width: "25px" }}
-                />
-                &emsp;사진 선택 (1장)
-              </label>
-              <input type="text" style={{ display: "none" }} />
-            </div>
-            <div
-              style={{
-                width: "600px",
-                display: "flex",
-                justifyContent: "left",
-              }}
-            >
-              {showImages.length !== 0 ? (
-                <div
-                  style={{
-                    width: "600px",
-                    padding: "20px",
-                    marginBottom: "30px",
-                    backgroundColor: "#111015",
-                    boxShadow:
-                      "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                    borderRadius: "20px",
-                    overflow: "auto",
-                  }}
-                >
-                  {showImages.map((image, id) => (
-                    <div
-                      key={id}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "14px",
-                      }}
-                    >
-                      <img
-                        src="../../img/btn/delete_disabled.png"
-                        alt="delete"
-                        style={{ width: "16px", cursor: "pointer" }}
-                        onClick={() => {
-                          handleDeleteImage(id);
-                        }}
-                        onMouseEnter={(e) => {
-                          (e.target as HTMLImageElement).src =
-                            "../../img/btn/delete_enabled.png";
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.target as HTMLImageElement).src =
-                            "../../img/btn/delete_disabled.png";
-                        }}
-                      />
-                      &emsp;{image}
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </div>
-            <div
-              style={{
-                width: "100%",
-                marginTop: "20px",
-                display: "flex",
-                justifyContent: "right",
-                gap: "10px",
-              }}
-            >
-              <Button
-                type="destructive"
-                size="small"
-                title="취소"
-                onClick={() => {
-                  const deleteEnd =
-                    window.confirm("사진 업로드를 취소하시겠습니까?");
-                  if (deleteEnd) {
-                    setIsImagePopupOpen(false);
-                  }
-                }}
-              />
-              <Button
-                type="primary"
-                size="small"
-                title="저장"
-                onClick={handleSubmitImage(onImageValid, onImageInvalid)}
-              />
-            </div>
-          </form>
-        )}
-        {isImagePopupOpen && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              padding: "0 20px",
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              zIndex: 999,
-            }}
-          />
-        )}
-
         {isWeeklyBestPopupOpen && (
           <form
             style={{
@@ -2115,18 +1922,17 @@ export default function StudyPost() {
                       height: "20px",
                       borderRadius: "4px",
                       border: "2px solid #2cc295",
-                      backgroundColor: checkedWeeklyBest.includes(
-                        member.memberId
-                      )
-                        ? "#2cc295"
-                        : "transparent",
+                      backgroundColor:
+                        checkedWeeklyBest === member.memberId
+                          ? "#2cc295"
+                          : "transparent",
                       cursor: "pointer",
                       position: "relative",
                     }}
                   >
                     <input
                       type="checkbox"
-                      checked={checkedMembers.includes(member.studentId)}
+                      checked={checkedWeeklyBest === member.memberId}
                       onChange={() => handleWeeklyBestChange(member.memberId)}
                       style={{
                         opacity: 0,
@@ -2136,7 +1942,7 @@ export default function StudyPost() {
                         cursor: "pointer",
                       }}
                     />
-                    {checkedWeeklyBest.includes(member.memberId) && (
+                    {checkedWeeklyBest === member.memberId && (
                       <span
                         style={{
                           position: "absolute",

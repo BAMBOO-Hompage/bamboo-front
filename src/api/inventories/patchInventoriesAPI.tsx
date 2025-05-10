@@ -3,26 +3,22 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function patchNotices(accessToken, id, fileUrls, formData) {
-  return fetch(
-    API_SERVER_DOMAIN +
-      `/api/notices/${id}?imageUrls=${[]}&fileUrls=${fileUrls}`,
-    {
-      method: "PATCH",
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-      body: formData,
-    }
-  ).then((response) => {
+async function patchInventories(accessToken, id, formData) {
+  return fetch(API_SERVER_DOMAIN + `/api/inventories/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+    body: formData,
+  }).then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to post activies");
+      throw new Error("Failed to patch activies");
     }
     return response.json();
   });
 }
 
-export default async function PatchNoticesAPI(id, fileUrls, formData) {
+export default async function PatchInventoriesAPI(id, formData) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
@@ -31,7 +27,7 @@ export default async function PatchNoticesAPI(id, fileUrls, formData) {
       formData.forEach((value, key) => {
         console.log(key, value);
       });
-      await patchNotices(accessToken, id, fileUrls, formData);
+      await patchInventories(accessToken, id, formData);
 
       alert("수정 완료");
       window.history.back();
@@ -44,16 +40,16 @@ export default async function PatchNoticesAPI(id, fileUrls, formData) {
             accessToken,
             refreshToken
           );
-          await patchNotices(newAccessToken, id, fileUrls, formData);
+          await patchInventories(newAccessToken, id, formData);
 
           alert("수정 완료");
           window.history.back();
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");
-          removeCookie("accessToken");
-          removeCookie("refreshToken");
-          window.location.href = "/";
+          // removeCookie("accessToken");
+          // removeCookie("refreshToken");
+          // window.location.href = "/";
         }
       } else {
         alert("다시 로그인 해주세요.");

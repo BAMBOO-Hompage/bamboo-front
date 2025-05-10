@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
@@ -16,14 +16,23 @@ export default function KnowledgeAdd() {
     register,
     getValues,
     handleSubmit,
+    setFocus,
     formState: { errors },
   } = useForm();
-
+  useEffect(() => {
+    setFocus("Title");
+  }, [setFocus]);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>("카테고리 선택");
   const [content, setContent] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
   const [showFiles, setShowFiles] = useState<string[]>([]);
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
 
   const handleAddFiles = (event) => {
     const docLists = event.target.files; // 선택한 파일들
@@ -223,13 +232,17 @@ export default function KnowledgeAdd() {
                         border: "none",
                         fontFamily: "Pretendard-Light",
                         fontSize: "18px",
-                        color: "#2CC295",
+                        color:
+                          selectedCategory === "카테고리 선택"
+                            ? "#777"
+                            : "#2CC295",
                         cursor: "pointer",
                       }}
                       {...register("Category", {
                         required: "카테고리를 선택해주세요.",
                         validate: (value) =>
                           value !== "전체" || "카테고리를 선택해주세요.",
+                        onChange: handleCategoryChange,
                       })}
                     >
                       <option
@@ -305,34 +318,6 @@ export default function KnowledgeAdd() {
                       fontSize: "18px",
                     }}
                   />
-                </div>
-
-                <div
-                  style={{
-                    width: "100%",
-                    marginBottom: "20px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontFamily: "Pretendard-Light",
-                    fontSize: "18px",
-                  }}
-                >
-                  <div>내용</div>
-                  <div
-                    style={{
-                      boxSizing: "border-box",
-                      width: "660px",
-                      height: "500px",
-                      borderRadius: "20px",
-                      border: "none",
-                      backgroundColor: "#111015",
-                      boxShadow:
-                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
-                      padding: "20px",
-                    }}
-                  >
-                    <ReactEditor content={content} setContent={setContent} />
-                  </div>
                 </div>
 
                 <div
@@ -442,6 +427,34 @@ export default function KnowledgeAdd() {
                   ) : (
                     <div></div>
                   )}
+                </div>
+
+                <div
+                  style={{
+                    width: "100%",
+                    marginBottom: "20px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                  }}
+                >
+                  <div>내용</div>
+                  <div
+                    style={{
+                      boxSizing: "border-box",
+                      width: "660px",
+                      height: "500px",
+                      borderRadius: "20px",
+                      border: "none",
+                      backgroundColor: "#111015",
+                      boxShadow:
+                        "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
+                      padding: "20px",
+                    }}
+                  >
+                    <ReactEditor content={content} setContent={setContent} />
+                  </div>
                 </div>
 
                 <div

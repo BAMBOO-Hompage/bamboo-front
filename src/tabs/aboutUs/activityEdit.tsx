@@ -106,7 +106,6 @@ export default function ActivityEdit() {
     setImages(fileLists);
     setShowNewImages(fileNameLists);
   };
-
   const handleDeleteImage = (id) => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
