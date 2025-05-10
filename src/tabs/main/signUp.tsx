@@ -71,7 +71,6 @@ export default function Signup() {
 
   const onEmailValid = async (e) => {
     var studentNumToEmail = `${e.StudentNum}@sangmyung.kr`;
-
     const handleVerification = async () => {
       const success = await VerificationRequestsAPI(studentNumToEmail);
 
