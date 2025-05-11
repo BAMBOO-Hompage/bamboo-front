@@ -109,14 +109,15 @@ export default function AlexandriaPost() {
           searchParams.get("id"),
           currentPage
         );
-        setPaperCommentsToDisplay(paperCommentsResult);
+        setPaperCommentsToDisplay(paperCommentsResult.content);
+        setTotalPages(paperCommentsResult.totalPages);
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
       }
     };
 
     fetchData();
-  }, [searchParams]);
+  }, [currentPage]);
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
@@ -143,7 +144,7 @@ export default function AlexandriaPost() {
         searchParams.get("id"),
         currentPage
       );
-      setPaperCommentsToDisplay(paperCommentsResult);
+      setPaperCommentsToDisplay(paperCommentsResult.content);
       setComment("");
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
@@ -156,7 +157,7 @@ export default function AlexandriaPost() {
         searchParams.get("id"),
         currentPage
       );
-      setPaperCommentsToDisplay(paperCommentsResult);
+      setPaperCommentsToDisplay(paperCommentsResult.content);
       setOpenReply(0);
       setReply("");
     } catch (error) {
@@ -174,7 +175,7 @@ export default function AlexandriaPost() {
         searchParams.get("id"),
         currentPage
       );
-      setPaperCommentsToDisplay(paperCommentsResult);
+      setPaperCommentsToDisplay(paperCommentsResult.content);
       setComment("");
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);

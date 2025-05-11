@@ -20,16 +20,19 @@ export default function Login() {
   const {
     register: registerEmail,
     handleSubmit: handleSubmitEmail,
+    setValue: setValueEmail,
     formState: { errors: errorsEmail },
   } = useForm();
   const {
     register: registerVerification,
     handleSubmit: handleSubmitVerification,
+    setValue: setValueVerification,
   } = useForm();
   const {
     register: registerPassword,
     handleSubmit: handleSubmitPassword,
     getValues: getValuesPassword,
+    setValue: setValuePassword,
     formState: { errors: errorsPassword },
   } = useForm();
   useEffect(() => {
@@ -464,6 +467,13 @@ export default function Login() {
               );
               if (closeConfirm) {
                 setIsPopupOpen(false);
+                setCheckedEmail(false);
+                setValidEmail(false);
+                setChangePassword(false);
+                setValueEmail("StudentNum", "");
+                setValueVerification("Code", "");
+                setValuePassword("Password", "");
+                setValuePassword("RePassword", "");
               }
             }}
             style={{

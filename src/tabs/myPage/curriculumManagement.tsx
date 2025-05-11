@@ -55,6 +55,7 @@ export default function CurriculumManagement() {
     reset,
     getValues,
     handleSubmit,
+    setFocus,
     formState: { errors },
   } = useForm();
   const {
@@ -62,6 +63,7 @@ export default function CurriculumManagement() {
     reset: resetEdit,
     handleSubmit: handleSubmitEdit,
     getValues: getValuesEdit,
+    setFocus: setFocusEdit,
     formState: { errors: errorsEdit },
   } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -78,12 +80,26 @@ export default function CurriculumManagement() {
     subjects: [],
   });
   const [subjects, setSubjects] = useState<subject[]>([]);
-
   const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
   const [isEditPopupOpen, setIsEditPopupOpen] = useState<subject | undefined>(
     undefined
   );
   const [isEndPopupOpen, setIsEndPopupOpen] = useState(false);
+
+  useEffect(() => {
+    if (isAddPopupOpen) {
+      setTimeout(() => {
+        setFocus("Subject");
+      }, 0);
+    }
+  }, [isAddPopupOpen, setFocus]);
+  useEffect(() => {
+    if (isEditPopupOpen) {
+      setTimeout(() => {
+        setFocusEdit("Subject");
+      }, 0);
+    }
+  }, [isEditPopupOpen, setFocusEdit]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -371,7 +387,7 @@ export default function CurriculumManagement() {
                   }}
                 >
                   커리큘럼 관리
-                  <span
+                  {/* <span
                     style={{
                       fontFamily: "Pretendard-Light",
                       fontSize: "12px",
@@ -379,7 +395,7 @@ export default function CurriculumManagement() {
                     }}
                   >
                     test 기간동안만 개방합니다. (활동 종료 제한)
-                  </span>
+                  </span> */}
                 </div>
               </div>
 

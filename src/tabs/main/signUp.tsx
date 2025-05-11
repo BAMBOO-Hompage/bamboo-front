@@ -725,9 +725,9 @@ export default function Signup() {
                   })}
                   style={{
                     width: "100%",
-                    maxWidth: errorsSignUp.Name ? "290px" : "320px",
+                    maxWidth: errorsSignUp.Name ? "310px" : "340px",
                     height: "30px",
-                    margin: "0 20px 0 10px",
+                    margin: "0 10px",
                   }}
                 />
                 {errorsSignUp.Name ? (
@@ -809,7 +809,7 @@ export default function Signup() {
                   id="major"
                   style={{
                     width: "100%",
-                    maxWidth: errorsSignUp.Major ? "290px" : "320px",
+                    maxWidth: errorsSignUp.Major ? "310px" : "340px",
                     margin: "0 10px",
                     height: "40px",
                     backgroundColor: "transparent",
@@ -939,9 +939,9 @@ export default function Signup() {
                   placeholder="전화번호 입력"
                   style={{
                     width: "100%",
-                    maxWidth: errorsSignUp.PhoneNum ? "290px" : "320px",
+                    maxWidth: errorsSignUp.PhoneNum ? "310px" : "340px",
                     height: "30px",
-                    margin: "0 20px 0 10px",
+                    margin: "0 10px",
                   }}
                 />
                 {errorsSignUp.PhoneNum ? (

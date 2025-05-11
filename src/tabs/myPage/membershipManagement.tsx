@@ -273,7 +273,7 @@ export default function PersonalInfo() {
                   }}
                 >
                   회원 관리&nbsp;
-                  <span
+                  {/* <span
                     style={{
                       fontFamily: "Pretendard-Light",
                       fontSize: "12px",
@@ -282,7 +282,7 @@ export default function PersonalInfo() {
                   >
                     test 기간동안만 개방합니다. (개인정보 마스킹, 삭제 및 변경
                     제한)
-                  </span>
+                  </span> */}
                 </div>
                 <div
                   style={{
