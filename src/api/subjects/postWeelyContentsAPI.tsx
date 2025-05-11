@@ -59,8 +59,6 @@ export default async function PostWeeklyContentsAPI(
         startPage,
         endPage
       );
-
-      return;
     } catch (error) {
       if (refreshToken) {
         try {
@@ -80,8 +78,6 @@ export default async function PostWeeklyContentsAPI(
             startPage,
             endPage
           );
-
-          return;
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

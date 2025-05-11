@@ -3,13 +3,16 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function deleteSubjects(accessToken, id) {
-  return fetch(API_SERVER_DOMAIN + `/api/subjects/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + accessToken,
-    },
-  }).then((response) => {
+async function deleteWeeklyContentsAll(accessToken, subjectId) {
+  return fetch(
+    API_SERVER_DOMAIN + `/api/subjects/${subjectId}/weeklyContents`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  ).then((response) => {
     if (!response.ok) {
       throw new Error("Failed to pdelete activies");
     }
@@ -17,16 +20,13 @@ async function deleteSubjects(accessToken, id) {
   });
 }
 
-export default async function DeleteSubjectsAPI(id) {
+export default async function DeleteWeeklyContentsAllAPI(id) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await deleteSubjects(accessToken, id);
-
-      alert("삭제 완료");
-      window.location.reload();
+      await deleteWeeklyContentsAll(accessToken, id);
     } catch (error) {
       if (refreshToken) {
         try {
@@ -36,10 +36,7 @@ export default async function DeleteSubjectsAPI(id) {
             accessToken,
             refreshToken
           );
-          await deleteSubjects(newAccessToken, id);
-
-          alert("삭제 완료");
-          window.location.reload();
+          await deleteWeeklyContentsAll(newAccessToken, id);
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

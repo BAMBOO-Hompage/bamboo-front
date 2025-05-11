@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import ImageAPI from "../api/imageAPI.tsx";
 
-import "../style/Editor.css";
+// import "../style/Editor.css";
 
 Quill.register("modules/imageActions", ImageActions);
 

@@ -18,7 +18,7 @@ import DeletePaperCommentsAPI from "../../api/library-posts/deletePaperCommentsA
 import PutPaperCommentsAPI from "../../api/library-posts/putPaperCommentsAPI.tsx";
 
 import "../../App.css";
-import "../../style/Post.css";
+// import "../../style/Post.css";`
 
 type MyDataType = {
   memberId: number;
@@ -144,7 +144,13 @@ export default function AlexandriaPost() {
         searchParams.get("id"),
         currentPage
       );
-      setPaperCommentsToDisplay(paperCommentsResult.content);
+      setTotalPages(paperCommentsResult.totalPages);
+      const newPaperCommentsResult = await GetPaperCommentsAPI(
+        searchParams.get("id"),
+        paperCommentsResult.totalPages
+      );
+      setCurrentPage(paperCommentsResult.totalPages);
+      setPaperCommentsToDisplay(newPaperCommentsResult.content);
       setComment("");
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);

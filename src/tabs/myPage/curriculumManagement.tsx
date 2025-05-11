@@ -17,6 +17,7 @@ import PutSubjectsAPI from "../../api/subjects/putSubjectsAPI.tsx";
 import PostWeeklyContentsAPI from "../../api/subjects/postWeelyContentsAPI.tsx";
 import GetSubjectsAPI from "../../api/subjects/getSubjectsAPI.tsx";
 import DeleteSubjectsAPI from "../../api/subjects/deleteSubjectsAPI.tsx";
+import DeleteWeeklyContentsAllAPI from "../../api/subjects/deleteWeeklyContentsAllAPI.tsx";
 
 import "../../App.css";
 
@@ -229,17 +230,18 @@ export default function CurriculumManagement() {
         e.Category === "정규",
         cohort.batch
       );
-
       if (!subjectResponse) {
         alert("과목 수정에 실패했습니다.");
         return;
       }
       console.log(subjectResponse);
-      const subjectId = subjectResponse.subjectId;
+      const deleteResponse = await DeleteWeeklyContentsAllAPI(
+        subjectResponse.subjectId
+      );
 
       for (const curriculum of curriculumList) {
         await PostWeeklyContentsAPI(
-          subjectId,
+          subjectResponse.subjectId,
           e[`Content${curriculum.week}`],
           curriculum.week,
           e[`StartDate${curriculum.week}`],
@@ -248,11 +250,11 @@ export default function CurriculumManagement() {
           e[`EndPage${curriculum.week}`]
         );
       }
-      alert("커리큘럼이 성공적으로 등록되었습니다.");
+      alert("커리큘럼이 성공적으로 수정되었습니다.");
       window.location.reload();
     } catch (error) {
       console.error("커리큘럼 등록 오류:", error);
-      alert("커리큘럼 등록 중 오류가 발생했습니다.");
+      alert("커리큘럼 수정 중 오류가 발생했습니다.");
     }
   };
   const onEditInvalid = (e) => {
@@ -679,6 +681,43 @@ export default function CurriculumManagement() {
             zIndex: 1000,
           }}
         >
+          {/* <div
+            onClick={() => {
+              const deleteEnd = window.confirm(
+                "커리큘럼 추가를 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
+              );
+              if (deleteEnd) {
+                reset();
+                setCurriculumList([
+                  {
+                    weeklyContentId: 0,
+                    week: 1,
+                    subjectName: "",
+                    content: "",
+                    startDate: [],
+                    endDate: [],
+                    startPage: 0,
+                    endPage: 0,
+                  },
+                ]);
+                setIsAddPopupOpen(!isAddPopupOpen);
+              }
+            }}
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              background: "transparent",
+              border: "none",
+              color: "#fff",
+              fontFamily: "Pretendard-Bold",
+              fontSize: "30px",
+              cursor: "pointer",
+            }}
+            aria-label="Close"
+          >
+            ×
+          </div> */}
           <div
             style={{
               marginBottom: "20px",
@@ -1093,6 +1132,43 @@ export default function CurriculumManagement() {
             zIndex: 1000,
           }}
         >
+          {/* <div
+            onClick={() => {
+              const deleteEnd = window.confirm(
+                "커리큘럼 수정을 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
+              );
+              if (deleteEnd) {
+                resetEdit();
+                setCurriculumList([
+                  {
+                    weeklyContentId: 0,
+                    week: 1,
+                    subjectName: "",
+                    content: "",
+                    startDate: [],
+                    endDate: [],
+                    startPage: 0,
+                    endPage: 0,
+                  },
+                ]);
+                setIsEditPopupOpen(undefined);
+              }
+            }}
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              background: "transparent",
+              border: "none",
+              color: "#fff",
+              fontFamily: "Pretendard-Bold",
+              fontSize: "30px",
+              cursor: "pointer",
+            }}
+            aria-label="Close"
+          >
+            ×
+          </div> */}
           <div
             style={{
               marginBottom: "20px",
