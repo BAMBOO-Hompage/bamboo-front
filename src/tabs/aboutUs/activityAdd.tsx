@@ -300,6 +300,9 @@ export default function ActivityAdd() {
                       {...register("Image", {
                         // required: "사진을 추가해주세요.",
                       })}
+                      onClick={(e) => {
+                        (e.target as HTMLInputElement).value = "";
+                      }}
                     />
                     <img
                       src="../../img/btn/search_enabled.png"

@@ -63,7 +63,6 @@ export default function StudyAdd() {
     setFiles(fileLists);
     setShowFiles(fileNameLists); // 파일명 리스트 저장
   };
-
   const handleDeleteFile = (id) => {
     setShowFiles(showFiles.filter((_, index) => index !== id));
   };
@@ -222,7 +221,10 @@ export default function StudyAdd() {
                         display: "none",
                       }}
                       accept=".pdf"
-                      {...register("Image", {})}
+                      {...register("File", {})}
+                      onClick={(e) => {
+                        (e.target as HTMLInputElement).value = "";
+                      }}
                     />
                     <img
                       src="../../img/btn/search_enabled.png"

@@ -385,6 +385,9 @@ export default function ActivityEdit() {
                       multiple
                       accept="image/*"
                       {...register("Image", {})}
+                      onClick={(e) => {
+                        (e.target as HTMLInputElement).value = "";
+                      }}
                     />
                     <img
                       src="../../img/btn/search_enabled.png"

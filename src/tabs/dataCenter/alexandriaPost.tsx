@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import PDFPreviewComponent from "../../components/pdfPreview.tsx";
 import dompurify from "dompurify";
 
 import Nav from "../../components/nav.tsx";
@@ -39,6 +40,7 @@ type Paper = {
   topic: string;
   tagNames: string[];
   content: string;
+  fileUrl: string;
   commentCount: number;
 };
 
@@ -70,6 +72,7 @@ export default function AlexandriaPost() {
     topic: "",
     tagNames: [],
     content: "",
+    fileUrl: "",
     commentCount: 0,
   });
   const [comment, setComment] = useState("");
@@ -473,6 +476,58 @@ export default function AlexandriaPost() {
                     height: "2px",
                   }}
                 />
+                {paperData?.fileUrl && (
+                  <>
+                    <div
+                      style={{
+                        boxSizing: "border-box",
+                        width: "100%",
+                        paddingTop: "20px",
+                        borderRadius: "20px",
+                        marginBottom: "10px",
+                        fontFamily: "Pretendard-Light",
+                        fontSize: "18px",
+                        color: "#fff",
+                      }}
+                    >
+                      <div
+                        style={{
+                          marginBottom: "20px",
+                          display: "flex",
+                          justifyContent: "left",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: "150px",
+                            marginRight: "20px",
+                          }}
+                        >
+                          첨부 파일
+                        </div>
+                        <div>
+                          <div>
+                            <a
+                              href={paperData?.fileUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ color: "#fff" }}
+                            >
+                              {paperData?.fileUrl}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div style={{ width: "100%", margin: "0 auto" }}>
+                        <PDFPreviewComponent
+                          pdfUrl={paperData?.fileUrl}
+                          width={960}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
                 <div
                   style={{
                     boxSizing: "border-box",

@@ -135,12 +135,12 @@ export default function Main() {
               <div
                 style={{
                   fontFamily: "Pretendard-Regular",
-                  fontSize: "18px",
+                  fontSize: "20px",
                   color: "#fff",
                   marginBottom: "10px",
                 }}
               >
-                동아리 안내
+                Scroll
               </div>
               <img
                 src="../img/icon/scroll.png"

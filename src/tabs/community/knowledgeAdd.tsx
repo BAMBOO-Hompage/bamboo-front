@@ -361,7 +361,10 @@ export default function KnowledgeAdd() {
                       }}
                       multiple
                       accept=".pdf, .hwp, .pptx, .docx, .doc, .xlsx, .txt"
-                      {...register("Image", {})}
+                      {...register("File", {})}
+                      onClick={(e) => {
+                        (e.target as HTMLInputElement).value = "";
+                      }}
                     />
                     <img
                       src="../../img/btn/search_enabled.png"

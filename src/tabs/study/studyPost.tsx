@@ -1550,6 +1550,7 @@ export default function StudyPost() {
                         <div>
                           <PDFPreviewComponent
                             pdfUrl={selectedInventory?.fileUrl}
+                            width={700}
                           />
                         </div>
                       </div>

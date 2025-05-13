@@ -3,30 +3,13 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function putPapers(
-  accessToken,
-  id,
-  paperName,
-  link,
-  year,
-  topic,
-  tagNames,
-  content
-) {
+async function putPapers(accessToken, id, formData) {
   return fetch(API_SERVER_DOMAIN + `/api/library-posts/${id}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    body: JSON.stringify({
-      link: link,
-      year: year,
-      paperName: paperName,
-      topic: topic,
-      content: content,
-      tagNames: tagNames,
-    }),
+    body: formData,
   }).then((response) => {
     if (!response.ok) {
       throw new Error("Failed to post activies");
@@ -35,30 +18,16 @@ async function putPapers(
   });
 }
 
-export default async function PutPapersAPI(
-  id,
-  paperName,
-  link,
-  year,
-  topic,
-  tagNames,
-  content
-) {
+export default async function PutPapersAPI(id, formData) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await putPapers(
-        accessToken,
-        id,
-        paperName,
-        link,
-        year,
-        topic,
-        tagNames,
-        content
-      );
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+      await putPapers(accessToken, id, formData);
 
       alert("수정 완료");
       window.history.back();
@@ -71,16 +40,7 @@ export default async function PutPapersAPI(
             accessToken,
             refreshToken
           );
-          await putPapers(
-            newAccessToken,
-            id,
-            paperName,
-            link,
-            year,
-            topic,
-            tagNames,
-            content
-          );
+          await putPapers(newAccessToken, id, formData);
 
           alert("수정 완료");
           window.history.back();

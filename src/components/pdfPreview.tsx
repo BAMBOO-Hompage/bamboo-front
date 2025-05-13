@@ -7,7 +7,7 @@ import "../App.css";
 // external CDN에서 호출
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.8.69/build/pdf.worker.min.mjs`;
 
-const PDFPreviewComponent = ({ pdfUrl }) => {
+const PDFPreviewComponent = ({ pdfUrl, width }) => {
   const [numPages, setNumPages] = useState(null);
 
   const onDocumentLoadSuccess = ({ numPages }) => {
@@ -21,7 +21,7 @@ const PDFPreviewComponent = ({ pdfUrl }) => {
           {numPages &&
             Array.from(new Array(numPages), (_, index) => (
               <div key={`page_${index + 1}`} style={{ marginBottom: "16px" }}>
-                <Page pageNumber={index + 1} width={700} />
+                <Page pageNumber={index + 1} width={width} />
               </div>
             ))}
         </Document>

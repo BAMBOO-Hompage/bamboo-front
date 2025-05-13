@@ -40,7 +40,7 @@ export default function Introduction() {
               textAlign: "left",
             }}
           >
-            About Us
+            동아리 소개
           </div>
 
           <div

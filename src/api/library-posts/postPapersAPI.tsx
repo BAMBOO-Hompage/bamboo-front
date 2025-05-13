@@ -3,29 +3,13 @@ import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.ts
 
 var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
-async function postPapers(
-  accessToken,
-  paperName,
-  link,
-  year,
-  topic,
-  tagNames,
-  content
-) {
+async function postPapers(accessToken, formData) {
   return fetch(API_SERVER_DOMAIN + "/api/library-posts", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    body: JSON.stringify({
-      link: link,
-      year: year,
-      paperName: paperName,
-      topic: topic,
-      content: content,
-      tagNames: tagNames,
-    }),
+    body: formData,
   }).then((response) => {
     if (!response.ok) {
       throw new Error("Failed to post activies");
@@ -34,28 +18,16 @@ async function postPapers(
   });
 }
 
-export default async function PostPapersAPI(
-  paperName,
-  link,
-  year,
-  topic,
-  tagNames,
-  content
-) {
+export default async function PostPapersAPI(formData) {
   var accessToken = getCookie("accessToken");
   var refreshToken = getCookie("refreshToken");
 
   if (accessToken) {
     try {
-      await postPapers(
-        accessToken,
-        paperName,
-        link,
-        year,
-        topic,
-        tagNames,
-        content
-      );
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+      await postPapers(accessToken, formData);
 
       alert("작성 완료");
       window.location.href = "/alexandria?tab=&search=&page=1&size=10";
@@ -68,15 +40,7 @@ export default async function PostPapersAPI(
             accessToken,
             refreshToken
           );
-          await postPapers(
-            newAccessToken,
-            paperName,
-            link,
-            year,
-            topic,
-            tagNames,
-            content
-          );
+          await postPapers(newAccessToken, formData);
 
           alert("작성 완료");
           window.location.href = "/alexandria?tab=&search=&page=1&size=10";

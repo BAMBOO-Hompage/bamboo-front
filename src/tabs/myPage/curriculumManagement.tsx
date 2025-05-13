@@ -150,6 +150,15 @@ export default function CurriculumManagement() {
       alert("다시 입력해주세요.");
     }
   };
+  const handleStart = async () => {
+    const startConfirm = window.confirm(
+      `${cohort.batch}기 활동을 시작하겠습니까?\n\n활동 시작 후에는 커리큘럼 및 스터디 수정이 불가능합니다!`
+    );
+    if (startConfirm) {
+      await PatchCohortsAPI(cohort.cohortId, "활동 중");
+      setIsStartActive(false);
+    }
+  };
 
   const [curriculumList, setCurriculumList] = useState<
     subject["weeklyContents"]
@@ -235,9 +244,7 @@ export default function CurriculumManagement() {
         return;
       }
       console.log(subjectResponse);
-      const deleteResponse = await DeleteWeeklyContentsAllAPI(
-        subjectResponse.subjectId
-      );
+      await DeleteWeeklyContentsAllAPI(subjectResponse.subjectId);
 
       for (const curriculum of curriculumList) {
         await PostWeeklyContentsAPI(
@@ -650,7 +657,9 @@ export default function CurriculumManagement() {
                         (e.target as HTMLDivElement).style.boxShadow =
                           "-10px -10px 30px #242424, 15px 15px 30px #000";
                       }}
-                      onClick={() => {}}
+                      onClick={() => {
+                        handleStart();
+                      }}
                     >
                       활동 시작
                     </div>

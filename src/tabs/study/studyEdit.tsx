@@ -334,7 +334,7 @@ export default function StudyEdit() {
                         display: "none",
                       }}
                       accept=".pdf"
-                      {...register("Image", {})}
+                      {...register("File", {})}
                     />
                     <img
                       src="../../img/btn/search_enabled.png"
@@ -391,7 +391,7 @@ export default function StudyEdit() {
                                 "../../img/btn/delete_disabled.png";
                             }}
                           />
-                          &emsp;{file}
+                          &emsp;<div>{file}</div>
                         </div>
                       ))}
                       {showNewFiles.map((file, id) => (

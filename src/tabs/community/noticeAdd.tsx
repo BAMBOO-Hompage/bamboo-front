@@ -375,7 +375,10 @@ export default function PostAdd() {
                         display: "none",
                       }}
                       multiple
-                      {...register("Image", {})}
+                      {...register("File", {})}
+                      onClick={(e) => {
+                        (e.target as HTMLInputElement).value = "";
+                      }}
                     />
                     <img
                       src="../../img/btn/search_enabled.png"
