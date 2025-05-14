@@ -673,7 +673,7 @@ export default function HallOfFame() {
                     <div></div>
                   )}
                 </div>
-                <Link to="#" style={{ textDecoration: "none" }}>
+                {/* <Link to="#" style={{ textDecoration: "none" }}>
                   <div
                     style={{
                       fontFamily: "Pretendard-Regular",
@@ -702,7 +702,7 @@ export default function HallOfFame() {
                   >
                     현 황
                   </div>
-                </Link>
+                </Link> */}
               </div>
               <div>
                 <div

@@ -1529,6 +1529,7 @@ export default function StudyPost() {
                           <div
                             style={{
                               width: "150px",
+                              minWidth: "80px",
                               marginRight: "20px",
                             }}
                           >
