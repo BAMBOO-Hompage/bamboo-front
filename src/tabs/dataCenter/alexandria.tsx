@@ -295,38 +295,42 @@ export default function Alexandria() {
                   </button>
                 </div>
               </form>
-              <div
-                className="alexandria_2"
-                style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  alignItems: "center",
-                  fontFamily: "Pretendard-Light",
-                  fontSize: "18px",
-                  color: "#777",
-                }}
-              >
-                논문 리뷰 작성&emsp;
-                <img
-                  src="../../img/btn/edit_enabled.png"
-                  alt="edit"
+              {checkAuth === 1 ? (
+                <div
+                  className="alexandria_2"
                   style={{
-                    width: "30px",
-                    cursor: "pointer",
-                    opacity: "0.8",
-                    transition: "all 0.3s ease",
+                    display: "flex",
+                    justifyContent: "right",
+                    alignItems: "center",
+                    fontFamily: "Pretendard-Light",
+                    fontSize: "18px",
+                    color: "#777",
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = "1";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.opacity = "0.8";
-                  }}
-                  onClick={() => {
-                    window.location.href = "/alexandriaAdd";
-                  }}
-                />
-              </div>
+                >
+                  논문 리뷰 작성&emsp;
+                  <img
+                    src="../../img/btn/edit_enabled.png"
+                    alt="edit"
+                    style={{
+                      width: "30px",
+                      cursor: "pointer",
+                      opacity: "0.8",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "0.8";
+                    }}
+                    onClick={() => {
+                      window.location.href = "/alexandriaAdd";
+                    }}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
 
             <div

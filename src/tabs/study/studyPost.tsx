@@ -343,7 +343,9 @@ export default function StudyPost() {
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
-      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+      if (data.role === "ROLE_OPS") {
+        setCheckAuth(3);
+      } else if (data.role === "ROLE_ADMIN") {
         setCheckAuth(2);
       } else if (data.role === "ROLE_MEMBER") {
         setCheckAuth(1);
@@ -442,6 +444,20 @@ export default function StudyPost() {
     );
     return currentWeek ? currentWeek : null;
   };
+  const getCurrentWeekForOps = (selectedSubject) => {
+    const today = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
+    );
+    const currentWeek = selectedSubject.weeklyContents.find(
+      ({ startDate, endDate }) => {
+        const start = new Date(endDate);
+        const end = new Date(endDate);
+        end.setDate(end.getDate() + 7);
+        return today >= start && today <= end;
+      }
+    );
+    return currentWeek ? currentWeek : null;
+  };
 
   const handleAddImages = (event) => {
     const imageLists = [...event.target.files]; // 선택한 파일들
@@ -468,7 +484,7 @@ export default function StudyPost() {
 
     PostAttendancesAPI(
       parseInt(searchParams.get("id") || "0", 10),
-      getCurrentWeek(selectedSubject).week,
+      getCurrentWeekForOps(selectedSubject).week,
       newAttendances
     );
   };
@@ -483,7 +499,7 @@ export default function StudyPost() {
     } else {
       PostWeeklyBestAPI(
         parseInt(searchParams.get("id") || "0", 10),
-        getCurrentWeekForWeeklyBest(selectedSubject).week,
+        getCurrentWeekForOps(selectedSubject).week,
         checkedWeeklyBest
       );
     }
@@ -1007,9 +1023,10 @@ export default function StudyPost() {
                   justifyContent: "right",
                 }}
               >
-                {getCurrentWeek(selectedSubject) &&
-                (myData.memberId === postData.studyMaster.memberId ||
-                  checkAuth === 2) ? (
+                {(getCurrentWeek(selectedSubject) &&
+                  (myData.memberId === postData.studyMaster.memberId ||
+                    checkAuth >= 2)) ||
+                (getCurrentWeekForOps(selectedSubject) && checkAuth === 3) ? (
                   <button
                     type="button"
                     style={{
@@ -1038,7 +1055,7 @@ export default function StudyPost() {
                         .filter(
                           (attendance) =>
                             attendance.week ===
-                              getCurrentWeek(selectedSubject).week &&
+                              getCurrentWeekForOps(selectedSubject).week &&
                             attendance.status === "출석"
                         )
                         .map((attendance) => attendance.studentId);
@@ -1312,13 +1329,17 @@ export default function StudyPost() {
                               >
                                 📖 {curriculum.week}주차 학습내용
                               </div>
-                              {getCurrentWeekForWeeklyBest(selectedSubject) &&
-                              getCurrentWeekForWeeklyBest(selectedSubject)
-                                .week === curriculum.week &&
-                              postList === "Weekly Best" &&
-                              (myData.memberId ===
-                                postData.studyMaster.memberId ||
-                                checkAuth === 2) ? (
+                              {postList === "Weekly Best" &&
+                              ((getCurrentWeekForWeeklyBest(selectedSubject) &&
+                                getCurrentWeekForWeeklyBest(selectedSubject)
+                                  .week === curriculum.week &&
+                                (myData.memberId ===
+                                  postData.studyMaster.memberId ||
+                                  checkAuth >= 2)) ||
+                                (getCurrentWeekForOps(selectedSubject) &&
+                                  getCurrentWeekForOps(selectedSubject).week ===
+                                    curriculum.week &&
+                                  checkAuth === 3)) ? (
                                 <div style={{ display: "flex" }}>
                                   <label
                                     htmlFor="fileInput"
@@ -1350,9 +1371,6 @@ export default function StudyPost() {
                                       onMouseLeave={(e) => {
                                         e.currentTarget.style.opacity = "0.8";
                                       }}
-                                      // onClick={() => {
-                                      //   setIsImagePopupOpen(true);
-                                      // }}
                                     />
                                   </label>
 
@@ -1368,7 +1386,9 @@ export default function StudyPost() {
                               ) : (
                                 <></>
                               )}
-                              {myData.memberId === parseInt(postList) &&
+                              {(myData.memberId === parseInt(postList) ||
+                                (postList !== "Weekly Best" &&
+                                  checkAuth >= 2)) &&
                               selectedInventory ? (
                                 <div>
                                   <img
@@ -1401,31 +1421,36 @@ export default function StudyPost() {
                                         "../../img/btn/trash_disabled.png";
                                     }}
                                   />
-                                  <Link
-                                    to={`/studyEdit?id=${selectedInventory?.inventoryId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
-                                    style={{
-                                      textDecoration: "none",
-                                      width: "25px",
-                                      height: "25px",
-                                    }}
-                                  >
-                                    <img
-                                      src="../../img/btn/edit_enabled.png"
-                                      alt="edit"
-                                      style={{
-                                        width: "25px",
-                                        cursor: "pointer",
-                                        opacity: "0.8",
-                                        transition: "all 0.3s ease",
-                                      }}
-                                      onMouseEnter={(e) => {
-                                        e.currentTarget.style.opacity = "1";
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        e.currentTarget.style.opacity = "0.8";
-                                      }}
-                                    />
-                                  </Link>
+                                  {myData.memberId === parseInt(postList) && (
+                                    <>
+                                      <Link
+                                        to={`/studyEdit?id=${selectedInventory?.inventoryId}&subject=${selectedSubject.subjectId}&week=${curriculum.weeklyContentId}`}
+                                        style={{
+                                          textDecoration: "none",
+                                          width: "25px",
+                                          height: "25px",
+                                        }}
+                                      >
+                                        <img
+                                          src="../../img/btn/edit_enabled.png"
+                                          alt="edit"
+                                          style={{
+                                            width: "25px",
+                                            cursor: "pointer",
+                                            opacity: "0.8",
+                                            transition: "all 0.3s ease",
+                                          }}
+                                          onMouseEnter={(e) => {
+                                            e.currentTarget.style.opacity = "1";
+                                          }}
+                                          onMouseLeave={(e) => {
+                                            e.currentTarget.style.opacity =
+                                              "0.8";
+                                          }}
+                                        />
+                                      </Link>
+                                    </>
+                                  )}
                                 </div>
                               ) : myData.memberId === parseInt(postList) &&
                                 !selectedInventory ? (
@@ -1641,7 +1666,7 @@ export default function StudyPost() {
                   color: "#2cc295",
                 }}
               >
-                {getCurrentWeek(selectedSubject).week}주차 출석 체크
+                {getCurrentWeekForOps(selectedSubject).week}주차 출석 체크
                 <br />
                 <span
                   style={{
@@ -1651,11 +1676,11 @@ export default function StudyPost() {
                   }}
                 >
                   스터디 날짜 :{" "}
-                  {getCurrentWeek(selectedSubject).endDate[0] +
+                  {getCurrentWeekForOps(selectedSubject).endDate[0] +
                     "/" +
-                    getCurrentWeek(selectedSubject).endDate[1] +
+                    getCurrentWeekForOps(selectedSubject).endDate[1] +
                     "/" +
-                    (getCurrentWeek(selectedSubject).endDate[2] - 1)}
+                    (getCurrentWeekForOps(selectedSubject).endDate[2] - 1)}
                 </span>
               </div>
             </div>
@@ -1866,8 +1891,8 @@ export default function StudyPost() {
                   color: "#2cc295",
                 }}
               >
-                {getCurrentWeekForWeeklyBest(selectedSubject).week}주차 주간
-                베스트 지정
+                {getCurrentWeekForOps(selectedSubject).week}주차 주간 베스트
+                지정
                 <br />
                 <span
                   style={{
@@ -1877,17 +1902,11 @@ export default function StudyPost() {
                   }}
                 >
                   (
-                  {getCurrentWeekForWeeklyBest(selectedSubject).startDate[0] +
+                  {getCurrentWeekForOps(selectedSubject).endDate[0] +
                     "/" +
-                    getCurrentWeekForWeeklyBest(selectedSubject).startDate[1] +
+                    getCurrentWeekForOps(selectedSubject).endDate[1] +
                     "/" +
-                    getCurrentWeekForWeeklyBest(selectedSubject).startDate[2] +
-                    " ~ " +
-                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[0] +
-                    "/" +
-                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[1] +
-                    "/" +
-                    getCurrentWeekForWeeklyBest(selectedSubject).endDate[2]}
+                    getCurrentWeekForOps(selectedSubject).endDate[2]}
                   )
                 </span>
               </div>

@@ -423,99 +423,208 @@ export default function SelfStudy() {
                         const y = baseY + Math.floor(studyIndex / 4) * 200;
 
                         return (
-                          <Link
-                            to={`/studyPost?id=${study.studyId}&member=&week=1`}
-                            style={{ textDecoration: "none" }}
-                            key={study.studyId}
-                          >
-                            <g
-                              transform="scale(1)"
-                              onMouseEnter={() =>
-                                setStudyHovered(study.studyId)
-                              }
-                              onMouseLeave={() => setStudyHovered(null)}
-                            >
-                              <rect
-                                x={x}
-                                y={y - 190 / 2 + 2}
-                                width={190 - 4}
-                                height={190 - 4}
-                                fill={
-                                  studyHovered === study.studyId
-                                    ? "rgba(255, 255, 255, 0.2)"
-                                    : "transparent"
-                                }
-                                stroke={
-                                  studyHovered === study.studyId
-                                    ? "#777"
-                                    : "none"
-                                }
-                                strokeWidth="2"
-                                rx="20"
-                                ry="20"
-                                cursor="pointer"
-                              />
-                              <text
-                                x={x + 30}
-                                y={y - 190 / 2 + 40}
-                                fontFamily="Pretendard-Regular"
-                                fontSize="18px"
-                                fill="#2cc295"
-                                alignmentBaseline="hanging"
-                                cursor="pointer"
+                          <>
+                            {cohortLatest.status === "활동 중" ? (
+                              <Link
+                                to={`/studyPost?id=${study.studyId}&member=&week=1`}
+                                style={{ textDecoration: "none" }}
+                                key={study.studyId}
                               >
-                                {`${study.subjectName}_${study.section}`}
-                              </text>
-                              <text
-                                x={x + 30}
-                                y={y - 190 / 2 + 70}
-                                fontFamily="Pretendard-SemiBold"
-                                fontSize="20px"
-                                fill="#fff"
-                                alignmentBaseline="hanging"
-                                cursor="pointer"
+                                <g
+                                  transform="scale(1)"
+                                  onMouseEnter={() =>
+                                    setStudyHovered(study.studyId)
+                                  }
+                                  onMouseLeave={() => setStudyHovered(null)}
+                                >
+                                  <rect
+                                    x={x}
+                                    y={y - 190 / 2 + 2}
+                                    width={190 - 4}
+                                    height={190 - 4}
+                                    fill={
+                                      studyHovered === study.studyId
+                                        ? "rgba(255, 255, 255, 0.2)"
+                                        : "transparent"
+                                    }
+                                    stroke={
+                                      studyHovered === study.studyId
+                                        ? "#777"
+                                        : "none"
+                                    }
+                                    strokeWidth="2"
+                                    rx="20"
+                                    ry="20"
+                                    cursor="pointer"
+                                  />
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 40}
+                                    fontFamily="Pretendard-Regular"
+                                    fontSize="18px"
+                                    fill="#2cc295"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {`${study.subjectName}_${study.section}`}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 70}
+                                    fontFamily="Pretendard-SemiBold"
+                                    fontSize="20px"
+                                    fill="#fff"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {`${study.teamName}`}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 140}
+                                    fontFamily="Pretendard-Regular"
+                                    fontSize="15px"
+                                    fill="#777"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {`${study.studyMaster.name} `}
+                                    {study.studyMembers
+                                      .filter(
+                                        (member) =>
+                                          member.studentId !==
+                                          study.studyMaster.studentId
+                                      )
+                                      .slice(0, 2)
+                                      .map(
+                                        (studyMember) => `${studyMember.name} `
+                                      )}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 160}
+                                    fontFamily="Pretendard-Regular"
+                                    fontSize="15px"
+                                    fill="#777"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {study.studyMembers
+                                      .filter(
+                                        (member) =>
+                                          member.studentId !==
+                                          study.studyMaster.studentId
+                                      )
+                                      .slice(2, 5)
+                                      .map(
+                                        (studyMember) => `${studyMember.name} `
+                                      )}
+                                  </text>
+                                </g>
+                              </Link>
+                            ) : (
+                              <Link
+                                to="#"
+                                style={{ textDecoration: "none" }}
+                                onClick={() => {
+                                  alert("아직 활동 기간이 아닙니다.");
+                                }}
+                                key={study.studyId}
                               >
-                                {`${study.teamName}`}
-                              </text>
-                              <text
-                                x={x + 30}
-                                y={y - 190 / 2 + 140}
-                                fontFamily="Pretendard-Regular"
-                                fontSize="15px"
-                                fill="#777"
-                                alignmentBaseline="hanging"
-                                cursor="pointer"
-                              >
-                                {`${study.studyMaster.name} `}
-                                {study.studyMembers
-                                  .filter(
-                                    (member) =>
-                                      member.studentId !==
-                                      study.studyMaster.studentId
-                                  )
-                                  .slice(0, 2)
-                                  .map((studyMember) => `${studyMember.name} `)}
-                              </text>
-                              <text
-                                x={x + 30}
-                                y={y - 190 / 2 + 160}
-                                fontFamily="Pretendard-Regular"
-                                fontSize="15px"
-                                fill="#777"
-                                alignmentBaseline="hanging"
-                                cursor="pointer"
-                              >
-                                {study.studyMembers
-                                  .filter(
-                                    (member) =>
-                                      member.studentId !==
-                                      study.studyMaster.studentId
-                                  )
-                                  .slice(2, 5)
-                                  .map((studyMember) => `${studyMember.name} `)}
-                              </text>
-                            </g>
-                          </Link>
+                                <g
+                                  transform="scale(1)"
+                                  onMouseEnter={() =>
+                                    setStudyHovered(study.studyId)
+                                  }
+                                  onMouseLeave={() => setStudyHovered(null)}
+                                >
+                                  <rect
+                                    x={x}
+                                    y={y - 190 / 2 + 2}
+                                    width={190 - 4}
+                                    height={190 - 4}
+                                    fill={
+                                      studyHovered === study.studyId
+                                        ? "rgba(255, 255, 255, 0.2)"
+                                        : "transparent"
+                                    }
+                                    stroke={
+                                      studyHovered === study.studyId
+                                        ? "#777"
+                                        : "none"
+                                    }
+                                    strokeWidth="2"
+                                    rx="20"
+                                    ry="20"
+                                    cursor="pointer"
+                                  />
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 40}
+                                    fontFamily="Pretendard-Regular"
+                                    fontSize="18px"
+                                    fill="#2cc295"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {`${study.subjectName}_${study.section}`}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 70}
+                                    fontFamily="Pretendard-SemiBold"
+                                    fontSize="20px"
+                                    fill="#fff"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {`${study.teamName}`}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 140}
+                                    fontFamily="Pretendard-Regular"
+                                    fontSize="15px"
+                                    fill="#777"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {`${study.studyMaster.name} `}
+                                    {study.studyMembers
+                                      .filter(
+                                        (member) =>
+                                          member.studentId !==
+                                          study.studyMaster.studentId
+                                      )
+                                      .slice(0, 2)
+                                      .map(
+                                        (studyMember) => `${studyMember.name} `
+                                      )}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 160}
+                                    fontFamily="Pretendard-Regular"
+                                    fontSize="15px"
+                                    fill="#777"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {study.studyMembers
+                                      .filter(
+                                        (member) =>
+                                          member.studentId !==
+                                          study.studyMaster.studentId
+                                      )
+                                      .slice(2, 5)
+                                      .map(
+                                        (studyMember) => `${studyMember.name} `
+                                      )}
+                                  </text>
+                                </g>
+                              </Link>
+                            )}
+                          </>
                         );
                       })}
                     </>

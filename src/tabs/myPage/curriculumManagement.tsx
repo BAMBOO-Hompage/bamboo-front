@@ -7,6 +7,7 @@ import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
+import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetCohortAPI from "../../api/cohorts/GetCohortAPI.tsx";
 import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
 import GetCohortsAPI from "../../api/cohorts/GetCohortsAPI.tsx";
@@ -69,6 +70,7 @@ export default function CurriculumManagement() {
   } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [checkAuth, setCheckAuth] = useState<number>(0);
   const [isEndActive, setIsEndActive] = useState(true);
   const [isStartActive, setIsStartActive] = useState(true);
   const [confirmationText, setConfirmationText] = useState("");
@@ -86,6 +88,18 @@ export default function CurriculumManagement() {
     undefined
   );
   const [isEndPopupOpen, setIsEndPopupOpen] = useState(false);
+
+  useEffect(() => {
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_ADMIN") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (isAddPopupOpen) {
@@ -155,8 +169,9 @@ export default function CurriculumManagement() {
       `${cohort.batch}기 활동을 시작하겠습니까?\n\n활동 시작 후에는 커리큘럼 및 스터디 수정이 불가능합니다!`
     );
     if (startConfirm) {
-      await PatchCohortsAPI(cohort.cohortId, "활동 중");
-      setIsStartActive(false);
+      await PatchCohortsAPI(cohort.cohortId, "활동 중").then(() => {
+        window.location.reload();
+      });
     }
   };
 
@@ -332,36 +347,48 @@ export default function CurriculumManagement() {
                 >
                   개인 정보
                 </div>
-                <div
-                  className="side_tabs"
-                  onClick={() => {
-                    window.location.href =
-                      "/membershipManagement?page=1&size=10";
-                  }}
-                >
-                  회원 관리
-                </div>
-                <div
-                  className="side_tabs"
-                  style={{
-                    boxSizing: "border-box",
-                    color: "#2CC295",
-                    borderRight: "1px solid #2cc295",
-                  }}
-                  onClick={() => {
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  커리큘럼 관리
-                </div>
-                <div
-                  className="side_tabs"
-                  onClick={() => {
-                    window.location.href = "/studyManagement";
-                  }}
-                >
-                  스터디 관리
-                </div>
+                {checkAuth === 2 ? (
+                  <>
+                    <div
+                      className="side_tabs"
+                      onClick={() => {
+                        window.location.href =
+                          "/membershipManagement?page=1&size=10";
+                      }}
+                    >
+                      회원 관리
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+                {checkAuth >= 1 ? (
+                  <>
+                    <div
+                      className="side_tabs"
+                      style={{
+                        boxSizing: "border-box",
+                        color: "#2CC295",
+                        borderRight: "1px solid #2cc295",
+                      }}
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      커리큘럼 관리
+                    </div>
+                    <div
+                      className="side_tabs"
+                      onClick={() => {
+                        window.location.href = "/studyManagement";
+                      }}
+                    >
+                      스터디 관리
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
 
@@ -500,62 +527,66 @@ export default function CurriculumManagement() {
                           ({subject.isBook ? "정규" : "자율"})
                         </span>
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Pretendard-Light",
-                          fontSize: "14px",
-                          color: "#777",
-                        }}
-                      >
-                        <span
+                      {cohort.status === "활동 준비" ? (
+                        <div
                           style={{
-                            cursor: "pointer",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.fontWeight = "600";
-                            e.currentTarget.style.textDecoration =
-                              "underline #777";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.fontWeight = "300";
-                            e.currentTarget.style.textDecoration = "none";
-                          }}
-                          onClick={() => {
-                            setCurriculumList([]);
-                            setTimeout(() => {
-                              setIsEditPopupOpen(subject);
-                              setCurriculumList(subject.weeklyContents);
-                            }, 0);
-                            console.log(subject);
+                            fontFamily: "Pretendard-Light",
+                            fontSize: "14px",
+                            color: "#777",
                           }}
                         >
-                          수정
-                        </span>
-                        &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <span
-                          style={{
-                            cursor: "pointer",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.fontWeight = "600";
-                            e.currentTarget.style.textDecoration =
-                              "underline #777";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.fontWeight = "300";
-                            e.currentTarget.style.textDecoration = "none";
-                          }}
-                          onClick={() => {
-                            const confirm =
-                              window.confirm("커리큘럼을 삭제하시겠습니까?");
-                            if (confirm) {
-                              DeleteSubjectsAPI(subject.subjectId);
-                            }
-                          }}
-                        >
-                          삭제
-                        </span>
-                      </div>
+                          <span
+                            style={{
+                              cursor: "pointer",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.fontWeight = "600";
+                              e.currentTarget.style.textDecoration =
+                                "underline #777";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.fontWeight = "300";
+                              e.currentTarget.style.textDecoration = "none";
+                            }}
+                            onClick={() => {
+                              setCurriculumList([]);
+                              setTimeout(() => {
+                                setIsEditPopupOpen(subject);
+                                setCurriculumList(subject.weeklyContents);
+                              }, 0);
+                              console.log(subject);
+                            }}
+                          >
+                            수정
+                          </span>
+                          &nbsp;&nbsp;|&nbsp;&nbsp;
+                          <span
+                            style={{
+                              cursor: "pointer",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.fontWeight = "600";
+                              e.currentTarget.style.textDecoration =
+                                "underline #777";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.fontWeight = "300";
+                              e.currentTarget.style.textDecoration = "none";
+                            }}
+                            onClick={() => {
+                              const confirm =
+                                window.confirm("커리큘럼을 삭제하시겠습니까?");
+                              if (confirm) {
+                                DeleteSubjectsAPI(subject.subjectId);
+                              }
+                            }}
+                          >
+                            삭제
+                          </span>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                     {subject.weeklyContents.map((curriculum, weekIndex) => (
                       <div

@@ -42,7 +42,7 @@ export default function PersonalInfo() {
   const edit = searchParams.get("edit") || "0";
   const changePassword = searchParams.get("changePassword") || "0";
 
-  const [checkAuth, setCheckAuth] = useState<number>(1);
+  const [checkAuth, setCheckAuth] = useState<number>(0);
   const [myData, setmyData] = useState<MyDataType>({
     studentId: "",
     email: "",
@@ -61,6 +61,8 @@ export default function PersonalInfo() {
   useEffect(() => {
     CheckAuthAPI().then((data) => {
       if (data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_ADMIN") {
         setCheckAuth(1);
       } else {
         setCheckAuth(0);
@@ -224,7 +226,7 @@ export default function PersonalInfo() {
                 >
                   개인 정보
                 </div>
-                {checkAuth === 1 ? (
+                {checkAuth === 2 ? (
                   <>
                     <div
                       className="side_tabs"
@@ -235,6 +237,12 @@ export default function PersonalInfo() {
                     >
                       회원 관리
                     </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+                {checkAuth >= 1 ? (
+                  <>
                     <div
                       className="side_tabs"
                       onClick={() => {

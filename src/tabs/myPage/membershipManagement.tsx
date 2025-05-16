@@ -6,6 +6,7 @@ import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
+import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import SelectDeactivateAPI from "../../api/members/selectDeactivateAPI.tsx";
 import GetMembersAPI from "../../api/members/getMembersAPI.tsx";
 import PatchRoleAPI from "../../api/members/patchRoleAPI.tsx";
@@ -28,6 +29,7 @@ export default function PersonalInfo() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
+  const [checkAuth, setCheckAuth] = useState<number>(0);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [membersToDisplay, setMembersToDisplay] = useState<Members[]>([]);
   const [changedRoles, setChangedRoles] = useState<{ [key: number]: boolean }>(
@@ -45,6 +47,18 @@ export default function PersonalInfo() {
     setSearchParams({ page: page.toString(), size: "10" });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_ADMIN") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     GetMembersAPI(currentPage).then((result) => {
@@ -199,43 +213,49 @@ export default function PersonalInfo() {
                   fontSize: "18px",
                 }}
               >
-                <div
-                  className="side_tabs"
-                  onClick={() => {
-                    window.location.href = "/personalInfo";
-                  }}
-                >
-                  개인 정보
-                </div>
-                <div
-                  className="side_tabs"
-                  style={{
-                    boxSizing: "border-box",
-                    color: "#2CC295",
-                    borderRight: "1px solid #2cc295",
-                  }}
-                  onClick={() => {
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  회원 관리
-                </div>
-                <div
-                  className="side_tabs"
-                  onClick={() => {
-                    window.location.href = "/curriculumManagement";
-                  }}
-                >
-                  커리큘럼 관리
-                </div>
-                <div
-                  className="side_tabs"
-                  onClick={() => {
-                    window.location.href = "/studyManagement";
-                  }}
-                >
-                  스터디 관리
-                </div>
+                {checkAuth === 2 ? (
+                  <>
+                    <div
+                      className="side_tabs"
+                      onClick={() => {
+                        window.location.href = "/personalInfo";
+                      }}
+                    >
+                      개인 정보
+                    </div>
+                    <div
+                      className="side_tabs"
+                      style={{
+                        boxSizing: "border-box",
+                        color: "#2CC295",
+                        borderRight: "1px solid #2cc295",
+                      }}
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      회원 관리
+                    </div>
+                    <div
+                      className="side_tabs"
+                      onClick={() => {
+                        window.location.href = "/curriculumManagement";
+                      }}
+                    >
+                      커리큘럼 관리
+                    </div>
+                    <div
+                      className="side_tabs"
+                      onClick={() => {
+                        window.location.href = "/studyManagement";
+                      }}
+                    >
+                      스터디 관리
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
 

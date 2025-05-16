@@ -15,6 +15,7 @@ import GetWeeklyBestAPI from "../../api/inventories/getWeeklyBestAPI.tsx";
 import PostAwardsAPI from "../../api/awards/postAwardsAPI.tsx";
 import GetAwardsAPI from "../../api/awards/getAwardsAPI.tsx";
 import GetAwardLatestAPI from "../../api/awards/getAwardLatestAPI.tsx";
+import DeleteAwardsAPI from "../../api/awards/deleteAwardsAPI.tsx";
 
 import "../../App.css";
 
@@ -140,7 +141,7 @@ export default function HallOfFame() {
     subjects: [],
   });
   const [selectedCohort, setSelectedCohort] = useState(0);
-  const [groupedAwards, setGroupedAwards] = useState([]);
+  const [groupedAwards, setGroupedAwards] = useState<[][]>([]);
   const [awardsLatest, setAwardsLatest] = useState([]);
   const [curriculumSubjects, setCurriculumSubjects] = useState([]);
   const [isAddPopupOpen, setIsAddPopupOpen] = useState<boolean>(false);
@@ -275,7 +276,6 @@ export default function HallOfFame() {
           acc[week].push(curr);
           return acc;
         }, {});
-        console.log(grouped);
         // 2. 전체 주차 범위 구하기
         const allWeeks = Array.from(
           { length: Math.max(...awardsResult.map((a) => a.week)) },
@@ -284,29 +284,12 @@ export default function HallOfFame() {
         // 3. 빠진 주차도 포함한 리스트로 만들기
         const sortedGrouped = allWeeks.map((week) => grouped[week] ?? []);
         setGroupedAwards(sortedGrouped);
+        console.log(groupedAwards);
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
       }
     };
-
     fetchData();
-    // GetAwardsAPI(selectedCohort).then((result) => {
-    //   const awardsData = result;
-    //   // 1. week별로 데이터를 묶는다
-    //   const grouped = awardsData.reduce((acc, curr) => {
-    //     const week = curr.week;
-    //     if (!acc[week]) {
-    //       acc[week] = [];
-    //     }
-    //     acc[week].push(curr);
-    //     return acc;
-    //   }, {});
-    //   // 2. week를 오름차순으로 정렬하고 이중 리스트로 변환
-    //   const sortedGrouped = Object.keys(grouped)
-    //     .sort((a, b) => Number(a) - Number(b)) // week는 숫자
-    //     .map((week) => grouped[week]);
-    //   setGroupedAwards(sortedGrouped);
-    // });
   }, [selectedCohort]);
 
   const onValid = async (e) => {
@@ -954,21 +937,53 @@ export default function HallOfFame() {
                 type="primary"
                 size="small"
                 title="저장"
-                onClick={() => {
+                onClick={async () => {
                   if (urlInput) {
                     if (
                       curriculumSubjects.some(
                         (subject) => subject.name === selectedStudy.subjectName
                       )
                     ) {
-                      PostAwardsAPI(
-                        urlParams.week,
-                        selectedStudy.cohort.batch,
-                        selectedInventory?.inventoryId,
-                        selectedStudy.subjectName,
-                        selectedStudy.section,
-                        selectedInventory?.member.memberId
-                      );
+                      if (
+                        !groupedAwards[Number(urlParams.week) - 1] ||
+                        !groupedAwards[Number(urlParams.week) - 1].some(
+                          (award) =>
+                            award.study.subjectName ===
+                            selectedStudy.subjectName
+                        )
+                      ) {
+                        console.log(3);
+                        await PostAwardsAPI(
+                          urlParams.week,
+                          selectedStudy.cohort.batch,
+                          selectedInventory?.inventoryId,
+                          selectedStudy.subjectName,
+                          selectedStudy.section,
+                          selectedInventory?.member.memberId
+                        );
+                      } else {
+                        const awardId = groupedAwards[
+                          Number(urlParams.week) - 1
+                        ].find(
+                          (award) =>
+                            award.study.subjectName ===
+                            selectedStudy.subjectName
+                        )?.awardId;
+                        const patchConfirm = window.confirm(
+                          "해당 주체에 이미 등록된 학생이 있습니다.\n수정하시겠습니까?"
+                        );
+                        if (patchConfirm) {
+                          await DeleteAwardsAPI(awardId);
+                          await PostAwardsAPI(
+                            urlParams.week,
+                            selectedStudy.cohort.batch,
+                            selectedInventory?.inventoryId,
+                            selectedStudy.subjectName,
+                            selectedStudy.section,
+                            selectedInventory?.member.memberId
+                          );
+                        }
+                      }
                     } else {
                       alert("정규 스터디만 등록 가능합니다.");
                     }

@@ -289,8 +289,7 @@ export default function AlexandriaPost() {
                     window.history.back();
                   }}
                 />
-                {checkAuth === 2 ||
-                myData.studentId === paperData.member.studentId ? (
+                {myData.studentId === paperData.member.studentId ? (
                   <Button
                     type="primary"
                     size="xsmall"

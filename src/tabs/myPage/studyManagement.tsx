@@ -7,6 +7,7 @@ import Nav from "../../components/nav.tsx";
 import Button from "../../components/button.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
+import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
 import GetSubjectsAPI from "../../api/subjects/getSubjectsAPI.tsx";
 import GetStudiesAPI from "../../api/studies/getStudiesAPI.tsx";
@@ -89,6 +90,7 @@ export default function StudyManagement() {
   } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [checkAuth, setCheckAuth] = useState<number>(0);
   const [cohort, setCohort] = useState<cohort>({
     cohortId: 0,
     batch: 0,
@@ -139,6 +141,18 @@ export default function StudyManagement() {
       },
     ],
   });
+
+  useEffect(() => {
+    CheckAuthAPI().then((data) => {
+      if (data.role === "ROLE_OPS") {
+        setCheckAuth(2);
+      } else if (data.role === "ROLE_ADMIN") {
+        setCheckAuth(1);
+      } else {
+        setCheckAuth(0);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (isAddPopupOpen) {
@@ -341,36 +355,48 @@ export default function StudyManagement() {
                 >
                   개인 정보
                 </div>
-                <div
-                  className="side_tabs"
-                  onClick={() => {
-                    window.location.href =
-                      "/membershipManagement?page=1&size=10";
-                  }}
-                >
-                  회원 관리
-                </div>
-                <div
-                  className="side_tabs"
-                  onClick={() => {
-                    window.location.href = "/curriculumManagement";
-                  }}
-                >
-                  커리큘럼 관리
-                </div>
-                <div
-                  className="side_tabs"
-                  style={{
-                    boxSizing: "border-box",
-                    color: "#2CC295",
-                    borderRight: "1px solid #2cc295",
-                  }}
-                  onClick={() => {
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  스터디 관리
-                </div>
+                {checkAuth === 2 ? (
+                  <>
+                    <div
+                      className="side_tabs"
+                      onClick={() => {
+                        window.location.href =
+                          "/membershipManagement?page=1&size=10";
+                      }}
+                    >
+                      회원 관리
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+                {checkAuth >= 1 ? (
+                  <>
+                    <div
+                      className="side_tabs"
+                      onClick={() => {
+                        window.location.href = "/curriculumManagement";
+                      }}
+                    >
+                      커리큘럼 관리
+                    </div>
+                    <div
+                      className="side_tabs"
+                      style={{
+                        boxSizing: "border-box",
+                        color: "#2CC295",
+                        borderRight: "1px solid #2cc295",
+                      }}
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      스터디 관리
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
             <motion.div
@@ -462,19 +488,23 @@ export default function StudyManagement() {
                           />
                           &emsp;{subject.name}
                         </div>
-                        <div style={{ display: "flex" }}>
-                          <Button
-                            type="primary"
-                            size="xsmall"
-                            title="추가"
-                            onClick={() => {
-                              setIsAddPopupOpen(true);
-                              setSelectedSubjectId(subject.subjectId);
-                              setSelectedSubjectName(subject.name);
-                              setSelectedIsBook(subject.isBook);
-                            }}
-                          />
-                        </div>
+                        {cohort.status === "활동 준비" ? (
+                          <div style={{ display: "flex" }}>
+                            <Button
+                              type="primary"
+                              size="xsmall"
+                              title="추가"
+                              onClick={() => {
+                                setIsAddPopupOpen(true);
+                                setSelectedSubjectId(subject.subjectId);
+                                setSelectedSubjectName(subject.name);
+                                setSelectedIsBook(subject.isBook);
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <div
                         style={{
@@ -516,24 +546,30 @@ export default function StudyManagement() {
                         >
                           팀원
                         </div>
-                        <div
-                          style={{
-                            flexGrow: 1,
-                            flexBasis: "30px",
-                            minWidth: "30px",
-                          }}
-                        >
-                          수정
-                        </div>
-                        <div
-                          style={{
-                            flexGrow: 1,
-                            flexBasis: "30px",
-                            minWidth: "30px",
-                          }}
-                        >
-                          삭제
-                        </div>
+                        {cohort.status === "활동 준비" ? (
+                          <>
+                            <div
+                              style={{
+                                flexGrow: 1,
+                                flexBasis: "30px",
+                                minWidth: "30px",
+                              }}
+                            >
+                              수정
+                            </div>
+                            <div
+                              style={{
+                                flexGrow: 1,
+                                flexBasis: "30px",
+                                minWidth: "30px",
+                              }}
+                            >
+                              삭제
+                            </div>
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <hr
                         style={{
@@ -602,77 +638,83 @@ export default function StudyManagement() {
                                     </span>
                                   ))}
                               </div>
-                              <div
-                                style={{
-                                  flexGrow: 1,
-                                  flexBasis: "30px",
-                                  minWidth: "30px",
-                                  minHeight: "100%",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <img
-                                  src="../../img/btn/edit_enabled.png"
-                                  alt="edit"
-                                  style={{
-                                    width: "25px",
-                                    cursor: "pointer",
-                                    opacity: "0.8",
-                                    transition: "all 0.3s ease",
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.currentTarget.style.opacity = "1";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.currentTarget.style.opacity = "0.8";
-                                  }}
-                                  onClick={() => {
-                                    setEditStudy(study);
-                                    setSelectedSubjectId(subject.subjectId);
-                                    setIsEditPopupOpen(true);
-                                  }}
-                                />
-                              </div>
-                              <div
-                                style={{
-                                  flexGrow: 1,
-                                  flexBasis: "30px",
-                                  minWidth: "30px",
-                                  minHeight: "100%",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <img
-                                  src="../../img/btn/delete_disabled.png"
-                                  alt="delete"
-                                  style={{
-                                    width: "25px",
-                                    cursor: "pointer",
-                                    transition: "all 0.3s ease",
-                                  }}
-                                  onClick={() => {
-                                    const confirm =
-                                      window.confirm(
-                                        "스터디를 삭제하시겠습니까?"
-                                      );
-                                    if (confirm) {
-                                      DeleteStudiesAPI(study.studyId);
-                                    }
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    (e.target as HTMLImageElement).src =
-                                      "../../img/btn/delete_enabled.png";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    (e.target as HTMLImageElement).src =
-                                      "../../img/btn/delete_disabled.png";
-                                  }}
-                                />
-                              </div>
+                              {cohort.status === "활동 준비" ? (
+                                <>
+                                  <div
+                                    style={{
+                                      flexGrow: 1,
+                                      flexBasis: "30px",
+                                      minWidth: "30px",
+                                      minHeight: "100%",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <img
+                                      src="../../img/btn/edit_enabled.png"
+                                      alt="edit"
+                                      style={{
+                                        width: "25px",
+                                        cursor: "pointer",
+                                        opacity: "0.8",
+                                        transition: "all 0.3s ease",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.opacity = "1";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.opacity = "0.8";
+                                      }}
+                                      onClick={() => {
+                                        setEditStudy(study);
+                                        setSelectedSubjectId(subject.subjectId);
+                                        setIsEditPopupOpen(true);
+                                      }}
+                                    />
+                                  </div>
+                                  <div
+                                    style={{
+                                      flexGrow: 1,
+                                      flexBasis: "30px",
+                                      minWidth: "30px",
+                                      minHeight: "100%",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <img
+                                      src="../../img/btn/delete_disabled.png"
+                                      alt="delete"
+                                      style={{
+                                        width: "25px",
+                                        cursor: "pointer",
+                                        transition: "all 0.3s ease",
+                                      }}
+                                      onClick={() => {
+                                        const confirm =
+                                          window.confirm(
+                                            "스터디를 삭제하시겠습니까?"
+                                          );
+                                        if (confirm) {
+                                          DeleteStudiesAPI(study.studyId);
+                                        }
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        (e.target as HTMLImageElement).src =
+                                          "../../img/btn/delete_enabled.png";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        (e.target as HTMLImageElement).src =
+                                          "../../img/btn/delete_disabled.png";
+                                      }}
+                                    />
+                                  </div>
+                                </>
+                              ) : (
+                                <></>
+                              )}
                             </div>
                             <hr
                               style={{
