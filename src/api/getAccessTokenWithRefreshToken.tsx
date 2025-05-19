@@ -25,7 +25,7 @@ export default async function getAccessTokenWithRefreshToken(
     .then((newAccessToken) => {
       setCookie("accessToken", newAccessToken, {
         path: "/",
-        expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1일 뒤 삭제
+        expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // 1시간 뒤 삭제
       });
 
       return newAccessToken;

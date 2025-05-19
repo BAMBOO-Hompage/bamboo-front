@@ -36,11 +36,11 @@ export default function LogInAPI(studentId: number, password: string) {
       // 쿠키에 토큰 저장
       setCookie("accessToken", accessToken, {
         path: "/",
-        expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1일 뒤 삭제
+        expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // 1시간 뒤 삭제
       });
       setCookie("refreshToken", refreshToken, {
         path: "/",
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 2일 뒤 삭제
+        expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1일 뒤 삭제
       });
 
       setTimeout(() => {
