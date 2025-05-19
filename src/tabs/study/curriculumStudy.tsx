@@ -528,7 +528,7 @@ export default function CurriculumStudy() {
                                 to="#"
                                 style={{ textDecoration: "none" }}
                                 onClick={() => {
-                                  alert("아직 활동 기간이 아닙니다.");
+                                  alert("스터디 활동 기간이 아닙니다.");
                                 }}
                                 key={study.studyId}
                               >

@@ -970,7 +970,7 @@ export default function HallOfFame() {
                             selectedStudy.subjectName
                         )?.awardId;
                         const patchConfirm = window.confirm(
-                          "해당 주체에 이미 등록된 학생이 있습니다.\n수정하시겠습니까?"
+                          "해당 주차에 이미 등록된 학생이 있습니다.\n수정하시겠습니까?"
                         );
                         if (patchConfirm) {
                           await DeleteAwardsAPI(awardId);
