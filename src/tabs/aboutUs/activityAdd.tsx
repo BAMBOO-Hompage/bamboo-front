@@ -58,11 +58,11 @@ export default function ActivityAdd() {
     const year = moment(e.StartDate).format("YYYY");
 
     const formData = new FormData();
+
     formData.append("title", e.Title);
     formData.append("startDate", e.StartDate);
     formData.append("endDate", e.EndDate);
     formData.append("year", year);
-    // 이미지 배열로 추가
     images.forEach((file) => {
       formData.append("images", file); // images 배열 형식으로 전송
     });

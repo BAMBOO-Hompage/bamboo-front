@@ -54,6 +54,7 @@ export default function ActivityEdit() {
   useEffect(() => {
     GetActivityAPI(searchParams.get("id")).then((data) => {
       setActivityData(data);
+      // const encodedImages = (data.images || []).map((url) => encodeURI(url));
       setShowImages(data.images || []);
     });
   }, [searchParams]);
@@ -122,14 +123,23 @@ export default function ActivityEdit() {
     const year = moment(e.StartDate).format("YYYY");
 
     const formData = new FormData();
-    formData.append("title", e.Title);
-    formData.append("startDate", e.StartDate);
-    formData.append("endDate", e.EndDate);
-    formData.append("year", year);
-    formData.append("imageUrls", JSON.stringify(showImages)); // images 배열 형식으로 전송
-    images.forEach((file) => {
-      formData.append("newImages", file); // images 배열 형식으로 전송
+    const jsonData = JSON.stringify({
+      title: e.Title,
+      startDate: e.StartDate,
+      endDate: e.EndDate,
+      year: year,
+      keptImageUrls: showImages,
     });
+    formData.append(
+      "request",
+      new Blob([jsonData], { type: "application/json" })
+    );
+
+    if (images && images.length > 0) {
+      images.forEach((file) => {
+        formData.append("newImages", file);
+      });
+    }
 
     PatchActivitiesAPI(searchParams.get("id"), formData);
   };
