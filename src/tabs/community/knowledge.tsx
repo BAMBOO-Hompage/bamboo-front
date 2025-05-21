@@ -12,9 +12,10 @@ import GetKnowledgesAPI from "../../api/knowledges/getKnowledgesAPI.tsx";
 
 import "../../App.css";
 
-type Post = {
+type Knowledge = {
   knowledgeId: number;
-  member: { studentId: number; name: string };
+  writerId: number;
+  writerName: string;
   title: string;
   content: string;
   type: string;
@@ -35,7 +36,7 @@ export default function Knoledge() {
   const searchKeyword = searchParams.get("search") || "";
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
-  const [postsToDisplay, setPostsToDisplay] = useState<Post[]>([]);
+  const [postsToDisplay, setPostsToDisplay] = useState<Knowledge[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
 
   const startPage =
@@ -357,7 +358,7 @@ export default function Knoledge() {
                             color: "#888",
                           }}
                         >
-                          작성자: {post.member.name}
+                          작성자: {post.writerName}
                           &emsp; 작성일자:{" "}
                           {post.createdAt[0] +
                             "/" +

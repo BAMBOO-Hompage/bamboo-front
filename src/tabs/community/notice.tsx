@@ -11,13 +11,13 @@ import GetNoticesAPI from "../../api/notices/getNoticesAPI.tsx";
 
 import "../../App.css";
 
-type Post = {
+type Notice = {
   noticeId: number;
-  member: { studentId: number; name: string };
   title: string;
   content: string;
+  writerId: number;
+  writerName: string;
   type: string;
-  views: number;
   images: string[];
   files: string[];
   comments: string[];
@@ -33,7 +33,7 @@ export default function Notice() {
   const postList = searchParams.get("post") || "전체";
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
-  const [postsToDisplay, setPostsToDisplay] = useState<Post[]>([]);
+  const [postsToDisplay, setPostsToDisplay] = useState<Notice[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
 
   const startPage =
@@ -285,7 +285,7 @@ export default function Notice() {
                             color: "#888",
                           }}
                         >
-                          작성자: {post.member.name}
+                          작성자: {post.writerName}
                           &emsp; 작성 일자:{" "}
                           {post.createdAt[0] +
                             "/" +

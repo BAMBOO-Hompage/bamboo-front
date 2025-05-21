@@ -14,6 +14,7 @@ import "../../App.css";
 import "../../style/Post.css";
 
 type MyDataType = {
+  memberId: number;
   studentId: string;
   email: string;
   name: string;
@@ -22,9 +23,10 @@ type MyDataType = {
   role: string;
   profileImageUrl: string;
 };
-type Post = {
+type Knowledge = {
   knowledgeId: number;
-  member: { studentId: string; name: string };
+  writerId: number;
+  writerName: string;
   title: string;
   content: string;
   type: string;
@@ -43,6 +45,7 @@ export default function KnowledgePost() {
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
   const [myData, setMyData] = useState<MyDataType>({
+    memberId: 0,
     studentId: "",
     email: "",
     name: "",
@@ -51,9 +54,10 @@ export default function KnowledgePost() {
     role: "",
     profileImageUrl: "",
   });
-  const [postData, setPostData] = useState<Post>({
+  const [postData, setPostData] = useState<Knowledge>({
     knowledgeId: 0,
-    member: { studentId: "", name: "" },
+    writerId: 0,
+    writerName: "",
     title: "",
     content: "",
     type: "",
@@ -183,8 +187,7 @@ export default function KnowledgePost() {
                 >
                   {postData.type}
                 </div>
-                {checkAuth === 2 ||
-                myData.studentId === postData.member.studentId ? (
+                {checkAuth === 2 || myData.memberId === postData.writerId ? (
                   <div style={{ height: "30px" }}>
                     <img
                       src="../../img/btn/trash_disabled.png"
@@ -243,7 +246,7 @@ export default function KnowledgePost() {
                   color: "#777",
                 }}
               >
-                작성자: {postData.member.name}
+                작성자: {postData.writerName}
                 &emsp; 작성 일자:{" "}
                 {postData.createdAt[0] +
                   "/" +

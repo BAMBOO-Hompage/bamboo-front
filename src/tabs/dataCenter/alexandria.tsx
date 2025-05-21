@@ -14,13 +14,16 @@ import "../../App.css";
 
 type Paper = {
   libraryPostId: number;
+  writerId: number;
+  writerName: string;
   paperName: string;
-  link: string;
   year: string;
-  member: { studentId: number; name: string };
   topic: string;
-  tagNames: string[];
   content: string;
+  link: string;
+  fileUrl: string;
+  tagNames: string[];
+  commentCount: number;
 };
 
 const maxVisiblePages = 5;
@@ -420,7 +423,7 @@ export default function Alexandria() {
                     >
                       {paper.topic}
                     </div>
-                    <div style={{ width: "80px" }}>{paper.member.name}</div>
+                    <div style={{ width: "80px" }}>{paper.writerName}</div>
                     <div
                       style={{
                         width: "100px",

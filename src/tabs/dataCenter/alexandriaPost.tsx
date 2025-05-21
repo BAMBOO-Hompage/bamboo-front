@@ -33,14 +33,15 @@ type MyDataType = {
 };
 type Paper = {
   libraryPostId: number;
-  member: { studentId: string; name: string };
+  writerId: number;
+  writerName: string;
   paperName: string;
-  link: string;
   year: string;
   topic: string;
-  tagNames: string[];
   content: string;
+  link: string;
   fileUrl: string;
+  tagNames: string[];
   commentCount: number;
 };
 
@@ -65,14 +66,15 @@ export default function AlexandriaPost() {
   });
   const [paperData, setPaperData] = useState<Paper>({
     libraryPostId: 0,
+    writerId: 0,
+    writerName: "",
     paperName: "",
-    link: "",
     year: "",
-    member: { studentId: "", name: "" },
     topic: "",
-    tagNames: [],
     content: "",
+    link: "",
     fileUrl: "",
+    tagNames: [],
     commentCount: 0,
   });
   const [comment, setComment] = useState("");
@@ -257,8 +259,7 @@ export default function AlexandriaPost() {
                 justifyContent: "space-between",
               }}
             >
-              {checkAuth === 2 ||
-              myData.studentId === paperData.member.studentId ? (
+              {checkAuth === 2 || myData.memberId === paperData.writerId ? (
                 <Button
                   type="destructive"
                   size="xsmall"
@@ -289,7 +290,7 @@ export default function AlexandriaPost() {
                     window.history.back();
                   }}
                 />
-                {myData.studentId === paperData.member.studentId ? (
+                {myData.memberId === paperData.writerId ? (
                   <Button
                     type="primary"
                     size="xsmall"
@@ -463,7 +464,7 @@ export default function AlexandriaPost() {
                       color: "#fff",
                     }}
                   >
-                    {paperData.member.name}
+                    {paperData.writerName}
                   </div>
                 </div>
 
@@ -682,11 +683,12 @@ export default function AlexandriaPost() {
                                 }}
                               >
                                 <img
-                                  src={
-                                    paperComment.member.profileImageUrl
-                                      ? paperComment.member.profileImageUrl
-                                      : "../img/icon/base_profile.png"
-                                  }
+                                  // src={
+                                  //   paperComment.member.profileImageUrl
+                                  //     ? paperComment.member.profileImageUrl
+                                  //     : "../img/icon/base_profile.png"
+                                  // }
+                                  src="../img/icon/base_profile.png"
                                   alt="profile"
                                   style={{
                                     width: "30px",
@@ -697,8 +699,8 @@ export default function AlexandriaPost() {
                                   }}
                                 />
                                 <div>
-                                  {paperComment.member.major}_
-                                  {paperComment.member.name}
+                                  {paperComment.writerMajor}_
+                                  {paperComment.writerName}
                                 </div>
                               </div>
                               <div
@@ -738,8 +740,7 @@ export default function AlexandriaPost() {
                                 ) : (
                                   <></>
                                 )}
-                                {myData.studentId ===
-                                paperComment.member.studentId ? (
+                                {myData.memberId === paperComment.memberId ? (
                                   <>
                                     &nbsp;&nbsp;|&nbsp;&nbsp;
                                     <span
@@ -772,8 +773,7 @@ export default function AlexandriaPost() {
                                   <></>
                                 )}
                                 {checkAuth === 2 ||
-                                myData.studentId ===
-                                  paperComment.member.studentId ? (
+                                myData.memberId === paperComment.memberId ? (
                                   <>
                                     &nbsp;&nbsp;|&nbsp;&nbsp;
                                     <span
@@ -1042,12 +1042,13 @@ export default function AlexandriaPost() {
                                         }}
                                       >
                                         <img
-                                          src={
-                                            paperReply.member.profileImageUrl
-                                              ? paperReply.member
-                                                  .profileImageUrl
-                                              : "../img/icon/base_profile.png"
-                                          }
+                                          // src={
+                                          //   paperReply.member.profileImageUrl
+                                          //     ? paperReply.member
+                                          //         .profileImageUrl
+                                          //     : "../img/icon/base_profile.png"
+                                          // }
+                                          src="../img/icon/base_profile.png"
                                           alt="profile"
                                           style={{
                                             width: "30px",
@@ -1058,8 +1059,8 @@ export default function AlexandriaPost() {
                                           }}
                                         />
                                         <div>
-                                          {paperReply.member.major}_
-                                          {paperReply.member.name}
+                                          {paperReply.writerMajor}_
+                                          {paperReply.writerName}
                                         </div>
                                       </div>
                                       <div
@@ -1069,8 +1070,8 @@ export default function AlexandriaPost() {
                                           color: "#777",
                                         }}
                                       >
-                                        {myData.studentId ===
-                                        paperReply.member.studentId ? (
+                                        {myData.memberId ===
+                                        paperReply.memberId ? (
                                           <>
                                             <span
                                               style={{
@@ -1104,8 +1105,8 @@ export default function AlexandriaPost() {
                                           <></>
                                         )}
                                         {checkAuth === 2 ||
-                                        myData.studentId ===
-                                          paperReply.member.studentId ? (
+                                        myData.memberId ===
+                                          paperReply.memberId ? (
                                           <>
                                             &nbsp;&nbsp;|&nbsp;&nbsp;
                                             <span
@@ -1167,7 +1168,7 @@ export default function AlexandriaPost() {
                                         }}
                                       >
                                         <span style={{ color: "#2cc295" }}>
-                                          @{paperComment.member.name}
+                                          @{paperComment.writerName}
                                         </span>{" "}
                                         {paperReply.content}
                                       </div>

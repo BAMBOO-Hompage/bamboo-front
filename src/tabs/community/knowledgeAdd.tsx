@@ -63,16 +63,6 @@ export default function KnowledgeAdd() {
       e.Category + "\n" + e.Title + "\n" + content + "\n" + showFiles,
       "onValid"
     );
-    alert(
-      "카테고리 : " +
-        e.Category +
-        "\n제목 : " +
-        e.Title +
-        "\n내용 : \n" +
-        content +
-        "\n파일 : \n" +
-        showFiles
-    );
     const formData = new FormData();
     const jsonData = JSON.stringify({
       title: e.Title,

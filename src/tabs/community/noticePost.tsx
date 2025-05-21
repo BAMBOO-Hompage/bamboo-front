@@ -13,11 +13,12 @@ import DeleteNoticesAPI from "../../api/notices/deleteNoticesAPI.tsx";
 import "../../App.css";
 import "../../style/Post.css";
 
-type Post = {
+type Notice = {
   noticeId: number;
-  member: { studentId: string; name: string };
   title: string;
   content: string;
+  writerId: number;
+  writerName: string;
   type: string;
   images: string[];
   files: string[];
@@ -32,11 +33,12 @@ export default function NoticePost() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
-  const [postData, setPostData] = useState<Post>({
+  const [postData, setPostData] = useState<Notice>({
     noticeId: 0,
-    member: { studentId: "", name: "" },
     title: "",
     content: "",
+    writerId: 0,
+    writerName: "",
     type: "",
     images: [],
     files: [],
@@ -220,7 +222,7 @@ export default function NoticePost() {
                   color: "#777",
                 }}
               >
-                작성자: {postData.member.name}
+                작성자: {postData.writerName}
                 &emsp; 작성 일자:{" "}
                 {postData.createdAt[0] +
                   "/" +

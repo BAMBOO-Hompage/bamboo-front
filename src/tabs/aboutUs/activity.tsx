@@ -19,6 +19,8 @@ type Activities = {
   title: string;
   startDate: number[];
   endDate: number[];
+  year: number;
+  views: number;
   images: string[];
 };
 

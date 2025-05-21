@@ -16,6 +16,7 @@ import DeactivateAPI from "../../api/members/deactivateAPI.tsx";
 import "../../App.css";
 
 type MyDataType = {
+  memberId: number;
   studentId: string;
   email: string;
   name: string;
