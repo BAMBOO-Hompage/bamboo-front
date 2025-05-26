@@ -277,8 +277,14 @@ export default function KnowledgePost() {
                     alignItems: "flex-start",
                   }}
                 >
-                  <div style={{ minWidth: "80px", marginRight: "20px" }}>
-                    첨부 파일
+                  <div
+                    style={{
+                      width: "150px",
+                      minWidth: "70px",
+                      marginRight: "20px",
+                    }}
+                  >
+                    첨부파일
                   </div>
                   <div>
                     {postData.files.map((file, index) => (
@@ -294,7 +300,11 @@ export default function KnowledgePost() {
                           href={file}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{ color: "#fff" }}
+                          style={{
+                            color: "#fff",
+                            whiteSpace: "pre-wrap",
+                            wordBreak: "break-word",
+                          }}
                         >
                           {file}
                         </a>

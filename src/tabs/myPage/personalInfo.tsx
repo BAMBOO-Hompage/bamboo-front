@@ -312,7 +312,7 @@ export default function PersonalInfo() {
                   style={{
                     fontFamily: "Pretendard-Bold",
                     fontSize: "30px",
-                    color: "#555",
+                    color: "#aaa",
                   }}
                 >
                   회원 등급 -
@@ -981,10 +981,11 @@ export default function PersonalInfo() {
                       style={{
                         fontFamily: "Pretendard-Bold",
                         fontSize: "30px",
-                        color: "#555",
+                        color: "#aaa",
                       }}
                     >
-                      비밀번호를
+                      <span>비밀번호</span>
+                      를
                       <br />
                       변경해주세요.
                     </div>

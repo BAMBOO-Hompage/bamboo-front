@@ -12,7 +12,7 @@ import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
 import "../../App.css";
 
-type cohort = {
+type Cohort = {
   cohortId: number;
   batch: number;
   year: number;
@@ -35,7 +35,7 @@ export default function Project() {
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
   const [checkAuth, setCheckAuth] = useState<number>(1);
-  const [cohortLatest, setCohortLatest] = useState<cohort>({
+  const [cohortLatest, setCohortLatest] = useState<Cohort>({
     cohortId: 0,
     batch: 0,
     year: 0,

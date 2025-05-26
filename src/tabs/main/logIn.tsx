@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/button.tsx";
 
 import LogInAPI from "../../api/members/logInAPI.tsx";
+import ExistsAPI from "../../api/members/existsAPI.tsx";
 import VerificationRequestsAPI from "../../api/emails/verificationReauestsAPI.tsx";
 import VerificationsAPI from "../../api/emails/verificationsAPI.tsx";
 import PatchPasswordNonLoginAPI from "../../api/members/patchPasswordNonLoginAPI.tsx";
@@ -69,13 +70,18 @@ export default function Login() {
   }, [isTimerActive, timer]);
 
   const startTimer = () => {
-    setTimer(600); // 10분
+    setTimer(600);
     setIsTimerActive(true);
   };
 
   const onEmailValid = async (e) => {
     var studentNumToEmail = `${e.StudentNum}@sangmyung.kr`;
     const handleVerification = async () => {
+      const exists = await ExistsAPI(e.StudentNum);
+      if (!exists) {
+        alert("존재하지 않는 회원입니다. 회원가입을 진행해주세요.");
+        return;
+      }
       const success = await VerificationRequestsAPI(studentNumToEmail);
 
       if (success) {
@@ -123,13 +129,11 @@ export default function Login() {
 
   const autoPattern = (id: string) => {
     let input = document.getElementById(id) as HTMLInputElement | null;
-
     if (!input) {
       console.error(`Element with id "${id}" not found.`);
       return;
     }
     let inputValue = input.value;
-
     inputValue = inputValue.replace(/[^0-9]/g, "");
     input.value = inputValue;
   };

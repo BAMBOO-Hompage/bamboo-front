@@ -13,7 +13,7 @@ import PatchRoleAPI from "../../api/members/patchRoleAPI.tsx";
 
 import "../../App.css";
 
-type Members = {
+type Member = {
   memberId: number;
   studentId: string;
   email: string;
@@ -31,7 +31,7 @@ export default function PersonalInfo() {
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [membersToDisplay, setMembersToDisplay] = useState<Members[]>([]);
+  const [membersToDisplay, setMembersToDisplay] = useState<Member[]>([]);
   const [changedRoles, setChangedRoles] = useState<{ [key: number]: boolean }>(
     {}
   );
@@ -61,28 +61,36 @@ export default function PersonalInfo() {
   }, []);
 
   useEffect(() => {
-    GetMembersAPI(currentPage).then((result) => {
-      var memberData = result.content;
-      setMembersToDisplay(memberData);
+    const fetchMembers = async () => {
+      const result = await GetMembersAPI(currentPage);
+      const memberData = result.content;
       setTotalPages(result.totalPages);
+      if (currentPage > result.totalPages && result.totalPages > 0) {
+        setSearchParams({
+          page: result.totalPages.toString(),
+          size: "10",
+        });
+      } else {
+        setMembersToDisplay(memberData);
+        // 초기 changedRoles 상태 생성
+        const initialChangedRoles = memberData.reduce(
+          (acc: { [key: number]: boolean }, member: { id: number }) => {
+            acc[member.id] = false;
+            return acc;
+          },
+          {}
+        );
+        setChangedRoles(initialChangedRoles);
+      }
+    };
 
-      // 초기 changedRoles 상태 생성
-      const initialChangedRoles = memberData.reduce(
-        (acc: { [key: number]: boolean }, member: { id: number }) => {
-          acc[member.id] = false; // 모든 멤버의 id에 대해 초기값 false 설정
-          return acc;
-        },
-        {}
-      );
-      setChangedRoles(initialChangedRoles);
-    });
-  }, [currentPage]);
+    fetchMembers();
+  }, [currentPage, setSearchParams]);
 
   useEffect(() => {
     // localStorage에서 selected_id를 가져와 상태를 초기화
     const storedIds = JSON.parse(localStorage.getItem("selected_id") || "[]");
     setSelectedIds(storedIds);
-
     // 컴포넌트 언마운트 시 selected_id 초기화
     return () => {
       localStorage.removeItem("selected_id");

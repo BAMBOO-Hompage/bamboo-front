@@ -501,6 +501,7 @@ export default function AlexandriaPost() {
                         <div
                           style={{
                             width: "150px",
+                            minWidth: "70px",
                             marginRight: "20px",
                           }}
                         >
@@ -512,7 +513,11 @@ export default function AlexandriaPost() {
                               href={paperData?.fileUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{ color: "#fff" }}
+                              style={{
+                                color: "#fff",
+                                whiteSpace: "pre-wrap",
+                                wordBreak: "break-word",
+                              }}
                             >
                               {paperData?.fileUrl}
                             </a>
@@ -832,6 +837,8 @@ export default function AlexandriaPost() {
                                   resize: "none",
                                   outline: "none",
                                   lineHeight: "1.4",
+                                  whiteSpace: "pre-wrap",
+                                  wordBreak: "break-word",
                                 }}
                               >
                                 {paperComment.content}

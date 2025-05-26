@@ -85,12 +85,23 @@ export default function Alexandria() {
   }, []);
 
   useEffect(() => {
-    GetPapersAPI(paperList, searchKeyword, currentPage).then((result) => {
-      var alexandriaData = result.content;
-      setPapersToDisplay(alexandriaData);
+    const fetchActivities = async () => {
+      const result = await GetPapersAPI(paperList, searchKeyword, currentPage);
+      const alexandriaData = result.content;
       setTotalPages(result.totalPages);
-    });
-  }, [paperList, searchKeyword, currentPage]);
+      if (currentPage > result.totalPages && result.totalPages > 0) {
+        setSearchParams({
+          tab: paperList,
+          search: searchKeyword,
+          page: result.totalPages.toString(),
+          size: "10",
+        });
+      } else {
+        setPapersToDisplay(alexandriaData);
+      }
+    };
+    fetchActivities();
+  }, [paperList, searchKeyword, currentPage, setSearchParams]);
 
   const onValid = (e: any) => {
     console.log(e, "onValid");

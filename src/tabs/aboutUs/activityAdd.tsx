@@ -43,31 +43,35 @@ export default function ActivityAdd() {
     setImages(fileLists);
     setShowImages(fileNameLists); // 파일명 리스트 저장
   };
-
   const handleDeleteImage = (id) => {
     setImages(images.filter((_, index) => index !== id));
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
   const onValid = async (e) => {
-    console.log(
-      e.Title + "\n" + e.StartDate + "~" + e.EndDate + "\n" + showImages,
-      "onValid"
-    );
-
+    const MAX_FILE_SIZE_MB = 10;
     const year = moment(e.StartDate).format("YYYY");
 
-    const formData = new FormData();
+    const oversizedFile = images.find(
+      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
+    );
+    if (oversizedFile) {
+      alert(
+        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+      );
+      return;
+    }
 
+    const formData = new FormData();
     formData.append("title", e.Title);
     formData.append("startDate", e.StartDate);
     formData.append("endDate", e.EndDate);
     formData.append("year", year);
     images.forEach((file) => {
-      formData.append("images", file); // images 배열 형식으로 전송
+      formData.append("images", file);
     });
 
-    PostActivitiesAPI(formData);
+    await PostActivitiesAPI(formData);
   };
 
   const onInvalid = (e) => {
@@ -334,36 +338,45 @@ export default function ActivityAdd() {
                         overflow: "auto",
                       }}
                     >
-                      {showImages.map((image, id) => (
-                        <div
-                          key={id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "14px",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          <img
-                            src="../../img/btn/delete_disabled.png"
-                            alt="delete"
-                            style={{ width: "16px", cursor: "pointer" }}
-                            onClick={() => {
-                              handleDeleteImage(id);
+                      {showImages.map((image, id) => {
+                        const sizeMB = (images[id]?.size || 0) / (1024 * 1024);
+                        return (
+                          <div
+                            key={id}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              fontFamily: "Pretendard-Light",
+                              fontSize: "14px",
+                              marginBottom: "10px",
+                              color: "#ccc",
                             }}
-                            onMouseEnter={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_enabled.png";
-                            }}
-                            onMouseLeave={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_disabled.png";
-                            }}
-                          />
-                          &emsp;{image}
-                        </div>
-                      ))}
+                          >
+                            <img
+                              src="../../img/btn/delete_disabled.png"
+                              alt="delete"
+                              style={{ width: "16px", cursor: "pointer" }}
+                              onClick={() => {
+                                handleDeleteImage(id);
+                              }}
+                              onMouseEnter={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "../../img/btn/delete_enabled.png";
+                              }}
+                              onMouseLeave={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "../../img/btn/delete_disabled.png";
+                              }}
+                            />
+                            &emsp;
+                            <span style={{ color: "#fff" }}>{image}</span>
+                            &nbsp;
+                            <span style={{ color: "#aaa", fontSize: "13px" }}>
+                              ({sizeMB.toFixed(2)} MB)
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
                   ) : (
                     <div

@@ -116,11 +116,18 @@ export default function ActivityEdit() {
   };
 
   const onValid = async (e) => {
-    console.log(
-      e.Title + "\n" + e.StartDate + "~" + e.EndDate + "\n" + showImages,
-      "onValid"
-    );
+    const MAX_FILE_SIZE_MB = 10;
     const year = moment(e.StartDate).format("YYYY");
+
+    const oversizedFile = images.find(
+      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
+    );
+    if (oversizedFile) {
+      alert(
+        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+      );
+      return;
+    }
 
     const formData = new FormData();
     const jsonData = JSON.stringify({
@@ -460,37 +467,45 @@ export default function ActivityEdit() {
                           <div>{image}</div>
                         </div>
                       ))}
-                      {showNewImages.map((image, id) => (
-                        <div
-                          key={id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "14px",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          <img
-                            src="../../img/btn/delete_disabled.png"
-                            alt="delete"
-                            style={{ width: "16px", cursor: "pointer" }}
-                            onClick={() => {
-                              handleDeleteNewImage(id);
+                      {showNewImages.map((image, id) => {
+                        const sizeMB = (images[id]?.size || 0) / (1024 * 1024);
+                        return (
+                          <div
+                            key={id}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              fontFamily: "Pretendard-Light",
+                              fontSize: "14px",
+                              marginBottom: "10px",
+                              color: "#ccc", // 전체 텍스트 회색
                             }}
-                            onMouseEnter={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_enabled.png";
-                            }}
-                            onMouseLeave={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_disabled.png";
-                            }}
-                          />
-                          &emsp;
-                          <div>{image}</div>
-                        </div>
-                      ))}
+                          >
+                            <img
+                              src="../../img/btn/delete_disabled.png"
+                              alt="delete"
+                              style={{ width: "16px", cursor: "pointer" }}
+                              onClick={() => {
+                                handleDeleteImage(id);
+                              }}
+                              onMouseEnter={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "../../img/btn/delete_enabled.png";
+                              }}
+                              onMouseLeave={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "../../img/btn/delete_disabled.png";
+                              }}
+                            />
+                            &emsp;
+                            <span style={{ color: "#fff" }}>{image}</span>
+                            &nbsp;
+                            <span style={{ color: "#aaa", fontSize: "13px" }}>
+                              ({sizeMB.toFixed(2)} MB)
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
                   ) : (
                     <div

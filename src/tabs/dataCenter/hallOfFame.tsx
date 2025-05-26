@@ -19,7 +19,7 @@ import DeleteAwardsAPI from "../../api/awards/deleteAwardsAPI.tsx";
 
 import "../../App.css";
 
-type cohort = {
+type Cohort = {
   cohortId: number;
   batch: number;
   year: number;
@@ -27,11 +27,11 @@ type cohort = {
   status: string;
   subjects: [];
 };
-type study = {
+type Study = {
   studyId: number;
   teamName: string;
   subjectName: string;
-  cohort: cohort;
+  cohort: Cohort;
   isBook: boolean;
   section: number;
   studyMaster: {
@@ -132,7 +132,7 @@ export default function HallOfFame() {
 
   const [hovered, setHovered] = useState("");
   const [checkAuth, setCheckAuth] = useState<number>(1);
-  const [cohortLatest, setCohortLatest] = useState<cohort>({
+  const [cohortLatest, setCohortLatest] = useState<Cohort>({
     cohortId: 0,
     batch: 0,
     year: 0,
@@ -147,7 +147,7 @@ export default function HallOfFame() {
   const [isAddPopupOpen, setIsAddPopupOpen] = useState<boolean>(false);
   const [urlInput, setUrlInput] = useState("");
   const [urlParams, setUrlParams] = useState({ id: "", week: "" });
-  const [selectedStudy, setSelectedStudy] = useState<study>({
+  const [selectedStudy, setSelectedStudy] = useState<Study>({
     studyId: 0,
     teamName: "",
     subjectName: "",

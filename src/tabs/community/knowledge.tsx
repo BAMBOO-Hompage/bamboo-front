@@ -77,14 +77,27 @@ export default function Knoledge() {
   }, []);
 
   useEffect(() => {
-    GetKnowledgesAPI(postList, searchKeyword, currentPage).then((result) => {
-      console.log(result.content);
-      var knowledgeData = result.content;
-      setPostsToDisplay(knowledgeData);
+    const fetchActivities = async () => {
+      const result = await GetKnowledgesAPI(
+        postList,
+        searchKeyword,
+        currentPage
+      );
+      const knowledgeData = result.content;
       setTotalPages(result.totalPages);
-      console.log(postsToDisplay, totalPages);
-    });
-  }, [postList, searchKeyword, currentPage]);
+      if (currentPage > result.totalPages && result.totalPages > 0) {
+        setSearchParams({
+          post: postList,
+          search: searchKeyword,
+          page: result.totalPages.toString(),
+          size: "8",
+        });
+      } else {
+        setPostsToDisplay(knowledgeData);
+      }
+    };
+    fetchActivities();
+  }, [postList, searchKeyword, currentPage, setSearchParams]);
 
   return (
     <div>

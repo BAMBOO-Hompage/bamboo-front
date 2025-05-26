@@ -11,13 +11,14 @@ import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
 import GetSubjectsAPI from "../../api/subjects/getSubjectsAPI.tsx";
 import GetStudiesAPI from "../../api/studies/getStudiesAPI.tsx";
+import ExistsAPI from "../../api/members/existsAPI.tsx";
 import PostStudiesAPI from "../../api/studies/postStudiesAPI.tsx";
 import DeleteStudiesAPI from "../../api/studies/deleteStudiesAPI.tsx";
 import PatchStudiesAPI from "../../api/studies/patchStudiesAPI.tsx";
 
 import "../../App.css";
 
-type cohort = {
+type Cohort = {
   cohortId: number;
   batch: number;
   year: number;
@@ -25,7 +26,7 @@ type cohort = {
   status: string;
   subjects: [];
 };
-type subject = {
+type Subject = {
   subjectId: number;
   name: string;
   isBook: boolean;
@@ -41,11 +42,11 @@ type subject = {
     }
   ];
 };
-type study = {
+type Study = {
   studyId: number;
   teamName: string;
   subjectName: string;
-  cohort: cohort;
+  cohort: Cohort;
   isBook: boolean;
   section: number;
   studyMaster: {
@@ -91,7 +92,7 @@ export default function StudyManagement() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
-  const [cohort, setCohort] = useState<cohort>({
+  const [cohort, setCohort] = useState<Cohort>({
     cohortId: 0,
     batch: 0,
     year: 0,
@@ -99,14 +100,14 @@ export default function StudyManagement() {
     status: "",
     subjects: [],
   });
-  const [subjects, setSubjects] = useState<subject[]>([]);
-  const [studies, setStudies] = useState<study[]>([]);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [studies, setStudies] = useState<Study[]>([]);
   const [selectedSubjectId, setSelectedSubjectId] = useState<number>(0);
   const [selectedSubjectName, setSelectedSubjectName] = useState<string>("");
   const [selectedIsBook, setSelectedIsBook] = useState<boolean>(true);
   const [isAddPopupOpen, setIsAddPopupOpen] = useState<boolean>(false);
   const [isEditPopupOpen, setIsEditPopupOpen] = useState<boolean>(false);
-  const [editStudy, setEditStudy] = useState<study>({
+  const [editStudy, setEditStudy] = useState<Study>({
     studyId: 0,
     teamName: "",
     subjectName: "",
@@ -174,9 +175,11 @@ export default function StudyManagement() {
       try {
         const cohortResult = await GetCohortLatestAPI();
         setCohort(cohortResult);
+        console.log(cohortResult.batch);
 
         const subjectsResult = await GetSubjectsAPI(null, cohortResult.batch);
         setSubjects(subjectsResult);
+        console.log(subjects);
 
         const studiesResults = await Promise.all(
           subjectsResult.map((subject) =>
@@ -224,20 +227,32 @@ export default function StudyManagement() {
   };
 
   const onValid = async (e) => {
+    if (!e.TeamName || e.TeamName.length > 7) {
+      alert("팀명은 7자 이내로 입력해주세요.");
+      return;
+    }
     try {
+      const exists = await ExistsAPI(e.StudyMaster);
+      if (!exists) {
+        alert(`${e.StudyMaster}은 존재하지 않는 회원입니다.`);
+        return;
+      }
       const studyMembers = memberInputs.map(
         (_, index) => e[`StudyMember${index}`]
       );
-
-      console.log(
-        selectedSubjectId,
-        e.TeamName,
-        cohort.batch,
-        selectedIsBook,
-        parseInt(e.Section),
-        e.StudyMaster,
-        studyMembers
+      // 팀원 존재 여부 검사 (비동기 병렬)
+      const memberExistResults = await Promise.all(
+        studyMembers.map((member) => ExistsAPI(member))
       );
+      // 존재하지 않는 멤버 확인
+      const invalidMembers = studyMembers.filter(
+        (_, idx) => !memberExistResults[idx]
+      );
+      if (invalidMembers.length > 0) {
+        alert(`${invalidMembers.join(", ")}은 존재하지 않는 회원입니다`);
+        return;
+      }
+
       await PostStudiesAPI(
         selectedSubjectId,
         e.TeamName,
@@ -258,20 +273,32 @@ export default function StudyManagement() {
   };
 
   const onEditValid = async (e) => {
+    if (!e.TeamName || e.TeamName.length > 7) {
+      alert("팀명은 7자 이내로 입력해주세요.");
+      return;
+    }
     try {
-      const studyMembers = editMemberInputs.map(
+      const exists = await ExistsAPI(e.StudyMaster);
+      if (!exists) {
+        alert(`${e.StudyMaster}은 존재하지 않는 회원입니다.`);
+        return;
+      }
+      const studyMembers = memberInputs.map(
         (_, index) => e[`StudyMember${index}`]
       );
-
-      console.log(
-        selectedSubjectId,
-        e.TeamName,
-        cohort.batch,
-        selectedIsBook,
-        parseInt(e.Section),
-        e.StudyMaster,
-        studyMembers
+      // 팀원 존재 여부 검사 (비동기 병렬)
+      const memberExistResults = await Promise.all(
+        studyMembers.map((member) => ExistsAPI(member))
       );
+      // 존재하지 않는 멤버 확인
+      const invalidMembers = studyMembers.filter(
+        (_, idx) => !memberExistResults[idx]
+      );
+      if (invalidMembers.length > 0) {
+        alert(`${invalidMembers.join(", ")}은 존재하지 않는 회원입니다`);
+        return;
+      }
+
       await PatchStudiesAPI(
         editStudy.studyId,
         selectedSubjectId,
@@ -290,6 +317,17 @@ export default function StudyManagement() {
   const onEditInvalid = (e) => {
     console.log(e, "onEditInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
+  };
+
+  const autoPattern = (id: string) => {
+    let input = document.getElementById(id) as HTMLInputElement | null;
+    if (!input) {
+      console.error(`Element with id "${id}" not found.`);
+      return;
+    }
+    let inputValue = input.value;
+    inputValue = inputValue.replace(/[^0-9]/g, "");
+    input.value = inputValue;
   };
 
   return (
@@ -773,6 +811,26 @@ export default function StudyManagement() {
             >
               {selectedSubjectName}
             </div>
+            <img
+              src="../img/btn/plus_enabled.png"
+              alt="plus"
+              style={{
+                width: "30px",
+                height: "30px",
+                opacity: "0.8",
+                transition: "all 0.3s ease",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "1";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "0.8";
+              }}
+              onClick={() => {
+                addMember();
+              }}
+            />
           </div>
           <div
             style={{
@@ -792,6 +850,9 @@ export default function StudyManagement() {
                 type="text"
                 placeholder={`분반을 입력해주세요.`}
                 autoComplete="off"
+                onKeyUp={() => {
+                  autoPattern("section");
+                }}
                 {...register("Section", {
                   required: `분반을 입력해주세요.`,
                 })}
@@ -864,6 +925,9 @@ export default function StudyManagement() {
                 type="text"
                 placeholder={`팀장을 입력해주세요.`}
                 autoComplete="off"
+                onKeyUp={() => {
+                  autoPattern("studyMaster");
+                }}
                 {...register("StudyMaster", {
                   required: `팀장을 입력해주세요.`,
                 })}
@@ -914,6 +978,9 @@ export default function StudyManagement() {
                   type="text"
                   placeholder={`팀원을 입력해주세요.`}
                   autoComplete="off"
+                  onKeyUp={() => {
+                    autoPattern(`studyMember${index}`);
+                  }}
                   {...register(`StudyMember${index}`, {
                     required: `팀원을 입력해주세요.`,
                   })}
@@ -929,28 +996,29 @@ export default function StudyManagement() {
                     fontSize: "18px",
                   }}
                 />
-                {index === memberInputs.length - 1 && (
-                  <img
-                    src="../img/btn/plus_enabled.png"
-                    alt="plus"
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                      opacity: "0.8",
-                      transition: "all 0.3s ease",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.opacity = "1";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.opacity = "0.8";
-                    }}
-                    onClick={() => {
-                      addMember();
-                    }}
-                  />
-                )}
+                <img
+                  src="../../img/btn/delete_disabled.png"
+                  alt="delete"
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    transition: "all 0.3s ease",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setMemberInputs(
+                      memberInputs.filter((_, i) => i !== index) // 선택한 항목 제거
+                    );
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "../../img/btn/delete_enabled.png";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "../../img/btn/delete_disabled.png";
+                  }}
+                />
               </div>
             </div>
           ))}
@@ -974,6 +1042,7 @@ export default function StudyManagement() {
                 );
                 if (deleteEnd) {
                   setMemberInputs([""]);
+                  reset({ Section: "", TeamName: "", StudyMaster: "" });
                   setIsAddPopupOpen(false);
                 }
               }}
@@ -1041,6 +1110,26 @@ export default function StudyManagement() {
             >
               {editStudy.subjectName}
             </div>
+            <img
+              src="../img/btn/plus_enabled.png"
+              alt="plus"
+              style={{
+                width: "30px",
+                height: "30px",
+                opacity: "0.8",
+                transition: "all 0.3s ease",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "1";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "0.8";
+              }}
+              onClick={() => {
+                addEditMember();
+              }}
+            />
           </div>
           <div
             style={{
@@ -1056,10 +1145,13 @@ export default function StudyManagement() {
             <div style={{ width: "200px", color: "#fff" }}>·&emsp;분반</div>
             <div style={{ width: "100%" }}>
               <input
-                id="section"
+                id="editSection"
                 type="text"
                 placeholder={`분반을 입력해주세요.`}
                 autoComplete="off"
+                onKeyUp={() => {
+                  autoPattern("editSection");
+                }}
                 {...registerEdit("Section", {
                   required: `분반을 입력해주세요.`,
                 })}
@@ -1128,10 +1220,13 @@ export default function StudyManagement() {
             </div>
             <div style={{ width: "100%" }}>
               <input
-                id="studyMaster"
+                id="editStudyMaster"
                 type="text"
                 placeholder={`팀장을 입력해주세요.`}
                 autoComplete="off"
+                onKeyUp={() => {
+                  autoPattern("editStudyMaster");
+                }}
                 {...registerEdit("StudyMaster", {
                   required: `팀장을 입력해주세요.`,
                 })}
@@ -1178,10 +1273,13 @@ export default function StudyManagement() {
                 }}
               >
                 <input
-                  id={`studyMember${index}`}
+                  id={`editStudyMember${index}`}
                   type="text"
                   placeholder={`팀원을 입력해주세요.`}
                   autoComplete="off"
+                  onKeyUp={() => {
+                    autoPattern(`editStudyMember${index}`);
+                  }}
                   {...registerEdit(`StudyMember${index}`, {
                     required: `팀원을 입력해주세요.`,
                   })}
@@ -1197,28 +1295,29 @@ export default function StudyManagement() {
                     fontSize: "18px",
                   }}
                 />
-                {index === editMemberInputs.length - 1 && (
-                  <img
-                    src="../img/btn/plus_enabled.png"
-                    alt="plus"
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                      opacity: "0.8",
-                      transition: "all 0.3s ease",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.opacity = "1";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.opacity = "0.8";
-                    }}
-                    onClick={() => {
-                      addEditMember();
-                    }}
-                  />
-                )}
+                <img
+                  src="../../img/btn/delete_disabled.png"
+                  alt="delete"
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    transition: "all 0.3s ease",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setEditMemberInputs(
+                      editMemberInputs.filter((_, i) => i !== index) // 선택한 항목 제거
+                    );
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "../../img/btn/delete_enabled.png";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "../../img/btn/delete_disabled.png";
+                  }}
+                />
               </div>
             </div>
           ))}

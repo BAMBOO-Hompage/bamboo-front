@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 import Button from "../../components/button.tsx";
 
+import ExistsAPI from "../../api/members/existsAPI.tsx";
 import VerificationRequestsAPI from "../../api/emails/verificationReauestsAPI.tsx";
 import VerificationsAPI from "../../api/emails/verificationsAPI.tsx";
 import SignupAPI from "../../api/members/signUpAPI.tsx";
@@ -72,8 +73,13 @@ export default function Signup() {
   const onEmailValid = async (e) => {
     var studentNumToEmail = `${e.StudentNum}@sangmyung.kr`;
     const handleVerification = async () => {
-      const success = await VerificationRequestsAPI(studentNumToEmail);
+      const exists = await ExistsAPI(e.StudentNum);
+      if (exists) {
+        alert("이미 존재하는 학번입니다. 로그인을 진행해주세요.");
+        return;
+      }
 
+      const success = await VerificationRequestsAPI(studentNumToEmail);
       if (success) {
         setValidEmail(true);
         startTimer();

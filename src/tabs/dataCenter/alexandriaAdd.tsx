@@ -46,24 +46,22 @@ export default function AlexandriaAdd() {
     setShowFiles(fileNameLists); // 파일명 리스트 저장
   };
   const handleDeleteFile = (id) => {
+    setFiles(files.filter((_, index) => index !== id));
     setShowFiles(showFiles.filter((_, index) => index !== id));
   };
 
   const onValid = (e) => {
-    console.log(
-      e.Title +
-        "\n" +
-        e.Link +
-        "\n" +
-        e.Year +
-        "\n" +
-        e.Topic +
-        "\n" +
-        e.Tag +
-        "\n" +
-        content,
-      "onValid"
-    );
+    try {
+      const url = new URL(e.Link);
+      if (!["http:", "https:"].includes(url.protocol)) {
+        alert("링크는 http 또는 https로 시작해야 합니다.");
+        return;
+      }
+    } catch (err) {
+      alert("유효한 링크 형식이 아닙니다.");
+      return;
+    }
+
     var tagList = [];
     if (e.Tag) {
       const tags = e.Tag.split(/\s+/);
@@ -79,6 +77,17 @@ export default function AlexandriaAdd() {
       }
       tagList = tags.map((tag: string) => tag.slice(1));
       console.log("유효한 태그 목록:", tagList);
+    }
+
+    const MAX_FILE_SIZE_MB = 10;
+    const oversizedFile = files.find(
+      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
+    );
+    if (oversizedFile) {
+      alert(
+        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+      );
+      return;
     }
 
     const formData = new FormData();
@@ -106,6 +115,17 @@ export default function AlexandriaAdd() {
   const onInvalid = (e) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
+  };
+
+  const autoPattern = (id: string) => {
+    let input = document.getElementById(id) as HTMLInputElement | null;
+    if (!input) {
+      console.error(`Element with id "${id}" not found.`);
+      return;
+    }
+    let inputValue = input.value;
+    inputValue = inputValue.replace(/[^0-9]/g, "");
+    input.value = inputValue;
   };
 
   return (
@@ -261,9 +281,12 @@ export default function AlexandriaAdd() {
                   </div>
                   <input
                     id="year"
-                    type="number"
-                    placeholder="논문 작성 연도를 입력해주세요."
+                    type="text"
+                    placeholder="논문 작성 연도를 입력해주세요. ex) 2025"
                     autoComplete="off"
+                    onKeyUp={() => {
+                      autoPattern("year");
+                    }}
                     {...register("Year", {
                       required: "논문 작성 연도를 입력해주세요.",
                     })}
@@ -426,35 +449,43 @@ export default function AlexandriaAdd() {
                         overflow: "auto",
                       }}
                     >
-                      {showFiles.map((file, id) => (
-                        <div
-                          key={id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "16px",
-                          }}
-                        >
-                          <img
-                            src="../../img/btn/delete_disabled.png"
-                            alt="delete"
-                            style={{ width: "20px", cursor: "pointer" }}
-                            onClick={() => {
-                              handleDeleteFile(id);
+                      {showFiles.map((file, id) => {
+                        const sizeMB = (files[id]?.size || 0) / (1024 * 1024);
+                        return (
+                          <div
+                            key={id}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              fontFamily: "Pretendard-Light",
+                              fontSize: "16px",
                             }}
-                            onMouseEnter={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_enabled.png";
-                            }}
-                            onMouseLeave={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_disabled.png";
-                            }}
-                          />
-                          &emsp;{file}
-                        </div>
-                      ))}
+                          >
+                            <img
+                              src="../../img/btn/delete_disabled.png"
+                              alt="delete"
+                              style={{ width: "20px", cursor: "pointer" }}
+                              onClick={() => {
+                                handleDeleteFile(id);
+                              }}
+                              onMouseEnter={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "../../img/btn/delete_enabled.png";
+                              }}
+                              onMouseLeave={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "../../img/btn/delete_disabled.png";
+                              }}
+                            />
+                            &emsp;
+                            <span>{file}</span>
+                            &nbsp;
+                            <span style={{ color: "#aaa", fontSize: "13px" }}>
+                              ({sizeMB.toFixed(2)} MB)
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
                   ) : (
                     <div></div>

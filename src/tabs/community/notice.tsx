@@ -72,14 +72,22 @@ export default function Notice() {
   }, []);
 
   useEffect(() => {
-    GetNoticesAPI(postList, currentPage).then((result) => {
-      console.log(result.content);
-      var noticeData = result.content;
-      setPostsToDisplay(noticeData);
+    const fetchActivities = async () => {
+      const result = await GetNoticesAPI(postList, currentPage);
+      const noticeData = result.content;
       setTotalPages(result.totalPages);
-      console.log(postsToDisplay, totalPages);
-    });
-  }, [postList, currentPage]);
+      if (currentPage > result.totalPages && result.totalPages > 0) {
+        setSearchParams({
+          post: postList,
+          page: result.totalPages.toString(),
+          size: "8",
+        });
+      } else {
+        setPostsToDisplay(noticeData);
+      }
+    };
+    fetchActivities();
+  }, [postList, currentPage, setSearchParams]);
 
   return (
     <div>

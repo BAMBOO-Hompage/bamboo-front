@@ -22,7 +22,7 @@ import DeleteWeeklyContentsAllAPI from "../../api/subjects/deleteWeeklyContentsA
 
 import "../../App.css";
 
-type cohort = {
+type Cohort = {
   cohortId: number;
   batch: number;
   year: number;
@@ -30,7 +30,7 @@ type cohort = {
   status: string;
   subjects: [];
 };
-type weeklyContent = {
+type WeeklyContent = {
   weeklyContentId: number;
   subjectName: string;
   content: string;
@@ -40,13 +40,13 @@ type weeklyContent = {
   startPage: 0;
   endPage: 0;
 };
-type subject = {
+type Subject = {
   subjectId: number;
   name: string;
   bookName: string;
   isBook: boolean;
   batch: number;
-  weeklyContents: weeklyContent[];
+  weeklyContents: WeeklyContent[];
 };
 
 export default function CurriculumManagement() {
@@ -74,7 +74,7 @@ export default function CurriculumManagement() {
   const [isEndActive, setIsEndActive] = useState(true);
   const [isStartActive, setIsStartActive] = useState(true);
   const [confirmationText, setConfirmationText] = useState("");
-  const [cohort, setCohort] = useState<cohort>({
+  const [cohort, setCohort] = useState<Cohort>({
     cohortId: 0,
     batch: 0,
     year: 0,
@@ -82,9 +82,9 @@ export default function CurriculumManagement() {
     status: "",
     subjects: [],
   });
-  const [subjects, setSubjects] = useState<subject[]>([]);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
-  const [isEditPopupOpen, setIsEditPopupOpen] = useState<subject | undefined>(
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState<Subject | undefined>(
     undefined
   );
   const [isEndPopupOpen, setIsEndPopupOpen] = useState(false);
@@ -176,7 +176,7 @@ export default function CurriculumManagement() {
   };
 
   const [curriculumList, setCurriculumList] = useState<
-    subject["weeklyContents"]
+    Subject["weeklyContents"]
   >([
     {
       weeklyContentId: 0,
@@ -206,6 +206,10 @@ export default function CurriculumManagement() {
   };
 
   const onValid = async (e) => {
+    if (!e.Subject || e.Subject.length > 4) {
+      alert("과목명은 4자 이내로 입력해주세요.");
+      return;
+    }
     try {
       console.log(e.Subject, e.Book, e.Category);
       const subjectResponse = await PostSubjectsAPI(
@@ -282,6 +286,17 @@ export default function CurriculumManagement() {
   const onEditInvalid = (e) => {
     console.log(e, "onEditInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
+  };
+
+  const autoPattern = (id: string) => {
+    let input = document.getElementById(id) as HTMLInputElement | null;
+    if (!input) {
+      console.error(`Element with id "${id}" not found.`);
+      return;
+    }
+    let inputValue = input.value;
+    inputValue = inputValue.replace(/[^0-9]/g, "");
+    input.value = inputValue;
   };
 
   return (
@@ -614,7 +629,7 @@ export default function CurriculumManagement() {
                       width: "100%",
                       marginTop: "100px",
                       display: "flex",
-                      justifyContent: "right",
+                      justifyContent: "center",
                     }}
                   >
                     <div
@@ -658,7 +673,7 @@ export default function CurriculumManagement() {
                       width: "100%",
                       marginTop: "100px",
                       display: "flex",
-                      justifyContent: "right",
+                      justifyContent: "center",
                     }}
                   >
                     <div
@@ -1026,12 +1041,16 @@ export default function CurriculumManagement() {
                     페이지 :
                   </label>
                   <input
-                    type="number"
+                    id={`startPage${curriculum.week}`}
+                    type="text"
                     placeholder="시작페이지 입력"
                     style={{
                       fontFamily: "Pretendard-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
+                    }}
+                    onKeyUp={() => {
+                      autoPattern(`startPage${curriculum.week}`);
                     }}
                     {...register(`Startpage${curriculum.week}`, {
                       required: "시작 페이지를 입력해주세요.",
@@ -1039,7 +1058,8 @@ export default function CurriculumManagement() {
                   />
                   ~
                   <input
-                    type="number"
+                    id={`endPage${curriculum.week}`}
+                    type="text"
                     placeholder="끝페이지 입력"
                     style={{
                       overflow: "hidden",
@@ -1047,6 +1067,9 @@ export default function CurriculumManagement() {
                       fontSize: "18px",
                       maxWidth: "160px",
                       marginLeft: "20px",
+                    }}
+                    onKeyUp={() => {
+                      autoPattern(`endPage${curriculum.week}`);
                     }}
                     {...register(`EndPage${curriculum.week}`, {
                       required: "종료 페이지를 입력해주세요.",
@@ -1489,7 +1512,8 @@ export default function CurriculumManagement() {
                     페이지 :
                   </label>
                   <input
-                    type="number"
+                    id={`editStartPage${curriculum.week}`}
+                    type="text"
                     defaultValue={curriculum.startPage}
                     placeholder="시작페이지 입력"
                     style={{
@@ -1497,13 +1521,17 @@ export default function CurriculumManagement() {
                       fontSize: "18px",
                       maxWidth: "160px",
                     }}
+                    onKeyUp={() => {
+                      autoPattern(`editStartPage${curriculum.week}`);
+                    }}
                     {...registerEdit(`Startpage${curriculum.week}`, {
                       required: "시작 페이지를 입력해주세요.",
                     })}
                   />
                   ~
                   <input
-                    type="number"
+                    id={`editEndPage${curriculum.week}`}
+                    type="text"
                     defaultValue={curriculum.endPage}
                     placeholder="끝페이지 입력"
                     style={{
@@ -1512,6 +1540,9 @@ export default function CurriculumManagement() {
                       fontSize: "18px",
                       maxWidth: "160px",
                       marginLeft: "20px",
+                    }}
+                    onKeyUp={() => {
+                      autoPattern(`editEndPage${curriculum.week}`);
                     }}
                     {...registerEdit(`EndPage${curriculum.week}`, {
                       required: "종료 페이지를 입력해주세요.",

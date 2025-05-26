@@ -13,7 +13,7 @@ import GetStudiesAPI from "../../api/studies/getStudiesAPI.tsx";
 
 import "../../App.css";
 
-type cohort = {
+type Cohort = {
   cohortId: number;
   batch: number;
   year: number;
@@ -21,7 +21,7 @@ type cohort = {
   status: string;
   subjects: [];
 };
-type subject = {
+type Subject = {
   subjectId: number;
   name: string;
   isBook: boolean;
@@ -38,11 +38,11 @@ type subject = {
     }
   ];
 };
-type study = {
+type Study = {
   studyId: number;
   teamName: string;
   subjectName: string;
-  cohort: cohort;
+  cohort: Cohort;
   isBook: boolean;
   section: number;
   studyMaster: {
@@ -68,7 +68,7 @@ type study = {
 export default function CurriculumStudy() {
   const [hovered, setHovered] = useState(false);
   const [studyHovered, setStudyHovered] = useState<number | null>(null);
-  const [cohortLatest, setCohortLatest] = useState<cohort>({
+  const [cohortLatest, setCohortLatest] = useState<Cohort>({
     cohortId: 0,
     batch: 0,
     year: 0,
@@ -77,7 +77,7 @@ export default function CurriculumStudy() {
     subjects: [],
   });
   const [selectedCohort, setSelectedCohort] = useState(0);
-  const [subjects, setSubjects] = useState<subject[]>([]);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [studies, setStudies] = useState<any>([]);
 
   useEffect(() => {
@@ -406,17 +406,22 @@ export default function CurriculumStudy() {
 
                   return (
                     <>
-                      <text
-                        x={95 / 2}
-                        y={baseY}
-                        fontFamily="Pretendard-Bold"
-                        fontSize="24"
-                        fill="#2cc295"
-                        textAnchor="middle"
-                        alignmentBaseline="middle"
-                      >
-                        {subject.name}
-                      </text>
+                      {studies[subjectIndex] &&
+                      studies[subjectIndex].length > 0 ? (
+                        <text
+                          x={95 / 2}
+                          y={baseY}
+                          fontFamily="Pretendard-Bold"
+                          fontSize="24"
+                          fill="#2cc295"
+                          textAnchor="middle"
+                          alignmentBaseline="middle"
+                        >
+                          {subject.name}
+                        </text>
+                      ) : (
+                        <></>
+                      )}
 
                       {studies[subjectIndex]?.map((study, studyIndex) => {
                         const x = 105 + (studyIndex % 4) * 200;
@@ -424,7 +429,7 @@ export default function CurriculumStudy() {
 
                         return (
                           <>
-                            {cohortLatest.status === "활동 중" ? (
+                            {cohortLatest.status === "활동 준비" ? (
                               <Link
                                 to={`/studyPost?id=${study.studyId}&member=&week=1`}
                                 style={{ textDecoration: "none" }}

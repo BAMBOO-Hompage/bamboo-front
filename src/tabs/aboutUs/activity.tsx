@@ -14,7 +14,7 @@ import DeleteActivitiesAPI from "../../api/main-activities/deleteAcitivitiesAPI.
 
 import "../../App.css";
 
-type Activities = {
+type Activity = {
   mainActivitiesId: number;
   title: string;
   startDate: number[];
@@ -37,7 +37,7 @@ export default function Activity() {
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [yearList, setYearList] = useState<number[]>([]);
 
-  const [postsToDisplay, setPostsToDisplay] = useState<Activities[]>([]);
+  const [postsToDisplay, setPostsToDisplay] = useState<Activity[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
 
   const startPage =
@@ -84,12 +84,22 @@ export default function Activity() {
   }, []);
 
   useEffect(() => {
-    GetActivitiesAPI(selectedYear, currentPage).then((result) => {
-      var activityData = result.content;
-      setPostsToDisplay(activityData);
+    const fetchActivities = async () => {
+      const result = await GetActivitiesAPI(selectedYear, currentPage);
+      const activityData = result.content;
       setTotalPages(result.totalPages);
-    });
-  }, [selectedYear, currentPage]);
+      if (currentPage > result.totalPages && result.totalPages > 0) {
+        setSearchParams({
+          year: selectedYear.toString(),
+          page: result.totalPages.toString(),
+          size: "3",
+        });
+      } else {
+        setPostsToDisplay(activityData);
+      }
+    };
+    fetchActivities();
+  }, [selectedYear, currentPage, setSearchParams]);
 
   return (
     <div>
@@ -244,7 +254,7 @@ export default function Activity() {
                   width: "100%",
                 }}
               >
-                {postsToDisplay.map((activity: Activities) => (
+                {postsToDisplay.map((activity: Activity) => (
                   <div
                     key={activity.mainActivitiesId}
                     style={{

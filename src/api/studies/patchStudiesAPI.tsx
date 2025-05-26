@@ -11,7 +11,7 @@ async function patchStudies(
   cohort,
   isBook,
   section,
-  studyMaster,
+  studyMasterStudentId,
   studyMembers
 ) {
   return fetch(API_SERVER_DOMAIN + `/api/studies/${studyId}`, {
@@ -26,7 +26,7 @@ async function patchStudies(
       cohort: cohort,
       isBook: isBook,
       section: section,
-      studyMaster: studyMaster,
+      studyMasterStudentId: studyMasterStudentId,
       studyMembers: studyMembers,
     }),
   }).then((response) => {
@@ -44,7 +44,7 @@ export default async function PatchStudiesAPI(
   cohort,
   isBook,
   section,
-  studyMaster,
+  studyMasterStudentId,
   studyMembers
 ) {
   var accessToken = getCookie("accessToken");
@@ -60,7 +60,7 @@ export default async function PatchStudiesAPI(
         cohort,
         isBook,
         section,
-        studyMaster,
+        studyMasterStudentId,
         studyMembers
       );
       console.log(data.result);
@@ -84,7 +84,7 @@ export default async function PatchStudiesAPI(
             cohort,
             isBook,
             section,
-            studyMaster,
+            studyMasterStudentId,
             studyMembers
           );
           console.log(data.result);

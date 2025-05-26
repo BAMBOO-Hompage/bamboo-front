@@ -13,7 +13,7 @@ import GetStudiesAPI from "../../api/studies/getStudiesAPI.tsx";
 
 import "../../App.css";
 
-type cohort = {
+type Cohort = {
   cohortId: number;
   batch: number;
   year: number;
@@ -21,7 +21,7 @@ type cohort = {
   status: string;
   subjects: [];
 };
-type subject = {
+type Subject = {
   subjectId: number;
   name: string;
   isBook: boolean;
@@ -38,11 +38,11 @@ type subject = {
     }
   ];
 };
-type study = {
+type Study = {
   studyId: number;
   teamName: string;
   subjectName: string;
-  cohort: cohort;
+  cohort: Cohort;
   isBook: boolean;
   section: number;
   studyMaster: {
@@ -68,7 +68,7 @@ type study = {
 export default function SelfStudy() {
   const [hovered, setHovered] = useState(false);
   const [studyHovered, setStudyHovered] = useState<number | null>(null);
-  const [cohortLatest, setCohortLatest] = useState<cohort>({
+  const [cohortLatest, setCohortLatest] = useState<Cohort>({
     cohortId: 0,
     batch: 0,
     year: 0,
@@ -77,7 +77,7 @@ export default function SelfStudy() {
     subjects: [],
   });
   const [selectedCohort, setSelectedCohort] = useState(0);
-  const [subjects, setSubjects] = useState<subject[]>([]);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [studies, setStudies] = useState<any>([]);
 
   useEffect(() => {

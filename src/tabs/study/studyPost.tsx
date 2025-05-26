@@ -33,7 +33,7 @@ type MyDataType = {
   role: string;
   profileImageUrl: string;
 };
-type cohort = {
+type Cohort = {
   cohortId: number;
   batch: number;
   year: number;
@@ -41,7 +41,7 @@ type cohort = {
   status: string;
   subjects: [];
 };
-type weeklyContent = {
+type WeeklyContent = {
   weeklyContentId: number;
   subjectName: string;
   content: string;
@@ -51,19 +51,19 @@ type weeklyContent = {
   startPage: 0;
   endPage: 0;
 };
-type subject = {
+type Subject = {
   subjectId: number;
   name: string;
   bookName: string;
   isBook: boolean;
   batch: number;
-  weeklyContents: weeklyContent[];
+  weeklyContents: WeeklyContent[];
 };
-type study = {
+type Study = {
   studyId: number;
   teamName: string;
   subjectName: string;
-  cohort: cohort;
+  cohort: Cohort;
   isBook: boolean;
   section: number;
   studyMaster: {
@@ -87,17 +87,23 @@ type study = {
     }
   ];
 };
+type Award = {
+  awardId: number;
+  writerName: string;
+  study: {
+    studyId: number;
+    subjectName: string;
+    section: number;
+  };
+  batch: number;
+  week: number;
+};
 type Inventory = {
   inventoryId: number;
-  member: {
-    memberId: number;
-    studentId: string;
-    email: string;
-    name: string;
-    major: string;
-    phone: string;
-    role: string;
-  };
+  writerId: number;
+  writerStudentId: string;
+  writerName: string;
+  writerImageUrl: string;
   study: {
     teamName: string;
     subjectName: string;
@@ -109,33 +115,7 @@ type Inventory = {
   week: number;
   isWeeklyBest: true;
   fileUrl: string;
-  award: {
-    awardId: number;
-    study: {
-      studyId: number;
-      teamName: string;
-      subjectName: string;
-      batch: number;
-      section: number;
-      studyMaster: {
-        memberId: number;
-        studentId: string;
-        name: string;
-      };
-      studyMembers: [
-        {
-          memberId: number;
-          studentId: string;
-          name: string;
-        }
-      ];
-    };
-    title: string;
-    batch: number;
-    week: number;
-    startDate: number[];
-    endDate: number[];
-  };
+  award: Award;
 };
 
 const itemsPerPage = 8;
@@ -194,7 +174,7 @@ export default function StudyPost() {
     role: "",
     profileImageUrl: "",
   });
-  const [postData, setPostData] = useState<study>({
+  const [postData, setPostData] = useState<Study>({
     studyId: 0,
     teamName: "",
     subjectName: "",
@@ -229,7 +209,7 @@ export default function StudyPost() {
       },
     ],
   });
-  const [selectedSubject, setSelectedSubject] = useState<subject>({
+  const [selectedSubject, setSelectedSubject] = useState<Subject>({
     subjectId: 0,
     name: "",
     isBook: true,
@@ -252,15 +232,10 @@ export default function StudyPost() {
     Inventory | undefined
   >({
     inventoryId: 0,
-    member: {
-      memberId: 0,
-      studentId: "",
-      email: "",
-      name: "",
-      major: "",
-      phone: "",
-      role: "",
-    },
+    writerId: 0,
+    writerStudentId: "",
+    writerName: "",
+    writerImageUrl: "",
     study: {
       teamName: "",
       subjectName: "",
@@ -274,30 +249,14 @@ export default function StudyPost() {
     fileUrl: "",
     award: {
       awardId: 0,
+      writerName: "",
       study: {
         studyId: 0,
-        teamName: "",
         subjectName: "",
-        batch: 0,
         section: 0,
-        studyMaster: {
-          memberId: 0,
-          studentId: "",
-          name: "",
-        },
-        studyMembers: [
-          {
-            memberId: 0,
-            studentId: "",
-            name: "",
-          },
-        ],
       },
-      title: "",
       batch: 0,
       week: 0,
-      startDate: [],
-      endDate: [],
     },
   });
   const [displayWeeks, setDisplayWeeks] = useState([0, itemsPerPage]);
@@ -389,7 +348,7 @@ export default function StudyPost() {
         var inventoryData = result;
         setSelectedInventory(inventoryData);
         if (inventoryData) {
-          setCheckedWeeklyBest(inventoryData.member.memberId);
+          setCheckedWeeklyBest(inventoryData.writerId);
         }
       });
       GetImageAPI(postId, currentPage).then((result) => {
@@ -494,7 +453,7 @@ export default function StudyPost() {
   };
 
   const onWeeklyBestValid = async (e) => {
-    if (selectedInventory?.member.memberId === checkedWeeklyBest) {
+    if (selectedInventory?.writerId === checkedWeeklyBest) {
       alert("이미 Weekly Best로 지정된 학생입니다.");
     } else {
       PostWeeklyBestAPI(
@@ -1554,11 +1513,11 @@ export default function StudyPost() {
                           <div
                             style={{
                               width: "150px",
-                              minWidth: "80px",
+                              minWidth: "70px",
                               marginRight: "20px",
                             }}
                           >
-                            첨부 파일
+                            첨부파일
                           </div>
                           <div>
                             <div>
@@ -1566,7 +1525,11 @@ export default function StudyPost() {
                                 href={selectedInventory?.fileUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ color: "#fff" }}
+                                style={{
+                                  color: "#fff",
+                                  whiteSpace: "pre-wrap",
+                                  wordBreak: "break-word",
+                                }}
                               >
                                 {selectedInventory?.fileUrl}
                               </a>

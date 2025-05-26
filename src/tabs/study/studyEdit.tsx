@@ -9,12 +9,12 @@ import ReactEditor from "../../components/ReactEditor.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import GetSubjectAPI from "../../api/subjects/getSubjectAPI.tsx";
-import GetInventorybyIdAPI from "../../api/inventories/getInventorbyIdAPI.tsx";
+import GetInventorybyIdAPI from "../../api/inventories/getInventorybyIdAPI.tsx";
 import PatchInventoriesAPI from "../../api/inventories/patchInventoriesAPI.tsx";
 
 import "../../App.css";
 
-type weeklyContent = {
+type WeeklyContent = {
   weeklyContentId: number;
   subjectName: string;
   content: string;
@@ -22,17 +22,23 @@ type weeklyContent = {
   startDate: number[];
   endDate: number[];
 };
+type Award = {
+  awardId: number;
+  writerName: string;
+  study: {
+    studyId: number;
+    subjectName: string;
+    section: number;
+  };
+  batch: number;
+  week: number;
+};
 type Inventory = {
   inventoryId: number;
-  member: {
-    memberId: number;
-    studentId: string;
-    email: string;
-    name: string;
-    major: string;
-    phone: string;
-    role: string;
-  };
+  writerId: number;
+  writerStudentId: string;
+  writerName: string;
+  writerImageUrl: string;
   study: {
     teamName: string;
     subjectName: string;
@@ -44,33 +50,7 @@ type Inventory = {
   week: number;
   isWeeklyBest: true;
   fileUrl: string;
-  award: {
-    awardId: number;
-    study: {
-      studyId: number;
-      teamName: string;
-      subjectName: string;
-      batch: number;
-      section: number;
-      studyMaster: {
-        memberId: number;
-        studentId: string;
-        name: string;
-      };
-      studyMembers: [
-        {
-          memberId: number;
-          studentId: string;
-          name: string;
-        }
-      ];
-    };
-    title: string;
-    batch: number;
-    week: number;
-    startDate: number[];
-    endDate: number[];
-  };
+  award: Award;
 };
 
 export default function StudyEdit() {
@@ -83,7 +63,7 @@ export default function StudyEdit() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedWeeklyContents, setSelectedWeeklyContents] =
-    useState<weeklyContent>({
+    useState<WeeklyContent>({
       weeklyContentId: 0,
       subjectName: "",
       content: "",
@@ -95,15 +75,10 @@ export default function StudyEdit() {
     Inventory | undefined
   >({
     inventoryId: 0,
-    member: {
-      memberId: 0,
-      studentId: "",
-      email: "",
-      name: "",
-      major: "",
-      phone: "",
-      role: "",
-    },
+    writerId: 0,
+    writerStudentId: "",
+    writerName: "",
+    writerImageUrl: "",
     study: {
       teamName: "",
       subjectName: "",
@@ -117,30 +92,14 @@ export default function StudyEdit() {
     fileUrl: "",
     award: {
       awardId: 0,
+      writerName: "",
       study: {
         studyId: 0,
-        teamName: "",
         subjectName: "",
-        batch: 0,
         section: 0,
-        studyMaster: {
-          memberId: 0,
-          studentId: "",
-          name: "",
-        },
-        studyMembers: [
-          {
-            memberId: 0,
-            studentId: "",
-            name: "",
-          },
-        ],
       },
-      title: "",
       batch: 0,
       week: 0,
-      startDate: [],
-      endDate: [],
     },
   });
   const [content, setContent] = useState<string>("");
@@ -173,8 +132,6 @@ export default function StudyEdit() {
   const handleDeleteNewFile = (id) => {
     setFiles(files.filter((_, index) => index !== id));
     setShowNewFiles(showNewFiles.filter((_, index) => index !== id));
-    console.log(files);
-    console.log(showFiles);
   };
 
   useEffect(() => {
@@ -208,6 +165,17 @@ export default function StudyEdit() {
   const onValid = (e) => {
     console.log(content);
     const inventoryId = searchParams.get("id");
+
+    const MAX_FILE_SIZE_MB = 10;
+    const oversizedFile = files.find(
+      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
+    );
+    if (oversizedFile) {
+      alert(
+        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+      );
+      return;
+    }
 
     const formData = new FormData();
     const jsonData = JSON.stringify({
@@ -394,35 +362,43 @@ export default function StudyEdit() {
                           &emsp;<div>{file}</div>
                         </div>
                       ))}
-                      {showNewFiles.map((file, id) => (
-                        <div
-                          key={id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            fontFamily: "Pretendard-Light",
-                            fontSize: "16px",
-                          }}
-                        >
-                          <img
-                            src="../../img/btn/delete_disabled.png"
-                            alt="delete"
-                            style={{ width: "20px", cursor: "pointer" }}
-                            onClick={() => {
-                              handleDeleteNewFile(id);
+                      {showNewFiles.map((file, id) => {
+                        const sizeMB = (files[id]?.size || 0) / (1024 * 1024);
+                        return (
+                          <div
+                            key={id}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              fontFamily: "Pretendard-Light",
+                              fontSize: "16px",
                             }}
-                            onMouseEnter={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_enabled.png";
-                            }}
-                            onMouseLeave={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "../../img/btn/delete_disabled.png";
-                            }}
-                          />
-                          &emsp;{file}
-                        </div>
-                      ))}
+                          >
+                            <img
+                              src="../../img/btn/delete_disabled.png"
+                              alt="delete"
+                              style={{ width: "20px", cursor: "pointer" }}
+                              onClick={() => {
+                                handleDeleteNewFile(id);
+                              }}
+                              onMouseEnter={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "../../img/btn/delete_enabled.png";
+                              }}
+                              onMouseLeave={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "../../img/btn/delete_disabled.png";
+                              }}
+                            />
+                            &emsp;
+                            <span>{file}</span>
+                            &nbsp;
+                            <span style={{ color: "#aaa", fontSize: "13px" }}>
+                              ({sizeMB.toFixed(2)} MB)
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
                   ) : (
                     <div></div>
