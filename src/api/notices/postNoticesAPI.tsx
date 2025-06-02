@@ -47,9 +47,9 @@ export default async function PostNoticesAPI(formData) {
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");
-          removeCookie("accessToken");
-          removeCookie("refreshToken");
-          window.location.href = "/";
+          // removeCookie("accessToken");
+          // removeCookie("refreshToken");
+          // window.location.href = "/";
         }
       } else {
         alert("다시 로그인 해주세요.");
