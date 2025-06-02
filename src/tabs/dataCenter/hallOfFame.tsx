@@ -55,17 +55,23 @@ type Study = {
     }
   ];
 };
+type Award = {
+  awardId: number;
+  writerName: string;
+  study: {
+    studyId: number;
+    subjectName: string;
+    section: number;
+  };
+  batch: number;
+  week: number;
+};
 type Inventory = {
   inventoryId: number;
-  member: {
-    memberId: number;
-    studentId: string;
-    email: string;
-    name: string;
-    major: string;
-    phone: string;
-    role: string;
-  };
+  writerId: number;
+  writerStudentId: string;
+  writerName: string;
+  writerImageUrl: string;
   study: {
     teamName: string;
     subjectName: string;
@@ -77,47 +83,7 @@ type Inventory = {
   week: number;
   isWeeklyBest: true;
   fileUrl: string;
-  award: {
-    awardId: number;
-    study: {
-      studyId: number;
-      teamName: string;
-      subjectName: string;
-      batch: number;
-      section: number;
-      studyMaster: {
-        memberId: number;
-        studentId: string;
-        name: string;
-      };
-      studyMembers: [
-        {
-          memberId: number;
-          studentId: string;
-          name: string;
-        }
-      ];
-    };
-    title: string;
-    batch: number;
-    week: number;
-    startDate: number[];
-    endDate: number[];
-  };
-};
-type Award = {
-  awardId: number;
-  member: {
-    studentId: string;
-    name: string;
-  };
-  study: {
-    studyId: number;
-    subjectName: string;
-    section: number;
-  };
-  batch: number;
-  week: number;
+  award: Award;
 };
 
 export default function HallOfFame() {
@@ -186,15 +152,10 @@ export default function HallOfFame() {
     Inventory | undefined
   >({
     inventoryId: 0,
-    member: {
-      memberId: 0,
-      studentId: "",
-      email: "",
-      name: "",
-      major: "",
-      phone: "",
-      role: "",
-    },
+    writerId: 0,
+    writerStudentId: "",
+    writerName: "",
+    writerImageUrl: "",
     study: {
       teamName: "",
       subjectName: "",
@@ -208,30 +169,14 @@ export default function HallOfFame() {
     fileUrl: "",
     award: {
       awardId: 0,
+      writerName: "",
       study: {
         studyId: 0,
-        teamName: "",
         subjectName: "",
-        batch: 0,
         section: 0,
-        studyMaster: {
-          memberId: 0,
-          studentId: "",
-          name: "",
-        },
-        studyMembers: [
-          {
-            memberId: 0,
-            studentId: "",
-            name: "",
-          },
-        ],
       },
-      title: "",
       batch: 0,
       week: 0,
-      startDate: [],
-      endDate: [],
     },
   });
 
@@ -463,7 +408,7 @@ export default function HallOfFame() {
                                   }}
                                 ></div>
                                 <Link
-                                  to={`/studyPost?id=${award.study.studyId}&member=${award.member.memberId}&week=${award.week}`}
+                                  to={`/studyPost?id=${award.study.studyId}&member=Weekly Best&week=${award.week}`}
                                   style={{
                                     position: "relative",
                                     display: "flex",
@@ -498,14 +443,14 @@ export default function HallOfFame() {
                                         color: "#fff",
                                       }}
                                     >
-                                      {award.member.name}
+                                      {award.writerName}
                                     </div>
                                   </div>
                                   <div>
-                                    {award.member.profileImageUrl ? (
+                                    {award.writerImageUrl ? (
                                       <>
                                         <img
-                                          src={award.member.profileImageUrl}
+                                          src={award.writerImageUrl}
                                           alt="profileImg"
                                           style={{
                                             width: "90px",
@@ -775,14 +720,14 @@ export default function HallOfFame() {
                         >
                           {matchedAward ? (
                             <Link
-                              to={`/studyPost?id=${matchedAward.study.studyId}&member=${matchedAward.member.memberId}&week=${matchedAward.week}`}
+                              to={`/studyPost?id=${matchedAward.study.studyId}&member=Weekly Best&week=${matchedAward.week}`}
                               style={{ color: "#fff", textDecoration: "none" }}
                             >
                               <div style={{ color: "#2cc295" }}>
                                 {matchedAward.study.subjectName}_
                                 {matchedAward.study.section}
                               </div>
-                              <div>{matchedAward.member.name}</div>
+                              <div>{matchedAward.writerName}</div>
                             </Link>
                           ) : (
                             <div>-</div>
@@ -904,7 +849,7 @@ export default function HallOfFame() {
                   <strong>📅 주차 :</strong> {urlParams.week}
                 </div>
                 <div style={{ marginBottom: "10px" }}>
-                  <strong>👤 회원 :</strong> {selectedInventory?.member.name}
+                  <strong>👤 회원 :</strong> {selectedInventory?.writerName}
                 </div>
               </div>
             )}
@@ -959,7 +904,7 @@ export default function HallOfFame() {
                           selectedInventory?.inventoryId,
                           selectedStudy.subjectName,
                           selectedStudy.section,
-                          selectedInventory?.member.memberId
+                          selectedInventory?.writerId
                         );
                       } else {
                         const awardId = groupedAwards[
@@ -980,7 +925,7 @@ export default function HallOfFame() {
                             selectedInventory?.inventoryId,
                             selectedStudy.subjectName,
                             selectedStudy.section,
-                            selectedInventory?.member.memberId
+                            selectedInventory?.writerId
                           );
                         }
                       }
