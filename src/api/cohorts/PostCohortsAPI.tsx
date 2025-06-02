@@ -34,7 +34,6 @@ export default async function PostCohortsAPI(
   if (accessToken) {
     try {
       console.log(batch, year, isFirstSemester);
-      alert(1);
       await postCohorts(accessToken, batch, year, isFirstSemester);
 
       window.location.reload();

@@ -429,7 +429,7 @@ export default function CurriculumStudy() {
 
                         return (
                           <>
-                            {cohortLatest.status === "활동 준비" ? (
+                            {cohortLatest.status !== "활동 준비" ? (
                               <Link
                                 to={`/studyPost?id=${study.studyId}&member=&week=1`}
                                 style={{ textDecoration: "none" }}
