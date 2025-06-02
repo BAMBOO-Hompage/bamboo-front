@@ -70,6 +70,10 @@ export default function KnowledgeAdd() {
       );
       return;
     }
+    if (content === "") {
+      alert("내용을 작성해주세요.");
+      return;
+    }
 
     const formData = new FormData();
     const jsonData = JSON.stringify({
