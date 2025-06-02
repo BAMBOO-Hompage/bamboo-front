@@ -688,12 +688,11 @@ export default function AlexandriaPost() {
                                 }}
                               >
                                 <img
-                                  // src={
-                                  //   paperComment.member.profileImageUrl
-                                  //     ? paperComment.member.profileImageUrl
-                                  //     : "../img/icon/base_profile.png"
-                                  // }
-                                  src="../img/icon/base_profile.png"
+                                  src={
+                                    paperComment.writerImageUrl
+                                      ? paperComment.writerImageUrl
+                                      : "../img/icon/base_profile.png"
+                                  }
                                   alt="profile"
                                   style={{
                                     width: "30px",
