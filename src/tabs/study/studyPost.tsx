@@ -419,7 +419,7 @@ export default function StudyPost() {
   };
 
   const handleAddImages = (event) => {
-    const imageLists = [...event.target.files]; // 선택한 파일들
+    const imageLists = [...event.target.files];
     const formData = new FormData();
 
     // 이미지 배열로 추가
@@ -429,7 +429,7 @@ export default function StudyPost() {
 
     PostImageAPI(
       parseInt(searchParams.get("id") || "0", 10),
-      getCurrentWeekForWeeklyBest(selectedSubject).week,
+      getCurrentWeekForOps(selectedSubject)?.week,
       formData
     );
   };
@@ -1289,15 +1289,13 @@ export default function StudyPost() {
                                 📖 {curriculum.week}주차 학습내용
                               </div>
                               {postList === "Weekly Best" &&
-                              ((getCurrentWeekForWeeklyBest(selectedSubject) &&
-                                getCurrentWeekForWeeklyBest(selectedSubject)
-                                  .week === curriculum.week &&
+                              ((getCurrentWeekForWeeklyBest(selectedSubject)
+                                ?.week === curriculum.week &&
                                 (myData.memberId ===
                                   postData.studyMaster.memberId ||
                                   checkAuth >= 2)) ||
-                                (getCurrentWeekForOps(selectedSubject) &&
-                                  getCurrentWeekForOps(selectedSubject).week ===
-                                    curriculum.week &&
+                                (getCurrentWeekForOps(selectedSubject)?.week ===
+                                  curriculum.week &&
                                   checkAuth === 3)) ? (
                                 <div style={{ display: "flex" }}>
                                   <label

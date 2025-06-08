@@ -424,7 +424,8 @@ export default function SelfStudy() {
 
                         return (
                           <>
-                            {cohortLatest.status === "활동 중" ? (
+                            {selectedCohort !== cohortLatest.batch ||
+                            cohortLatest.status === "활동 중" ? (
                               <Link
                                 to={`/studyPost?id=${study.studyId}&member=&week=1`}
                                 style={{ textDecoration: "none" }}

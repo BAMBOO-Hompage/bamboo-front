@@ -46,6 +46,7 @@ export default function Signup() {
     setFocus("StudentNum");
   }, [setFocus]);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [timer, setTimer] = useState(600); // 10분 (초 단위)
   const [isTimerActive, setIsTimerActive] = useState(false);
@@ -113,10 +114,27 @@ export default function Signup() {
     alert("인증 번호를 다시 입력해주세요.");
   };
 
-  const onValid = (e) => {
+  const onValid = async (e) => {
     e.PhoneNum = e.PhoneNum.replace(/-/g, "");
     if (checkedEmail) {
-      SignupAPI(email, e.Password, e.Name, e.Major, studentNum, e.PhoneNum);
+      if (isSubmitting) return;
+      setIsSubmitting(true);
+      try {
+        console.log(e, "onValid");
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await SignupAPI(
+          email,
+          e.Password,
+          e.Name,
+          e.Major,
+          studentNum,
+          e.PhoneNum
+        );
+      } catch (error) {
+        console.error("로그인 실패:", error);
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
       alert("이메일 인증을 진행해주세요.");
     }
@@ -1002,13 +1020,13 @@ export default function Signup() {
               margin: "50px 0 150px",
               padding: "0",
               display: "flex",
-              justifyContent: "right",
+              justifyContent: "center",
               border: "none",
             }}
           >
             <Button
-              type="primary"
-              size="medium"
+              type={isSubmitting ? "disabled" : "primary"}
+              size="large"
               title="계정 생성"
               onClick={handleSubmitSignUp(onValid, onInvalid)}
             />

@@ -3,7 +3,13 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 import "../App.css";
 
-type ButtonType = "primary" | "secondary" | "destructive" | "logIn" | "submit";
+type ButtonType =
+  | "primary"
+  | "secondary"
+  | "destructive"
+  | "logIn"
+  | "submit"
+  | "disabled";
 type Size = "xsmall" | "small" | "medium" | "large" | "xlarge" | "logIn";
 
 type ButtonProps = {
@@ -14,7 +20,13 @@ type ButtonProps = {
 };
 
 const ButtonContainer = styled.div<{
-  type: "primary" | "secondary" | "destructive" | "logIn" | "submit";
+  type:
+    | "primary"
+    | "secondary"
+    | "destructive"
+    | "logIn"
+    | "submit"
+    | "disabled";
   size: "xsmall" | "small" | "medium" | "large" | "xlarge" | "logIn";
 }>`
   border: ${(props) => (props.type === "logIn" ? "none" : "none")};
@@ -22,7 +34,7 @@ const ButtonContainer = styled.div<{
   justify-content: center;
   align-items: center;
   display: flex;
-  opacity: 0.8;
+  opacity: ${(props) => (props.type === "disabled" ? 1 : 0.8)};
   transition: all 0.3s ease;
   background-color: ${(props) =>
     props.type === "primary"
@@ -31,6 +43,8 @@ const ButtonContainer = styled.div<{
       ? "#343434"
       : props.type === "destructive"
       ? "#343434"
+      : props.type === "disabled"
+      ? "#555"
       : "#2CC295"};
   color: ${(props) =>
     props.type === "primary"
@@ -39,8 +53,10 @@ const ButtonContainer = styled.div<{
       ? "#2cc295"
       : props.type === "destructive"
       ? "#fff"
+      : props.type === "disabled"
+      ? "#999"
       : "#fff"};
-  cursor: pointer;
+  cursor: ${(props) => (props.type === "disabled" ? "default" : "pointer")};
 
   ${(props) =>
     props.size === "xlarge" &&

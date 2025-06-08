@@ -90,7 +90,6 @@ export default function CurriculumStudy() {
         console.error("API 호출 중 오류 발생:", error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -429,7 +428,8 @@ export default function CurriculumStudy() {
 
                         return (
                           <>
-                            {cohortLatest.status !== "활동 준비" ? (
+                            {selectedCohort !== cohortLatest.batch ||
+                            cohortLatest.status !== "활동 준비" ? (
                               <Link
                                 to={`/studyPost?id=${study.studyId}&member=&week=1`}
                                 style={{ textDecoration: "none" }}

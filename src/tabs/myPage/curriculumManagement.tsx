@@ -474,36 +474,40 @@ export default function CurriculumManagement() {
                   >
                     {cohort.batch}기 커리큘럼
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "18px",
-                      color: "#777",
-                    }}
-                  >
-                    커리큘럼 추가&emsp;
-                    <img
-                      src="../../img/btn/edit_enabled.png"
-                      alt="edit"
+                  {cohort.status === "활동 준비" ? (
+                    <div
                       style={{
-                        width: "30px",
-                        cursor: "pointer",
-                        opacity: "0.8",
-                        transition: "all 0.3s ease",
+                        display: "flex",
+                        alignItems: "center",
+                        fontFamily: "Pretendard-Light",
+                        fontSize: "18px",
+                        color: "#777",
                       }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.opacity = "1";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.opacity = "0.8";
-                      }}
-                      onClick={() => {
-                        setIsAddPopupOpen(!isAddPopupOpen);
-                      }}
-                    />
-                  </div>
+                    >
+                      커리큘럼 추가&emsp;
+                      <img
+                        src="../../img/btn/edit_enabled.png"
+                        alt="edit"
+                        style={{
+                          width: "30px",
+                          cursor: "pointer",
+                          opacity: "0.8",
+                          transition: "all 0.3s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.opacity = "1";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.opacity = "0.8";
+                        }}
+                        onClick={() => {
+                          setIsAddPopupOpen(!isAddPopupOpen);
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
 
                 {subjects.map((subject) => (

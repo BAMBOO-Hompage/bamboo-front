@@ -10,6 +10,7 @@ import VerificationsAPI from "../../api/emails/verificationsAPI.tsx";
 import PatchPasswordNonLoginAPI from "../../api/members/patchPasswordNonLoginAPI.tsx";
 
 import "../../App.css";
+import { ascetic } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export default function Login() {
   const {
@@ -40,6 +41,7 @@ export default function Login() {
     setFocus("StudentNum");
   }, [setFocus]);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
@@ -52,9 +54,18 @@ export default function Login() {
   const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
   const [isRePasswordVisible, setIsRePasswordVisible] = useState(false);
 
-  const onValid = (e: any) => {
-    console.log(e, "onValid");
-    LogInAPI(e.StudentNum, e.Password);
+  const onValid = async (e: any) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    try {
+      console.log(e, "onValid");
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await LogInAPI(e.StudentNum, e.Password);
+    } catch (error) {
+      console.error("로그인 실패:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   const onInvalid = (e: any) => {
     console.log(e, "onInvalid");
@@ -372,6 +383,7 @@ export default function Login() {
             >
               <button
                 type="submit"
+                disabled={isSubmitting}
                 style={{
                   maxWidth: "100%",
                   padding: "0",
@@ -386,7 +398,11 @@ export default function Login() {
                     justifyContent: "center",
                   }}
                 >
-                  <Button type="primary" size="large" title="로그인" />
+                  <Button
+                    type={isSubmitting ? "disabled" : "primary"}
+                    size="large"
+                    title="로그인"
+                  />
                 </div>
               </button>
             </div>

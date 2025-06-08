@@ -9,6 +9,7 @@ import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
+import GetCohortAPI from "../../api/cohorts/GetCohortAPI.tsx";
 import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
 import GetStudyAPI from "../../api/studies/getStudyAPI.tsx";
 import GetWeeklyBestAPI from "../../api/inventories/getWeeklyBestAPI.tsx";
@@ -209,6 +210,15 @@ export default function HallOfFame() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(selectedCohort);
+        if (selectedCohort !== 0) {
+          const selectedCohortResult = await GetCohortAPI(selectedCohort);
+          setCurriculumSubjects(
+            selectedCohortResult.subjects.filter(
+              (subject) => subject.isBook === true
+            )
+          );
+        }
         const awardsLatestResult = await GetAwardLatestAPI(selectedCohort);
         setAwardsLatest(awardsLatestResult);
         const awardsResult = await GetAwardsAPI(selectedCohort);
