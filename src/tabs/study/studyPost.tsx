@@ -1641,7 +1641,7 @@ export default function StudyPost() {
                     "/" +
                     getCurrentWeekForOps(selectedSubject).endDate[1] +
                     "/" +
-                    (getCurrentWeekForOps(selectedSubject).endDate[2] - 1)}
+                    getCurrentWeekForOps(selectedSubject).endDate[2]}
                 </span>
               </div>
             </div>
