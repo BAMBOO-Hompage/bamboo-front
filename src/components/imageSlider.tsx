@@ -62,7 +62,7 @@ const ImageSlider = ({ images }) => {
           display: "flex",
           alignItems: "center",
           gap: "10px",
-          height: "100%",
+          height: "320px",
         }}
       >
         {images.map((image, index) => {
@@ -97,8 +97,8 @@ const ImageSlider = ({ images }) => {
                 alt={`Slide ${index}`}
                 style={{
                   width: "450px",
-                  height: "280px",
-                  objectFit: "contain",
+                  height: "320px",
+                  objectFit: "cover",
                 }}
               />
             </div>

@@ -350,7 +350,7 @@ export default function Activity() {
                     <div
                       style={{
                         width: "100%",
-                        height: "280px",
+                        height: "320px",
                       }}
                     >
                       <ImageSlider images={activity.images} />
