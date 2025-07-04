@@ -57,13 +57,13 @@ export default function Login() {
   const onValid = async (e: any) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
+
     try {
       console.log(e, "onValid");
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await LogInAPI(e.StudentNum, e.Password);
     } catch (error) {
       console.error("로그인 실패:", error);
-    } finally {
       setIsSubmitting(false);
     }
   };
