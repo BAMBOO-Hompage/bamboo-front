@@ -23,12 +23,16 @@ type WeeklyContent = {
 };
 
 export default function StudyAdd() {
+  //중복 제출 방지
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {
     register,
     getValues,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedWeeklyContents, setSelectedWeeklyContents] =
@@ -88,7 +92,11 @@ export default function StudyAdd() {
     fetchData();
   }, []);
 
-  const onValid = (e) => {
+  const onValid = async (e) => {
+    //  중복 제출 방지: 이미 제출 중이면 무시
+    if (isSubmitting) return;
+    setIsSubmitting(true); //  중복 클릭 방지 시작
+
     const studyId = searchParams.get("study");
     if (studyId) {
       const MAX_FILE_SIZE_MB = 10;
@@ -99,6 +107,7 @@ export default function StudyAdd() {
         alert(
           `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
         );
+        setIsSubmitting(false); //  중복 방지 해제
         return;
       }
 
@@ -120,9 +129,15 @@ export default function StudyAdd() {
         });
       }
 
-      PostInventoriesAPI(formData);
+      try {
+        await PostInventoriesAPI(formData);
+      } catch (err) {
+        alert("오류가 발생했습니다. 다시 시도해주세요.");
+        setIsSubmitting(false);
+      }
     } else {
       console.error("error");
+      setIsSubmitting(false); //  실패 시도 시에도 해제
     }
   };
 
@@ -347,8 +362,9 @@ export default function StudyAdd() {
                     }}
                   />
                   <Button
-                    type="primary"
+                    type={isSubmitting ? "disabled" : "primary"}
                     size="small"
+                    //  중복 클릭 방지용 disabled 및 동적 텍스트
                     title="작성 완료"
                     onClick={handleSubmit(onValid, onInvalid)}
                   />
