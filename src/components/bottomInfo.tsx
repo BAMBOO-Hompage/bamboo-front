@@ -66,7 +66,7 @@ export default function BottomInfo() {
               color: "#fff",
             }}
           >
-            Ver1.0 Created by 김진석(PM), 김재관(BE), 김희재(BE), 맹의현(FE),
+            Ver1.0 Created by 이창민(PM), 김재관(BE), 김희재(BE), 맹의현(FE),
             윤현수(Design) in 2025
           </span>
           <br />
