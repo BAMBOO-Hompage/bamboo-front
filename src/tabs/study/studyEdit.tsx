@@ -54,6 +54,9 @@ type Inventory = {
 };
 
 export default function StudyEdit() {
+  // 중복 제출 방지 위해 상태 변수 추가
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {
     register,
     getValues,
@@ -162,7 +165,14 @@ export default function StudyEdit() {
     });
   }, [searchParams]);
 
-  const onValid = (e) => {
+  //OnValid 함수 비동기 변경..
+  const onValid = async () => {
+    // 중복 제출 방지: 이미 제출 중이면 함수 실행 중단
+    if (isSubmitting) return;
+
+    // 제출 시작 시 isSubmitting을 true로 설정
+    setIsSubmitting(true);
+
     console.log(content);
     const inventoryId = searchParams.get("id");
 
@@ -174,6 +184,7 @@ export default function StudyEdit() {
       alert(
         `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
       );
+      setIsSubmitting(false); // 파일 크기 초과 시 중복 방지 해제
       return;
     }
 
@@ -182,6 +193,7 @@ export default function StudyEdit() {
       title: selectedWeeklyContents.content,
       content: content,
       week: selectedWeeklyContents.week,
+      fileUrl: showFiles[0],
     });
     formData.append(
       "request",
@@ -193,7 +205,7 @@ export default function StudyEdit() {
       });
     }
 
-    PatchInventoriesAPI(inventoryId, formData);
+    await PatchInventoriesAPI(inventoryId, formData);
   };
 
   const onInvalid = (e) => {
@@ -443,9 +455,10 @@ export default function StudyEdit() {
                     }}
                   />
                   <Button
-                    type="primary"
+                    type={isSubmitting ? "disabled" : "primary"}
                     size="small"
-                    title="작성 완료"
+                    //  중복 클릭 방지용 disabled 및 동적 텍스트
+                    title="수정 완료"
                     onClick={handleSubmit(onValid, onInvalid)}
                   />
                 </div>
