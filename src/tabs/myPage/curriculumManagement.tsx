@@ -125,10 +125,10 @@ export default function CurriculumManagement() {
         setIsEndActive(
           cohortResult.status === "활동 중" &&
             (currentDate.getMonth() + 1 === 2 ||
-              currentDate.getMonth() + 1 === 8) &&
+              currentDate.getMonth() + 1 === 9) &&
             (currentDate.getFullYear() !== cohortResult.year ||
               (cohortResult.isFirstSemester === true &&
-                currentDate.getMonth() + 1 === 8))
+                currentDate.getMonth() + 1 === 9))
         );
         setIsStartActive(cohortResult.status === "활동 준비");
 

@@ -66,7 +66,7 @@ export default function BottomInfo() {
               color: "#fff",
             }}
           >
-            Ver1.0 Created by 이창민(PM), 김재관(BE), 김희재(BE), 맹의현(FE),
+            Ver1.0 Created by 김진석(PM), 김재관(BE), 김희재(BE), 맹의현(FE),
             윤현수(Design) in 2025
           </span>
           <br />
@@ -104,6 +104,20 @@ export default function BottomInfo() {
             }}
           >
             김진석 (카톡 ID: jinseok_02)
+          </span>
+          <br />
+          <br />
+          6기 부회장
+          <br />
+          <span
+            style={{
+              fontFamily: "Pretendard-Regular",
+              fontSize: "14px",
+              color: "#fff",
+              lineHeight: "1",
+            }}
+          >
+            맹의현 (카톡 ID: maeng1217)
           </span>
           <br />
           <br />

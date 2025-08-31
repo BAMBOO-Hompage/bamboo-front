@@ -10,7 +10,6 @@ import VerificationsAPI from "../../api/emails/verificationsAPI.tsx";
 import PatchPasswordNonLoginAPI from "../../api/members/patchPasswordNonLoginAPI.tsx";
 
 import "../../App.css";
-import { ascetic } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export default function Login() {
   const {

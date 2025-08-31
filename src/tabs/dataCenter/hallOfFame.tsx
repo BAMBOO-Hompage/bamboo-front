@@ -323,7 +323,7 @@ export default function HallOfFame() {
               position: "relative",
               maxWidth: "1000px",
               padding: "0 20px",
-              height: "1300px",
+              minHeight: "1300px",
               margin: "0 auto",
               paddingTop: "100px",
               marginBottom: "150px",

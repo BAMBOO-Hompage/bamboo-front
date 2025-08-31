@@ -131,7 +131,7 @@ export default function Signup() {
           e.PhoneNum
         );
       } catch (error) {
-        console.error("로그인 실패:", error);
+        console.error("회원가입 실패:", error);
       } finally {
         setIsSubmitting(false);
       }

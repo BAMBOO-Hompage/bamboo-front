@@ -221,7 +221,7 @@ export default function JoinUs() {
                     marginTop: "10px",
                   }}
                 >
-                  6기 모집
+                  7기 모집
                 </div>
                 <div
                   style={{
@@ -231,7 +231,7 @@ export default function JoinUs() {
                     marginTop: "10px",
                   }}
                 >
-                  2025년 1학기
+                  2025년 2학기
                 </div>
               </div>
               <div
@@ -253,7 +253,7 @@ export default function JoinUs() {
                     color: "#fff",
                   }}
                 >
-                  <span>2/28(금) ~ 3/4(수)</span>
+                  <span>9/1(월) ~ 9/3(수)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -284,7 +284,7 @@ export default function JoinUs() {
                     color: "#fff",
                   }}
                 >
-                  <span>3/5(수)</span>
+                  <span>9/4(목)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -315,7 +315,7 @@ export default function JoinUs() {
                     color: "#fff",
                   }}
                 >
-                  <span>3/6(목) ~ 3/7(금)</span>
+                  <span>9/5(금)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -346,7 +346,7 @@ export default function JoinUs() {
                     color: "#fff",
                   }}
                 >
-                  <span>3/8(토)</span>
+                  <span>9/6(토)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -492,7 +492,7 @@ export default function JoinUs() {
                     marginTop: "10px",
                   }}
                 >
-                  6기 모집 중
+                  7기 모집 중
                 </div>
                 <div
                   style={{
@@ -502,7 +502,7 @@ export default function JoinUs() {
                     marginTop: "10px",
                   }}
                 >
-                  2025년 1학기
+                  2025년 2학기
                 </div>
               </div>
               <div
@@ -737,7 +737,7 @@ export default function JoinUs() {
                   marginBottom: "70px",
                 }}
               >
-                모집 일정(PY, DA)
+                모집 일정
               </div>
               <div
                 style={{
@@ -758,7 +758,7 @@ export default function JoinUs() {
                     color: "#fff",
                   }}
                 >
-                  <span>2/28(금) ~ 3/4(수)</span>
+                  <span>9/1(월) ~ 9/3(수)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -789,7 +789,7 @@ export default function JoinUs() {
                     color: "#fff",
                   }}
                 >
-                  <span>3/5(수)</span>
+                  <span>9/4(목)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -820,7 +820,7 @@ export default function JoinUs() {
                     color: "#fff",
                   }}
                 >
-                  <span>3/6(목) ~ 3/7(금)</span>
+                  <span>9/5(금)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -851,7 +851,7 @@ export default function JoinUs() {
                     color: "#fff",
                   }}
                 >
-                  <span>3/8(토)</span>
+                  <span>9/6(토)</span>
                   <br />
                   <img
                     src="../img/icon/bamboo_list.png"
@@ -1183,6 +1183,8 @@ export default function JoinUs() {
                   }}
                 >
                   동아리장: 김진석 (카톡 ID: jinseok_02)
+                  <br />
+                  부동아리장: 맹의현 (카톡 ID: maeng1217)
                   <br />
                   부동아리장: 유세리 (카톡 ID: serih0219)
                 </div>
