@@ -45,6 +45,7 @@ export default function PersonalInfo() {
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
   const [myData, setmyData] = useState<MyDataType>({
+    memberId: 0,
     studentId: "",
     email: "",
     name: "",
