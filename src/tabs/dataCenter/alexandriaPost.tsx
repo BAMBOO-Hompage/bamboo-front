@@ -1136,8 +1136,13 @@ export default function AlexandriaPost() {
                                       >
                                         <img
                                           src={
-                                            // paperReply.member?.profileImageUrl ?? "../img/icon/base_profile.png"
-                                            "../img/icon/base_profile.png"
+                                            /* 🔧 FIX: 대댓글 프로필 이미지가 항상 기본 이미지로 보이던 문제 수정
+                                               - 기존: 하드코딩된 "../img/icon/base_profile.png"
+                                               - 변경: 백엔드에서 내려주는 paperReply.writerImageUrl를 우선 사용하고,
+                                                       없으면 기본 이미지를 fallback으로 사용 */
+                                            paperReply.writerImageUrl
+                                              ? paperReply.writerImageUrl
+                                              : "../img/icon/base_profile.png"
                                           }
                                           alt="profile"
                                           style={{

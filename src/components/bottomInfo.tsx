@@ -66,6 +66,17 @@ export default function BottomInfo() {
               color: "#fff",
             }}
           >
+            Ver1.1 Created by 김진석(PM), 김재관(BE), 장희정(FE), 맹의현(FE),
+            윤현수(Design) in 2025
+          </span>
+          <br />
+          <span
+            style={{
+              fontFamily: "Pretendard-Regular",
+              fontSize: "14px",
+              color: "#fff",
+            }}
+          >
             Ver1.0 Created by 김진석(PM), 김재관(BE), 김희재(BE), 맹의현(FE),
             윤현수(Design) in 2025
           </span>
