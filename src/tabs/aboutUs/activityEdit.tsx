@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import moment from "moment";
@@ -35,7 +35,7 @@ export default function ActivityEdit() {
   useEffect(() => {
     setFocus("Title");
   }, [setFocus]);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const [activityData, setActivityData] = useState<Activity>({
     mainActivitiesId: 0,
@@ -47,22 +47,23 @@ export default function ActivityEdit() {
     views: 0,
     images: [],
   });
-  const [images, setImages] = useState<any[]>([]);
+
+  //  중복 제출 방지
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [images, setImages] = useState<File[]>([]);
   const [showImages, setShowImages] = useState<string[]>([]);
   const [showNewImages, setShowNewImages] = useState<string[]>([]);
 
   useEffect(() => {
     GetActivityAPI(searchParams.get("id")).then((data) => {
       setActivityData(data);
-      // const encodedImages = (data.images || []).map((url) => encodeURI(url));
       setShowImages(data.images || []);
     });
   }, [searchParams]);
 
   useEffect(() => {
-    if (activityData.title) {
-      setValue("Title", activityData.title);
-    }
+    if (activityData.title) setValue("Title", activityData.title);
     if (activityData.startDate.length === 3) {
       setValue(
         "StartDate",
@@ -89,69 +90,81 @@ export default function ActivityEdit() {
     }
   }, [activityData, setValue]);
 
-  const handleAddImages = (event) => {
-    const imageLists = event.target.files; // 선택한 파일들
+  const handleAddImages = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const imageLists = event.target.files;
+    if (!imageLists || imageLists.length === 0) return;
+
     let fileLists: File[] = [...images];
-    let fileNameLists: string[] = [...showNewImages]; // 기존 저장된 파일명들
+    let fileNameLists: string[] = [...showNewImages];
     const currentImageCount = showImages.length + fileLists.length;
 
     for (let i = 0; i < imageLists.length; i++) {
-      if (currentImageCount + i >= 10) {
-        break; // 최대 10장을 초과하면 추가 중단
-      }
-      const currentFileName = imageLists[i].name; // 파일명 가져오기
+      if (currentImageCount + i >= 10) break; // 최대 10장
       fileLists.push(imageLists[i]);
-      fileNameLists.push(currentFileName);
+      fileNameLists.push(imageLists[i].name);
     }
 
     setImages(fileLists);
     setShowNewImages(fileNameLists);
+
+    // 같은 파일 다시 선택 가능하도록 리셋
+    event.target.value = "";
   };
-  const handleDeleteImage = (id) => {
+
+  const handleDeleteImage = (id: number) => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
-  const handleDeleteNewImage = (id) => {
+  const handleDeleteNewImage = (id: number) => {
     setImages(images.filter((_, index) => index !== id));
     setShowNewImages(showNewImages.filter((_, index) => index !== id));
   };
 
-  const onValid = async (e) => {
-    const MAX_FILE_SIZE_MB = 10;
-    const year = moment(e.StartDate).format("YYYY");
+  const onValid = async (e: any) => {
+    // ✅ 중복 제출 가드
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
-    const oversizedFile = images.find(
-      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
-    );
-    if (oversizedFile) {
-      alert(
-        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+    try {
+      const MAX_FILE_SIZE_MB = 10;
+      const year = moment(e.StartDate).format("YYYY");
+
+      const oversizedFile = images.find(
+        (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
       );
-      return;
-    }
+      if (oversizedFile) {
+        alert(
+          `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+        );
+        return;
+      }
 
-    const formData = new FormData();
-    const jsonData = JSON.stringify({
-      title: e.Title,
-      startDate: e.StartDate,
-      endDate: e.EndDate,
-      year: year,
-      keptImageUrls: showImages,
-    });
-    formData.append(
-      "request",
-      new Blob([jsonData], { type: "application/json" })
-    );
-
-    if (images && images.length > 0) {
-      images.forEach((file) => {
-        formData.append("newImages", file);
+      const formData = new FormData();
+      const jsonData = JSON.stringify({
+        title: e.Title,
+        startDate: e.StartDate,
+        endDate: e.EndDate,
+        year: year,
+        keptImageUrls: showImages,
       });
-    }
+      formData.append(
+        "request",
+        new Blob([jsonData], { type: "application/json" })
+      );
 
-    PatchActivitiesAPI(searchParams.get("id"), formData);
+      if (images && images.length > 0) {
+        images.forEach((file) => {
+          formData.append("newImages", file);
+        });
+      }
+
+      await PatchActivitiesAPI(searchParams.get("id"), formData);
+    } finally {
+      //  항상 해제 (추가 alert 없이)
+      setIsSubmitting(false);
+    }
   };
 
-  const onInvalid = (e) => {
+  const onInvalid = (e: unknown) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 확인해주세요.");
   };
@@ -164,14 +177,8 @@ export default function ActivityEdit() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
-          transition={{
-            ease: "easeInOut",
-            duration: 1,
-          }}
-          style={{
-            width: "100%",
-            height: "1000px",
-          }}
+          transition={{ ease: "easeInOut", duration: 1 }}
+          style={{ width: "100%", height: "1000px" }}
         >
           <div
             style={{
@@ -270,9 +277,7 @@ export default function ActivityEdit() {
                     type="text"
                     defaultValue={activityData.title}
                     placeholder="제목을 입력해주세요."
-                    {...register("Title", {
-                      required: "제목을 입력해주세요.",
-                    })}
+                    {...register("Title", { required: "제목을 입력해주세요." })}
                     style={{
                       width: "660px",
                       height: "40px",
@@ -286,6 +291,7 @@ export default function ActivityEdit() {
                     }}
                   />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -360,6 +366,7 @@ export default function ActivityEdit() {
                     />
                   </div>
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -391,17 +398,15 @@ export default function ActivityEdit() {
                       display: "flex",
                       alignItems: "center",
                     }}
-                    onChange={handleAddImages}
                   >
                     <input
                       type="file"
                       id="fileInput"
-                      style={{
-                        display: "none",
-                      }}
+                      style={{ display: "none" }}
                       multiple
                       accept="image/*"
                       {...register("Image", {})}
+                      onChange={handleAddImages} // ← input에 연결
                       onClick={(e) => {
                         (e.target as HTMLInputElement).value = "";
                       }}
@@ -415,6 +420,7 @@ export default function ActivityEdit() {
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -451,9 +457,7 @@ export default function ActivityEdit() {
                             src="../../img/btn/delete_disabled.png"
                             alt="delete"
                             style={{ width: "16px", cursor: "pointer" }}
-                            onClick={() => {
-                              handleDeleteImage(id);
-                            }}
+                            onClick={() => handleDeleteImage(id)}
                             onMouseEnter={(e) => {
                               (e.target as HTMLImageElement).src =
                                 "../../img/btn/delete_enabled.png";
@@ -478,16 +482,14 @@ export default function ActivityEdit() {
                               fontFamily: "Pretendard-Light",
                               fontSize: "14px",
                               marginBottom: "10px",
-                              color: "#ccc", // 전체 텍스트 회색
+                              color: "#ccc",
                             }}
                           >
                             <img
                               src="../../img/btn/delete_disabled.png"
                               alt="delete"
                               style={{ width: "16px", cursor: "pointer" }}
-                              onClick={() => {
-                                handleDeleteImage(id);
-                              }}
+                              onClick={() => handleDeleteNewImage(id)}
                               onMouseEnter={(e) => {
                                 (e.target as HTMLImageElement).src =
                                   "../../img/btn/delete_enabled.png";
@@ -520,7 +522,7 @@ export default function ActivityEdit() {
                         borderRadius: "20px",
                         overflow: "auto",
                       }}
-                    ></div>
+                    />
                   )}
                 </div>
 
@@ -532,7 +534,7 @@ export default function ActivityEdit() {
                   }}
                 >
                   <Button
-                    type="primary"
+                    type={isSubmitting ? "disabled" : "primary"} // 중복 제출 방지 UI
                     size="small"
                     title="작성 완료"
                     onClick={handleSubmit(onValid, onInvalid)}

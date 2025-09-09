@@ -1,3 +1,25 @@
+// import React from "react";
+// import { useSearchParams } from "react-router-dom";
+// import Nav from "../../components/nav.tsx";
+// import BottomInfo from "../../components/bottomInfo.tsx";
+
+// export default function StudyRecruitmentPost() {
+//   const [searchParams] = useSearchParams();
+//   const id = searchParams.get("id");
+
+//   return (
+//     <div>
+//       <Nav type="study" />
+//       <div className="background" style={{ padding: "100px 20px" }}>
+//         <h1 style={{ color: "#fff" }}>스터디 모집 상세 페이지</h1>
+//         <p style={{ color: "#aaa" }}>글 ID: {id}</p>
+//         {/* 상세 내용 들어갈 자리 */}
+//       </div>
+//       <BottomInfo />
+//     </div>
+//   );
+// }
+
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -7,97 +29,81 @@ import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
 
 import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
-import GetNoticeAPI from "../../api/notices/getNoticeAPI.tsx";
-import DeleteNoticesAPI from "../../api/notices/deleteNoticesAPI.tsx";
+import GetstudyRecruitmentAPI from "../../api/study/GetstudyRecruitmentAPI.tsx";
 
 import "../../App.css";
 import "../../style/Post.css";
 
-type Notice = {
-  noticeId: number;
-  title: string;
-  content: string;
+type LocalDate = [number, number, number];
+type LocalDateTime = [number, number, number, number, number, number, number?];
+
+type studyRecruitment = {
+  id: number;
   writerId: number;
   writerName: string;
-  type: string;
-  images: string[];
-  files: string[];
-  comments: string[];
-  createdAt: number[];
-  updatedAt: number[];
+  title: string;
+  content: string;
+  // maxMembers: number;
+  //
+  createdAt: LocalDateTime;
+  updatedAt: LocalDateTime;
 };
 
-export default function NoticePost() {
+export default function StudyRecruitmentPost() {
   const sanitizer = dompurify.sanitize;
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
-  const [postData, setPostData] = useState<Notice>({
-    noticeId: 0,
-    title: "",
-    content: "",
+  const [postData, setPostData] = useState<studyRecruitment>({
+    id: 0,
     writerId: 0,
     writerName: "",
-    type: "",
-    images: [],
+    title: "",
+    content: "",
+    // maxMembers: 0,
+    // deadline: [0, 0, 0],
+    createdAt: [0, 0, 0, 0, 0, 0],
+    updatedAt: [0, 0, 0, 0, 0, 0],
     files: [],
-    comments: [],
-    createdAt: [],
-    updatedAt: [],
   });
 
-  //  삭제 중복 제출 방지....
-  const [isDeleting, setIsDeleting] = useState(false);
-
+  // 상세 데이터 로드
   useEffect(() => {
-    GetNoticeAPI(searchParams.get("id")).then((data) => {
-      setPostData(data);
-    });
+    const idParam = searchParams.get("id");
+    if (!idParam) return;
+    (async () => {
+      try {
+        const res = await GetStudyRecruitmentAPI(Number(idParam));
+        // 서버 응답이 { code, message, result, success } 구조라면:
+        const data = res?.result ?? res;
+        setPostData(data as StudyRecruitment);
+      } catch (e) {
+        console.error("failed to load study recruitment:", e);
+      }
+    })();
   }, [searchParams]);
 
+  // 권한 확인
   useEffect(() => {
     CheckAuthAPI().then((data) => {
-      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS") {
+      if (data.role === "ROLE_ADMIN" || data.role === "ROLE_OPS")
         setCheckAuth(2);
-      } else if (data.role === "ROLE_MEMBER") {
-        setCheckAuth(1);
-      } else {
-        setCheckAuth(0);
-      }
+      else if (data.role === "ROLE_MEMBER") setCheckAuth(1);
+      else setCheckAuth(0);
     });
   }, []);
 
-  const handleDelete = async () => {
-    // 이미 삭제 진행 중이면 무시
-    if (isDeleting) return;
-
-    const confirmDelete = window.confirm("게시물을 삭제하시겠습니까?");
-    if (!confirmDelete) return;
-
-    try {
-      setIsDeleting(true);
-      await DeleteNoticesAPI(postData.noticeId);
-    } finally {
-      setIsDeleting(false);
-    }
-  };
-
   return (
     <div>
-      <Nav type="community" />
+      <Nav type="study" />
       <div id="background" className="background">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
-          transition={{
-            ease: "easeInOut",
-            duration: 1,
-          }}
-          style={{
-            width: "100%",
-          }}
+          transition={{ ease: "easeInOut", duration: 1 }}
+          style={{ width: "100%" }}
         >
           <div
             style={{
@@ -105,12 +111,11 @@ export default function NoticePost() {
               maxWidth: "1000px",
               padding: "0 20px",
               minHeight: "960px",
-              margin: "0 auto",
-              marginTop: "100px",
-              marginBottom: "150px",
+              margin: "100px auto 150px",
               display: "flex",
             }}
           >
+            {/* 좌측 사이드 */}
             <div
               style={{
                 boxSizing: "border-box",
@@ -128,7 +133,7 @@ export default function NoticePost() {
                   textShadow: "0 0 0.1em, 0 0 0.1em",
                 }}
               >
-                공지 사항
+                스터디 모집
               </div>
               <div
                 style={{
@@ -139,15 +144,14 @@ export default function NoticePost() {
               >
                 <div
                   className="side_tabs"
-                  onClick={() => {
-                    window.history.back();
-                  }}
+                  onClick={() => window.history.back()}
                 >
                   목록으로
                 </div>
               </div>
             </div>
 
+            {/* 본문 */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -165,6 +169,7 @@ export default function NoticePost() {
                 paddingLeft: "50px",
               }}
             >
+              {/* 상단 우측 액션 */}
               <div
                 style={{
                   marginBottom: "5px",
@@ -180,55 +185,57 @@ export default function NoticePost() {
                     color: "#2CC295",
                   }}
                 >
-                  {postData.type}
+                  스터디 모집
                 </div>
+
                 {checkAuth === 2 ? (
-                  <div
-                    style={{
-                      height: "30px",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
+                  <div style={{ height: "30px" }}>
                     <img
-                      src={
-                        isDeleting
-                          ? "../../img/btn/trash_enabled.png"
-                          : "../../img/btn/trash_disabled.png"
-                      }
+                      src="../../img/btn/trash_disabled.png"
                       alt="trash"
                       style={{
                         width: "30px",
-                        cursor: isDeleting ? "not-allowed" : "pointer",
-                        opacity: isDeleting ? 0.6 : 1,
+                        cursor: "pointer",
                         marginRight: "15px",
                       }}
-                      onClick={handleDelete}
+                      onClick={async () => {
+                        const ok = window.confirm("게시물을 삭제하시겠습니까?");
+                        if (!ok) return;
+                        try {
+                          await DeleteStudyRecruitmentAPI(postData.id);
+                          alert("삭제되었습니다.");
+                          window.history.back();
+                        } catch (e) {
+                          console.error(e);
+                          alert("삭제 중 오류가 발생했습니다.");
+                        }
+                      }}
                       onMouseOver={(e) => {
-                        if (isDeleting) return;
-                        (e.target as HTMLImageElement).src =
-                          "../../img/btn/trash_enabled.png";
+                        (
+                          e.target as HTMLImageElement
+                        ).src = `../../img/btn/trash_enabled.png`;
                       }}
                       onMouseOut={(e) => {
-                        if (isDeleting) return;
-                        (e.target as HTMLImageElement).src =
-                          "../../img/btn/trash_disabled.png";
+                        (
+                          e.target as HTMLImageElement
+                        ).src = `../../img/btn/trash_disabled.png`;
                       }}
                     />
-                    {/* 수정 아이콘 */}
                     <img
                       src="../../img/btn/edit_enabled.png"
                       alt="edit"
                       style={{ width: "30px", cursor: "pointer" }}
                       onClick={() => {
-                        window.location.href = `/noticeEdit?id=${postData.noticeId}`;
+                        window.location.href = `/studyRecruitmentEdit?id=${postData.id}`;
                       }}
                     />
                   </div>
                 ) : (
-                  <div style={{ height: "30px" }}></div>
+                  <div style={{ height: "30px" }} />
                 )}
               </div>
+
+              {/* 제목 */}
               <div
                 style={{
                   marginBottom: "13px",
@@ -239,6 +246,8 @@ export default function NoticePost() {
               >
                 {postData.title}
               </div>
+
+              {/* 메타 정보 */}
               <div
                 style={{
                   marginBottom: "50px",
@@ -248,20 +257,12 @@ export default function NoticePost() {
                 }}
               >
                 작성자: {postData.writerName}
-                &emsp; 작성 일자:{" "}
-                {postData.createdAt[0] +
-                  "/" +
-                  postData.createdAt[1] +
-                  "/" +
-                  postData.createdAt[2] +
-                  " " +
-                  postData.createdAt[3] +
-                  ":" +
-                  postData.createdAt[4] +
-                  ":" +
-                  postData.createdAt[5]}
+                &emsp; 모집정원: {postData.maxMembers}명 &emsp; 작성 일자:{" "}
+                {fmtDateTime(postData.createdAt)}
               </div>
-              {postData.files.length !== 0 && (
+
+              {/* 첨부파일(옵셔널) */}
+              {postData.files && postData.files.length > 0 && (
                 <div
                   style={{
                     boxSizing: "border-box",
@@ -293,7 +294,7 @@ export default function NoticePost() {
                         key={index}
                         style={{
                           marginBottom:
-                            index !== postData.files.length - 1 ? "10px" : "0",
+                            index !== postData.files!.length - 1 ? "10px" : 0,
                         }}
                       >
                         ·&emsp;
@@ -314,6 +315,8 @@ export default function NoticePost() {
                   </div>
                 </div>
               )}
+
+              {/* 내용 */}
               <div>
                 <div
                   className="container"
