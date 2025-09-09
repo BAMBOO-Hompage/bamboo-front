@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 
@@ -143,6 +143,11 @@ export default function StudyManagement() {
     ],
   });
 
+  // 중복 제출 방지 상태들
+  const [isAdding, setIsAdding] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [deletingIds, setDeletingIds] = useState<Set<number>>(new Set());
+
   useEffect(() => {
     CheckAuthAPI().then((data) => {
       if (data.role === "ROLE_OPS") {
@@ -175,11 +180,9 @@ export default function StudyManagement() {
       try {
         const cohortResult = await GetCohortLatestAPI();
         setCohort(cohortResult);
-        console.log(cohortResult.batch);
 
         const subjectsResult = await GetSubjectsAPI(null, cohortResult.batch);
         setSubjects(subjectsResult);
-        console.log(subjects);
 
         const studiesResults = await Promise.all(
           subjectsResult.map((subject) =>
@@ -226,30 +229,36 @@ export default function StudyManagement() {
     setEditMemberInputs([...editMemberInputs, ""]);
   };
 
-  const onValid = async (e) => {
-    if (!e.TeamName || e.TeamName.length > 7) {
-      alert("팀명은 7자 이내로 입력해주세요.");
-      return;
-    }
+  const onValid = async (e: any) => {
+    if (isAdding) return;
+    setIsAdding(true);
+
     try {
+      if (!e.TeamName || e.TeamName.length > 7) {
+        alert("팀명은 7자 이내로 입력해주세요.");
+        setIsAdding(false);
+        return;
+      }
+
       const exists = await ExistsAPI(e.StudyMaster);
       if (!exists) {
         alert(`${e.StudyMaster}은 존재하지 않는 회원입니다.`);
+        setIsAdding(false);
         return;
       }
+
       const studyMembers = memberInputs.map(
         (_, index) => e[`StudyMember${index}`]
       );
-      // 팀원 존재 여부 검사 (비동기 병렬)
       const memberExistResults = await Promise.all(
         studyMembers.map((member) => ExistsAPI(member))
       );
-      // 존재하지 않는 멤버 확인
       const invalidMembers = studyMembers.filter(
         (_, idx) => !memberExistResults[idx]
       );
       if (invalidMembers.length > 0) {
         alert(`${invalidMembers.join(", ")}은 존재하지 않는 회원입니다`);
+        setIsAdding(false);
         return;
       }
 
@@ -265,37 +274,47 @@ export default function StudyManagement() {
     } catch (error) {
       console.error("스터디 등록 오류:", error);
       alert("스터디 등록 중 오류가 발생했습니다.");
+    } finally {
+      setIsAdding(false);
     }
   };
-  const onInvalid = (e) => {
+
+  const onInvalid = (e: unknown) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
 
-  const onEditValid = async (e) => {
-    if (!e.TeamName || e.TeamName.length > 7) {
-      alert("팀명은 7자 이내로 입력해주세요.");
-      return;
-    }
+  const onEditValid = async (e: any) => {
+    if (isEditing) return;
+    setIsEditing(true);
+
     try {
+      if (!e.TeamName || e.TeamName.length > 7) {
+        alert("팀명은 7자 이내로 입력해주세요.");
+        setIsEditing(false);
+        return;
+      }
+
       const exists = await ExistsAPI(e.StudyMaster);
       if (!exists) {
         alert(`${e.StudyMaster}은 존재하지 않는 회원입니다.`);
+        setIsEditing(false);
         return;
       }
-      const studyMembers = memberInputs.map(
+
+      //  수정 폼은 editMemberInputs 사용 (오타 수정)
+      const studyMembers = editMemberInputs.map(
         (_, index) => e[`StudyMember${index}`]
       );
-      // 팀원 존재 여부 검사 (비동기 병렬)
       const memberExistResults = await Promise.all(
         studyMembers.map((member) => ExistsAPI(member))
       );
-      // 존재하지 않는 멤버 확인
       const invalidMembers = studyMembers.filter(
         (_, idx) => !memberExistResults[idx]
       );
       if (invalidMembers.length > 0) {
         alert(`${invalidMembers.join(", ")}은 존재하지 않는 회원입니다`);
+        setIsEditing(false);
         return;
       }
 
@@ -312,9 +331,12 @@ export default function StudyManagement() {
     } catch (error) {
       console.error("스터디 수정 오류:", error);
       alert("스터디 수정 중 오류가 발생했습니다.");
+    } finally {
+      setIsEditing(false);
     }
   };
-  const onEditInvalid = (e) => {
+
+  const onEditInvalid = (e: unknown) => {
     console.log(e, "onEditInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
@@ -328,6 +350,24 @@ export default function StudyManagement() {
     let inputValue = input.value;
     inputValue = inputValue.replace(/[^0-9]/g, "");
     input.value = inputValue;
+  };
+
+  // ✅ 삭제 중복 방지용 핸들러
+  const handleDeleteStudy = async (studyId: number) => {
+    if (deletingIds.has(studyId)) return; // 이미 삭제 중
+    const confirm = window.confirm("스터디를 삭제하시겠습니까?");
+    if (!confirm) return;
+
+    setDeletingIds((prev) => new Set(prev).add(studyId));
+    try {
+      await DeleteStudiesAPI(studyId);
+    } finally {
+      setDeletingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(studyId);
+        return next;
+      });
+    }
   };
 
   return (
@@ -468,15 +508,6 @@ export default function StudyManagement() {
                   }}
                 >
                   스터디 관리
-                  {/* <span
-                    style={{
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "12px",
-                      color: "#FF5005",
-                    }}
-                  >
-                    test 기간동안만 개방합니다. (활동 종료 제한)
-                  </span> */}
                 </div>
                 <div style={{ marginTop: "40px" }}>
                   <div
@@ -619,150 +650,154 @@ export default function StudyManagement() {
                       {studies
                         .flat()
                         .filter((study) => study.subjectName === subject.name)
-                        .map((study, idx) => (
-                          <>
-                            <div
-                              key={idx}
-                              style={{
-                                position: "relative",
-                                width: "100%",
-                                minHeight: "40px",
-                                marginTop: "10px",
-                                display: "flex",
-                                justifyContent: "space-between",
-                                fontFamily: "Pretendard-Light",
-                                fontSize: "16px",
-                                color: "#fff",
-                                gap: "10px",
-                                textAlign: "center",
-                              }}
-                            >
+                        .map((study, idx) => {
+                          const isDeleting = deletingIds.has(study.studyId);
+                          return (
+                            <React.Fragment key={study.studyId}>
                               <div
                                 style={{
-                                  flexGrow: 2,
-                                  flexBasis: "100px",
-                                  minWidth: "60px",
+                                  position: "relative",
+                                  width: "100%",
+                                  minHeight: "40px",
+                                  marginTop: "10px",
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  fontFamily: "Pretendard-Light",
+                                  fontSize: "16px",
+                                  color: "#fff",
+                                  gap: "10px",
+                                  textAlign: "center",
                                 }}
                               >
-                                {study.isBook ? "정규" : "자율"}
-                              </div>
-                              <div
-                                style={{
-                                  flexGrow: 1,
-                                  flexBasis: "60px",
-                                  minWidth: "20px",
-                                }}
-                              >
-                                {study.section}
-                              </div>
-                              <div
-                                style={{
-                                  flexGrow: 3,
-                                  flexBasis: "150px",
-                                  minWidth: "80px",
-                                }}
-                              >
-                                {study.studyMaster.name},
-                                {study.studyMembers
-                                  .filter(
-                                    (member) =>
-                                      member.studentId !==
-                                      study.studyMaster.studentId
-                                  )
-                                  .map((studyMember, index, arr) => (
-                                    <span key={studyMember.studentId}>
-                                      {studyMember.name}
-                                      {index !== arr.length - 1 && ","}
-                                    </span>
-                                  ))}
-                              </div>
-                              {cohort.status === "활동 준비" ? (
-                                <>
-                                  <div
-                                    style={{
-                                      flexGrow: 1,
-                                      flexBasis: "30px",
-                                      minWidth: "30px",
-                                      minHeight: "100%",
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <img
-                                      src="../../img/btn/edit_enabled.png"
-                                      alt="edit"
+                                <div
+                                  style={{
+                                    flexGrow: 2,
+                                    flexBasis: "100px",
+                                    minWidth: "60px",
+                                  }}
+                                >
+                                  {study.isBook ? "정규" : "자율"}
+                                </div>
+                                <div
+                                  style={{
+                                    flexGrow: 1,
+                                    flexBasis: "60px",
+                                    minWidth: "20px",
+                                  }}
+                                >
+                                  {study.section}
+                                </div>
+                                <div
+                                  style={{
+                                    flexGrow: 3,
+                                    flexBasis: "150px",
+                                    minWidth: "80px",
+                                  }}
+                                >
+                                  {study.studyMaster.name},
+                                  {study.studyMembers
+                                    .filter(
+                                      (member) =>
+                                        member.studentId !==
+                                        study.studyMaster.studentId
+                                    )
+                                    .map((studyMember, index, arr) => (
+                                      <span key={studyMember.studentId}>
+                                        {studyMember.name}
+                                        {index !== arr.length - 1 && ","}
+                                      </span>
+                                    ))}
+                                </div>
+                                {cohort.status === "활동 준비" ? (
+                                  <>
+                                    <div
                                       style={{
-                                        width: "25px",
-                                        cursor: "pointer",
-                                        opacity: "0.8",
-                                        transition: "all 0.3s ease",
+                                        flexGrow: 1,
+                                        flexBasis: "30px",
+                                        minWidth: "30px",
+                                        minHeight: "100%",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
                                       }}
-                                      onMouseEnter={(e) => {
-                                        e.currentTarget.style.opacity = "1";
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        e.currentTarget.style.opacity = "0.8";
-                                      }}
-                                      onClick={() => {
-                                        setEditStudy(study);
-                                        setSelectedSubjectId(subject.subjectId);
-                                        setIsEditPopupOpen(true);
-                                      }}
-                                    />
-                                  </div>
-                                  <div
-                                    style={{
-                                      flexGrow: 1,
-                                      flexBasis: "30px",
-                                      minWidth: "30px",
-                                      minHeight: "100%",
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <img
-                                      src="../../img/btn/delete_disabled.png"
-                                      alt="delete"
-                                      style={{
-                                        width: "25px",
-                                        cursor: "pointer",
-                                        transition: "all 0.3s ease",
-                                      }}
-                                      onClick={() => {
-                                        const confirm =
-                                          window.confirm(
-                                            "스터디를 삭제하시겠습니까?"
+                                    >
+                                      <img
+                                        src="../../img/btn/edit_enabled.png"
+                                        alt="edit"
+                                        style={{
+                                          width: "25px",
+                                          cursor: "pointer",
+                                          opacity: "0.8",
+                                          transition: "all 0.3s ease",
+                                        }}
+                                        onMouseEnter={(e) => {
+                                          e.currentTarget.style.opacity = "1";
+                                        }}
+                                        onMouseLeave={(e) => {
+                                          e.currentTarget.style.opacity = "0.8";
+                                        }}
+                                        onClick={() => {
+                                          setEditStudy(study);
+                                          setSelectedSubjectId(
+                                            subject.subjectId
                                           );
-                                        if (confirm) {
-                                          DeleteStudiesAPI(study.studyId);
+                                          setIsEditPopupOpen(true);
+                                        }}
+                                      />
+                                    </div>
+                                    <div
+                                      style={{
+                                        flexGrow: 1,
+                                        flexBasis: "30px",
+                                        minWidth: "30px",
+                                        minHeight: "100%",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <img
+                                        src="../../img/btn/delete_disabled.png"
+                                        alt="delete"
+                                        style={{
+                                          width: "25px",
+                                          cursor: isDeleting
+                                            ? "not-allowed"
+                                            : "pointer",
+                                          transition: "all 0.3s ease",
+                                          opacity: isDeleting ? 0.5 : 1,
+                                        }}
+                                        onClick={() =>
+                                          isDeleting
+                                            ? null
+                                            : handleDeleteStudy(study.studyId)
                                         }
-                                      }}
-                                      onMouseEnter={(e) => {
-                                        (e.target as HTMLImageElement).src =
-                                          "../../img/btn/delete_enabled.png";
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        (e.target as HTMLImageElement).src =
-                                          "../../img/btn/delete_disabled.png";
-                                      }}
-                                    />
-                                  </div>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </div>
-                            <hr
-                              style={{
-                                height: "0.5px",
-                                background: "#666",
-                                border: "none",
-                              }}
-                            />
-                          </>
-                        ))}
+                                        onMouseEnter={(e) => {
+                                          if (isDeleting) return;
+                                          (e.target as HTMLImageElement).src =
+                                            "../../img/btn/delete_enabled.png";
+                                        }}
+                                        onMouseLeave={(e) => {
+                                          (e.target as HTMLImageElement).src =
+                                            "../../img/btn/delete_disabled.png";
+                                        }}
+                                      />
+                                    </div>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                              </div>
+                              <hr
+                                style={{
+                                  height: "0.5px",
+                                  background: "#666",
+                                  border: "none",
+                                }}
+                              />
+                            </React.Fragment>
+                          );
+                        })}
                     </div>
                   ))}
                 </div>
@@ -1006,9 +1041,7 @@ export default function StudyManagement() {
                     cursor: "pointer",
                   }}
                   onClick={() => {
-                    setMemberInputs(
-                      memberInputs.filter((_, i) => i !== index) // 선택한 항목 제거
-                    );
+                    setMemberInputs(memberInputs.filter((_, i) => i !== index));
                   }}
                   onMouseEnter={(e) => {
                     (e.target as HTMLImageElement).src =
@@ -1048,7 +1081,7 @@ export default function StudyManagement() {
               }}
             />
             <Button
-              type="primary"
+              type={isAdding ? "disabled" : "primary"} //  중복 제출 방지
               size="small"
               title="저장"
               onClick={handleSubmit(onValid, onInvalid)}
@@ -1306,7 +1339,7 @@ export default function StudyManagement() {
                   }}
                   onClick={() => {
                     setEditMemberInputs(
-                      editMemberInputs.filter((_, i) => i !== index) // 선택한 항목 제거
+                      editMemberInputs.filter((_, i) => i !== index)
                     );
                   }}
                   onMouseEnter={(e) => {
@@ -1346,7 +1379,7 @@ export default function StudyManagement() {
               }}
             />
             <Button
-              type="primary"
+              type={isEditing ? "disabled" : "primary"} // 중복 제출 방지
               size="small"
               title="저장"
               onClick={handleSubmitEdit(onEditValid, onEditInvalid)}
