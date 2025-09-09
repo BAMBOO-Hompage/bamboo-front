@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
@@ -59,6 +59,9 @@ export default function PostEdit() {
   const [showFiles, setShowFiles] = useState<string[]>([]);
   const [showNewFiles, setShowNewFiles] = useState<string[]>([]);
 
+  // ✅ 중복 제출 방지
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
     GetKnowledgeAPI(searchParams.get("id")).then((data) => {
       setPostData(data);
@@ -77,20 +80,20 @@ export default function PostEdit() {
     }
   }, [postData, setValue]);
 
-  const handleCategoryChange = (e) => {
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
   };
 
-  const handleAddFiles = (event) => {
+  const handleAddFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
     const docLists = event.target.files; // 선택한 파일들
+    if (!docLists || docLists.length === 0) return;
+
     let fileLists: File[] = [...files];
     let fileNameLists: string[] = [...showNewFiles]; // 기존 저장된 파일명들
     const currentImageCount = showFiles.length + fileLists.length;
 
     for (let i = 0; i < docLists.length; i++) {
-      if (currentImageCount + i >= 4) {
-        break;
-      }
+      if (currentImageCount + i >= 4) break;
       const currentFileName: string = docLists[i].name; // 파일명 가져오기
       fileLists.push(docLists[i]);
       fileNameLists.push(currentFileName);
@@ -98,52 +101,64 @@ export default function PostEdit() {
 
     setFiles(fileLists);
     setShowNewFiles(fileNameLists); // 파일명 리스트 저장
+
+    // 같은 파일 다시 선택 가능하도록 리셋
+    event.target.value = "";
   };
 
-  const handleDeleteFile = (id) => {
+  const handleDeleteFile = (id: number) => {
     setShowFiles(showFiles.filter((_, index) => index !== id));
   };
-  const handleDeleteNewFile = (id) => {
+  const handleDeleteNewFile = (id: number) => {
     setFiles(files.filter((_, index) => index !== id));
     setShowNewFiles(showNewFiles.filter((_, index) => index !== id));
   };
 
-  const onValid = (e) => {
-    const MAX_FILE_SIZE_MB = 10;
-    const oversizedFile = files.find(
-      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
-    );
-    if (oversizedFile) {
-      alert(
-        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+  const onValid = async (e: any) => {
+    // ✅ 중복 제출 가드
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    try {
+      const MAX_FILE_SIZE_MB = 10;
+      const oversizedFile = files.find(
+        (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
       );
-      return;
-    }
-    if (content === "") {
-      alert("내용을 작성해주세요.");
-      return;
-    }
+      if (oversizedFile) {
+        alert(
+          `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+        );
+        return;
+      }
+      if (content === "") {
+        alert("내용을 작성해주세요.");
+        return;
+      }
 
-    const formData = new FormData();
-    const jsonData = JSON.stringify({
-      title: e.Title,
-      content: content,
-      type: e.Category,
-    });
-    formData.append(
-      "request",
-      new Blob([jsonData], { type: "application/json" })
-    );
-    if (files && files.length > 0) {
-      files.forEach((file) => {
-        formData.append("newFiles", file);
+      const formData = new FormData();
+      const jsonData = JSON.stringify({
+        title: e.Title,
+        content: content,
+        type: e.Category,
       });
-    }
+      formData.append(
+        "request",
+        new Blob([jsonData], { type: "application/json" })
+      );
+      if (files && files.length > 0) {
+        files.forEach((file) => {
+          formData.append("newFiles", file);
+        });
+      }
 
-    PatchKnowledgesAPI(searchParams.get("id"), showFiles, formData);
+      await PatchKnowledgesAPI(searchParams.get("id"), showFiles, formData);
+    } finally {
+      // ✅ 항상 해제 (추가 alert 없음)
+      setIsSubmitting(false);
+    }
   };
 
-  const onInvalid = (e) => {
+  const onInvalid = (e: unknown) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
@@ -401,7 +416,6 @@ export default function PostEdit() {
                       display: "flex",
                       alignItems: "center",
                     }}
-                    onChange={handleAddFiles}
                   >
                     <input
                       type="file"
@@ -412,6 +426,7 @@ export default function PostEdit() {
                       multiple
                       accept=".pdf, .hwp, .pptx, .docx, .doc, .xlsx, .txt"
                       {...register("File", {})}
+                      onChange={handleAddFiles}
                       onClick={(e) => {
                         (e.target as HTMLInputElement).value = "";
                       }}
@@ -556,7 +571,7 @@ export default function PostEdit() {
                   }}
                 >
                   <Button
-                    type="primary"
+                    type={isSubmitting ? "disabled" : "primary"}
                     size="small"
                     title="작성 완료"
                     onClick={handleSubmit(onValid, onInvalid)}

@@ -23,6 +23,7 @@ type MyDataType = {
   role: string;
   profileImageUrl: string;
 };
+
 type Knowledge = {
   knowledgeId: number;
   writerId: number;
@@ -69,6 +70,9 @@ export default function KnowledgePost() {
     updatedAt: [],
   });
 
+  // ✅ 삭제 중복 제출 방지
+  const [isDeleting, setIsDeleting] = useState(false);
+
   useEffect(() => {
     GetKnowledgeAPI(searchParams.get("id")).then((data) => {
       setPostData(data);
@@ -87,6 +91,22 @@ export default function KnowledgePost() {
       setMyData(data);
     });
   }, []);
+
+  const handleDelete = async () => {
+    // ✅ 중복 클릭 가드
+    if (isDeleting) return;
+
+    const confirm = window.confirm("게시물을 삭제하시겠습니까?");
+    if (!confirm) return;
+
+    setIsDeleting(true);
+    try {
+      await DeleteKnowledgesAPI(postData.knowledgeId);
+    } finally {
+      // API 내부에서 라우팅/알림을 처리하더라도 가드를 해제해서 상태 복구
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <div>
@@ -188,23 +208,26 @@ export default function KnowledgePost() {
                   {postData.type}
                 </div>
                 {checkAuth === 2 || myData.memberId === postData.writerId ? (
-                  <div style={{ height: "30px" }}>
+                  <div
+                    style={{
+                      height: "30px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
                     <img
                       src="../../img/btn/trash_disabled.png"
                       alt="trash"
                       style={{
                         width: "30px",
-                        cursor: "pointer",
+                        cursor: isDeleting ? "not-allowed" : "pointer",
                         marginRight: "15px",
+                        opacity: isDeleting ? 0.5 : 1,
+                        transition: "opacity 0.2s",
                       }}
-                      onClick={() => {
-                        const confirm =
-                          window.confirm("게시물을 삭제하시겠습니까?");
-                        if (confirm) {
-                          DeleteKnowledgesAPI(postData.knowledgeId);
-                        }
-                      }}
+                      onClick={handleDelete}
                       onMouseOver={(e) => {
+                        if (isDeleting) return;
                         (
                           e.target as HTMLImageElement
                         ).src = `../../img/btn/trash_enabled.png`;

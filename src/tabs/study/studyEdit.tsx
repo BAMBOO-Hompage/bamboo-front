@@ -54,7 +54,7 @@ type Inventory = {
 };
 
 export default function StudyEdit() {
-  // 중복 제출 방지 위해 상태 변수 추가
+  // ✅ 중복 제출 방지
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -110,29 +110,32 @@ export default function StudyEdit() {
   const [showFiles, setShowFiles] = useState<string[]>([]);
   const [showNewFiles, setShowNewFiles] = useState<string[]>([]);
 
-  const handleAddFiles = (event) => {
+  const handleAddFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
     const docLists = event.target.files; // 선택한 파일들
+    if (!docLists || docLists.length === 0) return;
+
     let fileLists: File[] = [...files];
     let fileNameLists: string[] = [...showNewFiles]; // 기존 저장된 파일명들
     const currentFileCount = showFiles.length + fileLists.length;
-    console.log(currentFileCount);
 
     for (let i = 0; i < docLists.length; i++) {
-      if (currentFileCount + i >= 1) {
-        break;
-      }
-      const currentFileName: string = docLists[i].name; // 파일명 가져오기
+      if (currentFileCount + i >= 1) break; // 최대 1개
+      const currentFileName: string = docLists[i].name; // 파일명
       fileLists.push(docLists[i]);
       fileNameLists.push(currentFileName);
     }
 
     setFiles(fileLists);
-    setShowNewFiles(fileNameLists); // 파일명 리스트 저장
+    setShowNewFiles(fileNameLists);
+
+    // 같은 파일 다시 선택 가능하도록 리셋
+    event.target.value = "";
   };
-  const handleDeleteFile = (id) => {
+
+  const handleDeleteFile = (id: number) => {
     setShowFiles(showFiles.filter((_, index) => index !== id));
   };
-  const handleDeleteNewFile = (id) => {
+  const handleDeleteNewFile = (id: number) => {
     setFiles(files.filter((_, index) => index !== id));
     setShowNewFiles(showNewFiles.filter((_, index) => index !== id));
   };
@@ -143,7 +146,7 @@ export default function StudyEdit() {
         const subjectResult = await GetSubjectAPI(searchParams.get("subject"));
         if (subjectResult?.weeklyContents) {
           const selectedContent = subjectResult.weeklyContents.find(
-            (content) =>
+            (content: WeeklyContent) =>
               content.weeklyContentId.toString() === searchParams.get("week")
           );
 
@@ -158,57 +161,60 @@ export default function StudyEdit() {
   }, []);
 
   useEffect(() => {
-    GetInventorybyIdAPI(searchParams.get("id")).then((data) => {
+    GetInventorybyIdAPI(searchParams.get("id")).then((data: Inventory) => {
       setSelectedInventory(data);
       setContent(data.content);
       setShowFiles([data.fileUrl]);
     });
   }, [searchParams]);
 
-  //OnValid 함수 비동기 변경..
+  // ✅ 중복 제출 방지 포함
   const onValid = async () => {
-    // 중복 제출 방지: 이미 제출 중이면 함수 실행 중단
-    if (isSubmitting) return;
-
-    // 제출 시작 시 isSubmitting을 true로 설정
+    if (isSubmitting) return; // 이미 제출 중이면 무시
     setIsSubmitting(true);
 
-    console.log(content);
-    const inventoryId = searchParams.get("id");
+    try {
+      const inventoryId = searchParams.get("id");
 
-    const MAX_FILE_SIZE_MB = 10;
-    const oversizedFile = files.find(
-      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
-    );
-    if (oversizedFile) {
-      alert(
-        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+      const MAX_FILE_SIZE_MB = 10;
+      const oversizedFile = files.find(
+        (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
       );
-      setIsSubmitting(false); // 파일 크기 초과 시 중복 방지 해제
-      return;
-    }
+      if (oversizedFile) {
+        alert(
+          `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+        );
+        return;
+      }
 
-    const formData = new FormData();
-    const jsonData = JSON.stringify({
-      title: selectedWeeklyContents.content,
-      content: content,
-      week: selectedWeeklyContents.week,
-      fileUrl: showFiles[0],
-    });
-    formData.append(
-      "request",
-      new Blob([jsonData], { type: "application/json" })
-    );
-    if (files && files.length > 0) {
-      files.forEach((file) => {
-        formData.append("file", file);
+      const formData = new FormData();
+      const jsonData = JSON.stringify({
+        title: selectedWeeklyContents.content,
+        content: content,
+        week: selectedWeeklyContents.week,
+        fileUrl: showFiles[0],
       });
-    }
+      formData.append(
+        "request",
+        new Blob([jsonData], { type: "application/json" })
+      );
 
-    await PatchInventoriesAPI(inventoryId, formData);
+      if (files && files.length > 0) {
+        files.forEach((file) => {
+          formData.append("file", file);
+        });
+      }
+
+      await PatchInventoriesAPI(inventoryId, formData);
+    } catch (e) {
+      console.error(e);
+      alert("수정 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false); // 성공/실패 모두 해제
+    }
   };
 
-  const onInvalid = (e) => {
+  const onInvalid = (e: unknown) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
@@ -305,16 +311,14 @@ export default function StudyEdit() {
                       display: "flex",
                       alignItems: "center",
                     }}
-                    onChange={handleAddFiles}
                   >
                     <input
                       type="file"
                       id="fileInput"
-                      style={{
-                        display: "none",
-                      }}
+                      style={{ display: "none" }}
                       accept=".pdf"
                       {...register("File", {})}
+                      onChange={handleAddFiles} // ✅ input에 onChange 연결
                     />
                     <img
                       src="../../img/btn/search_enabled.png"
@@ -325,6 +329,7 @@ export default function StudyEdit() {
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -416,6 +421,7 @@ export default function StudyEdit() {
                     <div></div>
                   )}
                 </div>
+
                 <div
                   style={{
                     boxSizing: "border-box",
@@ -457,8 +463,7 @@ export default function StudyEdit() {
                   <Button
                     type={isSubmitting ? "disabled" : "primary"}
                     size="small"
-                    //  중복 클릭 방지용 disabled 및 동적 텍스트
-                    title="수정 완료"
+                    title={isSubmitting ? "저장 중..." : "수정 완료"}
                     onClick={handleSubmit(onValid, onInvalid)}
                   />
                 </div>

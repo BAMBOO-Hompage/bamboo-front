@@ -19,9 +19,11 @@ export default function KnowledgeAdd() {
     setFocus,
     formState: { errors },
   } = useForm();
+
   useEffect(() => {
     setFocus("Title");
   }, [setFocus]);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedCategory, setSelectedCategory] =
@@ -30,72 +32,86 @@ export default function KnowledgeAdd() {
   const [files, setFiles] = useState<File[]>([]);
   const [showFiles, setShowFiles] = useState<string[]>([]);
 
-  const handleCategoryChange = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
   };
 
-  const handleAddFiles = (event) => {
+  const handleAddFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
     const docLists = event.target.files; // 선택한 파일들
+    if (!docLists || docLists.length === 0) return;
+
     let fileLists: File[] = [...files];
     let fileNameLists: string[] = [...showFiles]; // 기존 저장된 파일명들
 
     for (let i = 0; i < docLists.length; i++) {
-      const currentFileName: string = docLists[i].name; // 파일명 가져오기
       fileLists.push(docLists[i]);
-      fileNameLists.push(currentFileName);
+      fileNameLists.push(docLists[i].name);
     }
 
+    // 최대 4개 제한
     if (fileNameLists.length > 4) {
       fileLists = fileLists.slice(0, 4);
-      fileNameLists = fileNameLists.slice(0, 4); // 최대 4개 제한
+      fileNameLists = fileNameLists.slice(0, 4);
     }
 
     setFiles(fileLists);
     setShowFiles(fileNameLists); // 파일명 리스트 저장
+
+    // 같은 파일 다시 선택 가능하도록 리셋
+    event.target.value = "";
   };
 
-  const handleDeleteFile = (id) => {
+  const handleDeleteFile = (id: number) => {
     setFiles(files.filter((_, index) => index !== id));
     setShowFiles(showFiles.filter((_, index) => index !== id));
   };
 
-  const onValid = (e) => {
-    const MAX_FILE_SIZE_MB = 10;
-    const oversizedFile = files.find(
-      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
-    );
-    if (oversizedFile) {
-      alert(
-        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+  const onValid = async (e: any) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    try {
+      const MAX_FILE_SIZE_MB = 10;
+      const oversizedFile = files.find(
+        (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
       );
-      return;
-    }
-    if (content === "") {
-      alert("내용을 작성해주세요.");
-      return;
-    }
+      if (oversizedFile) {
+        alert(
+          `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+        );
+        return;
+      }
+      if (content === "") {
+        alert("내용을 작성해주세요.");
+        return;
+      }
 
-    const formData = new FormData();
-    const jsonData = JSON.stringify({
-      title: e.Title,
-      content: content,
-      type: e.Category,
-    });
-
-    formData.append(
-      "request",
-      new Blob([jsonData], { type: "application/json" })
-    );
-    if (files && files.length > 0) {
-      files.forEach((file) => {
-        formData.append("files", file);
+      const formData = new FormData();
+      const jsonData = JSON.stringify({
+        title: e.Title,
+        content: content,
+        type: e.Category,
       });
-    }
 
-    PostKnowledgesAPI(formData);
+      formData.append(
+        "request",
+        new Blob([jsonData], { type: "application/json" })
+      );
+      if (files && files.length > 0) {
+        files.forEach((file) => {
+          formData.append("files", file);
+        });
+      }
+
+      await PostKnowledgesAPI(formData);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const onInvalid = (e) => {
+  const onInvalid = (e: unknown) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
@@ -353,17 +369,15 @@ export default function KnowledgeAdd() {
                       display: "flex",
                       alignItems: "center",
                     }}
-                    onChange={handleAddFiles}
                   >
                     <input
                       type="file"
                       id="fileInput"
-                      style={{
-                        display: "none",
-                      }}
+                      style={{ display: "none" }}
                       multiple
                       accept=".pdf, .hwp, .pptx, .docx, .doc, .xlsx, .txt"
                       {...register("File", {})}
+                      onChange={handleAddFiles}
                       onClick={(e) => {
                         (e.target as HTMLInputElement).value = "";
                       }}
@@ -377,6 +391,7 @@ export default function KnowledgeAdd() {
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -478,7 +493,7 @@ export default function KnowledgeAdd() {
                   }}
                 >
                   <Button
-                    type="primary"
+                    type={isSubmitting ? "disabled" : "primary"}
                     size="small"
                     title="작성 완료"
                     onClick={handleSubmit(onValid, onInvalid)}

@@ -32,6 +32,9 @@ export default function PostAdd() {
   const [files, setFiles] = useState<File[]>([]);
   const [showFiles, setShowFiles] = useState<string[]>([]);
 
+  //  중복 제출 방지
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // useEffect(() => {
   //   const handleBeforeUnload = (event) => {
   //     event.preventDefault();
@@ -85,7 +88,8 @@ export default function PostAdd() {
     setShowFiles(showFiles.filter((_, index) => index !== id));
   };
 
-  const onValid = (e) => {
+  const onValid = async (e) => {
+    // ---- 사전 검증(기존 alert 그대로 유지) ----
     const MAX_FILE_SIZE_MB = 10;
     const oversizedFile = files.find(
       (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
@@ -100,24 +104,33 @@ export default function PostAdd() {
       alert("내용을 작성해주세요.");
       return;
     }
+    if (isSubmitting) return; // 중복 제출 가드
 
-    const formData = new FormData();
-    const jsonData = JSON.stringify({
-      title: e.Title,
-      content: content,
-      type: e.Category,
-    });
-    formData.append(
-      "request",
-      new Blob([jsonData], { type: "application/json" })
-    );
-    if (files && files.length > 0) {
-      files.forEach((file) => {
-        formData.append("files", file);
+    // ---- 제출 시작 ----
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData();
+      const jsonData = JSON.stringify({
+        title: e.Title,
+        content: content,
+        type: e.Category,
       });
-    }
+      formData.append(
+        "request",
+        new Blob([jsonData], { type: "application/json" })
+      );
+      if (files && files.length > 0) {
+        files.forEach((file) => {
+          formData.append("files", file);
+        });
+      }
 
-    PostNoticesAPI(formData);
+      await PostNoticesAPI(formData);
+      // 필요 시 이동 로직을 여기서 처리 가능
+      // navigate("/notice"); // 원하면 활성화
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const onInvalid = (e) => {
@@ -492,7 +505,7 @@ export default function PostAdd() {
                   }}
                 >
                   <Button
-                    type="primary"
+                    type={isSubmitting ? "disabled" : "primary"}
                     size="small"
                     title="작성 완료"
                     onClick={handleSubmit(onValid, onInvalid)}

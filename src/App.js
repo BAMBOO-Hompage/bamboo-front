@@ -40,6 +40,8 @@ import StudyPost from "./tabs/study/studyPost.tsx";
 import StudyAdd from "./tabs/study/studyAdd.tsx";
 import StudyEdit from "./tabs/study/studyEdit.tsx";
 import StudyRecruitment from "./tabs/study/studyRecruitment.tsx";
+import StudyRecruitmentAdd from "./tabs/study/studyRecruitmentAdd.tsx";
+import StudyRecruitmentPost from "./tabs/study/studyRecruitmentPost.tsx";
 
 import "./App.css";
 
@@ -93,6 +95,14 @@ function App() {
           <Route path="/studyAdd" element={<StudyAdd />} />
           <Route path="/studyEdit" element={<StudyEdit />} />
           <Route path="/studyRecruitment" element={<StudyRecruitment />} />
+          <Route
+            path="/studyRecruitmentAdd"
+            element={<StudyRecruitmentAdd />}
+          />
+          <Route
+            path="/studyRecruitmentPost"
+            element={<StudyRecruitmentPost />}
+          />
         </Routes>
       </div>
     </BrowserRouter>

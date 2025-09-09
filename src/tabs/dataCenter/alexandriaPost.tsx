@@ -83,9 +83,21 @@ export default function AlexandriaPost() {
   const [openCommentEdit, setOpenCommentEdit] = useState(0);
   const [commentEdit, setCommentEdit] = useState("");
   const [previewImage, setPreviewImage] = useState("");
-  const [paperCommentsToDisplay, setPaperCommentsToDisplay] = useState([]);
+  const [paperCommentsToDisplay, setPaperCommentsToDisplay] = useState<any[]>(
+    []
+  );
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  // ✅ 중복 제출 방지 플래그들
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false); // 댓글 등록
+  const [submittingReplyId, setSubmittingReplyId] = useState<number | null>(
+    null
+  ); // 대댓글 등록 (해당 commentId)
+  const [submittingEditId, setSubmittingEditId] = useState<number | null>(null); // 댓글/대댓글 수정 (해당 commentId)
+  const [deletingCommentId, setDeletingCommentId] = useState<number | null>(
+    null
+  ); // 댓글/대댓글 삭제 (해당 commentId)
 
   const startPage =
     Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
@@ -105,6 +117,15 @@ export default function AlexandriaPost() {
     setCurrentPage(page);
   };
 
+  const refetchCommentsForCurrentPage = async () => {
+    const paperCommentsResult = await GetPaperCommentsAPI(
+      searchParams.get("id"),
+      currentPage
+    );
+    setPaperCommentsToDisplay(paperCommentsResult.content);
+    setTotalPages(paperCommentsResult.totalPages);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -122,7 +143,7 @@ export default function AlexandriaPost() {
     };
 
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, searchParams]);
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
@@ -142,54 +163,115 @@ export default function AlexandriaPost() {
     });
   }, []);
 
+  // ✅ 댓글 등록
   const postComments = async () => {
+    if (isSubmittingComment) return;
+    if (!comment.trim()) {
+      alert("내용을 작성해주세요.");
+      return;
+    }
+    setIsSubmittingComment(true);
     try {
       await PostPaperCommentsAPI(paperData.libraryPostId, comment);
-      const paperCommentsResult = await GetPaperCommentsAPI(
+
+      // 페이지 총수 갱신 후, 마지막 페이지로 이동하여 최신 댓글 보이기
+      const first = await GetPaperCommentsAPI(
         searchParams.get("id"),
         currentPage
       );
-      setTotalPages(paperCommentsResult.totalPages);
-      const newPaperCommentsResult = await GetPaperCommentsAPI(
+      setTotalPages(first.totalPages);
+      const last = await GetPaperCommentsAPI(
         searchParams.get("id"),
-        paperCommentsResult.totalPages
+        first.totalPages
       );
-      setCurrentPage(paperCommentsResult.totalPages);
-      setPaperCommentsToDisplay(newPaperCommentsResult.content);
+      setCurrentPage(first.totalPages);
+      setPaperCommentsToDisplay(last.content);
       setComment("");
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
+    } finally {
+      setIsSubmittingComment(false);
     }
   };
-  const postReplies = async (parentId) => {
+
+  // ✅ 대댓글 등록
+  const postReplies = async (parentId: number) => {
+    if (submittingReplyId !== null) return; // 다른 reply 처리 중
+    if (!reply.trim()) {
+      alert("내용을 작성해주세요.");
+      return;
+    }
+    setSubmittingReplyId(parentId);
     try {
       await PostPaperRepliesAPI(paperData.libraryPostId, parentId, reply);
-      const paperCommentsResult = await GetPaperCommentsAPI(
-        searchParams.get("id"),
-        currentPage
-      );
-      setPaperCommentsToDisplay(paperCommentsResult.content);
+      await refetchCommentsForCurrentPage();
       setOpenReply(0);
       setReply("");
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
+    } finally {
+      setSubmittingReplyId(null);
     }
   };
-  const putComments = async (commentId) => {
+
+  // ✅ 댓글/대댓글 수정
+  const putComments = async (commentId: number) => {
+    if (submittingEditId !== null) return; // 다른 수정 처리 중
+    if (!commentEdit.trim()) {
+      alert("내용을 작성해주세요.");
+      return;
+    }
+    setSubmittingEditId(commentId);
     try {
       await PutPaperCommentsAPI(
         paperData.libraryPostId,
         commentId,
         commentEdit
       );
-      const paperCommentsResult = await GetPaperCommentsAPI(
+      await refetchCommentsForCurrentPage();
+      setOpenCommentEdit(0);
+      setCommentEdit("");
+    } catch (error) {
+      console.error("API 호출 중 오류 발생:", error);
+    } finally {
+      setSubmittingEditId(null);
+    }
+  };
+
+  // ✅ 댓글/대댓글 삭제
+  const deleteComment = async (commentId: number) => {
+    if (deletingCommentId !== null) return; // 다른 삭제 처리 중
+    const deleteConfirm = window.confirm("댓글을 삭제하시겠습니까?");
+    if (!deleteConfirm) return;
+
+    setDeletingCommentId(commentId);
+    try {
+      await DeletePaperCommentsAPI(paperData.libraryPostId, commentId);
+
+      // 삭제 후 현재 페이지의 댓글 다시 가져오기
+      const res = await GetPaperCommentsAPI(
         searchParams.get("id"),
         currentPage
       );
-      setPaperCommentsToDisplay(paperCommentsResult.content);
-      setComment("");
+
+      // 현재 페이지에 댓글이 하나도 없고, 페이지가 1보다 크다면 이전 페이지로 이동
+      if (res.content.length === 0 && currentPage > 1) {
+        const prevPage = currentPage - 1;
+        setCurrentPage(prevPage);
+        const prevRes = await GetPaperCommentsAPI(
+          searchParams.get("id"),
+          prevPage
+        );
+        setPaperCommentsToDisplay(prevRes.content);
+        setTotalPages(prevRes.totalPages);
+      } else {
+        setPaperCommentsToDisplay(res.content);
+        setTotalPages(res.totalPages);
+      }
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
+    } finally {
+      setDeletingCommentId(null);
     }
   };
 
@@ -264,11 +346,12 @@ export default function AlexandriaPost() {
                   type="destructive"
                   size="xsmall"
                   title="삭제"
-                  onClick={() => {
+                  onClick={async () => {
+                    // 게시글 삭제는 요청에 없었지만 그대로 유지
                     const deleteConfirm =
                       window.confirm("게시물을 삭제하시겠습니까?");
                     if (deleteConfirm) {
-                      DeletePapersAPI(paperData.libraryPostId);
+                      await DeletePapersAPI(paperData.libraryPostId);
                     }
                   }}
                 />
@@ -579,7 +662,7 @@ export default function AlexandriaPost() {
                     >
                       댓글 {paperData.commentCount}개
                     </div>
-                    {paperCommentsToDisplay.map((paperComment) => (
+                    {paperCommentsToDisplay.map((paperComment: any) => (
                       <div
                         key={paperComment.commentId}
                         style={{ padding: "15px 0 0" }}
@@ -622,13 +705,17 @@ export default function AlexandriaPost() {
                                 }}
                               >
                                 <Button
-                                  type="primary"
+                                  type={
+                                    submittingEditId === paperComment.commentId
+                                      ? "disabled"
+                                      : "primary"
+                                  }
                                   size="small"
                                   title="댓글 등록"
                                   onClick={() => {
+                                    if (submittingEditId !== null) return;
                                     if (commentEdit) {
                                       putComments(paperComment.commentId);
-                                      setOpenCommentEdit(0);
                                     } else {
                                       alert("내용을 작성해주세요.");
                                     }
@@ -716,9 +803,7 @@ export default function AlexandriaPost() {
                               >
                                 {checkAuth >= 1 ? (
                                   <span
-                                    style={{
-                                      cursor: "pointer",
-                                    }}
+                                    style={{ cursor: "pointer" }}
                                     onMouseEnter={(e) => {
                                       e.currentTarget.style.fontWeight = "600";
                                       e.currentTarget.style.textDecoration =
@@ -748,9 +833,7 @@ export default function AlexandriaPost() {
                                   <>
                                     &nbsp;&nbsp;|&nbsp;&nbsp;
                                     <span
-                                      style={{
-                                        cursor: "pointer",
-                                      }}
+                                      style={{ cursor: "pointer" }}
                                       onMouseEnter={(e) => {
                                         e.currentTarget.style.fontWeight =
                                           "600";
@@ -781,9 +864,7 @@ export default function AlexandriaPost() {
                                   <>
                                     &nbsp;&nbsp;|&nbsp;&nbsp;
                                     <span
-                                      style={{
-                                        cursor: "pointer",
-                                      }}
+                                      style={{ cursor: "pointer" }}
                                       onMouseEnter={(e) => {
                                         e.currentTarget.style.fontWeight =
                                           "600";
@@ -797,19 +878,14 @@ export default function AlexandriaPost() {
                                           "none";
                                       }}
                                       onClick={() => {
-                                        const deleteConfirm =
-                                          window.confirm(
-                                            "댓글을 삭제하시겠습니까?"
-                                          );
-                                        if (deleteConfirm) {
-                                          DeletePaperCommentsAPI(
-                                            paperData.libraryPostId,
-                                            paperComment.commentId
-                                          );
-                                        }
+                                        if (deletingCommentId !== null) return;
+                                        deleteComment(paperComment.commentId);
                                       }}
                                     >
-                                      삭제
+                                      {deletingCommentId ===
+                                      paperComment.commentId
+                                        ? "삭제 중..."
+                                        : "삭제"}
                                     </span>
                                   </>
                                 ) : (
@@ -885,10 +961,15 @@ export default function AlexandriaPost() {
                                 }}
                               >
                                 <Button
-                                  type="primary"
+                                  type={
+                                    submittingReplyId === paperComment.commentId
+                                      ? "disabled"
+                                      : "primary"
+                                  }
                                   size="small"
                                   title="댓글 등록"
                                   onClick={() => {
+                                    if (submittingReplyId !== null) return;
                                     if (reply) {
                                       postReplies(paperComment.commentId);
                                     } else {
@@ -934,7 +1015,7 @@ export default function AlexandriaPost() {
                         )}
                         {paperComment.children.length > 0 ? (
                           <>
-                            {paperComment.children.map((paperReply) => (
+                            {paperComment.children.map((paperReply: any) => (
                               <div
                                 key={paperReply.commentId}
                                 style={{
@@ -982,13 +1063,19 @@ export default function AlexandriaPost() {
                                         }}
                                       >
                                         <Button
-                                          type="primary"
+                                          type={
+                                            submittingEditId ===
+                                            paperReply.commentId
+                                              ? "disabled"
+                                              : "primary"
+                                          }
                                           size="small"
                                           title="댓글 등록"
                                           onClick={() => {
+                                            if (submittingEditId !== null)
+                                              return;
                                             if (commentEdit) {
                                               putComments(paperReply.commentId);
-                                              setOpenCommentEdit(0);
                                             } else {
                                               alert("내용을 작성해주세요.");
                                             }
@@ -1048,13 +1135,10 @@ export default function AlexandriaPost() {
                                         }}
                                       >
                                         <img
-                                          // src={
-                                          //   paperReply.member.profileImageUrl
-                                          //     ? paperReply.member
-                                          //         .profileImageUrl
-                                          //     : "../img/icon/base_profile.png"
-                                          // }
-                                          src="../img/icon/base_profile.png"
+                                          src={
+                                            // paperReply.member?.profileImageUrl ?? "../img/icon/base_profile.png"
+                                            "../img/icon/base_profile.png"
+                                          }
                                           alt="profile"
                                           style={{
                                             width: "30px",
@@ -1080,9 +1164,7 @@ export default function AlexandriaPost() {
                                         paperReply.memberId ? (
                                           <>
                                             <span
-                                              style={{
-                                                cursor: "pointer",
-                                              }}
+                                              style={{ cursor: "pointer" }}
                                               onMouseEnter={(e) => {
                                                 e.currentTarget.style.fontWeight =
                                                   "600";
@@ -1116,9 +1198,7 @@ export default function AlexandriaPost() {
                                           <>
                                             &nbsp;&nbsp;|&nbsp;&nbsp;
                                             <span
-                                              style={{
-                                                cursor: "pointer",
-                                              }}
+                                              style={{ cursor: "pointer" }}
                                               onMouseEnter={(e) => {
                                                 e.currentTarget.style.fontWeight =
                                                   "600";
@@ -1132,19 +1212,17 @@ export default function AlexandriaPost() {
                                                   "none";
                                               }}
                                               onClick={() => {
-                                                const deleteConfirm =
-                                                  window.confirm(
-                                                    "댓글을 삭제하시겠습니까?"
-                                                  );
-                                                if (deleteConfirm) {
-                                                  DeletePaperCommentsAPI(
-                                                    paperData.libraryPostId,
-                                                    paperReply.commentId
-                                                  );
-                                                }
+                                                if (deletingCommentId !== null)
+                                                  return;
+                                                deleteComment(
+                                                  paperReply.commentId
+                                                );
                                               }}
                                             >
-                                              삭제
+                                              {deletingCommentId ===
+                                              paperReply.commentId
+                                                ? "삭제 중..."
+                                                : "삭제"}
                                             </span>
                                           </>
                                         ) : (
@@ -1208,28 +1286,22 @@ export default function AlexandriaPost() {
                   >
                     <button
                       className="bottom_btn"
-                      style={{}}
                       onClick={() => changePage(1)}
                     >
                       <img
                         src="../img/btn/pageStart.png"
                         alt="pageStart"
-                        style={{
-                          height: "12px",
-                        }}
+                        style={{ height: "12px" }}
                       />
                     </button>
                     <button
                       className="bottom_btn"
-                      style={{}}
                       onClick={() => changePage(currentPage - 1)}
                     >
                       <img
                         src="../img/btn/pagePrev.png"
                         alt="pagePrev"
-                        style={{
-                          height: "12px",
-                        }}
+                        style={{ height: "12px" }}
                       />
                     </button>
                     {Array.from(
@@ -1254,28 +1326,22 @@ export default function AlexandriaPost() {
                     ))}
                     <button
                       className="bottom_btn"
-                      style={{}}
                       onClick={() => changePage(currentPage + 1)}
                     >
                       <img
                         src="../img/btn/pageNext.png"
                         alt="pageNext"
-                        style={{
-                          height: "12px",
-                        }}
+                        style={{ height: "12px" }}
                       />
                     </button>
                     <button
                       className="bottom_btn"
-                      style={{}}
                       onClick={() => changePage(totalPages)}
                     >
                       <img
                         src="../img/btn/pageEnd.png"
                         alt="pageNext"
-                        style={{
-                          height: "12px",
-                        }}
+                        style={{ height: "12px" }}
                       />
                     </button>
                   </div>
@@ -1321,10 +1387,11 @@ export default function AlexandriaPost() {
                       </div>
                       <div style={{ display: comment.trim() ? "" : "none" }}>
                         <Button
-                          type="primary"
+                          type={isSubmittingComment ? "disabled" : "primary"}
                           size="small"
                           title="댓글 등록"
                           onClick={() => {
+                            if (isSubmittingComment) return;
                             if (comment) {
                               postComments();
                             } else {
