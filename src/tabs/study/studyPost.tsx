@@ -1161,7 +1161,13 @@ export default function StudyPost() {
                                 }}
                               >
                                 📖 {curriculum.week}주차{" "}
-                                <span>
+                                <span
+                                  style={{
+                                    fontFamily: "Pretendard-SemiBold",
+                                    fontSize: "clamp(10px, 1.8vw, 16px)",
+                                    color: "#2cc295",
+                                  }}
+                                >
                                   (
                                   {curriculum.startDate[0] +
                                     "/" +
@@ -1283,9 +1289,13 @@ export default function StudyPost() {
                                 color: "#fff",
                               }}
                             >
-                              (p.
-                              {curriculum.startPage} ~ p.{curriculum.endPage})
-                              &nbsp;{curriculum.content}
+                              {curriculum.content}&nbsp;
+                              <span
+                                style={{ fontSize: "clamp(10px, 1.5vw, 14px)" }}
+                              >
+                                (p.
+                                {curriculum.startPage} ~ p.{curriculum.endPage})
+                              </span>
                             </div>
                           </div>
                         );
