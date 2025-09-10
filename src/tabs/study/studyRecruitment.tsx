@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
+import LockedPagePrepare from "../../components/lockedPagePrepare.tsx";
 import "../../App.css";
 
 type StudyRecruitmentItem = {
@@ -85,7 +86,8 @@ export default function StudyRecruitment() {
           whileInView={{ opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 1 }}
         >
-          <div
+          <LockedPagePrepare />
+          {/* <div
             style={{
               position: "relative",
               maxWidth: "1000px",
@@ -306,7 +308,7 @@ export default function StudyRecruitment() {
                 </div>
               )}
             </motion.div>
-          </div>
+          </div> */}
         </motion.div>
         <BottomInfo />
       </div>

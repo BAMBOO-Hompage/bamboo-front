@@ -333,7 +333,7 @@ export default function HallOfFame() {
               <div
                 style={{
                   margin: "0 auto",
-                  fontFamily: "Pretendard-ExtraBold",
+                  fontFamily: "Pretendard-Bold",
                   fontSize: "70px",
                   color: "#2cc295",
                 }}
@@ -368,7 +368,7 @@ export default function HallOfFame() {
                   color: "#777",
                 }}
               >
-                BEST OF THE WEEK
+                BEST OF THE SEASON
               </div>
               <div
                 style={{

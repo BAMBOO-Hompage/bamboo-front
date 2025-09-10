@@ -1639,6 +1639,7 @@ export default function CurriculumManagement() {
           }}
         />
       )}
+
       {isEndPopupOpen && (
         <form
           style={{

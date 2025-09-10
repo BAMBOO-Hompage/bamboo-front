@@ -93,7 +93,7 @@ export default function JoinUs() {
                         marginBottom: "30px",
                       }}
                     >
-                      6기 모집이 마감되었습니다.
+                      7기 모집이 마감되었습니다.
                     </div>
                     <div
                       style={{
@@ -136,7 +136,7 @@ export default function JoinUs() {
                     padding: "0 32px",
                   }}
                 >
-                  6기 모집 공고
+                  7기 모집 공고
                 </div>
                 <hr
                   style={{
