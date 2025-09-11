@@ -19,7 +19,6 @@ import DeletePaperCommentsAPI from "../../api/library-posts/deletePaperCommentsA
 import PutPaperCommentsAPI from "../../api/library-posts/putPaperCommentsAPI.tsx";
 
 import "../../App.css";
-// import "../../style/Post.css";`
 
 type MyDataType = {
   memberId: number;
@@ -49,9 +48,7 @@ const maxVisiblePages = 5;
 
 export default function AlexandriaPost() {
   const sanitizer = dompurify.sanitize;
-
   const [searchParams, setSearchParams] = useSearchParams();
-  // const currentPage = parseInt(searchParams.get("commentPage") || "1", 10);
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
   const [myData, setMyData] = useState<MyDataType>({
@@ -89,15 +86,14 @@ export default function AlexandriaPost() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  // ✅ 중복 제출 방지 플래그들
-  const [isSubmittingComment, setIsSubmittingComment] = useState(false); // 댓글 등록
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [submittingReplyId, setSubmittingReplyId] = useState<number | null>(
     null
-  ); // 대댓글 등록 (해당 commentId)
-  const [submittingEditId, setSubmittingEditId] = useState<number | null>(null); // 댓글/대댓글 수정 (해당 commentId)
+  );
+  const [submittingEditId, setSubmittingEditId] = useState<number | null>(null);
   const [deletingCommentId, setDeletingCommentId] = useState<number | null>(
     null
-  ); // 댓글/대댓글 삭제 (해당 commentId)
+  );
 
   const startPage =
     Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
@@ -141,7 +137,6 @@ export default function AlexandriaPost() {
         console.error("API 호출 중 오류 발생:", error);
       }
     };
-
     fetchData();
   }, [currentPage, searchParams]);
 
@@ -163,7 +158,7 @@ export default function AlexandriaPost() {
     });
   }, []);
 
-  // ✅ 댓글 등록
+  // 댓글 등록
   const postComments = async () => {
     if (isSubmittingComment) return;
     if (!comment.trim()) {
@@ -174,7 +169,6 @@ export default function AlexandriaPost() {
     try {
       await PostPaperCommentsAPI(paperData.libraryPostId, comment);
 
-      // 페이지 총수 갱신 후, 마지막 페이지로 이동하여 최신 댓글 보이기
       const first = await GetPaperCommentsAPI(
         searchParams.get("id"),
         currentPage
@@ -186,6 +180,13 @@ export default function AlexandriaPost() {
       );
       setCurrentPage(first.totalPages);
       setPaperCommentsToDisplay(last.content);
+
+      // 수정: 댓글 개수 증가
+      setPaperData((prev) => ({
+        ...prev,
+        commentCount: prev.commentCount + 1,
+      }));
+
       setComment("");
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
@@ -194,9 +195,9 @@ export default function AlexandriaPost() {
     }
   };
 
-  // ✅ 대댓글 등록
+  // 대댓글 등록
   const postReplies = async (parentId: number) => {
-    if (submittingReplyId !== null) return; // 다른 reply 처리 중
+    if (submittingReplyId !== null) return;
     if (!reply.trim()) {
       alert("내용을 작성해주세요.");
       return;
@@ -205,6 +206,13 @@ export default function AlexandriaPost() {
     try {
       await PostPaperRepliesAPI(paperData.libraryPostId, parentId, reply);
       await refetchCommentsForCurrentPage();
+
+      // 수정: 댓글 개수 증가
+      setPaperData((prev) => ({
+        ...prev,
+        commentCount: prev.commentCount + 1,
+      }));
+
       setOpenReply(0);
       setReply("");
     } catch (error) {
@@ -214,9 +222,9 @@ export default function AlexandriaPost() {
     }
   };
 
-  // ✅ 댓글/대댓글 수정
+  // 댓글/대댓글 수정
   const putComments = async (commentId: number) => {
-    if (submittingEditId !== null) return; // 다른 수정 처리 중
+    if (submittingEditId !== null) return;
     if (!commentEdit.trim()) {
       alert("내용을 작성해주세요.");
       return;
@@ -238,36 +246,44 @@ export default function AlexandriaPost() {
     }
   };
 
-  // ✅ 댓글/대댓글 삭제
+  // 댓글/대댓글 삭제
   const deleteComment = async (commentId: number) => {
-    if (deletingCommentId !== null) return; // 다른 삭제 처리 중
+    if (deletingCommentId !== null) return;
     const deleteConfirm = window.confirm("댓글을 삭제하시겠습니까?");
     if (!deleteConfirm) return;
 
     setDeletingCommentId(commentId);
     try {
       await DeletePaperCommentsAPI(paperData.libraryPostId, commentId);
-
-      // 삭제 후 현재 페이지의 댓글 다시 가져오기
       const res = await GetPaperCommentsAPI(
         searchParams.get("id"),
         currentPage
       );
 
-      // 현재 페이지에 댓글이 하나도 없고, 페이지가 1보다 크다면 이전 페이지로 이동
-      if (res.content.length === 0 && currentPage > 1) {
-        const prevPage = currentPage - 1;
-        setCurrentPage(prevPage);
-        const prevRes = await GetPaperCommentsAPI(
-          searchParams.get("id"),
-          prevPage
-        );
-        setPaperCommentsToDisplay(prevRes.content);
-        setTotalPages(prevRes.totalPages);
+      if (res.content.length === 0) {
+        if (currentPage > 1) {
+          const prevPage = currentPage - 1;
+          setCurrentPage(prevPage);
+          const prevRes = await GetPaperCommentsAPI(
+            searchParams.get("id"),
+            prevPage
+          );
+          setPaperCommentsToDisplay(prevRes.content);
+          setTotalPages(prevRes.totalPages);
+        } else {
+          setPaperCommentsToDisplay([]);
+          setTotalPages(1);
+        }
       } else {
         setPaperCommentsToDisplay(res.content);
         setTotalPages(res.totalPages);
       }
+
+      // 수정: 댓글 개수 감소
+      setPaperData((prev) => ({
+        ...prev,
+        commentCount: Math.max(prev.commentCount - 1, 0),
+      }));
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
     } finally {
@@ -287,9 +303,7 @@ export default function AlexandriaPost() {
             ease: "easeInOut",
             duration: 1,
           }}
-          style={{
-            width: "100%",
-          }}
+          style={{ width: "100%" }}
         >
           <div
             style={{
@@ -1136,7 +1150,7 @@ export default function AlexandriaPost() {
                                       >
                                         <img
                                           src={
-                                            /* 🔧 FIX: 대댓글 프로필 이미지가 항상 기본 이미지로 보이던 문제 수정
+                                            /* 수정  대댓글 프로필 이미지가 항상 기본 이미지로 보이던 문제 수정
                                                - 기존: 하드코딩된 "../img/icon/base_profile.png"
                                                - 변경: 백엔드에서 내려주는 paperReply.writerImageUrl를 우선 사용하고,
                                                        없으면 기본 이미지를 fallback으로 사용 */
