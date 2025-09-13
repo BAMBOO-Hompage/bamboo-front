@@ -487,7 +487,7 @@ export default function CurriculumStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 140}
+                                    y={y - 190 / 2 + 120}
                                     fontFamily="Pretendard-Regular"
                                     fontSize="15px"
                                     fill="#777"
@@ -508,7 +508,7 @@ export default function CurriculumStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 160}
+                                    y={y - 190 / 2 + 140}
                                     fontFamily="Pretendard-Regular"
                                     fontSize="15px"
                                     fill="#777"
@@ -522,6 +522,26 @@ export default function CurriculumStudy() {
                                           study.studyMaster.studentId
                                       )
                                       .slice(2, 5)
+                                      .map(
+                                        (studyMember) => `${studyMember.name} `
+                                      )}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 160}
+                                    fontFamily="Pretendard-Regular"
+                                    fontSize="15px"
+                                    fill="#777"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {study.studyMembers
+                                      .filter(
+                                        (member) =>
+                                          member.studentId !==
+                                          study.studyMaster.studentId
+                                      )
+                                      .slice(5, 8)
                                       .map(
                                         (studyMember) => `${studyMember.name} `
                                       )}
@@ -589,7 +609,7 @@ export default function CurriculumStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 140}
+                                    y={y - 190 / 2 + 120}
                                     fontFamily="Pretendard-Regular"
                                     fontSize="15px"
                                     fill="#777"
@@ -610,7 +630,7 @@ export default function CurriculumStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 160}
+                                    y={y - 190 / 2 + 140}
                                     fontFamily="Pretendard-Regular"
                                     fontSize="15px"
                                     fill="#777"
@@ -624,6 +644,26 @@ export default function CurriculumStudy() {
                                           study.studyMaster.studentId
                                       )
                                       .slice(2, 5)
+                                      .map(
+                                        (studyMember) => `${studyMember.name} `
+                                      )}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 160}
+                                    fontFamily="Pretendard-Regular"
+                                    fontSize="15px"
+                                    fill="#777"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {study.studyMembers
+                                      .filter(
+                                        (member) =>
+                                          member.studentId !==
+                                          study.studyMaster.studentId
+                                      )
+                                      .slice(5, 8)
                                       .map(
                                         (studyMember) => `${studyMember.name} `
                                       )}

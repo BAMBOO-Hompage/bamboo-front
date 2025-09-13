@@ -1180,7 +1180,7 @@ export default function StudyPost() {
                                     curriculum.endDate[1] +
                                     "/" +
                                     curriculum.endDate[2]}
-                                  )
+                                  )oqur
                                 </span>
                               </div>
                               {(myData.memberId === parseInt(postList) ||
