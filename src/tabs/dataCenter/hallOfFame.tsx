@@ -661,9 +661,7 @@ export default function HallOfFame() {
                       flexBasis: "120px",
                       minWidth: "60px",
                     }}
-                  >
-                    주차
-                  </div>
+                  ></div>
                   {curriculumSubjects?.map((subject, index) => (
                     <div
                       key={subject.subjectId}
@@ -686,7 +684,7 @@ export default function HallOfFame() {
                   }}
                 />
 
-                {groupedAwards.map((awards, index) => (
+                {["중간", "기말"].map((label, index) => (
                   <div
                     key={index}
                     style={{
@@ -712,11 +710,12 @@ export default function HallOfFame() {
                         alignItems: "center",
                       }}
                     >
-                      {index + 1}
+                      {label}
                     </div>
+
                     {/* 과목별 award 표시 */}
                     {curriculumSubjects.map((subject) => {
-                      const matchedAward = awards.find(
+                      const matchedAward = groupedAwards[label]?.find(
                         (award) => award.study.subjectName === subject.name
                       );
                       return (
@@ -740,7 +739,7 @@ export default function HallOfFame() {
                               <div>{matchedAward.writerName}</div>
                             </Link>
                           ) : (
-                            <div>-</div>
+                            <div>&nbsp;</div> // 빈칸 (공백)
                           )}
                         </div>
                       );
@@ -771,19 +770,64 @@ export default function HallOfFame() {
               zIndex: 1000,
             }}
           >
+            {/* 중간 / 기말 선택 (URL 위, 가운데 정렬) */}
             <div
               style={{
-                marginBottom: "10px",
+                width: "100%",
+                marginBottom: "25px",
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                justifyContent: "center", // 가운데 정렬
+                gap: "40px",
+                color: "#fff",
                 fontFamily: "Pretendard-Regular",
-                fontSize: "18px",
+                fontSize: "16px",
+              }}
+            >
+              <label
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
+                <input
+                  type="radio"
+                  value="중간"
+                  {...register("week", { required: true })}
+                  style={{
+                    accentColor: "#2cc295", // 체크 색상 (초록색)
+                    width: "16px",
+                    height: "16px",
+                    cursor: "pointer",
+                  }}
+                />
+                중간
+              </label>
+              <label
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
+                <input
+                  type="radio"
+                  value="기말"
+                  {...register("week", { required: true })}
+                  style={{
+                    accentColor: "#2cc295", // 체크 색상 (초록색)
+                    width: "16px",
+                    height: "16px",
+                    cursor: "pointer",
+                  }}
+                />
+                기말
+              </label>
+            </div>
+
+            {/* URL 입력 */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
                 gap: "10px",
+                marginBottom: "10px",
               }}
             >
               <div style={{ width: "200px", color: "#fff" }}>·&emsp;URL</div>
-              <div style={{ width: "100%" }}>
+              <div style={{ flex: 1 }}>
                 <input
                   id="url"
                   type="text"
@@ -793,7 +837,6 @@ export default function HallOfFame() {
                     required: `URL을 입력해주세요.`,
                   })}
                   style={{
-                    flex: "1",
                     width: "100%",
                     minWidth: "150px",
                     height: "40px",

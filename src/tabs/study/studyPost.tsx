@@ -294,11 +294,7 @@ export default function StudyPost() {
       try {
         const studyResult = await GetStudyAPI(searchParams.get("id"));
         setPostData(studyResult);
-        setSearchParams({
-          id: postId.toString(),
-          member: studyResult.studyMaster.memberId.toString(),
-          week: currentPage.toString(),
-        });
+
         const targetSubject = studyResult.cohort.subjects.find(
           (subject) => subject.name === studyResult.subjectName
         );
