@@ -211,7 +211,7 @@ export default function AlexandriaAdd() {
             <div style={{ marginBottom: "40px", textAlign: "center" }}>
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -222,7 +222,7 @@ export default function AlexandriaAdd() {
               </div>
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "12px",
                   color: "#888",
                 }}
@@ -268,7 +268,7 @@ export default function AlexandriaAdd() {
                       height: "40px",
                       backgroundColor: "transparent",
                       borderRadius: "10px",
-                      fontFamily: "Pretendard-Bold",
+                      fontFamily: "Paperozi-Semibold",
                       fontSize: "28px",
                     }}
                   />
@@ -282,7 +282,7 @@ export default function AlexandriaAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -307,7 +307,7 @@ export default function AlexandriaAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -321,7 +321,7 @@ export default function AlexandriaAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -347,7 +347,7 @@ export default function AlexandriaAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -361,7 +361,7 @@ export default function AlexandriaAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -386,7 +386,7 @@ export default function AlexandriaAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -400,7 +400,7 @@ export default function AlexandriaAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -423,7 +423,7 @@ export default function AlexandriaAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -437,7 +437,7 @@ export default function AlexandriaAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "16px",
                   }}
                 >
@@ -453,7 +453,7 @@ export default function AlexandriaAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
@@ -511,7 +511,7 @@ export default function AlexandriaAdd() {
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              fontFamily: "Pretendard-Light",
+                              fontFamily: "Paperozi-Light",
                               fontSize: "16px",
                             }}
                           >

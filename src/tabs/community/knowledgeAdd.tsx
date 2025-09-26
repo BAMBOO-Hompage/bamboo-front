@@ -154,7 +154,7 @@ export default function KnowledgeAdd() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -165,7 +165,7 @@ export default function KnowledgeAdd() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -204,7 +204,7 @@ export default function KnowledgeAdd() {
               <div
                 style={{
                   width: "100%",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                 }}
@@ -220,7 +220,7 @@ export default function KnowledgeAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -234,7 +234,7 @@ export default function KnowledgeAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       display: "flex",
                       alignItems: "center",
@@ -248,7 +248,7 @@ export default function KnowledgeAdd() {
                         backgroundColor: "transparent",
                         borderRadius: "20px",
                         border: "none",
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Paperozi-Light",
                         fontSize: "18px",
                         color:
                           selectedCategory === "카테고리 선택"
@@ -311,7 +311,7 @@ export default function KnowledgeAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -332,7 +332,7 @@ export default function KnowledgeAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -345,7 +345,7 @@ export default function KnowledgeAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "16px",
                   }}
                 >
@@ -362,7 +362,7 @@ export default function KnowledgeAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
@@ -421,7 +421,7 @@ export default function KnowledgeAdd() {
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              fontFamily: "Pretendard-Light",
+                              fontFamily: "Paperozi-Light",
                               fontSize: "16px",
                               marginBottom: "10px",
                             }}
@@ -463,7 +463,7 @@ export default function KnowledgeAdd() {
                     marginBottom: "20px",
                     display: "flex",
                     justifyContent: "space-between",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                   }}
                 >

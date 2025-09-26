@@ -209,7 +209,7 @@ export default function Signup() {
         style={{
           paddingTop: "20vh",
           marginBottom: "60px",
-          fontFamily: "Pretendard-ExtraBold",
+          fontFamily: "Paperozi-ExtraBold",
           fontSize: "clamp(26px, 3.8vw, 30px)",
         }}
       >
@@ -243,7 +243,7 @@ export default function Signup() {
                 htmlFor="studentNum"
                 style={{
                   display: "inline-block",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "clamp(14px, 2.2vw, 18px)",
                   color: "#fff",
                   width: "120px",
@@ -281,7 +281,7 @@ export default function Signup() {
                 style={{
                   width: "90px",
                   marginRight: "10px",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "12px",
                   color: "#777",
                 }}
@@ -321,7 +321,7 @@ export default function Signup() {
                       style={{
                         display: "block",
                         color: "#fff",
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Paperozi-Light",
                         fontSize: "13px",
                         textAlign: "left",
                       }}
@@ -336,7 +336,7 @@ export default function Signup() {
                   style={{
                     width: "70px",
                     minWidth: "70px",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "12px",
                     backgroundColor: "#2CC295",
                     color: "#fff",
@@ -400,7 +400,7 @@ export default function Signup() {
                     style={{
                       width: "40px",
                       marginRight: "10px",
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Paperozi-Regular",
                       fontSize: "16px",
                       color: "#777",
                     }}
@@ -415,7 +415,7 @@ export default function Signup() {
                     style={{
                       width: "40px",
                       marginRight: "10px",
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Paperozi-Regular",
                       fontSize: "16px",
                       color: "#777",
                     }}
@@ -441,7 +441,7 @@ export default function Signup() {
                     style={{
                       width: "70px",
                       minWidth: "70px",
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Paperozi-Regular",
                       fontSize: "12px",
                       backgroundColor: "#2CC295",
                       color: "#fff",
@@ -493,7 +493,7 @@ export default function Signup() {
                   htmlFor="password"
                   style={{
                     display: "inline-block",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
@@ -579,7 +579,7 @@ export default function Signup() {
                         style={{
                           display: "block",
                           color: "#fff",
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Paperozi-Light",
                           fontSize: "13px",
                           textAlign: "left",
                         }}
@@ -612,7 +612,7 @@ export default function Signup() {
                   htmlFor="rePassword"
                   style={{
                     display: "inline-block",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
@@ -696,7 +696,7 @@ export default function Signup() {
                         style={{
                           display: "block",
                           color: "#fff",
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Paperozi-Light",
                           fontSize: "13px",
                           textAlign: "left",
                         }}
@@ -729,7 +729,7 @@ export default function Signup() {
                   htmlFor="name"
                   style={{
                     display: "inline-block",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
@@ -785,7 +785,7 @@ export default function Signup() {
                         style={{
                           display: "block",
                           color: "#fff",
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Paperozi-Light",
                           fontSize: "13px",
                           textAlign: "left",
                         }}
@@ -818,7 +818,7 @@ export default function Signup() {
                   htmlFor="major"
                   style={{
                     display: "inline-block",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
@@ -838,7 +838,7 @@ export default function Signup() {
                     height: "40px",
                     backgroundColor: "transparent",
                     border: "none",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: selectedMajor === "학과 선택" ? "#777" : "#fff",
                     cursor: "pointer",
@@ -901,7 +901,7 @@ export default function Signup() {
                         style={{
                           display: "block",
                           color: "#fff",
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Paperozi-Light",
                           fontSize: "13px",
                           textAlign: "left",
                         }}
@@ -934,7 +934,7 @@ export default function Signup() {
                   htmlFor="phoneNum"
                   style={{
                     display: "inline-block",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
@@ -999,7 +999,7 @@ export default function Signup() {
                         style={{
                           display: "block",
                           color: "#fff",
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Paperozi-Light",
                           fontSize: "13px",
                           textAlign: "left",
                         }}

@@ -333,7 +333,7 @@ export default function HallOfFame() {
               <div
                 style={{
                   margin: "0 auto",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "70px",
                   color: "#2cc295",
                 }}
@@ -347,7 +347,7 @@ export default function HallOfFame() {
               <div
                 style={{
                   margin: "0 auto",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "20px",
                   color: "#fff",
                 }}
@@ -363,7 +363,7 @@ export default function HallOfFame() {
                   padding: "5px 10px",
                   borderRadius: "15px",
                   backgroundColor: "rgba(17, 16, 21, 0.5)",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "15px",
                   color: "#777",
                 }}
@@ -438,7 +438,7 @@ export default function HallOfFame() {
                                   <div style={{ paddingBottom: "10px" }}>
                                     <div
                                       style={{
-                                        fontFamily: "Pretendard-SemiBold",
+                                        fontFamily: "Paperozi-Semibold",
                                         fontSize: "16px",
                                         color: "#2cc295",
                                       }}
@@ -448,7 +448,7 @@ export default function HallOfFame() {
                                     </div>
                                     <div
                                       style={{
-                                        fontFamily: "Pretendard-SemiBold",
+                                        fontFamily: "Paperozi-Semibold",
                                         fontSize: "20px",
                                         color: "#fff",
                                       }}
@@ -495,7 +495,7 @@ export default function HallOfFame() {
                         <div style={{ marginTop: "60px", textAlign: "left" }}>
                           <div
                             style={{
-                              fontFamily: "Pretendard-SemiBold",
+                              fontFamily: "Paperozi-Semibold",
                               fontSize: "20px",
                               color: "#fff",
                             }}
@@ -517,7 +517,7 @@ export default function HallOfFame() {
                   borderRadius: "15px",
                   backgroundColor: "rgba(17, 16, 21, 0.5)",
                   textAlign: "center",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "14px",
                 }}
               >
@@ -582,7 +582,7 @@ export default function HallOfFame() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Paperozi-Light",
                         fontSize: "18px",
                         color: "#777",
                       }}
@@ -614,7 +614,7 @@ export default function HallOfFame() {
                 {/* <Link to="#" style={{ textDecoration: "none" }}>
                   <div
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Paperozi-Regular",
                       fontSize: "16px",
                       width: "150px",
                       padding: "10px 0",
@@ -649,7 +649,7 @@ export default function HallOfFame() {
                     marginTop: "30px",
                     display: "flex",
                     justifyContent: "space-between",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "16px",
                     color: "#888",
                     textAlign: "center",
@@ -694,7 +694,7 @@ export default function HallOfFame() {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Paperozi-Regular",
                       fontSize: "15px",
                       color: "#fff",
                       textAlign: "center",
@@ -779,7 +779,7 @@ export default function HallOfFame() {
                 justifyContent: "center", // 가운데 정렬
                 gap: "40px",
                 color: "#fff",
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Paperozi-Regular",
                 fontSize: "16px",
               }}
             >
@@ -843,7 +843,7 @@ export default function HallOfFame() {
                     padding: "0 20px",
                     backgroundColor: "#171717",
                     borderRadius: "20px",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                   }}
                 />
@@ -854,7 +854,7 @@ export default function HallOfFame() {
                   style={{
                     width: "70px",
                     minWidth: "70px",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "12px",
                     backgroundColor: "#2CC295",
                     color: "#fff",

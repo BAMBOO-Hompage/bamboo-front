@@ -151,7 +151,7 @@ export default function Alexandria() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Regulagar",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -162,7 +162,7 @@ export default function Alexandria() {
               </div>
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "12px",
                   color: "#888",
                 }}
@@ -209,7 +209,7 @@ export default function Alexandria() {
                       backgroundColor: "transparent",
                       border: "none",
                       borderRadius: "15px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
@@ -270,7 +270,7 @@ export default function Alexandria() {
                       backgroundColor: "transparent",
                       boxShadow: "none",
                       borderRadius: "10px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       display: "flex",
                     }}
@@ -316,7 +316,7 @@ export default function Alexandria() {
                     display: "flex",
                     justifyContent: "right",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#777",
                   }}
@@ -352,7 +352,7 @@ export default function Alexandria() {
                 width: "100%",
                 display: "flex",
                 justifyContent: "space-between",
-                fontFamily: "Pretendard-Light",
+                fontFamily: "Paperozi-Light",
                 fontSize: "16px",
                 color: "#888",
                 gap: "14px",
@@ -374,7 +374,7 @@ export default function Alexandria() {
                     style={{
                       width: "100%",
                       minHeight: "78px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "16px",
                       color: "#fff",
                       display: "flex",
@@ -506,7 +506,7 @@ export default function Alexandria() {
               <div
                 style={{
                   color: "#fff",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "18px",
                   textAlign: "center",
                   padding: "50px 40px",
