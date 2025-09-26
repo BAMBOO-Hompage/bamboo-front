@@ -134,7 +134,7 @@ export default function Main() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "20px",
                   color: "#fff",
                   marginBottom: "10px",
@@ -204,7 +204,7 @@ export default function Main() {
           >
             <span
               style={{
-                fontFamily: "Pretendard-Bold",
+                fontFamily: "Paperozi-Regular",
                 fontSize: "40px",
                 color: "#fff",
                 textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -215,7 +215,7 @@ export default function Main() {
             <br />
             <span
               style={{
-                fontFamily: "Pretendard-Light",
+                fontFamily: "Paperozi-Light",
                 fontSize: "16px",
                 color: "#999",
               }}
@@ -229,7 +229,7 @@ export default function Main() {
               textAlign: "left",
               margin: "0 auto",
               padding: "0 20px",
-              fontFamily: "Pretendard-Light",
+              fontFamily: "Paperozi-Light",
               fontSize: "18px",
               color: "#fff",
               lineHeight: "33px",
@@ -238,7 +238,7 @@ export default function Main() {
             <span
               style={{
                 color: "#2CC295",
-                fontFamily: "Pretendard-SemiBold",
+                fontFamily: "Paperozi-Semibold",
                 fontSize: "20px",
               }}
             >
@@ -255,7 +255,7 @@ export default function Main() {
             <span
               style={{
                 color: "#2CC295",
-                fontFamily: "Pretendard-SemiBold",
+                fontFamily: "Paperozi-Semibold",
                 fontSize: "20px",
               }}
             >
@@ -279,7 +279,7 @@ export default function Main() {
             <Link to="/introduction" style={{ textDecoration: "none" }}>
               <div
                 style={{
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "18px",
                   width: "150px",
                   marginTop: "80px",
@@ -366,7 +366,7 @@ export default function Main() {
             >
               <span
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-regular",
                   fontSize: "40px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -377,7 +377,7 @@ export default function Main() {
               <br />
               <span
                 style={{
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "16px",
                   color: "#999",
                 }}
@@ -391,7 +391,7 @@ export default function Main() {
                 padding: "0 20px",
                 textAlign: "left",
                 margin: "0 auto",
-                fontFamily: "Pretendard-Light",
+                fontFamily: "Paperozi-Light",
                 fontSize: "18px",
                 color: "#fff",
                 lineHeight: "30px",
@@ -400,7 +400,7 @@ export default function Main() {
               <span
                 style={{
                   color: "#2CC295",
-                  fontFamily: "Pretendard-SemiBold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "20px",
                 }}
               >
@@ -446,7 +446,7 @@ export default function Main() {
                 <div
                   style={{
                     margin: "10px 0 35px",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "22px",
                     color: "#fff",
                   }}
@@ -458,7 +458,7 @@ export default function Main() {
                     width: "80%",
                     textAlign: "left",
                     margin: "0 auto",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -503,7 +503,7 @@ export default function Main() {
                 <div
                   style={{
                     margin: "10px 0 35px",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "22px",
                     color: "#fff",
                   }}
@@ -515,7 +515,7 @@ export default function Main() {
                     width: "80%",
                     textAlign: "left",
                     margin: "0 auto",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -559,7 +559,7 @@ export default function Main() {
                 <div
                   style={{
                     margin: "10px 0 35px",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "22px",
                     color: "#fff",
                   }}
@@ -571,7 +571,7 @@ export default function Main() {
                     width: "80%",
                     textAlign: "left",
                     margin: "0 auto",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -605,7 +605,7 @@ export default function Main() {
             <Link to="/activity" style={{ textDecoration: "none" }}>
               <div
                 style={{
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "16px",
                   width: "150px",
                   marginTop: "25px",
@@ -675,7 +675,7 @@ export default function Main() {
             >
               <span
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "40px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -686,7 +686,7 @@ export default function Main() {
               <br />
               <span
                 style={{
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "16px",
                   color: "#999",
                 }}
@@ -744,7 +744,7 @@ export default function Main() {
                           >
                             <div
                               style={{
-                                fontFamily: "Pretendard-Bold",
+                                fontFamily: "Paperozi-Semibold",
                                 fontSize: "40px",
                                 fontWeight: "bold",
                                 marginBottom: "10px",
@@ -781,7 +781,7 @@ export default function Main() {
                                 <div
                                   key={idx}
                                   style={{
-                                    fontFamily: "Pretendard-Light",
+                                    fontFamily: "Paperozi-Light",
                                     fontSize: "16px",
                                     lineHeight: "1.5",
                                     whiteSpace: "nowrap",
@@ -837,7 +837,7 @@ export default function Main() {
                                 <div
                                   key={idx}
                                   style={{
-                                    fontFamily: "Pretendard-Light",
+                                    fontFamily: "Paperozi-Light",
                                     fontSize: "16px",
                                     lineHeight: "1.5",
                                     whiteSpace: "nowrap",
@@ -935,7 +935,7 @@ export default function Main() {
             <Link to="/joinUs" style={{ textDecoration: "none" }}>
               <div
                 style={{
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "18px",
                   width: "150px",
                   margin: "0 auto",

@@ -39,7 +39,7 @@ export default function StudyRecruitmentAdd() {
     backgroundColor: "#111015",
     boxShadow: "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
     borderRadius: "20px",
-    fontFamily: "Pretendard-Light",
+    fontFamily: "Paperozi-Light",
     fontSize: "18px",
     color: "#fff",
   };
@@ -129,7 +129,7 @@ export default function StudyRecruitmentAdd() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                 }}
@@ -163,7 +163,7 @@ export default function StudyRecruitmentAdd() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                   marginBottom: "40px",

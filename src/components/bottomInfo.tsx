@@ -24,7 +24,7 @@ export default function BottomInfo() {
       >
         <div
           style={{
-            fontFamily: "Pretendard-Light",
+            fontFamily: "Paperozi-Light",
             fontSize: "14px",
             color: "#fff",
           }}
@@ -51,7 +51,7 @@ export default function BottomInfo() {
       >
         <div
           style={{
-            fontFamily: "Pretendard-SemiBold",
+            fontFamily: "Paperozi-Semibold",
             fontSize: "18px",
             color: "#fff",
             marginBottom: "20px",
@@ -61,7 +61,7 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Paperozi-Regular",
               fontSize: "14px",
               color: "#fff",
             }}
@@ -72,7 +72,7 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Paperozi-Regular",
               fontSize: "14px",
               color: "#fff",
             }}
@@ -84,7 +84,7 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Paperozi-Regular",
               fontSize: "14px",
               color: "#fff",
             }}
@@ -99,7 +99,7 @@ export default function BottomInfo() {
         </div>
         <div
           style={{
-            fontFamily: "Pretendard-SemiBold",
+            fontFamily: "Paperozi-Semibold",
             fontSize: "18px",
             color: "#fff",
           }}
@@ -108,7 +108,7 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Paperozi-Regular",
               fontSize: "14px",
               color: "#fff",
               lineHeight: "1",
@@ -122,7 +122,7 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Paperozi-Regular",
               fontSize: "14px",
               color: "#fff",
               lineHeight: "1",
@@ -136,7 +136,7 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Paperozi-Regular",
               fontSize: "14px",
               color: "#fff",
               lineHeight: "1",

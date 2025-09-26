@@ -475,7 +475,7 @@ export default function StudyPost() {
             <div
               style={{
                 marginBottom: "50px",
-                fontFamily: "Pretendard-Bold",
+                fontFamily: "Paperozi-Semibold",
                 fontSize: "30px",
                 color: "#2cc295",
                 textAlign: "left",
@@ -498,7 +498,7 @@ export default function StudyPost() {
               <div
                 style={{
                   marginBottom: "10px",
-                  fontFamily: "Pretendard-SemiBold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                 }}
@@ -508,7 +508,7 @@ export default function StudyPost() {
               <div
                 style={{
                   marginBottom: "20px",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "18px",
                   color: "#fff",
                 }}
@@ -535,7 +535,7 @@ export default function StudyPost() {
               >
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#2cc295",
                     marginBottom: "10px",
@@ -545,7 +545,7 @@ export default function StudyPost() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     marginBottom: "10px",
@@ -556,7 +556,7 @@ export default function StudyPost() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     marginBottom: "10px",
@@ -567,7 +567,7 @@ export default function StudyPost() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     marginBottom: "10px",
@@ -578,7 +578,7 @@ export default function StudyPost() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     display: "flex",
@@ -616,7 +616,7 @@ export default function StudyPost() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "clamp(14px, 2vw, 18px)",
                   color: "#2cc295",
                 }}
@@ -658,7 +658,7 @@ export default function StudyPost() {
                   marginTop: "10px",
                   display: "flex",
                   justifyContent: "space-between",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "14px",
                   color: "#2cc295",
                   gap: "5px",
@@ -740,7 +740,7 @@ export default function StudyPost() {
                   marginBottom: "10px",
                   display: "flex",
                   justifyContent: "space-between",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "14px",
                   color: "#fff",
                   gap: "5px",
@@ -808,7 +808,7 @@ export default function StudyPost() {
                       marginBottom: "10px",
                       display: "flex",
                       justifyContent: "space-between",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "14px",
                       color: "#fff",
                       gap: "5px",
@@ -882,7 +882,7 @@ export default function StudyPost() {
                     style={{
                       width: "70px",
                       minWidth: "70px",
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Paperozi-Regular",
                       fontSize: "12px",
                       backgroundColor: "#2CC295",
                       color: "#fff",
@@ -954,7 +954,7 @@ export default function StudyPost() {
                 >
                   <div
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Paperozi-Regular",
                       fontSize: "18px",
                     }}
                   >
@@ -1035,7 +1035,7 @@ export default function StudyPost() {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "clamp(10px, 1.5vw, 14px)",
                       color: "#fff",
                     }}
@@ -1151,7 +1151,7 @@ export default function StudyPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Pretendard-SemiBold",
+                                  fontFamily: "Paperozi-Semibold",
                                   fontSize: "clamp(14px, 2vw, 18px)",
                                   color: "#2cc295",
                                 }}
@@ -1159,7 +1159,7 @@ export default function StudyPost() {
                                 📖 {curriculum.week}주차{" "}
                                 <span
                                   style={{
-                                    fontFamily: "Pretendard-SemiBold",
+                                    fontFamily: "Paperozi-Semibold",
                                     fontSize: "clamp(10px, 1.8vw, 16px)",
                                     color: "#2cc295",
                                   }}
@@ -1280,7 +1280,7 @@ export default function StudyPost() {
                             <div
                               style={{
                                 marginTop: "10px",
-                                fontFamily: "Pretendard-Light",
+                                fontFamily: "Paperozi-Light",
                                 fontSize: "clamp(14px, 2vw, 18px)",
                                 color: "#fff",
                               }}
@@ -1311,7 +1311,7 @@ export default function StudyPost() {
                           backgroundColor: "rgba(17, 16, 21, 0.5)",
                           borderRadius: "20px",
                           marginBottom: "10px",
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Paperozi-Light",
                           fontSize: "18px",
                           color: "#fff",
                         }}
@@ -1386,7 +1386,7 @@ export default function StudyPost() {
                                   ),
                                 }}
                                 style={{
-                                  fontFamily: "Pretendard-Light",
+                                  fontFamily: "Paperozi-Light",
                                   fontSize: "clamp(14px, 2vw, 18px)",
                                   color: "#fff",
                                   lineHeight: "1.4",
@@ -1438,7 +1438,7 @@ export default function StudyPost() {
                   width: "80%",
                   backgroundColor: "transparent",
                   borderRadius: "10px",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "28px",
                   color: "#2cc295",
                 }}
@@ -1447,7 +1447,7 @@ export default function StudyPost() {
                 <br />
                 <span
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#fff",
                   }}
@@ -1469,7 +1469,7 @@ export default function StudyPost() {
             <div
               style={{
                 marginBottom: "10px",
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Paperozi-Regular",
                 fontSize: "18px",
                 gap: "10px",
               }}

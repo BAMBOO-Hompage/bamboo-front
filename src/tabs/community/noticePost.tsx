@@ -122,7 +122,7 @@ export default function NoticePost() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -133,7 +133,7 @@ export default function NoticePost() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -175,7 +175,7 @@ export default function NoticePost() {
               >
                 <div
                   style={{
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "18px",
                     color: "#2CC295",
                   }}
@@ -232,7 +232,7 @@ export default function NoticePost() {
               <div
                 style={{
                   marginBottom: "13px",
-                  fontFamily: "Pretendard-SemiBold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                 }}
@@ -242,7 +242,7 @@ export default function NoticePost() {
               <div
                 style={{
                   marginBottom: "50px",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Paperozi-Light",
                   fontSize: "16px",
                   color: "#777",
                 }}
@@ -270,7 +270,7 @@ export default function NoticePost() {
                     backgroundColor: "#222",
                     borderRadius: "20px",
                     marginBottom: "30px",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#fff",
                     display: "flex",
@@ -321,7 +321,7 @@ export default function NoticePost() {
                     __html: sanitizer(`${postData.content}`),
                   }}
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#fff",
                     lineHeight: "1.4",

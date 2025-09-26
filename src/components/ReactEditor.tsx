@@ -91,7 +91,7 @@ const CustomQuillEditorView = styled.div`
       height: 420px;
       width: 100%;
       border: none;
-      font-family: Pretendard-Light;
+      font-family: Paperozi-Light;
       font-size: 16px;
 
       .ql-editor {

@@ -138,7 +138,7 @@ export default function Activity() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -150,7 +150,7 @@ export default function Activity() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -206,7 +206,7 @@ export default function Activity() {
               >
                 <div
                   style={{
-                    fontFamily: "Pretendard-Bold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -218,7 +218,7 @@ export default function Activity() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       color: "#777",
                     }}
@@ -271,7 +271,7 @@ export default function Activity() {
                     >
                       <div
                         style={{
-                          fontFamily: "Pretendard-SemiBold",
+                          fontFamily: "Paperozi-Semibold",
                           fontSize: "20px",
                           color: "#fff",
                         }}
@@ -281,7 +281,7 @@ export default function Activity() {
                       {checkAuth === 1 ? (
                         <div
                           style={{
-                            fontFamily: "Pretendard-Light",
+                            fontFamily: "Paperozi-Light",
                             fontSize: "14px",
                             color: "#777",
                           }}
@@ -336,7 +336,7 @@ export default function Activity() {
                     </div>
                     <div
                       style={{
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Paperozi-Light",
                         fontSize: "14px",
                         color: "#777",
                         marginTop: "2px",

@@ -135,7 +135,7 @@ export default function ActivityAdd() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -146,7 +146,7 @@ export default function ActivityAdd() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -185,7 +185,7 @@ export default function ActivityAdd() {
               <div
                 style={{
                   width: "100%",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                 }}
@@ -201,7 +201,7 @@ export default function ActivityAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -221,7 +221,7 @@ export default function ActivityAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -234,7 +234,7 @@ export default function ActivityAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -256,7 +256,7 @@ export default function ActivityAdd() {
                     <input
                       type="date"
                       style={{
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Paperozi-Light",
                         fontSize: "18px",
                         width: "130px",
                       }}
@@ -268,7 +268,7 @@ export default function ActivityAdd() {
                     <input
                       type="date"
                       style={{
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Paperozi-Light",
                         fontSize: "18px",
                         marginLeft: "20px",
                         width: "130px",
@@ -287,7 +287,7 @@ export default function ActivityAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -304,7 +304,7 @@ export default function ActivityAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
@@ -363,7 +363,7 @@ export default function ActivityAdd() {
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              fontFamily: "Pretendard-Light",
+                              fontFamily: "Paperozi-Light",
                               fontSize: "14px",
                               marginBottom: "10px",
                               color: "#ccc",

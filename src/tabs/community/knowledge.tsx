@@ -136,7 +136,7 @@ export default function Knoledge() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -148,7 +148,7 @@ export default function Knoledge() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -276,7 +276,7 @@ export default function Knoledge() {
               >
                 <div
                   style={{
-                    fontFamily: "Pretendard-Bold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -290,7 +290,7 @@ export default function Knoledge() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       color: "#777",
                       textDecoration: "none",
@@ -347,7 +347,7 @@ export default function Knoledge() {
                         <div
                           style={{
                             marginBottom: "5px",
-                            fontFamily: "Pretendard-Regular",
+                            fontFamily: "Paperozi-Regular",
                             fontSize: "15px",
                             color: "#2CC295",
                           }}
@@ -357,7 +357,7 @@ export default function Knoledge() {
                         <div
                           style={{
                             marginBottom: "5px",
-                            fontFamily: "Pretendard-SemiBold",
+                            fontFamily: "Paperozi-Semibold",
                             fontSize: "18px",
                             color: "#fff",
                           }}
@@ -366,7 +366,7 @@ export default function Knoledge() {
                         </div>
                         <div
                           style={{
-                            fontFamily: "Pretendard-Regular",
+                            fontFamily: "Paperozi-Regular",
                             fontSize: "15px",
                             color: "#888",
                           }}
@@ -393,7 +393,7 @@ export default function Knoledge() {
                   <div
                     style={{
                       color: "#fff",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       textAlign: "center",
                       padding: "50px 40px",

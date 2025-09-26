@@ -55,7 +55,7 @@ export default function JoinUs() {
                   padding: "120px 20px 0",
                   margin: "0 auto",
                   marginBottom: "60px",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -87,7 +87,7 @@ export default function JoinUs() {
                   <div>
                     <div
                       style={{
-                        fontFamily: "Pretendard-Bold",
+                        fontFamily: "Paperozi-Semibold",
                         fontSize: "30px",
                         color: "#fff",
                         marginBottom: "30px",
@@ -97,7 +97,7 @@ export default function JoinUs() {
                     </div>
                     <div
                       style={{
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Paperozi-Light",
                         fontSize: "18px",
                         color: "#aaa",
                         lineHeight: "1.5",
@@ -130,7 +130,7 @@ export default function JoinUs() {
                 />
                 <div
                   style={{
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "16px",
                     color: "#777",
                     padding: "0 32px",
@@ -198,7 +198,7 @@ export default function JoinUs() {
               <div
                 style={{
                   width: "100%",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "28px",
                   color: "#fff",
                   paddingTop: "90px",
@@ -215,7 +215,7 @@ export default function JoinUs() {
                 <br />
                 <div
                   style={{
-                    fontFamily: "Pretendard-Bold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "28px",
                     color: "#fff",
                     marginTop: "10px",
@@ -225,7 +225,7 @@ export default function JoinUs() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "16px",
                     color: "#777",
                     marginTop: "10px",
@@ -248,7 +248,7 @@ export default function JoinUs() {
                   style={{
                     width: "250px",
                     textAlign: "center",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
@@ -279,7 +279,7 @@ export default function JoinUs() {
                   style={{
                     width: "250px",
                     textAlign: "center",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
@@ -310,7 +310,7 @@ export default function JoinUs() {
                   style={{
                     width: "250px",
                     textAlign: "center",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
@@ -341,7 +341,7 @@ export default function JoinUs() {
                   style={{
                     width: "250px",
                     textAlign: "center",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
@@ -460,7 +460,7 @@ export default function JoinUs() {
                   maxWidth: "1000px",
                   padding: "120px 29px 0",
                   margin: "0 auto",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -486,7 +486,7 @@ export default function JoinUs() {
                 <br />
                 <div
                   style={{
-                    fontFamily: "Pretendard-Bold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "28px",
                     color: "#fff",
                     marginTop: "10px",
@@ -496,7 +496,7 @@ export default function JoinUs() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Paperozi-Regular",
                     fontSize: "16px",
                     color: "#777",
                     marginTop: "10px",
@@ -510,7 +510,7 @@ export default function JoinUs() {
                   padding: "0 20px",
                   marginTop: "100px",
                   marginBottom: "50px",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "28px",
                   color: "#2cc295",
                 }}
@@ -533,7 +533,7 @@ export default function JoinUs() {
                 >
                   <div
                     style={{
-                      fontFamily: "Pretendard-SemiBold",
+                      fontFamily: "Paperozi-Semibold",
                       fontSize: "22px",
                       color: "#2cc295",
                     }}
@@ -551,7 +551,7 @@ export default function JoinUs() {
                   <div
                     className="joinUs_text2"
                     style={{
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       color: "#fff",
                       textAlign: "right",
@@ -569,7 +569,7 @@ export default function JoinUs() {
                 >
                   <div
                     style={{
-                      fontFamily: "Pretendard-SemiBold",
+                      fontFamily: "Paperozi-Semibold",
                       fontSize: "22px",
                       color: "#2cc295",
                     }}
@@ -587,7 +587,7 @@ export default function JoinUs() {
                   <div
                     style={{
                       marginTop: "10px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       color: "#fff",
                       textAlign: "right",
@@ -605,7 +605,7 @@ export default function JoinUs() {
                 >
                   <div
                     style={{
-                      fontFamily: "Pretendard-SemiBold",
+                      fontFamily: "Paperozi-Semibold",
                       fontSize: "22px",
                       color: "#2cc295",
                     }}
@@ -623,7 +623,7 @@ export default function JoinUs() {
                   <div
                     style={{
                       marginTop: "10px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "18px",
                       color: "#fff",
                       textAlign: "right",
@@ -647,7 +647,7 @@ export default function JoinUs() {
                 <Link to="/activity" style={{ textDecoration: "none" }}>
                   <div
                     style={{
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Paperozi-Light",
                       fontSize: "16px",
                       color: "#2cc295",
                       width: "150px",
@@ -730,7 +730,7 @@ export default function JoinUs() {
               <div
                 style={{
                   width: "100%",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Paperozi-Semibold",
                   fontSize: "28px",
                   color: "#fff",
                   paddingTop: "90px",
@@ -753,7 +753,7 @@ export default function JoinUs() {
                   style={{
                     width: "250px",
                     textAlign: "center",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
@@ -784,7 +784,7 @@ export default function JoinUs() {
                   style={{
                     width: "250px",
                     textAlign: "center",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
@@ -815,7 +815,7 @@ export default function JoinUs() {
                   style={{
                     width: "250px",
                     textAlign: "center",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
@@ -846,7 +846,7 @@ export default function JoinUs() {
                   style={{
                     width: "250px",
                     textAlign: "center",
-                    fontFamily: "Pretendard-SemiBold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "clamp(14px, 2vw, 22px)",
                     color: "#fff",
                   }}
@@ -896,7 +896,7 @@ export default function JoinUs() {
           <div
             style={{
               width: "100%",
-              fontFamily: "Pretendard-Bold",
+              fontFamily: "Paperozi-Semibold",
               fontSize: "28px",
               color: "#fff",
               paddingTop: "90px",
@@ -932,7 +932,7 @@ export default function JoinUs() {
               <div style={{ width: "80%", margin: "0 auto" }}>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#2cc295",
                     lineHeight: "20px",
@@ -943,7 +943,7 @@ export default function JoinUs() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -974,7 +974,7 @@ export default function JoinUs() {
               <div style={{ width: "80%", margin: "0 auto" }}>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#2cc295",
                     lineHeight: "20px",
@@ -985,7 +985,7 @@ export default function JoinUs() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -1017,7 +1017,7 @@ export default function JoinUs() {
               <div style={{ width: "80%", margin: "0 auto" }}>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#2cc295",
                     lineHeight: "20px",
@@ -1028,7 +1028,7 @@ export default function JoinUs() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -1060,7 +1060,7 @@ export default function JoinUs() {
               <div style={{ width: "80%", margin: "0 auto" }}>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#2cc295",
                     lineHeight: "20px",
@@ -1071,7 +1071,7 @@ export default function JoinUs() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "18px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -1167,7 +1167,7 @@ export default function JoinUs() {
                 <div
                   style={{
                     color: "#fff",
-                    fontFamily: "Pretendard-Bold",
+                    fontFamily: "Paperozi-Semibold",
                     fontSize: "clamp(24px, 3.8vw, 30px)",
                     marginBottom: "10px",
                   }}
@@ -1177,7 +1177,7 @@ export default function JoinUs() {
                 <div
                   style={{
                     color: "#777",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Paperozi-Light",
                     fontSize: "clamp(14px, 2.2vw, 18px)",
                     lineHeight: "2",
                   }}
