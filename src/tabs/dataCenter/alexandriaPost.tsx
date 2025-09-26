@@ -169,23 +169,17 @@ export default function AlexandriaPost() {
     try {
       await PostPaperCommentsAPI(paperData.libraryPostId, comment);
 
-      const first = await GetPaperCommentsAPI(
-        searchParams.get("id"),
-        currentPage
-      );
-      setTotalPages(first.totalPages);
+      // 댓글 목록 최신화
       const last = await GetPaperCommentsAPI(
         searchParams.get("id"),
-        first.totalPages
+        totalPages
       );
-      setCurrentPage(first.totalPages);
       setPaperCommentsToDisplay(last.content);
+      setCurrentPage(totalPages);
 
-      // 수정: 댓글 개수 증가
-      setPaperData((prev) => ({
-        ...prev,
-        commentCount: prev.commentCount + 1,
-      }));
+      //  댓글 개수도 최신화 (useEffect와 동일하게 서버 기준으로)
+      const updatedPaper = await GetPaperAPI(searchParams.get("id"));
+      setPaperData(updatedPaper);
 
       setComment("");
     } catch (error) {

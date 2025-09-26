@@ -431,7 +431,7 @@ export default function CurriculumStudy() {
                             {selectedCohort !== cohortLatest.batch ||
                             cohortLatest.status !== "활동 준비" ? (
                               <Link
-                                to={`/studyPost?id=${study.studyId}&member=&week=1`}
+                                to={`/studyPost?id=${study.studyId}&member=${study.studyMaster.memberId}&week=1`}
                                 style={{ textDecoration: "none" }}
                                 key={study.studyId}
                               >
