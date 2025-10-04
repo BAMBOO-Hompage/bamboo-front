@@ -11,7 +11,7 @@ import GetNoticeAPI from "../../api/notices/getNoticeAPI.tsx";
 import DeleteNoticesAPI from "../../api/notices/deleteNoticesAPI.tsx";
 
 import "../../App.css";
-import "../../style/Post.css";
+import styles from "../../style/Post.module.css";
 
 type Notice = {
   noticeId: number;
@@ -316,7 +316,7 @@ export default function NoticePost() {
               )}
               <div>
                 <div
-                  className="container"
+                  className={styles.container}
                   dangerouslySetInnerHTML={{
                     __html: sanitizer(`${postData.content}`),
                   }}

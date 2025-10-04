@@ -32,7 +32,7 @@ import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetstudyRecruitmentAPI from "../../api/study/GetstudyRecruitmentAPI.tsx";
 
 import "../../App.css";
-import "../../style/Post.css";
+import styles from "../../style/Post.module.css";
 
 type LocalDate = [number, number, number];
 type LocalDateTime = [number, number, number, number, number, number, number?];
@@ -319,7 +319,7 @@ export default function StudyRecruitmentPost() {
               {/* 내용 */}
               <div>
                 <div
-                  className="container"
+                  className={styles.container}
                   dangerouslySetInnerHTML={{
                     __html: sanitizer(`${postData.content}`),
                   }}

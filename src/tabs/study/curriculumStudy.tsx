@@ -487,7 +487,7 @@ export default function CurriculumStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 140}
+                                    y={y - 190 / 2 + 125}
                                     fontFamily="Paperozi-Regular"
                                     fontSize="15px"
                                     fill="#777"
@@ -508,7 +508,7 @@ export default function CurriculumStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 160}
+                                    y={y - 190 / 2 + 145}
                                     fontFamily="Paperozi-Regular"
                                     fontSize="15px"
                                     fill="#777"
@@ -528,8 +528,8 @@ export default function CurriculumStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 160}
-                                    fontFamily="Pretendard-Regular"
+                                    y={y - 190 / 2 + 165}
+                                    fontFamily="Paperozi-Regular"
                                     fontSize="15px"
                                     fill="#777"
                                     alignmentBaseline="hanging"

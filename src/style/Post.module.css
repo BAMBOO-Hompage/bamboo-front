@@ -1,4 +1,4 @@
-/* .container h1,
+.container h1,
 h2,
 h3,
 h4,
@@ -43,4 +43,4 @@ ul {
 }
 .container .ql-indent-3::marker {
   content: "•  ";
-} */
+}
