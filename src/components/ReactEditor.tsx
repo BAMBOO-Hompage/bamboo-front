@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import ImageAPI from "../api/imageAPI.tsx";
 
-// import "../style/Editor.css";
+import styles from "../style/Editor.module.css";
 
 Quill.register("modules/imageActions", ImageActions);
 
@@ -241,7 +241,7 @@ const ReactEditor = ({ content, setContent }) => {
         modules={modules}
         formats={formats}
         id="quillContent"
-        className="editor"
+        className={styles.editor}
         value={content}
         placeholder={"내용을 작성해주세요."}
         onChange={handleTextChange}
