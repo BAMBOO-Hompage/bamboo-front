@@ -449,15 +449,13 @@ export default function StudyPost() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{
-            ease: "easeInOut",
-            duration: 1,
-          }}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0 }}
           style={{
             width: "100%",
+            overflow: "visible", // 글이 잘리지 않게 함
+            minHeight: "auto", // 높이 제한 해제
           }}
         >
           <div
@@ -922,15 +920,13 @@ export default function StudyPost() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: false }}
-              transition={{
-                ease: "easeInOut",
-                duration: 1,
-              }}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0 }}
               style={{
                 width: "100%",
+                overflow: "visible", // 글이 잘리지 않게 함
+                minHeight: "auto", // 높이 제한 해제
               }}
             >
               <div
@@ -1014,7 +1010,7 @@ export default function StudyPost() {
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false }}
+                  viewport={{ once: true }}
                   transition={{
                     ease: "easeInOut",
                     duration: 0.5,
@@ -1024,8 +1020,8 @@ export default function StudyPost() {
                   style={{
                     position: "relative",
                     width: "100%",
-                    maxWidth: "820px",
                     height: "100%",
+                    maxWidth: "820px",
                     textAlign: "left",
                     paddingLeft: "clamp(20px, 4vw, 50px)",
                   }}
