@@ -482,7 +482,7 @@ export default function SelfStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 140}
+                                    y={y - 190 / 2 + 160}
                                     fontFamily="Paperozi-Regular"
                                     fontSize="15px"
                                     fill="#777"

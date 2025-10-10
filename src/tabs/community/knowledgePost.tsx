@@ -11,7 +11,7 @@ import GetKnowledgeAPI from "../../api/knowledges/getKnowledgeAPI.tsx";
 import DeleteKnowledgesAPI from "../../api/knowledges/deleteKnowledgesAPI.tsx";
 
 import "../../App.css";
-import "../../style/Post.css";
+import styles from "../../style/Post.module.css";
 
 type MyDataType = {
   memberId: number;
@@ -338,7 +338,7 @@ export default function KnowledgePost() {
               )}
               <div>
                 <div
-                  className="container"
+                  className={styles.container}
                   dangerouslySetInnerHTML={{
                     __html: sanitizer(`${postData.content}`),
                   }}
