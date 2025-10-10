@@ -410,7 +410,7 @@ export default function CurriculumStudy() {
                         <text
                           x={95 / 2}
                           y={baseY}
-                          fontFamily="Paperozi-Semibold"
+                          fontFamily="Paperozi-Regular"
                           fontSize="24"
                           fill="#2cc295"
                           textAnchor="middle"
@@ -477,7 +477,7 @@ export default function CurriculumStudy() {
                                   <text
                                     x={x + 30}
                                     y={y - 190 / 2 + 70}
-                                    fontFamily="Paperozi-Semibold"
+                                    fontFamily="Paperozi-Regular"
                                     fontSize="20px"
                                     fill="#fff"
                                     alignmentBaseline="hanging"

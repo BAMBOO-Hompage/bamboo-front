@@ -1,54 +1,11 @@
 import React, { useMemo, useEffect, useRef, useState } from "react";
-import ReactQuill, { UnprivilegedEditor, Quill } from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { ImageActions } from "@xeger/quill-image-actions";
 import styled from "styled-components";
-
-import ImageAPI from "../api/imageAPI.tsx";
-
-import styles from "../style/Editor.module.css";
+import ImageAPI from "../api/imageAPI";
 
 Quill.register("modules/imageActions", ImageActions);
-
-function ReactModule() {
-  return (
-    <>
-      <div className="ql-formats">
-        <select className="ql-font" defaultValue="sans-serif" />
-        <select className="ql-header" defaultValue="7">
-          <option value="1">Header 1</option>
-          <option value="2">Header 2</option>
-          <option value="3">Header 3</option>
-          <option value="4">Header 4</option>
-          <option value="5">Header 5</option>
-          <option value="6">Header 6</option>
-          <option value="7">Normal</option>
-        </select>
-        {/* <select className="ql-size" defaultValue="medium">
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-          <option value="huge">Huge</option>
-        </select> */}
-        <button className="ql-bold" />
-        <button className="ql-italic" />
-        <button className="ql-underline" />
-        <button className="ql-strike" />
-        <select className="ql-align" />
-        <select className="ql-color" />
-        <select className="ql-background" />
-        <button className="ql-list" value="bullet" />
-        <button className="ql-list" value="ordered" />
-      </div>
-      <div className="ql-formats">
-        <button className="ql-blockquote" />
-        <button className="ql-code-block" />
-        <button className="ql-link" />
-        <button className="ql-image" />
-      </div>
-    </>
-  );
-}
 
 const CustomQuillEditorView = styled.div`
   #toolBar {
@@ -96,26 +53,64 @@ const CustomQuillEditorView = styled.div`
 
       .ql-editor {
         line-height: 1.4;
-        ul,
-        ol {
-          padding-left: 0;
-          margin-left: 0;
-          li {
-            margin: 5px 0;
-          }
+
+        /* --- Editor.module.css 내용 통합 --- */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          margin: 16px 0 8px;
         }
+        p {
+          margin-bottom: 8px;
+          line-height: 1.5;
+        }
+        ol,
+        ul {
+          margin-bottom: 8px;
+          line-height: 1.5;
+          padding-left: 20px;
+        }
+        img {
+          max-width: 80%;
+        }
+        li {
+          margin: 8px 0;
+          padding-left: 15px !important;
+        }
+        .ql-indent-1 {
+          padding-left: 45px !important;
+        }
+        .ql-indent-1::before {
+          content: "৹  ";
+        }
+        .ql-indent-2 {
+          padding-left: 75px !important;
+        }
+        .ql-indent-2::before {
+          content: "▪  ";
+        }
+        .ql-indent-3 {
+          padding-left: 105px !important;
+        }
+        .ql-indent-3::before {
+          content: "•  ";
+        }
+
         &::-webkit-scrollbar {
           width: 5px;
         }
         &::-webkit-scrollbar-thumb {
-          background: #777; /* 스크롤바의 색상 */
+          background: #777;
           border-radius: 15px;
         }
         &::-webkit-scrollbar-track {
           background: rgba(200, 200, 200, 0.1);
         }
       }
-      /* 플레이스홀더 색상 지정 */
+
       .ql-editor.ql-blank::before {
         color: #777 !important;
       }
@@ -123,27 +118,58 @@ const CustomQuillEditorView = styled.div`
   }
 `;
 
+function ReactModule() {
+  return (
+    <>
+      <div className="ql-formats">
+        <select className="ql-font" defaultValue="sans-serif" />
+        <select className="ql-header" defaultValue="7">
+          <option value="1">Header 1</option>
+          <option value="2">Header 2</option>
+          <option value="3">Header 3</option>
+          <option value="4">Header 4</option>
+          <option value="5">Header 5</option>
+          <option value="6">Header 6</option>
+          <option value="7">Normal</option>
+        </select>
+        <button className="ql-bold" />
+        <button className="ql-italic" />
+        <button className="ql-underline" />
+        <button className="ql-strike" />
+        <select className="ql-align" />
+        <select className="ql-color" />
+        <select className="ql-background" />
+        <button className="ql-list" value="bullet" />
+        <button className="ql-list" value="ordered" />
+      </div>
+      <div className="ql-formats">
+        <button className="ql-blockquote" />
+        <button className="ql-code-block" />
+        <button className="ql-link" />
+        <button className="ql-image" />
+      </div>
+    </>
+  );
+}
+
 const ReactEditor = ({ content, setContent }) => {
   const quillRef = useRef<ReactQuill | null>(null);
-
   const [image, setImage] = useState<File | null>(null);
 
   const imageHandler = () => {
     const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
+    input.type = "file";
+    input.accept = "image/*";
     input.click();
 
     input.addEventListener("change", async () => {
       const file = input.files?.[0];
       if (!file) return;
-
       setImage(file);
 
       try {
         const formData = new FormData();
         formData.append("image", file);
-
         const data = await ImageAPI(formData);
         const imageUrl = data.result;
 
@@ -153,12 +179,10 @@ const ReactEditor = ({ content, setContent }) => {
           if (range) {
             editor.insertEmbed(range.index, "image", imageUrl);
             editor.setSelection({ index: range.index + 1, length: 0 });
-          } else {
-            console.warn("range is null, unable to insert image.");
           }
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     });
   };
@@ -186,12 +210,10 @@ const ReactEditor = ({ content, setContent }) => {
   }, [content]);
 
   const handleTextChange = (value: string) => {
-    if (value !== content) {
-      setContent(value);
-    }
+    if (value !== content) setContent(value);
   };
 
-  const formats: string[] = [
+  const formats = [
     "header",
     "size",
     "font",
@@ -215,15 +237,12 @@ const ReactEditor = ({ content, setContent }) => {
     "width",
   ];
 
-  const modules: {} = useMemo(
+  const modules = useMemo(
     () => ({
       imageActions: {},
       toolbar: {
         container: "#toolBar",
         handlers: { image: imageHandler },
-        ImageResize: {
-          modules: ["Resize"],
-        },
       },
       clipboard: {
         matchVisual: false,
@@ -241,9 +260,9 @@ const ReactEditor = ({ content, setContent }) => {
         modules={modules}
         formats={formats}
         id="quillContent"
-        className={styles.editor}
+        className="editor"
         value={content}
-        placeholder={"내용을 작성해주세요."}
+        placeholder="내용을 작성해주세요."
         onChange={handleTextChange}
       />
     </CustomQuillEditorView>
