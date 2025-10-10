@@ -235,7 +235,7 @@ export default function AlexandriaEdit() {
             <div style={{ marginBottom: "40px", textAlign: "center" }}>
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -246,7 +246,7 @@ export default function AlexandriaEdit() {
               </div>
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "12px",
                   color: "#888",
                 }}
@@ -289,7 +289,7 @@ export default function AlexandriaEdit() {
                       height: "40px",
                       backgroundColor: "transparent",
                       borderRadius: "10px",
-                      fontFamily: "Paperozi-Semibold",
+                      fontFamily: "Suit-Semibold",
                       fontSize: "28px",
                     }}
                   />
@@ -302,7 +302,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -328,7 +328,7 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -341,7 +341,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -370,7 +370,7 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -383,7 +383,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -409,7 +409,7 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -422,7 +422,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -448,7 +448,7 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -461,7 +461,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "16px",
                   }}
                 >
@@ -477,7 +477,7 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
@@ -532,7 +532,7 @@ export default function AlexandriaEdit() {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            fontFamily: "Paperozi-Light",
+                            fontFamily: "Suit-Light",
                             fontSize: "16px",
                           }}
                         >
@@ -561,7 +561,7 @@ export default function AlexandriaEdit() {
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              fontFamily: "Paperozi-Light",
+                              fontFamily: "Suit-Light",
                               fontSize: "16px",
                             }}
                           >

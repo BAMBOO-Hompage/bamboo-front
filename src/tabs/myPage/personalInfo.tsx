@@ -199,7 +199,7 @@ export default function PersonalInfo() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -211,7 +211,7 @@ export default function PersonalInfo() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -291,7 +291,7 @@ export default function PersonalInfo() {
               >
                 <div
                   style={{
-                    fontFamily: "Paperozi-SemiBold",
+                    fontFamily: "Suit-SemiBold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -311,7 +311,7 @@ export default function PersonalInfo() {
               >
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "30px",
                     color: "#aaa",
                   }}
@@ -320,7 +320,7 @@ export default function PersonalInfo() {
                   {myData.role === "ROLE_USER" ? (
                     <span
                       style={{
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "30px",
                         color: "#aaa",
                       }}
@@ -330,7 +330,7 @@ export default function PersonalInfo() {
                   ) : myData.role === "ROLE_MEMBER" ? (
                     <span
                       style={{
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "30px",
                         color: "#2cc295",
                       }}
@@ -341,7 +341,7 @@ export default function PersonalInfo() {
                   ) : myData.role === "ROLE_ADMIN" ? (
                     <span
                       style={{
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "30px",
                         color: "#FF5005",
                       }}
@@ -351,7 +351,7 @@ export default function PersonalInfo() {
                   ) : (
                     <span
                       style={{
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "30px",
                         color: "#F1C411",
                       }}
@@ -364,7 +364,7 @@ export default function PersonalInfo() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "18px",
                     color: "#777",
                   }}
@@ -447,7 +447,7 @@ export default function PersonalInfo() {
                       <div
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           width: "80px",
@@ -461,7 +461,7 @@ export default function PersonalInfo() {
                           width: "260px",
                           height: "30px",
                           margin: "0 20px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           display: "flex",
@@ -486,7 +486,7 @@ export default function PersonalInfo() {
                       <div
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           width: "80px",
@@ -500,7 +500,7 @@ export default function PersonalInfo() {
                           width: "260px",
                           height: "30px",
                           margin: "0 20px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           display: "flex",
@@ -525,7 +525,7 @@ export default function PersonalInfo() {
                       <div
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           width: "80px",
@@ -539,7 +539,7 @@ export default function PersonalInfo() {
                           width: "260px",
                           height: "30px",
                           margin: "0 20px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           display: "flex",
@@ -565,7 +565,7 @@ export default function PersonalInfo() {
                       <div
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           width: "80px",
@@ -579,7 +579,7 @@ export default function PersonalInfo() {
                           width: "260px",
                           height: "30px",
                           margin: "0 20px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           display: "flex",
                           alignItems: "center",
@@ -604,7 +604,7 @@ export default function PersonalInfo() {
                       <div
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           width: "80px",
@@ -618,7 +618,7 @@ export default function PersonalInfo() {
                           width: "260px",
                           height: "30px",
                           margin: "0 20px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           display: "flex",
@@ -719,7 +719,7 @@ export default function PersonalInfo() {
                       <div
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#777",
                           width: "80px",
@@ -733,7 +733,7 @@ export default function PersonalInfo() {
                           width: "260px",
                           height: "30px",
                           margin: "0 20px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#777",
                           display: "flex",
@@ -758,7 +758,7 @@ export default function PersonalInfo() {
                       <div
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#777",
                           width: "80px",
@@ -772,7 +772,7 @@ export default function PersonalInfo() {
                           width: "260px",
                           height: "30px",
                           margin: "0 20px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#777",
                           display: "flex",
@@ -797,7 +797,7 @@ export default function PersonalInfo() {
                       <div
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#777",
                           width: "80px",
@@ -811,7 +811,7 @@ export default function PersonalInfo() {
                           width: "260px",
                           height: "30px",
                           margin: "0 20px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#777",
                           display: "flex",
@@ -841,7 +841,7 @@ export default function PersonalInfo() {
                         htmlFor="phoneNum"
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#fff",
                           width: "80px",
@@ -898,7 +898,7 @@ export default function PersonalInfo() {
                       <div
                         style={{
                           display: "inline-block",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#777",
                           width: "80px",
@@ -912,7 +912,7 @@ export default function PersonalInfo() {
                           width: "260px",
                           height: "30px",
                           margin: "0 20px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                           color: "#777",
                           display: "flex",
@@ -980,7 +980,7 @@ export default function PersonalInfo() {
                   >
                     <div
                       style={{
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "30px",
                         color: "#aaa",
                       }}
@@ -1045,7 +1045,7 @@ export default function PersonalInfo() {
                         htmlFor="password"
                         style={{
                           width: "140px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                         }}
                       >
@@ -1123,7 +1123,7 @@ export default function PersonalInfo() {
                         htmlFor="newPassword"
                         style={{
                           width: "140px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                         }}
                       >
@@ -1200,7 +1200,7 @@ export default function PersonalInfo() {
                         htmlFor="reNewPassword"
                         style={{
                           width: "140px",
-                          fontFamily: "Paperozi-Regular",
+                          fontFamily: "Suit-Regular",
                           fontSize: "18px",
                         }}
                       >
@@ -1280,7 +1280,7 @@ export default function PersonalInfo() {
               >
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "20px",
                     width: "280px",
                     padding: "12px",
@@ -1313,7 +1313,7 @@ export default function PersonalInfo() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "20px",
                     width: "280px",
                     padding: "12px",

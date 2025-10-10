@@ -318,7 +318,7 @@ export default function AlexandriaPost() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -329,7 +329,7 @@ export default function AlexandriaPost() {
               </div>
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "12px",
                   color: "#888",
                 }}
@@ -415,7 +415,7 @@ export default function AlexandriaPost() {
                     maxWidth: "960px",
                     minHeight: "40px",
                     marginBottom: "20px",
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "clamp(22px, 3.3vw, 28px)",
                     color: "#fff",
                   }}
@@ -430,7 +430,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -445,7 +445,7 @@ export default function AlexandriaPost() {
                       display: "block",
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                       wordWrap: "break-word",
                       overflowWrap: "break-word",
@@ -462,7 +462,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -473,7 +473,7 @@ export default function AlexandriaPost() {
                     style={{
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                     }}
                   >
@@ -488,7 +488,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -499,7 +499,7 @@ export default function AlexandriaPost() {
                     style={{
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                     }}
                   >
@@ -514,7 +514,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -525,7 +525,7 @@ export default function AlexandriaPost() {
                     style={{
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                     }}
                   >
@@ -540,7 +540,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -551,7 +551,7 @@ export default function AlexandriaPost() {
                     style={{
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                     }}
                   >
@@ -576,7 +576,7 @@ export default function AlexandriaPost() {
                         paddingTop: "20px",
                         borderRadius: "20px",
                         marginBottom: "10px",
-                        fontFamily: "Paperozi-Light",
+                        fontFamily: "Suit-Light",
                         fontSize: "18px",
                         color: "#fff",
                       }}
@@ -641,7 +641,7 @@ export default function AlexandriaPost() {
                       __html: sanitizer(`${paperData.content}`),
                     }}
                     style={{
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "clamp(14px, 2vw, 18px)",
                       color: "#fff",
                       lineHeight: "1.4",
@@ -661,7 +661,7 @@ export default function AlexandriaPost() {
                   <>
                     <div
                       style={{
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "18px",
                         color: "#fff",
                         marginTop: "40px",
@@ -687,7 +687,7 @@ export default function AlexandriaPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Paperozi-Semibold",
+                                  fontFamily: "Suit-Semibold",
                                   fontSize: "16px",
                                   color: "#fff",
                                   display: "flex",
@@ -743,7 +743,7 @@ export default function AlexandriaPost() {
                             >
                               <textarea
                                 style={{
-                                  fontFamily: "Paperozi-Light",
+                                  fontFamily: "Suit-Light",
                                   fontSize: "clamp(14px, 2vw, 16px)",
                                   color: "#fff",
                                   width: "100%",
@@ -774,7 +774,7 @@ export default function AlexandriaPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Paperozi-Semibold",
+                                  fontFamily: "Suit-Semibold",
                                   fontSize: "16px",
                                   color: "#fff",
                                   display: "flex",
@@ -804,7 +804,7 @@ export default function AlexandriaPost() {
                               </div>
                               <div
                                 style={{
-                                  fontFamily: "Paperozi-Light",
+                                  fontFamily: "Suit-Light",
                                   fontSize: "14px",
                                   color: "#777",
                                 }}
@@ -911,7 +911,7 @@ export default function AlexandriaPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Paperozi-ExtraLight",
+                                  fontFamily: "Suit-ExtraLight",
                                   fontSize: "clamp(14px, 2vw, 16px)",
                                   color: "#fff",
                                   width: "100%",
@@ -943,7 +943,7 @@ export default function AlexandriaPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Paperozi-Semibold",
+                                  fontFamily: "Suit-Semibold",
                                   fontSize: "16px",
                                   color: "#fff",
                                   display: "flex",
@@ -999,7 +999,7 @@ export default function AlexandriaPost() {
                             >
                               <textarea
                                 style={{
-                                  fontFamily: "Paperozi-Light",
+                                  fontFamily: "Suit-Light",
                                   fontSize: "clamp(14px, 2vw, 16px)",
                                   color: "#fff",
                                   width: "100%",
@@ -1043,7 +1043,7 @@ export default function AlexandriaPost() {
                                     >
                                       <div
                                         style={{
-                                          fontFamily: "Paperozi-Semibold",
+                                          fontFamily: "Suit-Semibold",
                                           fontSize: "16px",
                                           color: "#fff",
                                           display: "flex",
@@ -1103,7 +1103,7 @@ export default function AlexandriaPost() {
                                     >
                                       <textarea
                                         style={{
-                                          fontFamily: "Paperozi-Light",
+                                          fontFamily: "Suit-Light",
                                           fontSize: "clamp(14px, 2vw, 16px)",
                                           color: "#fff",
                                           width: "100%",
@@ -1134,7 +1134,7 @@ export default function AlexandriaPost() {
                                     >
                                       <div
                                         style={{
-                                          fontFamily: "Paperozi-Semibold",
+                                          fontFamily: "Suit-Semibold",
                                           fontSize: "16px",
                                           color: "#fff",
                                           display: "flex",
@@ -1168,7 +1168,7 @@ export default function AlexandriaPost() {
                                       </div>
                                       <div
                                         style={{
-                                          fontFamily: "Paperozi-Light",
+                                          fontFamily: "Suit-Light",
                                           fontSize: "14px",
                                           color: "#777",
                                         }}
@@ -1253,7 +1253,7 @@ export default function AlexandriaPost() {
                                     >
                                       <div
                                         style={{
-                                          fontFamily: "Paperozi-ExtraLight",
+                                          fontFamily: "Suit-ExtraLight",
                                           fontSize: "clamp(14px, 2vw, 16px)",
                                           color: "#fff",
                                           width: "100%",
@@ -1378,7 +1378,7 @@ export default function AlexandriaPost() {
                     >
                       <div
                         style={{
-                          fontFamily: "Paperozi-Semibold",
+                          fontFamily: "Suit-Semibold",
                           fontSize: "16px",
                           color: "#fff",
                           display: "flex",
@@ -1426,7 +1426,7 @@ export default function AlexandriaPost() {
                     >
                       <textarea
                         style={{
-                          fontFamily: "Paperozi-Light",
+                          fontFamily: "Suit-Light",
                           fontSize: "clamp(14px, 2vw, 16px)",
                           color: "#fff",
                           width: "100%",
@@ -1463,7 +1463,7 @@ export default function AlexandriaPost() {
                     >
                       <div
                         style={{
-                          fontFamily: "Paperozi-Light",
+                          fontFamily: "Suit-Light",
                           fontSize: "clamp(14px, 2vw, 16px)",
                           color: "#777",
                           width: "100%",

@@ -21,7 +21,7 @@ export default function LockedPageAuth() {
       <br />
       <div
         style={{
-          fontFamily: "Paperozi-Semibold",
+          fontFamily: "Suit-Semibold",
           fontSize: "clamp(24px, 4vw, 30px)",
           marginBottom: "20px",
         }}
@@ -30,7 +30,7 @@ export default function LockedPageAuth() {
       </div>
       <div
         style={{
-          fontFamily: "Paperozi-Semibold",
+          fontFamily: "Suit-Semibold",
           fontSize: "22px",
           color: "#777",
           lineHeight: "1.8",

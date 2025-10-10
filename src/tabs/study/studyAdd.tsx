@@ -180,7 +180,7 @@ export default function StudyAdd() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Semibold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -191,7 +191,7 @@ export default function StudyAdd() {
               </div>
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                   color: "#2cc295",
                 }}
@@ -215,7 +215,7 @@ export default function StudyAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "16px",
                   }}
                 >
@@ -231,7 +231,7 @@ export default function StudyAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
@@ -289,7 +289,7 @@ export default function StudyAdd() {
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              fontFamily: "Paperozi-Light",
+                              fontFamily: "Suit-Light",
                               fontSize: "16px",
                             }}
                           >

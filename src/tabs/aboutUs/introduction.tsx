@@ -33,7 +33,7 @@ export default function Introduction() {
               margin: "0 auto",
               marginBottom: "20px",
               padding: "100px 20px 0",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "30px",
               color: "#fff",
               textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -77,7 +77,7 @@ export default function Introduction() {
                 <div
                   className="intro_font"
                   style={{
-                    fontFamily: "Paperozi-Thin",
+                    fontFamily: "Suit-Thin",
                     color: "#000",
                   }}
                 >
@@ -89,7 +89,7 @@ export default function Introduction() {
           </div>
           <div
             style={{
-              fontFamily: "Paperozi-Light",
+              fontFamily: "Suit-Light",
               fontSize: "18px",
               color: "#fff",
               maxWidth: "1000px",
@@ -102,7 +102,7 @@ export default function Introduction() {
             <span
               style={{
                 color: "#2CC295",
-                fontFamily: "Paperozi-Semibold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "20px",
               }}
             >
@@ -149,7 +149,7 @@ export default function Introduction() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                fontFamily: "Paperozi-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
@@ -167,7 +167,7 @@ export default function Introduction() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                fontFamily: "Paperozi-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
@@ -185,7 +185,7 @@ export default function Introduction() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                fontFamily: "Paperozi-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
@@ -203,7 +203,7 @@ export default function Introduction() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                fontFamily: "Paperozi-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
@@ -221,7 +221,7 @@ export default function Introduction() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                fontFamily: "Paperozi-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "clamp(14px, 2vw, 18px)",
               }}
             >
@@ -241,7 +241,7 @@ export default function Introduction() {
           >
             <div
               style={{
-                fontFamily: "Paperozi-Semibold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "18px",
                 marginBottom: "10px",
               }}
@@ -250,7 +250,7 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                fontFamily: "Paperozi-Semibold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "25px",
                 color: "#2cc295",
                 marginBottom: "15px",
@@ -260,7 +260,7 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                fontFamily: "Paperozi-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "18px",
                 lineHeight: "2.2",
                 marginBottom: "30px",
@@ -274,7 +274,7 @@ export default function Introduction() {
             <br />
             <div
               style={{
-                fontFamily: "Paperozi-Semibold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "18px",
                 marginBottom: "10px",
               }}
@@ -283,7 +283,7 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                fontFamily: "Paperozi-Semibold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "25px",
                 color: "#2cc295",
                 marginBottom: "15px",
@@ -293,7 +293,7 @@ export default function Introduction() {
             </div>
             <div
               style={{
-                fontFamily: "Paperozi-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "18px",
                 lineHeight: "2.2",
               }}
@@ -361,7 +361,7 @@ export default function Introduction() {
             >
               <span
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "40px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -372,7 +372,7 @@ export default function Introduction() {
               <br />
               <span
                 style={{
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "16px",
                   color: "#999",
                 }}
@@ -386,7 +386,7 @@ export default function Introduction() {
                 padding: "0 20px",
                 textAlign: "left",
                 margin: "0 auto",
-                fontFamily: "Paperozi-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "18px",
                 color: "#fff",
                 lineHeight: "30px",
@@ -395,7 +395,7 @@ export default function Introduction() {
               <span
                 style={{
                   color: "#2CC295",
-                  fontFamily: "Paperozi-Semibold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "20px",
                 }}
               >
@@ -441,7 +441,7 @@ export default function Introduction() {
                 <div
                   style={{
                     margin: "10px 0 35px",
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "22px",
                     color: "#fff",
                   }}
@@ -453,7 +453,7 @@ export default function Introduction() {
                     width: "80%",
                     textAlign: "left",
                     margin: "0 auto",
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -498,7 +498,7 @@ export default function Introduction() {
                 <div
                   style={{
                     margin: "10px 0 35px",
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "22px",
                     color: "#fff",
                   }}
@@ -510,7 +510,7 @@ export default function Introduction() {
                     width: "80%",
                     textAlign: "left",
                     margin: "0 auto",
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -554,7 +554,7 @@ export default function Introduction() {
                 <div
                   style={{
                     margin: "10px 0 35px",
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "22px",
                     color: "#fff",
                   }}
@@ -566,7 +566,7 @@ export default function Introduction() {
                     width: "80%",
                     textAlign: "left",
                     margin: "0 auto",
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -600,7 +600,7 @@ export default function Introduction() {
             <Link to="/activity" style={{ textDecoration: "none" }}>
               <div
                 style={{
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "16px",
                   width: "150px",
                   marginTop: "25px",
@@ -692,7 +692,7 @@ export default function Introduction() {
               maxWidth: "1000px",
               padding: "0 20px",
               margin: "0 auto",
-              fontFamily: "Paperozi-Semibold",
+              fontFamily: "Suit-Semibold",
               fontSize: "35px",
             }}
           >
@@ -756,7 +756,7 @@ export default function Introduction() {
               <div style={{ width: "80%", margin: "0 auto" }}>
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "22px",
                     color: "#2cc295",
                     marginTop: "20px",
@@ -767,7 +767,7 @@ export default function Introduction() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -779,7 +779,7 @@ export default function Introduction() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -809,7 +809,7 @@ export default function Introduction() {
               <div style={{ width: "80%", margin: "0 auto" }}>
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "22px",
                     color: "#2cc295",
                     marginTop: "20px",
@@ -820,7 +820,7 @@ export default function Introduction() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -832,7 +832,7 @@ export default function Introduction() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "16px",
                     color: "#fff",
                     lineHeight: "20px",
@@ -921,7 +921,7 @@ export default function Introduction() {
             <Link to="/joinUs" style={{ textDecoration: "none" }}>
               <div
                 style={{
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                   width: "150px",
                   margin: "0 auto",

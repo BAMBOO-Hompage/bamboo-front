@@ -409,7 +409,7 @@ export default function StudyManagement() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -421,7 +421,7 @@ export default function StudyManagement() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -502,7 +502,7 @@ export default function StudyManagement() {
               >
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -521,7 +521,7 @@ export default function StudyManagement() {
                   >
                     <div
                       style={{
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "22px",
                         color: "#2CC295",
                       }}
@@ -541,7 +541,7 @@ export default function StudyManagement() {
                         style={{
                           width: "100%",
                           marginBottom: "10px",
-                          fontFamily: "Paperozi-Semibold",
+                          fontFamily: "Suit-Semibold",
                           fontSize: "22px",
                           color: "#fff",
                           display: "flex",
@@ -581,7 +581,7 @@ export default function StudyManagement() {
                           marginTop: "10px",
                           display: "flex",
                           justifyContent: "space-between",
-                          fontFamily: "Paperozi-Light",
+                          fontFamily: "Suit-Light",
                           fontSize: "16px",
                           color: "#888",
                           gap: "10px",
@@ -662,7 +662,7 @@ export default function StudyManagement() {
                                   marginTop: "10px",
                                   display: "flex",
                                   justifyContent: "space-between",
-                                  fontFamily: "Paperozi-Light",
+                                  fontFamily: "Suit-Light",
                                   fontSize: "16px",
                                   color: "#fff",
                                   gap: "10px",
@@ -840,7 +840,7 @@ export default function StudyManagement() {
                 height: "40px",
                 backgroundColor: "transparent",
                 borderRadius: "10px",
-                fontFamily: "Paperozi-Semibold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "28px",
               }}
             >
@@ -873,7 +873,7 @@ export default function StudyManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -899,7 +899,7 @@ export default function StudyManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -911,7 +911,7 @@ export default function StudyManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -934,7 +934,7 @@ export default function StudyManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -946,7 +946,7 @@ export default function StudyManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -974,7 +974,7 @@ export default function StudyManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -988,7 +988,7 @@ export default function StudyManagement() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                fontFamily: "Paperozi-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "18px",
                 gap: "10px",
               }}
@@ -1027,7 +1027,7 @@ export default function StudyManagement() {
                     padding: "0 20px",
                     backgroundColor: "#171717",
                     borderRadius: "20px",
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "18px",
                   }}
                 />
@@ -1137,7 +1137,7 @@ export default function StudyManagement() {
                 height: "40px",
                 backgroundColor: "transparent",
                 borderRadius: "10px",
-                fontFamily: "Paperozi-Semibold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "28px",
               }}
             >
@@ -1170,7 +1170,7 @@ export default function StudyManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -1196,7 +1196,7 @@ export default function StudyManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -1208,7 +1208,7 @@ export default function StudyManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -1231,7 +1231,7 @@ export default function StudyManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -1243,7 +1243,7 @@ export default function StudyManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -1271,7 +1271,7 @@ export default function StudyManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -1285,7 +1285,7 @@ export default function StudyManagement() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                fontFamily: "Paperozi-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "18px",
                 gap: "10px",
               }}
@@ -1324,7 +1324,7 @@ export default function StudyManagement() {
                     padding: "0 20px",
                     backgroundColor: "#171717",
                     borderRadius: "20px",
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "18px",
                   }}
                 />

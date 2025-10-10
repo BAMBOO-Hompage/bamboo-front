@@ -18,7 +18,7 @@ const MobileBlocker = () => {
       <br />
       <div
         style={{
-          fontFamily: "Paperozi-Semibold",
+          fontFamily: "Suit-Semibold",
           fontSize: "clamp(24px, 3.8vw, 30px)",
           marginBottom: "20px",
         }}
@@ -27,7 +27,7 @@ const MobileBlocker = () => {
       </div>
       <div
         style={{
-          fontFamily: "Paperozi-Semibold",
+          fontFamily: "Suit-Semibold",
           fontSize: "clamp(18px, 2.6vw, 22px)",
           color: "#777",
           lineHeight: "1.8",

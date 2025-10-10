@@ -126,7 +126,7 @@ export default function Notice() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -138,7 +138,7 @@ export default function Notice() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -199,7 +199,7 @@ export default function Notice() {
               >
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -212,7 +212,7 @@ export default function Notice() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#777",
                       textDecoration: "none",
@@ -269,7 +269,7 @@ export default function Notice() {
                         <div
                           style={{
                             marginBottom: "5px",
-                            fontFamily: "Paperozi-Regular",
+                            fontFamily: "Suit-Regular",
                             fontSize: "15px",
                             color: "#2CC295",
                           }}
@@ -279,7 +279,7 @@ export default function Notice() {
                         <div
                           style={{
                             marginBottom: "5px",
-                            fontFamily: "Paperozi-Semibold",
+                            fontFamily: "Suit-Semibold",
                             fontSize: "18px",
                             color: "#fff",
                           }}
@@ -288,7 +288,7 @@ export default function Notice() {
                         </div>
                         <div
                           style={{
-                            fontFamily: "Paperozi-Regular",
+                            fontFamily: "Suit-Regular",
                             fontSize: "15px",
                             color: "#888",
                           }}
@@ -314,7 +314,7 @@ export default function Notice() {
                   <div
                     style={{
                       color: "#fff",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       textAlign: "center",
                       padding: "50px 40px",

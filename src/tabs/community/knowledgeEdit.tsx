@@ -201,7 +201,7 @@ export default function PostEdit() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Semibold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -212,7 +212,7 @@ export default function PostEdit() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -251,7 +251,7 @@ export default function PostEdit() {
               <div
                 style={{
                   width: "100%",
-                  fontFamily: "Paperozi-Semibold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                 }}
@@ -267,7 +267,7 @@ export default function PostEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -281,7 +281,7 @@ export default function PostEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       display: "flex",
                       alignItems: "center",
@@ -295,7 +295,7 @@ export default function PostEdit() {
                         backgroundColor: "transparent",
                         borderRadius: "20px",
                         border: "none",
-                        fontFamily: "Paperozi-Light",
+                        fontFamily: "Suit-Light",
                         fontSize: "18px",
                         color:
                           selectedCategory === "카테고리 선택"
@@ -358,7 +358,7 @@ export default function PostEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -379,7 +379,7 @@ export default function PostEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
@@ -392,7 +392,7 @@ export default function PostEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Paperozi-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "16px",
                   }}
                 >
@@ -409,7 +409,7 @@ export default function PostEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
@@ -467,7 +467,7 @@ export default function PostEdit() {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            fontFamily: "Paperozi-Light",
+                            fontFamily: "Suit-Light",
                             fontSize: "14px",
                             marginBottom: "10px",
                           }}
@@ -499,7 +499,7 @@ export default function PostEdit() {
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              fontFamily: "Paperozi-Light",
+                              fontFamily: "Suit-Light",
                               fontSize: "16px",
                               marginBottom: "10px",
                             }}
@@ -541,7 +541,7 @@ export default function PostEdit() {
                     marginBottom: "20px",
                     display: "flex",
                     justifyContent: "space-between",
-                    fontFamily: "Paperozi-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "18px",
                   }}
                 >
