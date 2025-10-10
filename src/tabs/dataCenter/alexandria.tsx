@@ -355,15 +355,16 @@ export default function Alexandria() {
                 fontFamily: "Suit-Light",
                 fontSize: "16px",
                 color: "#888",
-                gap: "14px",
+                gap: "15px",
               }}
             >
-              <div style={{ width: "340px" }}>논문 이름</div>
+              <div style={{ width: "300px" }}>논문 이름</div>
               <div style={{ width: "70px" }}>연도</div>
               <div style={{ width: "100px" }}>태그</div>
-              <div style={{ width: "240px" }}>주제</div>
+              <div style={{ width: "260px" }}>주제</div>
               <div style={{ width: "80px" }}>발표자</div>
-              <div style={{ width: "100px" }}>논문</div>
+              <div style={{ width: "60px" }}>논문</div>
+              <div style={{ width: "40px" }}>댓글</div>
             </div>
             <hr style={{ height: "1px", background: "#666", border: "none" }} />
 
@@ -379,12 +380,12 @@ export default function Alexandria() {
                       color: "#fff",
                       display: "flex",
                       justifyContent: "space-between",
-                      gap: "14px",
+                      gap: "15px",
                     }}
                   >
                     <div
                       style={{
-                        width: "340px",
+                        width: "300px",
                         display: "-webkit-box",
                         WebkitLineClamp: 4,
                         WebkitBoxOrient: "vertical",
@@ -423,7 +424,7 @@ export default function Alexandria() {
                     </div>
                     <div
                       style={{
-                        width: "240px",
+                        width: "260px",
                         display: "-webkit-box",
                         WebkitLineClamp: 4,
                         WebkitBoxOrient: "vertical",
@@ -437,7 +438,7 @@ export default function Alexandria() {
                     <div style={{ width: "80px" }}>{paper.writerName}</div>
                     <div
                       style={{
-                        width: "100px",
+                        width: "60px",
                         minHeight: "100%",
                         display: "flex",
                         justifyContent: "left",
@@ -473,24 +474,18 @@ export default function Alexandria() {
                         <Link
                           to={`/alexandriaPost?id=${paper.libraryPostId}`}
                           style={{ textDecoration: "none" }}
-                        >
-                          <img
-                            src="../../img/btn/move.png"
-                            alt="move"
-                            style={{
-                              width: "12px",
-                              cursor: "pointer",
-                              transition: "transform 0.3s ease",
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.transform = "scale(1.4)";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.transform = "scale(1)";
-                            }}
-                          />
-                        </Link>
+                        ></Link>
                       </div>
+                    </div>
+                    <div
+                      style={{
+                        width: "40px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {paper.commentCount}
                     </div>
                   </div>
                   <hr

@@ -1,23 +1,50 @@
+/* ✅ 모듈 스코프 + 전역 Quill 클래스를 함께 쓰기 */
+.container :global(.ql-indent-1) {
+  margin-left: 30px;
+}
+.container :global(.ql-indent-2) {
+  margin-left: 60px;
+}
+.container :global(.ql-indent-3) {
+  margin-left: 90px;
+}
+
+/* 커스텀 불릿 */
+.container :global(.ql-indent-1)::marker {
+  content: "৹  ";
+}
+.container :global(.ql-indent-2)::marker {
+  content: "▪  ";
+}
+.container :global(.ql-indent-3)::marker {
+  content: "•  ";
+}
+
+/* 이미지 반응형 */
+.container :global(img) {
+  max-width: 80%;
+}
+
+/* 리스트/문단/헤딩 — 콤마마다 .container 반복! */
 .container h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.container h2,
+.container h3,
+.container h4,
+.container h5,
+.container h6 {
   margin: 16px 0 8px;
 }
+
 .container p {
   margin-bottom: 8px;
   line-height: 1.5;
 }
+
 .container ol,
-ul {
+.container ul {
   line-height: 1.5;
   margin: 8px 0;
   padding-left: 20px;
-}
-.container img {
-  max-width: 80%;
 }
 
 .container li {
@@ -26,21 +53,11 @@ ul {
 .container li::marker {
   content: "•  ";
 }
-.container .ql-indent-1 {
-  margin-left: 30px;
+
+/* 정렬/코드 등 다른 Quill 유틸 클래스도 필요하면 이렇게 */
+.container :global(.ql-align-center) {
+  text-align: center;
 }
-.container .ql-indent-1::marker {
-  content: "৹  ";
-}
-.container .ql-indent-2 {
-  margin-left: 60px;
-}
-.container .ql-indent-2::marker {
-  content: "▪  ";
-}
-.container .ql-indent-3 {
-  margin-left: 90px;
-}
-.container .ql-indent-3::marker {
-  content: "•  ";
+.container :global(.ql-align-right) {
+  text-align: right;
 }

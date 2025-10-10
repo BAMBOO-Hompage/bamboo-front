@@ -19,6 +19,8 @@ import PostAttendancesAPI from "../../api/attendance/postAttendanceAPI.tsx";
 
 import "../../App.css";
 
+import styles from "../../style/Post.module.css";
+
 type MyDataType = {
   memberId: number;
   studentId: string;
@@ -1375,7 +1377,7 @@ export default function StudyPost() {
                           >
                             {selectedInventory && (
                               <div
-                                className="container"
+                                className={styles.container}
                                 dangerouslySetInnerHTML={{
                                   __html: sanitizer(
                                     `${selectedInventory.content}`

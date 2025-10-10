@@ -19,6 +19,7 @@ import DeletePaperCommentsAPI from "../../api/library-posts/deletePaperCommentsA
 import PutPaperCommentsAPI from "../../api/library-posts/putPaperCommentsAPI.tsx";
 
 import "../../App.css";
+import styles from "../../style/Post.module.css";
 
 type MyDataType = {
   memberId: number;
@@ -636,7 +637,7 @@ export default function AlexandriaPost() {
                   }}
                 >
                   <div
-                    className="container"
+                    className={styles.container}
                     dangerouslySetInnerHTML={{
                       __html: sanitizer(`${paperData.content}`),
                     }}
