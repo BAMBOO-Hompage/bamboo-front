@@ -21,7 +21,7 @@ export default function LockedPageAuth() {
       <br />
       <div
         style={{
-          fontFamily: "Paperozi-Semibold",
+          fontFamily: "Suit-Semibold",
           fontSize: "30px",
           marginBottom: "20px",
         }}
@@ -30,14 +30,14 @@ export default function LockedPageAuth() {
       </div>
       <div
         style={{
-          fontFamily: "Paperozi-Light",
+          fontFamily: "Suit-Light",
           fontSize: "18px",
           lineHeight: "1.8",
           marginBottom: "30px",
         }}
       >
         현재 페이지는{" "}
-        <span style={{ fontFamily: "Paperozi-Semibold", color: "#2cc295" }}>
+        <span style={{ fontFamily: "Suit-Semibold", color: "#2cc295" }}>
           "아기판다<span style={{ fontSize: "18px" }}>🐼</span>"
         </span>{" "}
         이상의 회원들만 접근 가능합니다.

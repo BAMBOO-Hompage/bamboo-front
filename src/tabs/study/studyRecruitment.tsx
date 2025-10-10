@@ -104,7 +104,7 @@ export default function StudyRecruitment() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Semibold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                 }}
@@ -162,7 +162,7 @@ export default function StudyRecruitment() {
               >
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -176,7 +176,7 @@ export default function StudyRecruitment() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#777",
                       textDecoration: "none",

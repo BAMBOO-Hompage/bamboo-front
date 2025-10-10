@@ -138,7 +138,7 @@ export default function Activity() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -150,7 +150,7 @@ export default function Activity() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -206,7 +206,7 @@ export default function Activity() {
               >
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -218,7 +218,7 @@ export default function Activity() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#777",
                     }}
@@ -271,7 +271,7 @@ export default function Activity() {
                     >
                       <div
                         style={{
-                          fontFamily: "Paperozi-Semibold",
+                          fontFamily: "Suit-Semibold",
                           fontSize: "20px",
                           color: "#fff",
                         }}
@@ -281,7 +281,7 @@ export default function Activity() {
                       {checkAuth === 1 ? (
                         <div
                           style={{
-                            fontFamily: "Paperozi-Light",
+                            fontFamily: "Suit-Light",
                             fontSize: "14px",
                             color: "#777",
                           }}
@@ -336,7 +336,7 @@ export default function Activity() {
                     </div>
                     <div
                       style={{
-                        fontFamily: "Paperozi-Light",
+                        fontFamily: "Suit-Light",
                         fontSize: "14px",
                         color: "#777",
                         marginTop: "2px",

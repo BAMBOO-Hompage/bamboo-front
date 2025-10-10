@@ -376,7 +376,7 @@ export default function CurriculumManagement() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -388,7 +388,7 @@ export default function CurriculumManagement() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -470,7 +470,7 @@ export default function CurriculumManagement() {
               >
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -478,7 +478,7 @@ export default function CurriculumManagement() {
                   커리큘럼 관리
                   {/* <span
                     style={{
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "12px",
                       color: "#FF5005",
                     }}
@@ -505,7 +505,7 @@ export default function CurriculumManagement() {
                 >
                   <div
                     style={{
-                      fontFamily: "Paperozi-Semibold",
+                      fontFamily: "Suit-Semibold",
                       fontSize: "22px",
                       color: "#2CC295",
                     }}
@@ -517,7 +517,7 @@ export default function CurriculumManagement() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        fontFamily: "Paperozi-Light",
+                        fontFamily: "Suit-Light",
                         fontSize: "18px",
                         color: "#777",
                       }}
@@ -559,7 +559,7 @@ export default function CurriculumManagement() {
                       style={{
                         width: "100%",
                         marginBottom: "20px",
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "22px",
                         color: "#fff",
                         display: "flex",
@@ -576,7 +576,7 @@ export default function CurriculumManagement() {
                         &emsp;{subject.name}&emsp;
                         <span
                           style={{
-                            fontFamily: "Paperozi-Regular",
+                            fontFamily: "Suit-Regular",
                             fontSize: "16px",
                             color: "#2cc295",
                           }}
@@ -587,7 +587,7 @@ export default function CurriculumManagement() {
                       {cohort.status === "활동 준비" ? (
                         <div
                           style={{
-                            fontFamily: "Paperozi-Light",
+                            fontFamily: "Suit-Light",
                             fontSize: "14px",
                             color: "#777",
                           }}
@@ -668,7 +668,7 @@ export default function CurriculumManagement() {
                         key={weekIndex}
                         style={{
                           marginBottom: "10px",
-                          fontFamily: "Paperozi-Light",
+                          fontFamily: "Suit-Light",
                           fontSize: "16px",
                           color: "#fff",
                           display: "flex",
@@ -694,7 +694,7 @@ export default function CurriculumManagement() {
                   >
                     <div
                       style={{
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "20px",
                         width: "280px",
                         padding: "12px",
@@ -740,7 +740,7 @@ export default function CurriculumManagement() {
                   >
                     <div
                       style={{
-                        fontFamily: "Paperozi-Semibold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "20px",
                         width: "280px",
                         padding: "12px",
@@ -822,7 +822,7 @@ export default function CurriculumManagement() {
                 height: "40px",
                 backgroundColor: "transparent",
                 borderRadius: "10px",
-                fontFamily: "Paperozi-Semibold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "28px",
               }}
             />
@@ -854,7 +854,7 @@ export default function CurriculumManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -870,7 +870,7 @@ export default function CurriculumManagement() {
                   backgroundColor: "#171717",
                   borderRadius: "20px",
                   border: "none",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                   color: "#2CC295",
                   cursor: "pointer",
@@ -904,7 +904,7 @@ export default function CurriculumManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -927,7 +927,7 @@ export default function CurriculumManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -941,7 +941,7 @@ export default function CurriculumManagement() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
-                fontFamily: "Paperozi-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "18px",
                 gap: "10px",
               }}
@@ -976,7 +976,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="period"
                     style={{
-                      fontFamily: "Paperozi-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       width: "80px",
@@ -990,7 +990,7 @@ export default function CurriculumManagement() {
                     type="date"
                     style={{
                       width: "50%",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                     }}
@@ -1002,7 +1002,7 @@ export default function CurriculumManagement() {
                   <input
                     type="date"
                     style={{
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       marginLeft: "20px",
                       width: "50%",
@@ -1057,7 +1057,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="page"
                     style={{
-                      fontFamily: "Paperozi-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       width: "80px",
@@ -1072,7 +1072,7 @@ export default function CurriculumManagement() {
                     type="text"
                     placeholder="시작페이지 입력"
                     style={{
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                     }}
@@ -1090,7 +1090,7 @@ export default function CurriculumManagement() {
                     placeholder="끝페이지 입력"
                     style={{
                       overflow: "hidden",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                       marginLeft: "20px",
@@ -1117,7 +1117,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="name"
                     style={{
-                      fontFamily: "Paperozi-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       minWidth: "80px",
@@ -1245,7 +1245,7 @@ export default function CurriculumManagement() {
                 height: "40px",
                 backgroundColor: "transparent",
                 borderRadius: "10px",
-                fontFamily: "Paperozi-Semibold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "28px",
               }}
             />
@@ -1277,7 +1277,7 @@ export default function CurriculumManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -1293,7 +1293,7 @@ export default function CurriculumManagement() {
                   backgroundColor: "#171717",
                   borderRadius: "20px",
                   border: "none",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                   color: "#2CC295",
                   cursor: "pointer",
@@ -1327,7 +1327,7 @@ export default function CurriculumManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -1351,7 +1351,7 @@ export default function CurriculumManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -1365,7 +1365,7 @@ export default function CurriculumManagement() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
-                fontFamily: "Paperozi-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "18px",
                 gap: "10px",
               }}
@@ -1400,7 +1400,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="period"
                     style={{
-                      fontFamily: "Paperozi-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       width: "80px",
@@ -1419,7 +1419,7 @@ export default function CurriculumManagement() {
                     ).padStart(2, "0")}`}
                     style={{
                       width: "50%",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                     }}
@@ -1436,7 +1436,7 @@ export default function CurriculumManagement() {
                       curriculum.endDate[2]
                     ).padStart(2, "0")}`}
                     style={{
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       marginLeft: "20px",
                       width: "50%",
@@ -1491,7 +1491,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="page"
                     style={{
-                      fontFamily: "Paperozi-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       width: "80px",
@@ -1507,7 +1507,7 @@ export default function CurriculumManagement() {
                     defaultValue={curriculum.startPage}
                     placeholder="시작페이지 입력"
                     style={{
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                     }}
@@ -1526,7 +1526,7 @@ export default function CurriculumManagement() {
                     placeholder="끝페이지 입력"
                     style={{
                       overflow: "hidden",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                       marginLeft: "20px",
@@ -1553,7 +1553,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="name"
                     style={{
-                      fontFamily: "Paperozi-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       minWidth: "80px",
@@ -1659,7 +1659,7 @@ export default function CurriculumManagement() {
         >
           <div
             style={{
-              fontFamily: "Paperozi-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "16px",
               color: "#fff",
               marginBottom: "10px",
@@ -1703,7 +1703,7 @@ export default function CurriculumManagement() {
                 padding: "0 20px",
                 height: "40px",
                 borderRadius: "10px",
-                fontFamily: "Paperozi-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "18px",
               }}
             />

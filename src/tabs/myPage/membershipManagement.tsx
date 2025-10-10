@@ -205,7 +205,7 @@ export default function PersonalInfo() {
             >
               <div
                 style={{
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -217,7 +217,7 @@ export default function PersonalInfo() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Paperozi-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -295,7 +295,7 @@ export default function PersonalInfo() {
               >
                 <div
                   style={{
-                    fontFamily: "Paperozi-Semibold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -303,7 +303,7 @@ export default function PersonalInfo() {
                   회원 관리&nbsp;
                   {/* <span
                     style={{
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "12px",
                       color: "#FF5005",
                     }}
@@ -375,7 +375,7 @@ export default function PersonalInfo() {
                   marginTop: "40px",
                   display: "flex",
                   justifyContent: "space-between",
-                  fontFamily: "Paperozi-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "16px",
                   color: "#888",
                   gap: "10px",
@@ -429,7 +429,7 @@ export default function PersonalInfo() {
                       width: "100%",
                       height: "50px",
                       marginBottom: "8px",
-                      fontFamily: "Paperozi-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "16px",
                       color: "#fff",
                       display: "flex",
@@ -484,7 +484,7 @@ export default function PersonalInfo() {
                           height: "40px",
                           backgroundColor: "transparent",
                           border: "none",
-                          fontFamily: "Paperozi-Light",
+                          fontFamily: "Suit-Light",
                           fontSize: "16px",
                           color: changedRoles[member.memberId]
                             ? "#2cc295"

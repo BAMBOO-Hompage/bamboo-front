@@ -54,7 +54,7 @@ const DDayCounter = () => {
         <div
           style={{
             marginBottom: "30px",
-            fontFamily: "Paperozi-Semibold",
+            fontFamily: "Suit-Semibold",
             fontSize: "clamp(24px, 4vw, 30px)",
             color: "#fff",
           }}
@@ -63,7 +63,7 @@ const DDayCounter = () => {
         </div>
         <div
           style={{
-            fontFamily: "Paperozi-Semibold",
+            fontFamily: "Suit-Semibold",
             fontSize: "clamp(45px, 7vw, 60px)",
             color: "#2cc295",
           }}
@@ -88,7 +88,7 @@ const DDayCounter = () => {
       >
         <div
           style={{
-            fontFamily: "Paperozi-Regular",
+            fontFamily: "Suit-Regular",
             fontSize: "18px",
             color: "#fff",
             marginBottom: "10px",

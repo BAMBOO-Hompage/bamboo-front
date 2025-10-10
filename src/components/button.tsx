@@ -119,7 +119,7 @@ const ButtonContainer = styled.div<{
 `;
 
 const ButtonTitle = styled.p`
-  font-family: Paperozi-Regular;
+  font-family: Suit-Regular;
 `;
 
 export default function Button(props: ButtonProps) {
