@@ -19,7 +19,7 @@ import DeletePaperCommentsAPI from "../../api/library-posts/deletePaperCommentsA
 import PutPaperCommentsAPI from "../../api/library-posts/putPaperCommentsAPI.tsx";
 
 import "../../App.css";
-// import "../../style/Post.css";`
+import styles from "../../style/Post.module.css";
 
 type MyDataType = {
   memberId: number;
@@ -49,9 +49,7 @@ const maxVisiblePages = 5;
 
 export default function AlexandriaPost() {
   const sanitizer = dompurify.sanitize;
-
   const [searchParams, setSearchParams] = useSearchParams();
-  // const currentPage = parseInt(searchParams.get("commentPage") || "1", 10);
 
   const [checkAuth, setCheckAuth] = useState<number>(0);
   const [myData, setMyData] = useState<MyDataType>({
@@ -83,9 +81,20 @@ export default function AlexandriaPost() {
   const [openCommentEdit, setOpenCommentEdit] = useState(0);
   const [commentEdit, setCommentEdit] = useState("");
   const [previewImage, setPreviewImage] = useState("");
-  const [paperCommentsToDisplay, setPaperCommentsToDisplay] = useState([]);
+  const [paperCommentsToDisplay, setPaperCommentsToDisplay] = useState<any[]>(
+    []
+  );
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [submittingReplyId, setSubmittingReplyId] = useState<number | null>(
+    null
+  );
+  const [submittingEditId, setSubmittingEditId] = useState<number | null>(null);
+  const [deletingCommentId, setDeletingCommentId] = useState<number | null>(
+    null
+  );
 
   const startPage =
     Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
@@ -105,6 +114,15 @@ export default function AlexandriaPost() {
     setCurrentPage(page);
   };
 
+  const refetchCommentsForCurrentPage = async () => {
+    const paperCommentsResult = await GetPaperCommentsAPI(
+      searchParams.get("id"),
+      currentPage
+    );
+    setPaperCommentsToDisplay(paperCommentsResult.content);
+    setTotalPages(paperCommentsResult.totalPages);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,9 +138,8 @@ export default function AlexandriaPost() {
         console.error("API 호출 중 오류 발생:", error);
       }
     };
-
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, searchParams]);
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
@@ -142,54 +159,130 @@ export default function AlexandriaPost() {
     });
   }, []);
 
+  // 댓글 등록
   const postComments = async () => {
+    if (isSubmittingComment) return;
+    if (!comment.trim()) {
+      alert("내용을 작성해주세요.");
+      return;
+    }
+    setIsSubmittingComment(true);
     try {
       await PostPaperCommentsAPI(paperData.libraryPostId, comment);
-      const paperCommentsResult = await GetPaperCommentsAPI(
+
+      // 댓글 목록 최신화
+      const last = await GetPaperCommentsAPI(
         searchParams.get("id"),
-        currentPage
+        totalPages
       );
-      setTotalPages(paperCommentsResult.totalPages);
-      const newPaperCommentsResult = await GetPaperCommentsAPI(
-        searchParams.get("id"),
-        paperCommentsResult.totalPages
-      );
-      setCurrentPage(paperCommentsResult.totalPages);
-      setPaperCommentsToDisplay(newPaperCommentsResult.content);
+      setPaperCommentsToDisplay(last.content);
+      setCurrentPage(totalPages);
+
+      //  댓글 개수도 최신화 (useEffect와 동일하게 서버 기준으로)
+      const updatedPaper = await GetPaperAPI(searchParams.get("id"));
+      setPaperData(updatedPaper);
+
       setComment("");
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
+    } finally {
+      setIsSubmittingComment(false);
     }
   };
-  const postReplies = async (parentId) => {
+
+  // 대댓글 등록
+  const postReplies = async (parentId: number) => {
+    if (submittingReplyId !== null) return;
+    if (!reply.trim()) {
+      alert("내용을 작성해주세요.");
+      return;
+    }
+    setSubmittingReplyId(parentId);
     try {
       await PostPaperRepliesAPI(paperData.libraryPostId, parentId, reply);
-      const paperCommentsResult = await GetPaperCommentsAPI(
-        searchParams.get("id"),
-        currentPage
-      );
-      setPaperCommentsToDisplay(paperCommentsResult.content);
+      await refetchCommentsForCurrentPage();
+
+      // 수정: 댓글 개수 증가
+      setPaperData((prev) => ({
+        ...prev,
+        commentCount: prev.commentCount + 1,
+      }));
+
       setOpenReply(0);
       setReply("");
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
+    } finally {
+      setSubmittingReplyId(null);
     }
   };
-  const putComments = async (commentId) => {
+
+  // 댓글/대댓글 수정
+  const putComments = async (commentId: number) => {
+    if (submittingEditId !== null) return;
+    if (!commentEdit.trim()) {
+      alert("내용을 작성해주세요.");
+      return;
+    }
+    setSubmittingEditId(commentId);
     try {
       await PutPaperCommentsAPI(
         paperData.libraryPostId,
         commentId,
         commentEdit
       );
-      const paperCommentsResult = await GetPaperCommentsAPI(
+      await refetchCommentsForCurrentPage();
+      setOpenCommentEdit(0);
+      setCommentEdit("");
+    } catch (error) {
+      console.error("API 호출 중 오류 발생:", error);
+    } finally {
+      setSubmittingEditId(null);
+    }
+  };
+
+  // 댓글/대댓글 삭제
+  const deleteComment = async (commentId: number) => {
+    if (deletingCommentId !== null) return;
+    const deleteConfirm = window.confirm("댓글을 삭제하시겠습니까?");
+    if (!deleteConfirm) return;
+
+    setDeletingCommentId(commentId);
+    try {
+      await DeletePaperCommentsAPI(paperData.libraryPostId, commentId);
+      const res = await GetPaperCommentsAPI(
         searchParams.get("id"),
         currentPage
       );
-      setPaperCommentsToDisplay(paperCommentsResult.content);
-      setComment("");
+
+      if (res.content.length === 0) {
+        if (currentPage > 1) {
+          const prevPage = currentPage - 1;
+          setCurrentPage(prevPage);
+          const prevRes = await GetPaperCommentsAPI(
+            searchParams.get("id"),
+            prevPage
+          );
+          setPaperCommentsToDisplay(prevRes.content);
+          setTotalPages(prevRes.totalPages);
+        } else {
+          setPaperCommentsToDisplay([]);
+          setTotalPages(1);
+        }
+      } else {
+        setPaperCommentsToDisplay(res.content);
+        setTotalPages(res.totalPages);
+      }
+
+      // 수정: 댓글 개수 감소
+      setPaperData((prev) => ({
+        ...prev,
+        commentCount: Math.max(prev.commentCount - 1, 0),
+      }));
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
+    } finally {
+      setDeletingCommentId(null);
     }
   };
 
@@ -205,9 +298,7 @@ export default function AlexandriaPost() {
             ease: "easeInOut",
             duration: 1,
           }}
-          style={{
-            width: "100%",
-          }}
+          style={{ width: "100%" }}
         >
           <div
             style={{
@@ -228,7 +319,7 @@ export default function AlexandriaPost() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -239,7 +330,7 @@ export default function AlexandriaPost() {
               </div>
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "12px",
                   color: "#888",
                 }}
@@ -264,11 +355,12 @@ export default function AlexandriaPost() {
                   type="destructive"
                   size="xsmall"
                   title="삭제"
-                  onClick={() => {
+                  onClick={async () => {
+                    // 게시글 삭제는 요청에 없었지만 그대로 유지
                     const deleteConfirm =
                       window.confirm("게시물을 삭제하시겠습니까?");
                     if (deleteConfirm) {
-                      DeletePapersAPI(paperData.libraryPostId);
+                      await DeletePapersAPI(paperData.libraryPostId);
                     }
                   }}
                 />
@@ -324,7 +416,7 @@ export default function AlexandriaPost() {
                     maxWidth: "960px",
                     minHeight: "40px",
                     marginBottom: "20px",
-                    fontFamily: "Pretendard-Bold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "clamp(22px, 3.3vw, 28px)",
                     color: "#fff",
                   }}
@@ -339,7 +431,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -354,7 +446,7 @@ export default function AlexandriaPost() {
                       display: "block",
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                       wordWrap: "break-word",
                       overflowWrap: "break-word",
@@ -371,7 +463,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -382,7 +474,7 @@ export default function AlexandriaPost() {
                     style={{
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                     }}
                   >
@@ -397,7 +489,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -408,7 +500,7 @@ export default function AlexandriaPost() {
                     style={{
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                     }}
                   >
@@ -423,7 +515,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -434,7 +526,7 @@ export default function AlexandriaPost() {
                     style={{
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                     }}
                   >
@@ -449,7 +541,7 @@ export default function AlexandriaPost() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 18px)",
                   }}
                 >
@@ -460,7 +552,7 @@ export default function AlexandriaPost() {
                     style={{
                       width: "100%",
                       maxWidth: "850px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       color: "#fff",
                     }}
                   >
@@ -485,7 +577,7 @@ export default function AlexandriaPost() {
                         paddingTop: "20px",
                         borderRadius: "20px",
                         marginBottom: "10px",
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Suit-Light",
                         fontSize: "18px",
                         color: "#fff",
                       }}
@@ -543,20 +635,8 @@ export default function AlexandriaPost() {
                     padding: "20px 0",
                     paddingBottom: "100px",
                   }}
-                >
-                  <div
-                    className="container"
-                    dangerouslySetInnerHTML={{
-                      __html: sanitizer(`${paperData.content}`),
-                    }}
-                    style={{
-                      fontFamily: "Pretendard-Light",
-                      fontSize: "clamp(14px, 2vw, 18px)",
-                      color: "#fff",
-                      lineHeight: "1.4",
-                    }}
-                  />
-                </div>
+                ></div>
+
                 <hr
                   style={{
                     width: "100%",
@@ -570,7 +650,7 @@ export default function AlexandriaPost() {
                   <>
                     <div
                       style={{
-                        fontFamily: "Pretendard-Bold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "18px",
                         color: "#fff",
                         marginTop: "40px",
@@ -579,7 +659,7 @@ export default function AlexandriaPost() {
                     >
                       댓글 {paperData.commentCount}개
                     </div>
-                    {paperCommentsToDisplay.map((paperComment) => (
+                    {paperCommentsToDisplay.map((paperComment: any) => (
                       <div
                         key={paperComment.commentId}
                         style={{ padding: "15px 0 0" }}
@@ -596,7 +676,7 @@ export default function AlexandriaPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Pretendard-Bold",
+                                  fontFamily: "Suit-Semibold",
                                   fontSize: "16px",
                                   color: "#fff",
                                   display: "flex",
@@ -622,13 +702,17 @@ export default function AlexandriaPost() {
                                 }}
                               >
                                 <Button
-                                  type="primary"
+                                  type={
+                                    submittingEditId === paperComment.commentId
+                                      ? "disabled"
+                                      : "primary"
+                                  }
                                   size="small"
                                   title="댓글 등록"
                                   onClick={() => {
+                                    if (submittingEditId !== null) return;
                                     if (commentEdit) {
                                       putComments(paperComment.commentId);
-                                      setOpenCommentEdit(0);
                                     } else {
                                       alert("내용을 작성해주세요.");
                                     }
@@ -648,7 +732,7 @@ export default function AlexandriaPost() {
                             >
                               <textarea
                                 style={{
-                                  fontFamily: "Pretendard-Light",
+                                  fontFamily: "Suit-Light",
                                   fontSize: "clamp(14px, 2vw, 16px)",
                                   color: "#fff",
                                   width: "100%",
@@ -679,7 +763,7 @@ export default function AlexandriaPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Pretendard-SemiBold",
+                                  fontFamily: "Suit-Semibold",
                                   fontSize: "16px",
                                   color: "#fff",
                                   display: "flex",
@@ -709,16 +793,14 @@ export default function AlexandriaPost() {
                               </div>
                               <div
                                 style={{
-                                  fontFamily: "Pretendard-Light",
+                                  fontFamily: "Suit-Light",
                                   fontSize: "14px",
                                   color: "#777",
                                 }}
                               >
                                 {checkAuth >= 1 ? (
                                   <span
-                                    style={{
-                                      cursor: "pointer",
-                                    }}
+                                    style={{ cursor: "pointer" }}
                                     onMouseEnter={(e) => {
                                       e.currentTarget.style.fontWeight = "600";
                                       e.currentTarget.style.textDecoration =
@@ -748,9 +830,7 @@ export default function AlexandriaPost() {
                                   <>
                                     &nbsp;&nbsp;|&nbsp;&nbsp;
                                     <span
-                                      style={{
-                                        cursor: "pointer",
-                                      }}
+                                      style={{ cursor: "pointer" }}
                                       onMouseEnter={(e) => {
                                         e.currentTarget.style.fontWeight =
                                           "600";
@@ -781,9 +861,7 @@ export default function AlexandriaPost() {
                                   <>
                                     &nbsp;&nbsp;|&nbsp;&nbsp;
                                     <span
-                                      style={{
-                                        cursor: "pointer",
-                                      }}
+                                      style={{ cursor: "pointer" }}
                                       onMouseEnter={(e) => {
                                         e.currentTarget.style.fontWeight =
                                           "600";
@@ -797,19 +875,14 @@ export default function AlexandriaPost() {
                                           "none";
                                       }}
                                       onClick={() => {
-                                        const deleteConfirm =
-                                          window.confirm(
-                                            "댓글을 삭제하시겠습니까?"
-                                          );
-                                        if (deleteConfirm) {
-                                          DeletePaperCommentsAPI(
-                                            paperData.libraryPostId,
-                                            paperComment.commentId
-                                          );
-                                        }
+                                        if (deletingCommentId !== null) return;
+                                        deleteComment(paperComment.commentId);
                                       }}
                                     >
-                                      삭제
+                                      {deletingCommentId ===
+                                      paperComment.commentId
+                                        ? "삭제 중..."
+                                        : "삭제"}
                                     </span>
                                   </>
                                 ) : (
@@ -827,7 +900,7 @@ export default function AlexandriaPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Pretendard-ExtraLight",
+                                  fontFamily: "Suit-ExtraLight",
                                   fontSize: "clamp(14px, 2vw, 16px)",
                                   color: "#fff",
                                   width: "100%",
@@ -859,7 +932,7 @@ export default function AlexandriaPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Pretendard-Bold",
+                                  fontFamily: "Suit-Semibold",
                                   fontSize: "16px",
                                   color: "#fff",
                                   display: "flex",
@@ -885,10 +958,15 @@ export default function AlexandriaPost() {
                                 }}
                               >
                                 <Button
-                                  type="primary"
+                                  type={
+                                    submittingReplyId === paperComment.commentId
+                                      ? "disabled"
+                                      : "primary"
+                                  }
                                   size="small"
                                   title="댓글 등록"
                                   onClick={() => {
+                                    if (submittingReplyId !== null) return;
                                     if (reply) {
                                       postReplies(paperComment.commentId);
                                     } else {
@@ -910,7 +988,7 @@ export default function AlexandriaPost() {
                             >
                               <textarea
                                 style={{
-                                  fontFamily: "Pretendard-Light",
+                                  fontFamily: "Suit-Light",
                                   fontSize: "clamp(14px, 2vw, 16px)",
                                   color: "#fff",
                                   width: "100%",
@@ -934,7 +1012,7 @@ export default function AlexandriaPost() {
                         )}
                         {paperComment.children.length > 0 ? (
                           <>
-                            {paperComment.children.map((paperReply) => (
+                            {paperComment.children.map((paperReply: any) => (
                               <div
                                 key={paperReply.commentId}
                                 style={{
@@ -954,7 +1032,7 @@ export default function AlexandriaPost() {
                                     >
                                       <div
                                         style={{
-                                          fontFamily: "Pretendard-Bold",
+                                          fontFamily: "Suit-Semibold",
                                           fontSize: "16px",
                                           color: "#fff",
                                           display: "flex",
@@ -982,13 +1060,19 @@ export default function AlexandriaPost() {
                                         }}
                                       >
                                         <Button
-                                          type="primary"
+                                          type={
+                                            submittingEditId ===
+                                            paperReply.commentId
+                                              ? "disabled"
+                                              : "primary"
+                                          }
                                           size="small"
                                           title="댓글 등록"
                                           onClick={() => {
+                                            if (submittingEditId !== null)
+                                              return;
                                             if (commentEdit) {
                                               putComments(paperReply.commentId);
-                                              setOpenCommentEdit(0);
                                             } else {
                                               alert("내용을 작성해주세요.");
                                             }
@@ -1008,7 +1092,7 @@ export default function AlexandriaPost() {
                                     >
                                       <textarea
                                         style={{
-                                          fontFamily: "Pretendard-Light",
+                                          fontFamily: "Suit-Light",
                                           fontSize: "clamp(14px, 2vw, 16px)",
                                           color: "#fff",
                                           width: "100%",
@@ -1039,7 +1123,7 @@ export default function AlexandriaPost() {
                                     >
                                       <div
                                         style={{
-                                          fontFamily: "Pretendard-SemiBold",
+                                          fontFamily: "Suit-Semibold",
                                           fontSize: "16px",
                                           color: "#fff",
                                           display: "flex",
@@ -1048,13 +1132,15 @@ export default function AlexandriaPost() {
                                         }}
                                       >
                                         <img
-                                          // src={
-                                          //   paperReply.member.profileImageUrl
-                                          //     ? paperReply.member
-                                          //         .profileImageUrl
-                                          //     : "../img/icon/base_profile.png"
-                                          // }
-                                          src="../img/icon/base_profile.png"
+                                          src={
+                                            /* 수정  대댓글 프로필 이미지가 항상 기본 이미지로 보이던 문제 수정
+                                               - 기존: 하드코딩된 "../img/icon/base_profile.png"
+                                               - 변경: 백엔드에서 내려주는 paperReply.writerImageUrl를 우선 사용하고,
+                                                       없으면 기본 이미지를 fallback으로 사용 */
+                                            paperReply.writerImageUrl
+                                              ? paperReply.writerImageUrl
+                                              : "../img/icon/base_profile.png"
+                                          }
                                           alt="profile"
                                           style={{
                                             width: "30px",
@@ -1071,7 +1157,7 @@ export default function AlexandriaPost() {
                                       </div>
                                       <div
                                         style={{
-                                          fontFamily: "Pretendard-Light",
+                                          fontFamily: "Suit-Light",
                                           fontSize: "14px",
                                           color: "#777",
                                         }}
@@ -1080,9 +1166,7 @@ export default function AlexandriaPost() {
                                         paperReply.memberId ? (
                                           <>
                                             <span
-                                              style={{
-                                                cursor: "pointer",
-                                              }}
+                                              style={{ cursor: "pointer" }}
                                               onMouseEnter={(e) => {
                                                 e.currentTarget.style.fontWeight =
                                                   "600";
@@ -1116,9 +1200,7 @@ export default function AlexandriaPost() {
                                           <>
                                             &nbsp;&nbsp;|&nbsp;&nbsp;
                                             <span
-                                              style={{
-                                                cursor: "pointer",
-                                              }}
+                                              style={{ cursor: "pointer" }}
                                               onMouseEnter={(e) => {
                                                 e.currentTarget.style.fontWeight =
                                                   "600";
@@ -1132,19 +1214,17 @@ export default function AlexandriaPost() {
                                                   "none";
                                               }}
                                               onClick={() => {
-                                                const deleteConfirm =
-                                                  window.confirm(
-                                                    "댓글을 삭제하시겠습니까?"
-                                                  );
-                                                if (deleteConfirm) {
-                                                  DeletePaperCommentsAPI(
-                                                    paperData.libraryPostId,
-                                                    paperReply.commentId
-                                                  );
-                                                }
+                                                if (deletingCommentId !== null)
+                                                  return;
+                                                deleteComment(
+                                                  paperReply.commentId
+                                                );
                                               }}
                                             >
-                                              삭제
+                                              {deletingCommentId ===
+                                              paperReply.commentId
+                                                ? "삭제 중..."
+                                                : "삭제"}
                                             </span>
                                           </>
                                         ) : (
@@ -1162,7 +1242,7 @@ export default function AlexandriaPost() {
                                     >
                                       <div
                                         style={{
-                                          fontFamily: "Pretendard-ExtraLight",
+                                          fontFamily: "Suit-ExtraLight",
                                           fontSize: "clamp(14px, 2vw, 16px)",
                                           color: "#fff",
                                           width: "100%",
@@ -1208,28 +1288,22 @@ export default function AlexandriaPost() {
                   >
                     <button
                       className="bottom_btn"
-                      style={{}}
                       onClick={() => changePage(1)}
                     >
                       <img
                         src="../img/btn/pageStart.png"
                         alt="pageStart"
-                        style={{
-                          height: "12px",
-                        }}
+                        style={{ height: "12px" }}
                       />
                     </button>
                     <button
                       className="bottom_btn"
-                      style={{}}
                       onClick={() => changePage(currentPage - 1)}
                     >
                       <img
                         src="../img/btn/pagePrev.png"
                         alt="pagePrev"
-                        style={{
-                          height: "12px",
-                        }}
+                        style={{ height: "12px" }}
                       />
                     </button>
                     {Array.from(
@@ -1254,28 +1328,22 @@ export default function AlexandriaPost() {
                     ))}
                     <button
                       className="bottom_btn"
-                      style={{}}
                       onClick={() => changePage(currentPage + 1)}
                     >
                       <img
                         src="../img/btn/pageNext.png"
                         alt="pageNext"
-                        style={{
-                          height: "12px",
-                        }}
+                        style={{ height: "12px" }}
                       />
                     </button>
                     <button
                       className="bottom_btn"
-                      style={{}}
                       onClick={() => changePage(totalPages)}
                     >
                       <img
                         src="../img/btn/pageEnd.png"
                         alt="pageNext"
-                        style={{
-                          height: "12px",
-                        }}
+                        style={{ height: "12px" }}
                       />
                     </button>
                   </div>
@@ -1299,7 +1367,7 @@ export default function AlexandriaPost() {
                     >
                       <div
                         style={{
-                          fontFamily: "Pretendard-Bold",
+                          fontFamily: "Suit-Semibold",
                           fontSize: "16px",
                           color: "#fff",
                           display: "flex",
@@ -1321,10 +1389,11 @@ export default function AlexandriaPost() {
                       </div>
                       <div style={{ display: comment.trim() ? "" : "none" }}>
                         <Button
-                          type="primary"
+                          type={isSubmittingComment ? "disabled" : "primary"}
                           size="small"
                           title="댓글 등록"
                           onClick={() => {
+                            if (isSubmittingComment) return;
                             if (comment) {
                               postComments();
                             } else {
@@ -1346,7 +1415,7 @@ export default function AlexandriaPost() {
                     >
                       <textarea
                         style={{
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Suit-Light",
                           fontSize: "clamp(14px, 2vw, 16px)",
                           color: "#fff",
                           width: "100%",
@@ -1383,7 +1452,7 @@ export default function AlexandriaPost() {
                     >
                       <div
                         style={{
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Suit-Light",
                           fontSize: "clamp(14px, 2vw, 16px)",
                           color: "#777",
                           width: "100%",

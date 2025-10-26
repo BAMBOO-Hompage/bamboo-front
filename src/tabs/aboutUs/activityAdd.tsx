@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import moment from "moment";
@@ -18,63 +17,82 @@ export default function ActivityAdd() {
     setFocus,
     formState: { errors },
   } = useForm();
+
   useEffect(() => {
     setFocus("Title");
   }, [setFocus]);
+
+  // 중복 제출 방지
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [images, setImages] = useState<File[]>([]);
   const [showImages, setShowImages] = useState<string[]>([]);
 
-  const handleAddImages = (event) => {
-    const imageLists = event.target.files; // 선택한 파일들
+  const handleAddImages = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const imageLists = event.target.files;
+    if (!imageLists || imageLists.length === 0) return;
+
     let fileLists: File[] = [...images];
-    let fileNameLists: string[] = [...showImages]; // 기존 저장된 파일명들
+    let fileNameLists: string[] = [...showImages];
 
     for (let i = 0; i < imageLists.length; i++) {
-      const currentFileName: string = imageLists[i].name; // 파일명 가져오기
       fileLists.push(imageLists[i]);
-      fileNameLists.push(currentFileName);
+      fileNameLists.push(imageLists[i].name);
     }
 
     if (fileNameLists.length > 10) {
       fileLists = fileLists.slice(0, 10);
-      fileNameLists = fileNameLists.slice(0, 10); // 최대 10개 제한
+      fileNameLists = fileNameLists.slice(0, 10);
     }
 
     setImages(fileLists);
-    setShowImages(fileNameLists); // 파일명 리스트 저장
+    setShowImages(fileNameLists);
+
+    // 같은 파일 다시 선택 가능하도록 리셋
+    event.target.value = "";
   };
-  const handleDeleteImage = (id) => {
+
+  const handleDeleteImage = (id: number) => {
     setImages(images.filter((_, index) => index !== id));
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
-  const onValid = async (e) => {
-    const MAX_FILE_SIZE_MB = 10;
-    const year = moment(e.StartDate).format("YYYY");
+  const onValid = async (e: any) => {
+    // ✅ 중복 제출 가드
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
-    const oversizedFile = images.find(
-      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
-    );
-    if (oversizedFile) {
-      alert(
-        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+    try {
+      const MAX_FILE_SIZE_MB = 10;
+      const year = moment(e.StartDate).format("YYYY");
+
+      const oversizedFile = images.find(
+        (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
       );
-      return;
+      if (oversizedFile) {
+        alert(
+          `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+        );
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("title", e.Title);
+      formData.append("startDate", e.StartDate);
+      formData.append("endDate", e.EndDate);
+      formData.append("year", year);
+      images.forEach((file) => {
+        formData.append("images", file);
+      });
+
+      await PostActivitiesAPI(formData);
+    } finally {
+      // ✅ 항상 해제 (추가 alert 없음)
+      setIsSubmitting(false);
     }
-
-    const formData = new FormData();
-    formData.append("title", e.Title);
-    formData.append("startDate", e.StartDate);
-    formData.append("endDate", e.EndDate);
-    formData.append("year", year);
-    images.forEach((file) => {
-      formData.append("images", file);
-    });
-
-    await PostActivitiesAPI(formData);
   };
 
-  const onInvalid = (e) => {
+  const onInvalid = (e: unknown) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
@@ -117,7 +135,7 @@ export default function ActivityAdd() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -128,7 +146,7 @@ export default function ActivityAdd() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -167,7 +185,7 @@ export default function ActivityAdd() {
               <div
                 style={{
                   width: "100%",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                 }}
@@ -183,7 +201,7 @@ export default function ActivityAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -203,11 +221,12 @@ export default function ActivityAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -215,7 +234,7 @@ export default function ActivityAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -237,7 +256,7 @@ export default function ActivityAdd() {
                     <input
                       type="date"
                       style={{
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Suit-Light",
                         fontSize: "18px",
                         width: "130px",
                       }}
@@ -249,7 +268,7 @@ export default function ActivityAdd() {
                     <input
                       type="date"
                       style={{
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Suit-Light",
                         fontSize: "18px",
                         marginLeft: "20px",
                         width: "130px",
@@ -260,6 +279,7 @@ export default function ActivityAdd() {
                     />
                   </div>
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -267,7 +287,7 @@ export default function ActivityAdd() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                   }}
                 >
@@ -284,26 +304,22 @@ export default function ActivityAdd() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
                     }}
-                    onChange={handleAddImages}
                   >
                     <input
                       type="file"
                       id="fileInput"
-                      style={{
-                        display: "none",
-                      }}
+                      style={{ display: "none" }}
                       multiple
                       accept="image/*"
-                      {...register("Image", {
-                        // required: "사진을 추가해주세요.",
-                      })}
+                      {...register("Image")}
+                      onChange={handleAddImages}
                       onClick={(e) => {
                         (e.target as HTMLInputElement).value = "";
                       }}
@@ -317,6 +333,7 @@ export default function ActivityAdd() {
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -346,7 +363,7 @@ export default function ActivityAdd() {
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              fontFamily: "Pretendard-Light",
+                              fontFamily: "Suit-Light",
                               fontSize: "14px",
                               marginBottom: "10px",
                               color: "#ccc",
@@ -356,9 +373,7 @@ export default function ActivityAdd() {
                               src="../../img/btn/delete_disabled.png"
                               alt="delete"
                               style={{ width: "16px", cursor: "pointer" }}
-                              onClick={() => {
-                                handleDeleteImage(id);
-                              }}
+                              onClick={() => handleDeleteImage(id)}
                               onMouseEnter={(e) => {
                                 (e.target as HTMLImageElement).src =
                                   "../../img/btn/delete_enabled.png";
@@ -391,7 +406,7 @@ export default function ActivityAdd() {
                         borderRadius: "20px",
                         overflow: "auto",
                       }}
-                    ></div>
+                    />
                   )}
                 </div>
 
@@ -403,7 +418,7 @@ export default function ActivityAdd() {
                   }}
                 >
                   <Button
-                    type="primary"
+                    type={isSubmitting ? "disabled" : "primary"} // 중복 제출 방지
                     size="small"
                     title="작성 완료"
                     onClick={handleSubmit(onValid, onInvalid)}

@@ -89,6 +89,15 @@ export default function CurriculumManagement() {
   );
   const [isEndPopupOpen, setIsEndPopupOpen] = useState(false);
 
+  //  중복 제출 방지 상태
+  const [isAdding, setIsAdding] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [deletingSubjectId, setDeletingSubjectId] = useState<number | null>(
+    null
+  );
+  const [isStarting, setIsStarting] = useState(false);
+  const [isEnding, setIsEnding] = useState(false);
+
   useEffect(() => {
     CheckAuthAPI().then((data) => {
       if (data.role === "ROLE_OPS") {
@@ -125,10 +134,10 @@ export default function CurriculumManagement() {
         setIsEndActive(
           cohortResult.status === "활동 중" &&
             (currentDate.getMonth() + 1 === 2 ||
-              currentDate.getMonth() + 1 === 8) &&
+              currentDate.getMonth() + 1 === 9) &&
             (currentDate.getFullYear() !== cohortResult.year ||
               (cohortResult.isFirstSemester === true &&
-                currentDate.getMonth() + 1 === 8))
+                currentDate.getMonth() + 1 === 9))
         );
         setIsStartActive(cohortResult.status === "활동 준비");
 
@@ -142,36 +151,47 @@ export default function CurriculumManagement() {
     fetchData();
   }, []);
 
+  //  활동 종료(중복 방지)
   const handleEnd = async () => {
-    if (confirmationText === `${cohort.batch}기 활동 종료`) {
-      try {
+    if (isEnding) return;
+    setIsEnding(true);
+    try {
+      if (confirmationText === `${cohort.batch}기 활동 종료`) {
         await PatchCohortsAPI(cohort.cohortId, "활동 종료");
         alert(`${cohort.batch}기 활동 종료!\n한 학기돟안 고생 많으셨습니다.`);
 
         const newCohort = cohort.batch + 1;
-        console.log(currentDate.getMonth() + 1 === 2);
 
         await PostCohortsAPI(
           newCohort,
           currentDate.getFullYear(),
           currentDate.getMonth() + 1 === 2
         );
-      } catch (error) {
-        console.error("Error handling cohort end:", error);
-        alert("처리 중 오류가 발생했습니다. 다시 시도해주세요.");
+      } else {
+        alert("다시 입력해주세요.");
       }
-    } else {
-      alert("다시 입력해주세요.");
+    } catch (error) {
+      console.error("Error handling cohort end:", error);
+      alert("처리 중 오류가 발생했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsEnding(false);
     }
   };
+
+  //  활동 시작(중복 방지)
   const handleStart = async () => {
+    if (isStarting) return;
     const startConfirm = window.confirm(
       `${cohort.batch}기 활동을 시작하겠습니까?\n\n활동 시작 후에는 커리큘럼 및 스터디 수정이 불가능합니다!`
     );
-    if (startConfirm) {
-      await PatchCohortsAPI(cohort.cohortId, "활동 중").then(() => {
-        window.location.reload();
-      });
+    if (!startConfirm) return;
+
+    setIsStarting(true);
+    try {
+      await PatchCohortsAPI(cohort.cohortId, "활동 중");
+      window.location.reload();
+    } finally {
+      setIsStarting(false);
     }
   };
 
@@ -191,7 +211,6 @@ export default function CurriculumManagement() {
   ]);
   const addCurriculum = () => {
     const updatedSubjects = [...curriculumList];
-    console.log(updatedSubjects);
     updatedSubjects.push({
       weeklyContentId: 0,
       subjectName: "",
@@ -205,13 +224,15 @@ export default function CurriculumManagement() {
     setCurriculumList(updatedSubjects);
   };
 
-  const onValid = async (e) => {
-    if (!e.Subject || e.Subject.length > 4) {
-      alert("과목명은 4자 이내로 입력해주세요.");
-      return;
-    }
+  //  ADD 저장 (중복 방지)
+  const onValid = async (e: any) => {
+    if (isAdding) return;
+    setIsAdding(true);
     try {
-      console.log(e.Subject, e.Book, e.Category);
+      if (!e.Subject || e.Subject.length > 4) {
+        alert("과목명은 4자 이내로 입력해주세요.");
+        return;
+      }
       const subjectResponse = await PostSubjectsAPI(
         e.Subject,
         e.Book,
@@ -222,7 +243,6 @@ export default function CurriculumManagement() {
         alert("과목 생성에 실패했습니다.");
         return;
       }
-      console.log(subjectResponse);
       const subjectId = subjectResponse.subjectId;
       for (const curriculum of curriculumList) {
         await PostWeeklyContentsAPI(
@@ -240,17 +260,20 @@ export default function CurriculumManagement() {
     } catch (error) {
       console.error("커리큘럼 등록 오류:", error);
       alert("커리큘럼 등록 중 오류가 발생했습니다.");
+    } finally {
+      setIsAdding(false);
     }
   };
-  const onInvalid = (e) => {
+  const onInvalid = (e: unknown) => {
     console.log(e, "onEditInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
 
-  const onEditValid = async (e) => {
+  //  EDIT 저장 (중복 방지)
+  const onEditValid = async (e: any) => {
+    if (isEditing) return;
+    setIsEditing(true);
     try {
-      console.log(e.Subject, e.Book, e.Category);
-
       const subjectResponse = await PutSubjectsAPI(
         isEditPopupOpen?.subjectId,
         e.Subject,
@@ -262,7 +285,6 @@ export default function CurriculumManagement() {
         alert("과목 수정에 실패했습니다.");
         return;
       }
-      console.log(subjectResponse);
       await DeleteWeeklyContentsAllAPI(subjectResponse.subjectId);
 
       for (const curriculum of curriculumList) {
@@ -281,11 +303,27 @@ export default function CurriculumManagement() {
     } catch (error) {
       console.error("커리큘럼 등록 오류:", error);
       alert("커리큘럼 수정 중 오류가 발생했습니다.");
+    } finally {
+      setIsEditing(false);
     }
   };
-  const onEditInvalid = (e) => {
+  const onEditInvalid = (e: unknown) => {
     console.log(e, "onEditInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
+  };
+
+  //  DELETE (중복 방지)
+  const handleDeleteSubject = async (subjectId: number) => {
+    if (deletingSubjectId === subjectId) return;
+    const confirm = window.confirm("커리큘럼을 삭제하시겠습니까?");
+    if (!confirm) return;
+
+    setDeletingSubjectId(subjectId);
+    try {
+      await DeleteSubjectsAPI(subjectId);
+    } finally {
+      setDeletingSubjectId(null);
+    }
   };
 
   const autoPattern = (id: string) => {
@@ -338,7 +376,7 @@ export default function CurriculumManagement() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -350,7 +388,7 @@ export default function CurriculumManagement() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -432,7 +470,7 @@ export default function CurriculumManagement() {
               >
                 <div
                   style={{
-                    fontFamily: "Pretendard-Bold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -440,7 +478,7 @@ export default function CurriculumManagement() {
                   커리큘럼 관리
                   {/* <span
                     style={{
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "12px",
                       color: "#FF5005",
                     }}
@@ -467,7 +505,7 @@ export default function CurriculumManagement() {
                 >
                   <div
                     style={{
-                      fontFamily: "Pretendard-SemiBold",
+                      fontFamily: "Suit-Semibold",
                       fontSize: "22px",
                       color: "#2CC295",
                     }}
@@ -479,7 +517,7 @@ export default function CurriculumManagement() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Suit-Light",
                         fontSize: "18px",
                         color: "#777",
                       }}
@@ -521,7 +559,7 @@ export default function CurriculumManagement() {
                       style={{
                         width: "100%",
                         marginBottom: "20px",
-                        fontFamily: "Pretendard-SemiBold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "22px",
                         color: "#fff",
                         display: "flex",
@@ -538,7 +576,7 @@ export default function CurriculumManagement() {
                         &emsp;{subject.name}&emsp;
                         <span
                           style={{
-                            fontFamily: "Pretendard-Regular",
+                            fontFamily: "Suit-Regular",
                             fontSize: "16px",
                             color: "#2cc295",
                           }}
@@ -549,7 +587,7 @@ export default function CurriculumManagement() {
                       {cohort.status === "활동 준비" ? (
                         <div
                           style={{
-                            fontFamily: "Pretendard-Light",
+                            fontFamily: "Suit-Light",
                             fontSize: "14px",
                             color: "#777",
                           }}
@@ -559,13 +597,20 @@ export default function CurriculumManagement() {
                               cursor: "pointer",
                             }}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.fontWeight = "600";
-                              e.currentTarget.style.textDecoration =
-                                "underline #777";
+                              (
+                                e.currentTarget as HTMLSpanElement
+                              ).style.fontWeight = "600";
+                              (
+                                e.currentTarget as HTMLSpanElement
+                              ).style.textDecoration = "underline #777";
                             }}
                             onMouseLeave={(e) => {
-                              e.currentTarget.style.fontWeight = "300";
-                              e.currentTarget.style.textDecoration = "none";
+                              (
+                                e.currentTarget as HTMLSpanElement
+                              ).style.fontWeight = "300";
+                              (
+                                e.currentTarget as HTMLSpanElement
+                              ).style.textDecoration = "none";
                             }}
                             onClick={() => {
                               setCurriculumList([]);
@@ -573,7 +618,6 @@ export default function CurriculumManagement() {
                                 setIsEditPopupOpen(subject);
                                 setCurriculumList(subject.weeklyContents);
                               }, 0);
-                              console.log(subject);
                             }}
                           >
                             수정
@@ -581,24 +625,36 @@ export default function CurriculumManagement() {
                           &nbsp;&nbsp;|&nbsp;&nbsp;
                           <span
                             style={{
-                              cursor: "pointer",
+                              cursor:
+                                deletingSubjectId === subject.subjectId
+                                  ? "not-allowed"
+                                  : "pointer",
+                              opacity:
+                                deletingSubjectId === subject.subjectId
+                                  ? 0.5
+                                  : 1,
                             }}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.fontWeight = "600";
-                              e.currentTarget.style.textDecoration =
-                                "underline #777";
+                              if (deletingSubjectId === subject.subjectId)
+                                return;
+                              (
+                                e.currentTarget as HTMLSpanElement
+                              ).style.fontWeight = "600";
+                              (
+                                e.currentTarget as HTMLSpanElement
+                              ).style.textDecoration = "underline #777";
                             }}
                             onMouseLeave={(e) => {
-                              e.currentTarget.style.fontWeight = "300";
-                              e.currentTarget.style.textDecoration = "none";
+                              (
+                                e.currentTarget as HTMLSpanElement
+                              ).style.fontWeight = "300";
+                              (
+                                e.currentTarget as HTMLSpanElement
+                              ).style.textDecoration = "none";
                             }}
-                            onClick={() => {
-                              const confirm =
-                                window.confirm("커리큘럼을 삭제하시겠습니까?");
-                              if (confirm) {
-                                DeleteSubjectsAPI(subject.subjectId);
-                              }
-                            }}
+                            onClick={() =>
+                              handleDeleteSubject(subject.subjectId)
+                            }
                           >
                             삭제
                           </span>
@@ -612,7 +668,7 @@ export default function CurriculumManagement() {
                         key={weekIndex}
                         style={{
                           marginBottom: "10px",
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Suit-Light",
                           fontSize: "16px",
                           color: "#fff",
                           display: "flex",
@@ -638,7 +694,7 @@ export default function CurriculumManagement() {
                   >
                     <div
                       style={{
-                        fontFamily: "Pretendard-SemiBold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "20px",
                         width: "280px",
                         padding: "12px",
@@ -647,15 +703,17 @@ export default function CurriculumManagement() {
                         boxShadow:
                           "-10px -10px 30px #242424, 15px 15px 30px #000",
                         color: "#FF5005",
-                        cursor: "pointer",
+                        cursor: isEnding ? "not-allowed" : "pointer",
                         transition: "all 0.3s ease",
                         textAlign: "center",
+                        opacity: isEnding ? 0.6 : 1,
                       }}
                       onMouseEnter={(e) => {
+                        if (isEnding) return;
                         (e.target as HTMLDivElement).style.transform =
-                          "scale(1.05)"; // 살짝 확대
+                          "scale(1.05)";
                         (e.target as HTMLDivElement).style.boxShadow =
-                          "-15px -15px 40px rgba(36, 36, 36, 0.5), 20px 20px 40px rgba(0, 0, 0, 0.7)"; // 그림자 효과 강하게
+                          "-15px -15px 40px rgba(36, 36, 36, 0.5), 20px 20px 40px rgba(0, 0, 0, 0.7)";
                       }}
                       onMouseLeave={(e) => {
                         (e.target as HTMLDivElement).style.transform =
@@ -664,7 +722,7 @@ export default function CurriculumManagement() {
                           "-10px -10px 30px #242424, 15px 15px 30px #000";
                       }}
                       onClick={() => {
-                        setIsEndPopupOpen(!isEndPopupOpen);
+                        if (!isEnding) setIsEndPopupOpen(!isEndPopupOpen);
                       }}
                     >
                       활동 종료
@@ -682,7 +740,7 @@ export default function CurriculumManagement() {
                   >
                     <div
                       style={{
-                        fontFamily: "Pretendard-SemiBold",
+                        fontFamily: "Suit-Semibold",
                         fontSize: "20px",
                         width: "280px",
                         padding: "12px",
@@ -691,15 +749,17 @@ export default function CurriculumManagement() {
                         boxShadow:
                           "-10px -10px 30px #242424, 15px 15px 30px #000",
                         color: "#2cc295",
-                        cursor: "pointer",
+                        cursor: isStarting ? "not-allowed" : "pointer",
                         transition: "all 0.3s ease",
                         textAlign: "center",
+                        opacity: isStarting ? 0.6 : 1,
                       }}
                       onMouseEnter={(e) => {
+                        if (isStarting) return;
                         (e.target as HTMLDivElement).style.transform =
-                          "scale(1.05)"; // 살짝 확대
+                          "scale(1.05)";
                         (e.target as HTMLDivElement).style.boxShadow =
-                          "-15px -15px 40px rgba(36, 36, 36, 0.5), 20px 20px 40px rgba(0, 0, 0, 0.7)"; // 그림자 효과 강하게
+                          "-15px -15px 40px rgba(36, 36, 36, 0.5), 20px 20px 40px rgba(0, 0, 0, 0.7)";
                       }}
                       onMouseLeave={(e) => {
                         (e.target as HTMLDivElement).style.transform =
@@ -708,7 +768,7 @@ export default function CurriculumManagement() {
                           "-10px -10px 30px #242424, 15px 15px 30px #000";
                       }}
                       onClick={() => {
-                        handleStart();
+                        if (!isStarting) handleStart();
                       }}
                     >
                       활동 시작
@@ -740,43 +800,6 @@ export default function CurriculumManagement() {
             zIndex: 1000,
           }}
         >
-          {/* <div
-            onClick={() => {
-              const deleteEnd = window.confirm(
-                "커리큘럼 추가를 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
-              );
-              if (deleteEnd) {
-                reset();
-                setCurriculumList([
-                  {
-                    weeklyContentId: 0,
-                    week: 1,
-                    subjectName: "",
-                    content: "",
-                    startDate: [],
-                    endDate: [],
-                    startPage: 0,
-                    endPage: 0,
-                  },
-                ]);
-                setIsAddPopupOpen(!isAddPopupOpen);
-              }
-            }}
-            style={{
-              position: "absolute",
-              top: "10px",
-              right: "10px",
-              background: "transparent",
-              border: "none",
-              color: "#fff",
-              fontFamily: "Pretendard-Bold",
-              fontSize: "30px",
-              cursor: "pointer",
-            }}
-            aria-label="Close"
-          >
-            ×
-          </div> */}
           <div
             style={{
               marginBottom: "20px",
@@ -799,7 +822,7 @@ export default function CurriculumManagement() {
                 height: "40px",
                 backgroundColor: "transparent",
                 borderRadius: "10px",
-                fontFamily: "Pretendard-Bold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "28px",
               }}
             />
@@ -831,7 +854,7 @@ export default function CurriculumManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -847,7 +870,7 @@ export default function CurriculumManagement() {
                   backgroundColor: "#171717",
                   borderRadius: "20px",
                   border: "none",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                   color: "#2CC295",
                   cursor: "pointer",
@@ -881,7 +904,7 @@ export default function CurriculumManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -904,7 +927,7 @@ export default function CurriculumManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -918,7 +941,7 @@ export default function CurriculumManagement() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "18px",
                 gap: "10px",
               }}
@@ -953,7 +976,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="period"
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       width: "80px",
@@ -967,7 +990,7 @@ export default function CurriculumManagement() {
                     type="date"
                     style={{
                       width: "50%",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                     }}
@@ -979,7 +1002,7 @@ export default function CurriculumManagement() {
                   <input
                     type="date"
                     style={{
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       marginLeft: "20px",
                       width: "50%",
@@ -1003,7 +1026,7 @@ export default function CurriculumManagement() {
                     onClick={() => {
                       setCurriculumList(
                         curriculumList
-                          .filter((_, i) => i !== index) // 선택한 항목 제거
+                          .filter((_, i) => i !== index)
                           .map((curriculum, newIndex) => ({
                             ...curriculum,
                             week: newIndex + 1,
@@ -1034,7 +1057,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="page"
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       width: "80px",
@@ -1049,7 +1072,7 @@ export default function CurriculumManagement() {
                     type="text"
                     placeholder="시작페이지 입력"
                     style={{
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                     }}
@@ -1067,7 +1090,7 @@ export default function CurriculumManagement() {
                     placeholder="끝페이지 입력"
                     style={{
                       overflow: "hidden",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                       marginLeft: "20px",
@@ -1094,7 +1117,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="name"
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       minWidth: "80px",
@@ -1157,7 +1180,7 @@ export default function CurriculumManagement() {
               }}
             />
             <Button
-              type="primary"
+              type={isAdding ? "disabled" : "primary"} //  중복 제출 방지
               size="small"
               title="저장"
               onClick={handleSubmit(onValid, onInvalid)}
@@ -1199,43 +1222,6 @@ export default function CurriculumManagement() {
             zIndex: 1000,
           }}
         >
-          {/* <div
-            onClick={() => {
-              const deleteEnd = window.confirm(
-                "커리큘럼 수정을 취소하시겠습니까?\n(변경 사항은 저장되지 않습니다.)"
-              );
-              if (deleteEnd) {
-                resetEdit();
-                setCurriculumList([
-                  {
-                    weeklyContentId: 0,
-                    week: 1,
-                    subjectName: "",
-                    content: "",
-                    startDate: [],
-                    endDate: [],
-                    startPage: 0,
-                    endPage: 0,
-                  },
-                ]);
-                setIsEditPopupOpen(undefined);
-              }
-            }}
-            style={{
-              position: "absolute",
-              top: "10px",
-              right: "10px",
-              background: "transparent",
-              border: "none",
-              color: "#fff",
-              fontFamily: "Pretendard-Bold",
-              fontSize: "30px",
-              cursor: "pointer",
-            }}
-            aria-label="Close"
-          >
-            ×
-          </div> */}
           <div
             style={{
               marginBottom: "20px",
@@ -1259,7 +1245,7 @@ export default function CurriculumManagement() {
                 height: "40px",
                 backgroundColor: "transparent",
                 borderRadius: "10px",
-                fontFamily: "Pretendard-Bold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "28px",
               }}
             />
@@ -1291,7 +1277,7 @@ export default function CurriculumManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -1307,7 +1293,7 @@ export default function CurriculumManagement() {
                   backgroundColor: "#171717",
                   borderRadius: "20px",
                   border: "none",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                   color: "#2CC295",
                   cursor: "pointer",
@@ -1341,7 +1327,7 @@ export default function CurriculumManagement() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "18px",
               gap: "10px",
             }}
@@ -1365,7 +1351,7 @@ export default function CurriculumManagement() {
                   padding: "0 20px",
                   backgroundColor: "#171717",
                   borderRadius: "20px",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                 }}
               />
@@ -1379,7 +1365,7 @@ export default function CurriculumManagement() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "18px",
                 gap: "10px",
               }}
@@ -1414,7 +1400,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="period"
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       width: "80px",
@@ -1433,7 +1419,7 @@ export default function CurriculumManagement() {
                     ).padStart(2, "0")}`}
                     style={{
                       width: "50%",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                     }}
@@ -1450,7 +1436,7 @@ export default function CurriculumManagement() {
                       curriculum.endDate[2]
                     ).padStart(2, "0")}`}
                     style={{
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       marginLeft: "20px",
                       width: "50%",
@@ -1474,7 +1460,7 @@ export default function CurriculumManagement() {
                     onClick={() => {
                       setCurriculumList(
                         curriculumList
-                          .filter((_, i) => i !== index) // 선택한 항목 제거
+                          .filter((_, i) => i !== index)
                           .map((curriculum, newIndex) => ({
                             ...curriculum,
                             week: newIndex + 1,
@@ -1505,7 +1491,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="page"
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       width: "80px",
@@ -1521,7 +1507,7 @@ export default function CurriculumManagement() {
                     defaultValue={curriculum.startPage}
                     placeholder="시작페이지 입력"
                     style={{
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                     }}
@@ -1540,7 +1526,7 @@ export default function CurriculumManagement() {
                     placeholder="끝페이지 입력"
                     style={{
                       overflow: "hidden",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       maxWidth: "160px",
                       marginLeft: "20px",
@@ -1567,7 +1553,7 @@ export default function CurriculumManagement() {
                   <label
                     htmlFor="name"
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "clamp(14px, 2.2vw, 18px)",
                       color: "#aaa",
                       minWidth: "80px",
@@ -1631,7 +1617,7 @@ export default function CurriculumManagement() {
               }}
             />
             <Button
-              type="primary"
+              type={isEditing ? "disabled" : "primary"} //  중복 제출 방지
               size="small"
               title="저장"
               onClick={handleSubmitEdit(onEditValid, onEditInvalid)}
@@ -1653,6 +1639,7 @@ export default function CurriculumManagement() {
           }}
         />
       )}
+
       {isEndPopupOpen && (
         <form
           style={{
@@ -1672,7 +1659,7 @@ export default function CurriculumManagement() {
         >
           <div
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "16px",
               color: "#fff",
               marginBottom: "10px",
@@ -1716,7 +1703,7 @@ export default function CurriculumManagement() {
                 padding: "0 20px",
                 height: "40px",
                 borderRadius: "10px",
-                fontFamily: "Pretendard-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "18px",
               }}
             />
@@ -1740,11 +1727,11 @@ export default function CurriculumManagement() {
               }}
             />
             <Button
-              type="primary"
+              type={isEnding ? "disabled" : "primary"} //  중복 제출 방지
               size="small"
               title="활동 종료"
               onClick={() => {
-                handleEnd();
+                if (!isEnding) handleEnd();
               }}
             />
           </div>
@@ -1753,7 +1740,7 @@ export default function CurriculumManagement() {
       {isEndPopupOpen && (
         <div
           onClick={() => {
-            setIsEndPopupOpen(!isEndPopupOpen);
+            if (!isEnding) setIsEndPopupOpen(!isEndPopupOpen);
           }}
           style={{
             position: "fixed",

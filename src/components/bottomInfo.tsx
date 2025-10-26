@@ -24,7 +24,7 @@ export default function BottomInfo() {
       >
         <div
           style={{
-            fontFamily: "Pretendard-Light",
+            fontFamily: "Suit-Light",
             fontSize: "14px",
             color: "#fff",
           }}
@@ -51,7 +51,7 @@ export default function BottomInfo() {
       >
         <div
           style={{
-            fontFamily: "Pretendard-SemiBold",
+            fontFamily: "Suit-Semibold",
             fontSize: "18px",
             color: "#fff",
             marginBottom: "20px",
@@ -61,7 +61,18 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Suit-Regular",
+              fontSize: "14px",
+              color: "#fff",
+            }}
+          >
+            Ver1.1 Created by 김진석(PM), 김재관(BE), 맹의현(FE), 장희정(FE) in
+            2025
+          </span>
+          <br />
+          <span
+            style={{
+              fontFamily: "Suit-Regular",
               fontSize: "14px",
               color: "#fff",
             }}
@@ -73,7 +84,7 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "14px",
               color: "#fff",
             }}
@@ -88,7 +99,7 @@ export default function BottomInfo() {
         </div>
         <div
           style={{
-            fontFamily: "Pretendard-SemiBold",
+            fontFamily: "Suit-Semibold",
             fontSize: "18px",
             color: "#fff",
           }}
@@ -97,7 +108,7 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Suit-Regular",
               fontSize: "14px",
               color: "#fff",
               lineHeight: "1",
@@ -111,7 +122,21 @@ export default function BottomInfo() {
           <br />
           <span
             style={{
-              fontFamily: "Pretendard-Regular",
+              fontFamily: "Suit-Regular",
+              fontSize: "14px",
+              color: "#fff",
+              lineHeight: "1",
+            }}
+          >
+            맹의현 (카톡 ID: maeng1217)
+          </span>
+          <br />
+          <br />
+          6기 부회장
+          <br />
+          <span
+            style={{
+              fontFamily: "Suit-Regular",
               fontSize: "14px",
               color: "#fff",
               lineHeight: "1",

@@ -143,7 +143,7 @@ export default function CurriculumStudy() {
             <div
               style={{
                 marginBottom: "50px",
-                fontFamily: "Pretendard-Bold",
+                fontFamily: "Suit-Regular",
                 fontSize: "30px",
                 color: "#fff",
                 textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -158,7 +158,7 @@ export default function CurriculumStudy() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "clamp(14px, 2vw, 18px)",
                   width: "180px",
                   padding: "10px",
@@ -178,7 +178,7 @@ export default function CurriculumStudy() {
                 to="/selfStudy"
                 style={{
                   textDecoration: "none",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "clamp(14px, 2vw, 18px)",
                   width: "180px",
                   padding: "10px",
@@ -410,7 +410,7 @@ export default function CurriculumStudy() {
                         <text
                           x={95 / 2}
                           y={baseY}
-                          fontFamily="Pretendard-Bold"
+                          fontFamily="Suit-Regular"
                           fontSize="24"
                           fill="#2cc295"
                           textAnchor="middle"
@@ -431,7 +431,7 @@ export default function CurriculumStudy() {
                             {selectedCohort !== cohortLatest.batch ||
                             cohortLatest.status !== "활동 준비" ? (
                               <Link
-                                to={`/studyPost?id=${study.studyId}&member=&week=1`}
+                                to={`/studyPost?id=${study.studyId}&member=${study.studyMaster.memberId}&week=1`}
                                 style={{ textDecoration: "none" }}
                                 key={study.studyId}
                               >
@@ -466,7 +466,7 @@ export default function CurriculumStudy() {
                                   <text
                                     x={x + 30}
                                     y={y - 190 / 2 + 40}
-                                    fontFamily="Pretendard-Regular"
+                                    fontFamily="Suit-Regular"
                                     fontSize="18px"
                                     fill="#2cc295"
                                     alignmentBaseline="hanging"
@@ -477,7 +477,7 @@ export default function CurriculumStudy() {
                                   <text
                                     x={x + 30}
                                     y={y - 190 / 2 + 70}
-                                    fontFamily="Pretendard-SemiBold"
+                                    fontFamily="Suit-Regular"
                                     fontSize="20px"
                                     fill="#fff"
                                     alignmentBaseline="hanging"
@@ -487,8 +487,8 @@ export default function CurriculumStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 140}
-                                    fontFamily="Pretendard-Regular"
+                                    y={y - 190 / 2 + 125}
+                                    fontFamily="Suit-Regular"
                                     fontSize="15px"
                                     fill="#777"
                                     alignmentBaseline="hanging"
@@ -508,8 +508,8 @@ export default function CurriculumStudy() {
                                   </text>
                                   <text
                                     x={x + 30}
-                                    y={y - 190 / 2 + 160}
-                                    fontFamily="Pretendard-Regular"
+                                    y={y - 190 / 2 + 145}
+                                    fontFamily="Suit-Regular"
                                     fontSize="15px"
                                     fill="#777"
                                     alignmentBaseline="hanging"
@@ -522,6 +522,26 @@ export default function CurriculumStudy() {
                                           study.studyMaster.studentId
                                       )
                                       .slice(2, 5)
+                                      .map(
+                                        (studyMember) => `${studyMember.name} `
+                                      )}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 165}
+                                    fontFamily="Suit-Regular"
+                                    fontSize="15px"
+                                    fill="#777"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {study.studyMembers
+                                      .filter(
+                                        (member) =>
+                                          member.studentId !==
+                                          study.studyMaster.studentId
+                                      )
+                                      .slice(5, 8)
                                       .map(
                                         (studyMember) => `${studyMember.name} `
                                       )}
@@ -568,7 +588,7 @@ export default function CurriculumStudy() {
                                   <text
                                     x={x + 30}
                                     y={y - 190 / 2 + 40}
-                                    fontFamily="Pretendard-Regular"
+                                    fontFamily="Suit-Regular"
                                     fontSize="18px"
                                     fill="#2cc295"
                                     alignmentBaseline="hanging"
@@ -579,7 +599,7 @@ export default function CurriculumStudy() {
                                   <text
                                     x={x + 30}
                                     y={y - 190 / 2 + 70}
-                                    fontFamily="Pretendard-SemiBold"
+                                    fontFamily="Suit-Semibold"
                                     fontSize="20px"
                                     fill="#fff"
                                     alignmentBaseline="hanging"
@@ -590,6 +610,8 @@ export default function CurriculumStudy() {
                                   <text
                                     x={x + 30}
                                     y={y - 190 / 2 + 140}
+                                    fontFamily="Suit-Regular"
+                                    y={y - 190 / 2 + 120}
                                     fontFamily="Pretendard-Regular"
                                     fontSize="15px"
                                     fill="#777"
@@ -611,7 +633,7 @@ export default function CurriculumStudy() {
                                   <text
                                     x={x + 30}
                                     y={y - 190 / 2 + 160}
-                                    fontFamily="Pretendard-Regular"
+                                    fontFamily="Suit-Regular"
                                     fontSize="15px"
                                     fill="#777"
                                     alignmentBaseline="hanging"
@@ -624,6 +646,26 @@ export default function CurriculumStudy() {
                                           study.studyMaster.studentId
                                       )
                                       .slice(2, 5)
+                                      .map(
+                                        (studyMember) => `${studyMember.name} `
+                                      )}
+                                  </text>
+                                  <text
+                                    x={x + 30}
+                                    y={y - 190 / 2 + 160}
+                                    fontFamily="Pretendard-Regular"
+                                    fontSize="15px"
+                                    fill="#777"
+                                    alignmentBaseline="hanging"
+                                    cursor="pointer"
+                                  >
+                                    {study.studyMembers
+                                      .filter(
+                                        (member) =>
+                                          member.studentId !==
+                                          study.studyMaster.studentId
+                                      )
+                                      .slice(5, 8)
                                       .map(
                                         (studyMember) => `${studyMember.name} `
                                       )}

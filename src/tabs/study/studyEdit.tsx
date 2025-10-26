@@ -54,6 +54,9 @@ type Inventory = {
 };
 
 export default function StudyEdit() {
+  // ✅ 중복 제출 방지
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {
     register,
     getValues,
@@ -107,29 +110,32 @@ export default function StudyEdit() {
   const [showFiles, setShowFiles] = useState<string[]>([]);
   const [showNewFiles, setShowNewFiles] = useState<string[]>([]);
 
-  const handleAddFiles = (event) => {
+  const handleAddFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
     const docLists = event.target.files; // 선택한 파일들
+    if (!docLists || docLists.length === 0) return;
+
     let fileLists: File[] = [...files];
     let fileNameLists: string[] = [...showNewFiles]; // 기존 저장된 파일명들
     const currentFileCount = showFiles.length + fileLists.length;
-    console.log(currentFileCount);
 
     for (let i = 0; i < docLists.length; i++) {
-      if (currentFileCount + i >= 1) {
-        break;
-      }
-      const currentFileName: string = docLists[i].name; // 파일명 가져오기
+      if (currentFileCount + i >= 1) break; // 최대 1개
+      const currentFileName: string = docLists[i].name; // 파일명
       fileLists.push(docLists[i]);
       fileNameLists.push(currentFileName);
     }
 
     setFiles(fileLists);
-    setShowNewFiles(fileNameLists); // 파일명 리스트 저장
+    setShowNewFiles(fileNameLists);
+
+    // 같은 파일 다시 선택 가능하도록 리셋
+    event.target.value = "";
   };
-  const handleDeleteFile = (id) => {
+
+  const handleDeleteFile = (id: number) => {
     setShowFiles(showFiles.filter((_, index) => index !== id));
   };
-  const handleDeleteNewFile = (id) => {
+  const handleDeleteNewFile = (id: number) => {
     setFiles(files.filter((_, index) => index !== id));
     setShowNewFiles(showNewFiles.filter((_, index) => index !== id));
   };
@@ -140,7 +146,7 @@ export default function StudyEdit() {
         const subjectResult = await GetSubjectAPI(searchParams.get("subject"));
         if (subjectResult?.weeklyContents) {
           const selectedContent = subjectResult.weeklyContents.find(
-            (content) =>
+            (content: WeeklyContent) =>
               content.weeklyContentId.toString() === searchParams.get("week")
           );
 
@@ -155,48 +161,60 @@ export default function StudyEdit() {
   }, []);
 
   useEffect(() => {
-    GetInventorybyIdAPI(searchParams.get("id")).then((data) => {
+    GetInventorybyIdAPI(searchParams.get("id")).then((data: Inventory) => {
       setSelectedInventory(data);
       setContent(data.content);
       setShowFiles([data.fileUrl]);
     });
   }, [searchParams]);
 
-  const onValid = (e) => {
-    console.log(content);
-    const inventoryId = searchParams.get("id");
+  // ✅ 중복 제출 방지 포함
+  const onValid = async () => {
+    if (isSubmitting) return; // 이미 제출 중이면 무시
+    setIsSubmitting(true);
 
-    const MAX_FILE_SIZE_MB = 10;
-    const oversizedFile = files.find(
-      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
-    );
-    if (oversizedFile) {
-      alert(
-        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+    try {
+      const inventoryId = searchParams.get("id");
+
+      const MAX_FILE_SIZE_MB = 10;
+      const oversizedFile = files.find(
+        (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
       );
-      return;
-    }
+      if (oversizedFile) {
+        alert(
+          `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+        );
+        return;
+      }
 
-    const formData = new FormData();
-    const jsonData = JSON.stringify({
-      title: selectedWeeklyContents.content,
-      content: content,
-      week: selectedWeeklyContents.week,
-    });
-    formData.append(
-      "request",
-      new Blob([jsonData], { type: "application/json" })
-    );
-    if (files && files.length > 0) {
-      files.forEach((file) => {
-        formData.append("file", file);
+      const formData = new FormData();
+      const jsonData = JSON.stringify({
+        title: selectedWeeklyContents.content,
+        content: content,
+        week: selectedWeeklyContents.week,
+        fileUrl: showFiles[0],
       });
-    }
+      formData.append(
+        "request",
+        new Blob([jsonData], { type: "application/json" })
+      );
 
-    PatchInventoriesAPI(inventoryId, formData);
+      if (files && files.length > 0) {
+        files.forEach((file) => {
+          formData.append("file", file);
+        });
+      }
+
+      await PatchInventoriesAPI(inventoryId, formData);
+    } catch (e) {
+      console.error(e);
+      alert("수정 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false); // 성공/실패 모두 해제
+    }
   };
 
-  const onInvalid = (e) => {
+  const onInvalid = (e: unknown) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
@@ -235,7 +253,7 @@ export default function StudyEdit() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -246,7 +264,7 @@ export default function StudyEdit() {
               </div>
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                   color: "#2cc295",
                 }}
@@ -270,7 +288,7 @@ export default function StudyEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "16px",
                   }}
                 >
@@ -286,23 +304,21 @@ export default function StudyEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
                     }}
-                    onChange={handleAddFiles}
                   >
                     <input
                       type="file"
                       id="fileInput"
-                      style={{
-                        display: "none",
-                      }}
+                      style={{ display: "none" }}
                       accept=".pdf"
                       {...register("File", {})}
+                      onChange={handleAddFiles} // ✅ input에 onChange 연결
                     />
                     <img
                       src="../../img/btn/search_enabled.png"
@@ -313,6 +329,7 @@ export default function StudyEdit() {
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -339,7 +356,7 @@ export default function StudyEdit() {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            fontFamily: "Pretendard-Light",
+                            fontFamily: "Suit-Light",
                             fontSize: "16px",
                           }}
                         >
@@ -370,7 +387,7 @@ export default function StudyEdit() {
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              fontFamily: "Pretendard-Light",
+                              fontFamily: "Suit-Light",
                               fontSize: "16px",
                             }}
                           >
@@ -404,6 +421,7 @@ export default function StudyEdit() {
                     <div></div>
                   )}
                 </div>
+
                 <div
                   style={{
                     boxSizing: "border-box",
@@ -443,9 +461,9 @@ export default function StudyEdit() {
                     }}
                   />
                   <Button
-                    type="primary"
+                    type={isSubmitting ? "disabled" : "primary"}
                     size="small"
-                    title="작성 완료"
+                    title={isSubmitting ? "저장 중..." : "수정 완료"}
                     onClick={handleSubmit(onValid, onInvalid)}
                   />
                 </div>

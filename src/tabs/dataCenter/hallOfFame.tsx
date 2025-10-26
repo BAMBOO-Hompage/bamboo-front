@@ -323,7 +323,7 @@ export default function HallOfFame() {
               position: "relative",
               maxWidth: "1000px",
               padding: "0 20px",
-              height: "1300px",
+              minHeight: "1300px",
               margin: "0 auto",
               paddingTop: "100px",
               marginBottom: "150px",
@@ -333,7 +333,7 @@ export default function HallOfFame() {
               <div
                 style={{
                   margin: "0 auto",
-                  fontFamily: "Pretendard-ExtraBold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "70px",
                   color: "#2cc295",
                 }}
@@ -347,7 +347,7 @@ export default function HallOfFame() {
               <div
                 style={{
                   margin: "0 auto",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "20px",
                   color: "#fff",
                 }}
@@ -363,12 +363,12 @@ export default function HallOfFame() {
                   padding: "5px 10px",
                   borderRadius: "15px",
                   backgroundColor: "rgba(17, 16, 21, 0.5)",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "15px",
                   color: "#777",
                 }}
               >
-                BEST OF THE WEEK
+                BEST OF THE SEASON
               </div>
               <div
                 style={{
@@ -438,7 +438,7 @@ export default function HallOfFame() {
                                   <div style={{ paddingBottom: "10px" }}>
                                     <div
                                       style={{
-                                        fontFamily: "Pretendard-SemiBold",
+                                        fontFamily: "Suit-Semibold",
                                         fontSize: "16px",
                                         color: "#2cc295",
                                       }}
@@ -448,7 +448,7 @@ export default function HallOfFame() {
                                     </div>
                                     <div
                                       style={{
-                                        fontFamily: "Pretendard-SemiBold",
+                                        fontFamily: "Suit-Semibold",
                                         fontSize: "20px",
                                         color: "#fff",
                                       }}
@@ -495,7 +495,7 @@ export default function HallOfFame() {
                         <div style={{ marginTop: "60px", textAlign: "left" }}>
                           <div
                             style={{
-                              fontFamily: "Pretendard-SemiBold",
+                              fontFamily: "Suit-Semibold",
                               fontSize: "20px",
                               color: "#fff",
                             }}
@@ -517,7 +517,7 @@ export default function HallOfFame() {
                   borderRadius: "15px",
                   backgroundColor: "rgba(17, 16, 21, 0.5)",
                   textAlign: "center",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "14px",
                 }}
               >
@@ -582,7 +582,7 @@ export default function HallOfFame() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        fontFamily: "Pretendard-Light",
+                        fontFamily: "Suit-Light",
                         fontSize: "18px",
                         color: "#777",
                       }}
@@ -614,7 +614,7 @@ export default function HallOfFame() {
                 {/* <Link to="#" style={{ textDecoration: "none" }}>
                   <div
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "16px",
                       width: "150px",
                       padding: "10px 0",
@@ -649,7 +649,7 @@ export default function HallOfFame() {
                     marginTop: "30px",
                     display: "flex",
                     justifyContent: "space-between",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "16px",
                     color: "#888",
                     textAlign: "center",
@@ -661,9 +661,7 @@ export default function HallOfFame() {
                       flexBasis: "120px",
                       minWidth: "60px",
                     }}
-                  >
-                    주차
-                  </div>
+                  ></div>
                   {curriculumSubjects?.map((subject, index) => (
                     <div
                       key={subject.subjectId}
@@ -686,7 +684,7 @@ export default function HallOfFame() {
                   }}
                 />
 
-                {groupedAwards.map((awards, index) => (
+                {["중간", "기말"].map((label, index) => (
                   <div
                     key={index}
                     style={{
@@ -696,7 +694,7 @@ export default function HallOfFame() {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "15px",
                       color: "#fff",
                       textAlign: "center",
@@ -712,11 +710,12 @@ export default function HallOfFame() {
                         alignItems: "center",
                       }}
                     >
-                      {index + 1}
+                      {label}
                     </div>
+
                     {/* 과목별 award 표시 */}
                     {curriculumSubjects.map((subject) => {
-                      const matchedAward = awards.find(
+                      const matchedAward = groupedAwards[label]?.find(
                         (award) => award.study.subjectName === subject.name
                       );
                       return (
@@ -740,7 +739,7 @@ export default function HallOfFame() {
                               <div>{matchedAward.writerName}</div>
                             </Link>
                           ) : (
-                            <div>-</div>
+                            <div>&nbsp;</div> // 빈칸 (공백)
                           )}
                         </div>
                       );
@@ -771,19 +770,64 @@ export default function HallOfFame() {
               zIndex: 1000,
             }}
           >
+            {/* 중간 / 기말 선택 (URL 위, 가운데 정렬) */}
             <div
               style={{
-                marginBottom: "10px",
+                width: "100%",
+                marginBottom: "25px",
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "center", // 가운데 정렬
+                gap: "40px",
+                color: "#fff",
+                fontFamily: "Suit-Regular",
+                fontSize: "16px",
+              }}
+            >
+              <label
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
+                <input
+                  type="radio"
+                  value="중간"
+                  {...register("week", { required: true })}
+                  style={{
+                    accentColor: "#2cc295", // 체크 색상 (초록색)
+                    width: "16px",
+                    height: "16px",
+                    cursor: "pointer",
+                  }}
+                />
+                중간
+              </label>
+              <label
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
+                <input
+                  type="radio"
+                  value="기말"
+                  {...register("week", { required: true })}
+                  style={{
+                    accentColor: "#2cc295", // 체크 색상 (초록색)
+                    width: "16px",
+                    height: "16px",
+                    cursor: "pointer",
+                  }}
+                />
+                기말
+              </label>
+            </div>
+
+            {/* URL 입력 */}
+            <div
+              style={{
+                display: "flex",
                 alignItems: "center",
-                fontFamily: "Pretendard-Regular",
-                fontSize: "18px",
                 gap: "10px",
+                marginBottom: "10px",
               }}
             >
               <div style={{ width: "200px", color: "#fff" }}>·&emsp;URL</div>
-              <div style={{ width: "100%" }}>
+              <div style={{ flex: 1 }}>
                 <input
                   id="url"
                   type="text"
@@ -793,14 +837,13 @@ export default function HallOfFame() {
                     required: `URL을 입력해주세요.`,
                   })}
                   style={{
-                    flex: "1",
                     width: "100%",
                     minWidth: "150px",
                     height: "40px",
                     padding: "0 20px",
                     backgroundColor: "#171717",
                     borderRadius: "20px",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "18px",
                   }}
                 />
@@ -811,7 +854,7 @@ export default function HallOfFame() {
                   style={{
                     width: "70px",
                     minWidth: "70px",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "12px",
                     backgroundColor: "#2CC295",
                     color: "#fff",

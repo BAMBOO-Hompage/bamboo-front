@@ -175,7 +175,7 @@ export default function Project() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -187,7 +187,7 @@ export default function Project() {
               <div
                 style={{
                   marginTop: "40px",
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "18px",
                 }}
               >
@@ -246,7 +246,7 @@ export default function Project() {
               >
                 <div
                   style={{
-                    fontFamily: "Pretendard-Bold",
+                    fontFamily: "Suit-Semibold",
                     fontSize: "30px",
                     color: "#fff",
                   }}
@@ -254,7 +254,7 @@ export default function Project() {
                   {selectedCohort}기{" "}
                   <span
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "18px",
                       color: "#fff",
                     }}
@@ -268,7 +268,7 @@ export default function Project() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#777",
                     }}
@@ -422,7 +422,7 @@ export default function Project() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "18px",
                 gap: "10px",
               }}
@@ -445,7 +445,7 @@ export default function Project() {
                     padding: "0 20px",
                     backgroundColor: "#171717",
                     borderRadius: "20px",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "18px",
                   }}
                 />
@@ -456,7 +456,7 @@ export default function Project() {
                   style={{
                     width: "70px",
                     minWidth: "70px",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "12px",
                     backgroundColor: "#2CC295",
                     color: "#fff",

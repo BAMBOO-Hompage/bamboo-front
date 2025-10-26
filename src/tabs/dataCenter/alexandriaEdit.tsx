@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
@@ -39,7 +39,7 @@ export default function AlexandriaEdit() {
     setFocus("Title");
   }, [setFocus]);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const [paperData, setPaperData] = useState<Paper>({
     libraryPostId: 0,
@@ -58,17 +58,19 @@ export default function AlexandriaEdit() {
   const [showFiles, setShowFiles] = useState<string[]>([]);
   const [showNewFiles, setShowNewFiles] = useState<string[]>([]);
 
-  const handleAddFiles = (event) => {
+  // ✅ 중복 제출 방지
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleAddFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
     const docLists = event.target.files; // 선택한 파일들
+    if (!docLists || docLists.length === 0) return;
+
     let fileLists: File[] = [...files];
     let fileNameLists: string[] = [...showNewFiles]; // 기존 저장된 파일명들
     const currentFileCount = showFiles.length + fileLists.length;
-    console.log(currentFileCount);
 
     for (let i = 0; i < docLists.length; i++) {
-      if (currentFileCount + i >= 1) {
-        break;
-      }
+      if (currentFileCount + i >= 1) break; // 최대 1개
       const currentFileName: string = docLists[i].name; // 파일명 가져오기
       fileLists.push(docLists[i]);
       fileNameLists.push(currentFileName);
@@ -76,11 +78,15 @@ export default function AlexandriaEdit() {
 
     setFiles(fileLists);
     setShowNewFiles(fileNameLists); // 파일명 리스트 저장
+
+    // 같은 파일 다시 선택 가능하도록 리셋
+    event.target.value = "";
   };
-  const handleDeleteFile = (id) => {
+
+  const handleDeleteFile = (id: number) => {
     setShowFiles([]);
   };
-  const handleDeleteNewFile = (id) => {
+  const handleDeleteNewFile = (id: number) => {
     setFiles(files.filter((_, index) => index !== id));
     setShowNewFiles(showNewFiles.filter((_, index) => index !== id));
   };
@@ -113,70 +119,84 @@ export default function AlexandriaEdit() {
     }
   }, [paperData, setValue]);
 
-  const onValid = (e) => {
+  const onValid = async (e: any) => {
+    // ✅ 중복 제출 가드
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     try {
-      const url = new URL(e.Link);
-      if (!["http:", "https:"].includes(url.protocol)) {
-        alert("링크는 http 또는 https로 시작해야 합니다.");
+      // 링크 유효성 (기존 alert 유지)
+      try {
+        const url = new URL(e.Link);
+        if (!["http:", "https:"].includes(url.protocol)) {
+          alert("링크는 http 또는 https로 시작해야 합니다.");
+          return;
+        }
+      } catch (err) {
+        alert("유효한 링크 형식이 아닙니다.");
         return;
       }
-    } catch (err) {
-      alert("유효한 링크 형식이 아닙니다.");
-      return;
-    }
 
-    var tagList = [];
-    if (e.Tag) {
-      const tags = e.Tag.split(/\s+/);
-      const allStartWithHash = tags.every((tag: string) => tag.startsWith("#"));
-      if (!allStartWithHash) {
-        alert("모든 태그는 #으로 시작해야 합니다.");
-        return;
+      // 태그 유효성 (기존 alert 유지)
+      let tagList: string[] = [];
+      if (e.Tag) {
+        const tags = e.Tag.split(/\s+/);
+        const allStartWithHash = tags.every((tag: string) =>
+          tag.startsWith("#")
+        );
+        if (!allStartWithHash) {
+          alert("모든 태그는 #으로 시작해야 합니다.");
+          return;
+        }
+        const isValid = tags.every((tag: string) => /^#\w+$/.test(tag));
+        if (!isValid) {
+          alert("태그는 '_'를 제외한 특수문자를 포함할 수 없습니다.");
+          return;
+        }
+        tagList = tags.map((tag: string) => tag.slice(1));
       }
-      const isValid = tags.every((tag: string) => /^#\w+$/.test(tag));
-      if (!isValid) {
-        alert("태그는 '_'를 제외한 특수문자를 포함할 수 없습니다.");
-        return;
-      }
-      tagList = tags.map((tag: string) => tag.slice(1));
-      console.log("유효한 태그 목록:", tagList);
-    }
 
-    const MAX_FILE_SIZE_MB = 10;
-    const oversizedFile = files.find(
-      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
-    );
-    if (oversizedFile) {
-      alert(
-        `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+      // 파일 크기 체크 (기존 alert 유지)
+      const MAX_FILE_SIZE_MB = 10;
+      const oversizedFile = files.find(
+        (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
       );
-      return;
-    }
+      if (oversizedFile) {
+        alert(
+          `'${oversizedFile.name}' 파일은 10MB를 초과하여 업로드할 수 없습니다.`
+        );
+        return;
+      }
 
-    const formData = new FormData();
-    const jsonData = JSON.stringify({
-      link: e.Link,
-      year: parseInt(e.Year),
-      paperName: e.Title,
-      topic: e.Topic,
-      content: content,
-      tagNames: tagList,
-      fileUrl: showFiles.length === 1 ? showFiles[0] : "",
-    });
-
-    formData.append(
-      "request",
-      new Blob([jsonData], { type: "application/json" })
-    );
-    if (files && files.length > 0) {
-      files.forEach((file) => {
-        formData.append("file", file);
+      const formData = new FormData();
+      const jsonData = JSON.stringify({
+        link: e.Link,
+        year: parseInt(e.Year),
+        paperName: e.Title,
+        topic: e.Topic,
+        content: content,
+        tagNames: tagList,
+        fileUrl: showFiles.length === 1 ? showFiles[0] : "",
       });
-    }
 
-    PutPapersAPI(searchParams.get("id"), formData);
+      formData.append(
+        "request",
+        new Blob([jsonData], { type: "application/json" })
+      );
+      if (files && files.length > 0) {
+        files.forEach((file) => {
+          formData.append("file", file);
+        });
+      }
+
+      await PutPapersAPI(searchParams.get("id"), formData);
+    } finally {
+      // ✅ 항상 해제 (추가 alert 없음)
+      setIsSubmitting(false);
+    }
   };
-  const onInvalid = (e) => {
+
+  const onInvalid = (e: unknown) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
   };
@@ -200,14 +220,8 @@ export default function AlexandriaEdit() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
-          transition={{
-            ease: "easeInOut",
-            duration: 1,
-          }}
-          style={{
-            width: "100%",
-            maxHeight: "1250px",
-          }}
+          transition={{ ease: "easeInOut", duration: 1 }}
+          style={{ width: "100%", maxHeight: "1250px" }}
         >
           <div
             style={{
@@ -218,15 +232,10 @@ export default function AlexandriaEdit() {
               textAlign: "left",
             }}
           >
-            <div
-              style={{
-                marginBottom: "40px",
-                textAlign: "center",
-              }}
-            >
+            <div style={{ marginBottom: "40px", textAlign: "center" }}>
               <div
                 style={{
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Suit-Regular",
                   fontSize: "30px",
                   color: "#fff",
                   textShadow: "0 0 0.1em, 0 0 0.1em",
@@ -237,7 +246,7 @@ export default function AlexandriaEdit() {
               </div>
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "12px",
                   color: "#888",
                 }}
@@ -257,12 +266,7 @@ export default function AlexandriaEdit() {
                 borderRadius: "20px",
               }}
             >
-              <form
-                style={{
-                  margin: "0 20px",
-                  paddingTop: "20px",
-                }}
-              >
+              <form style={{ margin: "0 20px", paddingTop: "20px" }}>
                 <div
                   style={{
                     width: "100%",
@@ -279,19 +283,18 @@ export default function AlexandriaEdit() {
                     defaultValue={paperData.paperName}
                     placeholder="제목을 입력해주세요."
                     autoComplete="off"
-                    {...register("Title", {
-                      required: "제목을 입력해주세요.",
-                    })}
+                    {...register("Title", { required: "제목을 입력해주세요." })}
                     style={{
                       width: "100%",
                       height: "40px",
                       backgroundColor: "transparent",
                       borderRadius: "10px",
-                      fontFamily: "Pretendard-Bold",
+                      fontFamily: "Suit-Semibold",
                       fontSize: "28px",
                     }}
                   />
                 </div>
+
                 <div
                   style={{
                     maxWidth: "920px",
@@ -299,7 +302,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -325,11 +328,12 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
                 </div>
+
                 <div
                   style={{
                     maxWidth: "920px",
@@ -337,7 +341,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -366,11 +370,12 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
                 </div>
+
                 <div
                   style={{
                     maxWidth: "920px",
@@ -378,7 +383,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -404,11 +409,12 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
                 </div>
+
                 <div
                   style={{
                     maxWidth: "920px",
@@ -416,7 +422,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "18px",
                     gap: "40px",
                   }}
@@ -442,11 +448,12 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                     }}
                   />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -454,7 +461,7 @@ export default function AlexandriaEdit() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "16px",
                   }}
                 >
@@ -470,23 +477,21 @@ export default function AlexandriaEdit() {
                       boxShadow:
                         "inset -10px -10px 30px #242424, inset 15px 15px 30px #000",
                       borderRadius: "20px",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "18px",
                       color: "#2CC295",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
                     }}
-                    onChange={handleAddFiles}
                   >
                     <input
                       type="file"
                       id="fileInput"
-                      style={{
-                        display: "none",
-                      }}
+                      style={{ display: "none" }}
                       accept=".pdf"
                       {...register("File", {})}
+                      onChange={handleAddFiles} // ← input에 연결
                       onClick={(e) => {
                         (e.target as HTMLInputElement).value = "";
                       }}
@@ -500,6 +505,7 @@ export default function AlexandriaEdit() {
                   </label>
                   <input type="text" style={{ display: "none" }} />
                 </div>
+
                 <div
                   style={{
                     width: "100%",
@@ -526,7 +532,7 @@ export default function AlexandriaEdit() {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            fontFamily: "Pretendard-Light",
+                            fontFamily: "Suit-Light",
                             fontSize: "16px",
                           }}
                         >
@@ -534,9 +540,7 @@ export default function AlexandriaEdit() {
                             src="../../img/btn/delete_disabled.png"
                             alt="delete"
                             style={{ width: "20px", cursor: "pointer" }}
-                            onClick={() => {
-                              handleDeleteFile(id);
-                            }}
+                            onClick={() => handleDeleteFile(id)}
                             onMouseEnter={(e) => {
                               (e.target as HTMLImageElement).src =
                                 "../../img/btn/delete_enabled.png";
@@ -557,7 +561,7 @@ export default function AlexandriaEdit() {
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              fontFamily: "Pretendard-Light",
+                              fontFamily: "Suit-Light",
                               fontSize: "16px",
                             }}
                           >
@@ -565,9 +569,7 @@ export default function AlexandriaEdit() {
                               src="../../img/btn/delete_disabled.png"
                               alt="delete"
                               style={{ width: "20px", cursor: "pointer" }}
-                              onClick={() => {
-                                handleDeleteNewFile(id);
-                              }}
+                              onClick={() => handleDeleteNewFile(id)}
                               onMouseEnter={(e) => {
                                 (e.target as HTMLImageElement).src =
                                   "../../img/btn/delete_enabled.png";
@@ -591,6 +593,7 @@ export default function AlexandriaEdit() {
                     <div></div>
                   )}
                 </div>
+
                 <div
                   style={{
                     boxSizing: "border-box",
@@ -630,7 +633,7 @@ export default function AlexandriaEdit() {
                     }}
                   />
                   <Button
-                    type="primary"
+                    type={isSubmitting ? "disabled" : "primary"} // 중복 제출 방지
                     size="small"
                     title="작성 완료"
                     onClick={handleSubmit(onValid, onInvalid)}

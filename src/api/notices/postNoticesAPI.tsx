@@ -43,7 +43,7 @@ export default async function PostNoticesAPI(formData) {
           await postNotices(newAccessToken, formData);
 
           alert("작성 완료");
-          window.location.href = "/nitice?post=전체&page=1&size=8";
+          window.location.href = "/notice?post=전체&page=1&size=8";
         } catch (error) {
           console.error("Failed to refresh accessToken: ", error);
           alert("다시 로그인 해주세요.");

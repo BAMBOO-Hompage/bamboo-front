@@ -10,7 +10,6 @@ import VerificationsAPI from "../../api/emails/verificationsAPI.tsx";
 import PatchPasswordNonLoginAPI from "../../api/members/patchPasswordNonLoginAPI.tsx";
 
 import "../../App.css";
-import { ascetic } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export default function Login() {
   const {
@@ -62,8 +61,7 @@ export default function Login() {
       console.log(e, "onValid");
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await LogInAPI(e.StudentNum, e.Password);
-    } catch (error) {
-      console.error("로그인 실패:", error);
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -269,13 +267,13 @@ export default function Login() {
                     height: "40px",
                     margin: "0 20px",
                     borderRadius: "10px",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "18px",
                   }}
                 />
                 <div
                   style={{
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2vw, 16px)",
                     color: "#777",
                     marginRight: "20px",
@@ -311,7 +309,7 @@ export default function Login() {
                     height: "40px",
                     margin: "0 20px",
                     borderRadius: "10px",
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "18px",
                   }}
                 />
@@ -418,7 +416,7 @@ export default function Login() {
           >
             <div
               style={{
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "14px",
                 color: "#777",
                 cursor: "pointer",
@@ -440,7 +438,7 @@ export default function Login() {
             <a
               href="/privacyPolicy"
               style={{
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "14px",
                 color: "#777",
                 textDecorationLine: "none",
@@ -503,7 +501,7 @@ export default function Login() {
               background: "transparent",
               border: "none",
               color: "#fff",
-              fontFamily: "Pretendard-Bold",
+              fontFamily: "Suit-Semibold",
               fontSize: "30px",
               cursor: "pointer",
             }}
@@ -514,7 +512,7 @@ export default function Login() {
           <div
             style={{
               marginBottom: "30px",
-              fontFamily: "Pretendard-Bold",
+              fontFamily: "Suit-Semibold",
               fontSize: "25px",
               color: "#fff",
               textAlign: "center",
@@ -541,7 +539,7 @@ export default function Login() {
               htmlFor="studentNum"
               style={{
                 display: "inline-block",
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "clamp(14px, 2.2vw, 18px)",
                 color: "#fff",
                 width: "120px",
@@ -579,7 +577,7 @@ export default function Login() {
               style={{
                 width: "90px",
                 marginRight: "10px",
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "12px",
                 color: "#777",
               }}
@@ -591,7 +589,7 @@ export default function Login() {
               style={{
                 width: "70px",
                 minWidth: "70px",
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "12px",
                 backgroundColor: "#2CC295",
                 color: "#fff",
@@ -654,7 +652,7 @@ export default function Login() {
                   style={{
                     width: "40px",
                     marginRight: "10px",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "16px",
                     color: "#777",
                   }}
@@ -669,7 +667,7 @@ export default function Login() {
                   style={{
                     width: "40px",
                     marginRight: "10px",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "16px",
                     color: "#777",
                   }}
@@ -695,7 +693,7 @@ export default function Login() {
                   style={{
                     width: "70px",
                     minWidth: "70px",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "12px",
                     backgroundColor: "#2CC295",
                     color: "#fff",
@@ -748,7 +746,7 @@ export default function Login() {
                   htmlFor="password"
                   style={{
                     display: "inline-block",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",
@@ -850,7 +848,7 @@ export default function Login() {
                   htmlFor="rePassword"
                   style={{
                     display: "inline-block",
-                    fontFamily: "Pretendard-Regular",
+                    fontFamily: "Suit-Regular",
                     fontSize: "clamp(14px, 2.2vw, 18px)",
                     color: "#fff",
                     width: "120px",

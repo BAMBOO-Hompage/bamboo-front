@@ -1,51 +1,73 @@
 @font-face {
-  font-family: "Pretendard-Thin";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff")
-    format("woff");
+  font-family: "Suit-Thin";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Thin.woff2")
+    format("woff2");
   font-weight: 100;
-  font-style: normal;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: "Pretendard-ExtraLight";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff")
-    format("woff");
+  font-family: "Suit-ExtraLight";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-ExtraLight.woff2")
+    format("woff2");
   font-weight: 200;
-  font-style: normal;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: "Pretendard-Light";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff")
-    format("woff");
+  font-family: "Suit-Light";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2")
+    format("woff2");
   font-weight: 300;
-  font-style: normal;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
-  font-weight: 400;
-  font-style: normal;
+  font-family: "Suit-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: "Pretendard-SemiBold";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
-    format("woff");
+  font-family: "Suit-Medium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2")
+    format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Suit-SemiBold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-SemiBold.woff2")
+    format("woff2");
   font-weight: 600;
-  font-style: normal;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: "Pretendard-Bold";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
-    format("woff");
+  font-family: "Suit-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2")
+    format("woff2");
   font-weight: 700;
-  font-style: normal;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: "Pretendard-ExtraBold";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff")
-    format("woff");
+  font-family: "Suit-ExtraBold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-ExtraBold.woff2")
+    format("woff2");
   font-weight: 800;
-  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Suit-Heavy";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Heavy.woff2")
+    format("woff2");
+  font-weight: 900;
+  font-display: swap;
 }
 
 .App {
@@ -67,18 +89,18 @@ input {
   box-sizing: border-box;
   border: none;
   background-color: transparent;
-  font-family: Pretendard-Light;
+  font-family: Suit-Thin;
   font-size: clamp(14px, 2.2vw, 18px);
   color: #fff;
   outline: none;
 }
 input::placeholder {
-  font-family: Pretendard-Light;
+  font-family: Suit-Light;
   font-size: clamp(14px, 2.2vw, 18px);
   color: #777;
 }
 textarea::placeholder {
-  font-family: Pretendard-Light;
+  font-family: Suit-Light;
   font-size: 16px;
   color: #777;
 }
@@ -91,7 +113,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 .title::placeholder {
-  font-family: Pretendard-Bold;
+  font-family: Suit-Semibold;
   font-size: 28px;
   color: #777;
 }
@@ -207,7 +229,7 @@ select {
   width: 170px;
   padding: 20px 0;
   text-align: center;
-  font-family: Pretendard-Regular;
+  font-family: Suit-SemiBold;
   font-size: 18px;
   color: #fff;
   border-bottom: 2px solid transparent;
@@ -223,7 +245,8 @@ select {
   color: #fff;
   height: 40px;
   margin-bottom: 0px;
-  font-family: Pretendard-SemiBold;
+  font-family: Suit-SemiBold;
+  font-weight: 400;
   font-size: 25px;
   padding: 0 0 10px;
   cursor: pointer;
@@ -238,7 +261,7 @@ select {
   padding: 5px 20px;
   margin-top: 20px;
   text-align: left;
-  font-family: Pretendard-Light;
+  font-family: Suit-Light;
   font-size: 15px;
   border-right: 1px solid #777;
   text-decoration-line: none;
@@ -272,7 +295,7 @@ select {
 }
 
 .bottom_tabs {
-  font-family: Pretendard-Light;
+  font-family: Suit-Light;
   font-size: 16px;
   color: #fff;
   margin: 0 8px;

@@ -16,12 +16,10 @@ import GetStudyAPI from "../../api/studies/getStudyAPI.tsx";
 import GetInventoryAPI from "../../api/inventories/getInventoryAPI.tsx";
 import DeleteInventoriesAPI from "../../api/inventories/deleteInventoriesAPI.tsx";
 import PostAttendancesAPI from "../../api/attendance/postAttendanceAPI.tsx";
-import PostWeeklyBestAPI from "../../api/inventories/postWeeklyBestAPI.tsx";
-import GetWeeklyBestAPI from "../../api/inventories/getWeeklyBestAPI.tsx";
-import PostImageAPI from "../../api/studies/postImageAPI.tsx";
-import GetImageAPI from "../../api/studies/getImageAPI.tsx";
 
 import "../../App.css";
+
+import styles from "../../style/Post.module.css";
 
 type MyDataType = {
   memberId: number;
@@ -130,38 +128,16 @@ export default function StudyPost() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const {
-    register: registerWeeklyBest,
-    reset: resetWeeklyBest,
-    getValues: getValuesWeeklyBest,
-    handleSubmit: handleSubmitWeeklyBest,
-    formState: { errors: errorsWeeklyBest },
-  } = useForm();
-  const {
-    register: registerImage,
-    reset: resetImage,
-    getValues: getValuesImage,
-    handleSubmit: handleSubmitImage,
-    formState: { errors: errorsImage },
-  } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const postId = parseInt(searchParams.get("id") || "0", 10);
-  const postList = searchParams.get("member") || "Weekly Best";
+  const postList = searchParams.get("member") || "0";
   const currentPage = parseInt(searchParams.get("week") || "1", 10);
 
   const [expandedSections, setExpandedSections] = useState(false);
   const [isAttendancePopupOpen, setIsAttendancePopupOpen] =
     useState<boolean>(false);
   const [checkedMembers, setCheckedMembers] = useState<string[]>([]);
-  const [isWeeklyBestPopupOpen, setIsWeeklyBestPopupOpen] =
-    useState<boolean>(false);
-  const [checkedWeeklyBest, setCheckedWeeklyBest] = useState<number>();
-  const [isImagePopupOpen, setIsImagePopupOpen] = useState<boolean>(false);
-
-  const [image, setImage] = useState<string | undefined>();
-  const [images, setImages] = useState<File[]>([]);
-  const [showImages, setShowImages] = useState<string[]>([]);
 
   const [checkAuth, setCheckAuth] = useState<number>(1);
   const [myData, setMyData] = useState<MyDataType>({
@@ -320,6 +296,7 @@ export default function StudyPost() {
       try {
         const studyResult = await GetStudyAPI(searchParams.get("id"));
         setPostData(studyResult);
+
         const targetSubject = studyResult.cohort.subjects.find(
           (subject) => subject.name === studyResult.subjectName
         );
@@ -327,7 +304,6 @@ export default function StudyPost() {
         setSelectedSubject(subjectResult);
         const remainder = subjectResult.weeklyContents.length % itemsPerPage;
         setEmptySlots(remainder === 0 ? 0 : itemsPerPage - remainder);
-        console.log(subjectResult);
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
       }
@@ -337,25 +313,11 @@ export default function StudyPost() {
   }, []);
 
   useEffect(() => {
-    if (postList !== "Weekly Best") {
-      GetInventoryAPI(postId, postList, currentPage).then((result) => {
-        var inventoryData = result;
-        setSelectedInventory(inventoryData);
-      });
-      setImage(undefined);
-    } else {
-      GetWeeklyBestAPI(postId, currentPage).then((result) => {
-        var inventoryData = result;
-        setSelectedInventory(inventoryData);
-        if (inventoryData) {
-          setCheckedWeeklyBest(inventoryData.writerId);
-        }
-      });
-      GetImageAPI(postId, currentPage).then((result) => {
-        var inventoryData = result;
-        setImage(inventoryData);
-      });
-    }
+    if (!postList) return;
+    GetInventoryAPI(postId, postList, currentPage).then((result) => {
+      var inventoryData = result;
+      setSelectedInventory(inventoryData);
+    });
   }, [postId, postList, currentPage]);
 
   const handleCheckboxChange = (studentId: string) => {
@@ -366,37 +328,14 @@ export default function StudyPost() {
     );
   };
 
-  const handleWeeklyBestChange = (memberId) => {
-    if (checkedWeeklyBest === memberId) {
-      setCheckedWeeklyBest(0); // Uncheck if already checked
-    } else {
-      setCheckedWeeklyBest(memberId); // Make it mutually exclusive
-    }
-  };
-
   const getCurrentWeek = (selectedSubject) => {
     const today = new Date(
       new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
     );
     const currentWeek = selectedSubject.weeklyContents.find(
       ({ startDate, endDate }) => {
-        const start = new Date(endDate);
+        const start = new Date(startDate);
         const end = new Date(endDate);
-        end.setHours(23, 59, 59, 999);
-        return today >= start && today <= end;
-      }
-    );
-    return currentWeek ? currentWeek : null;
-  };
-  const getCurrentWeekForWeeklyBest = (selectedSubject) => {
-    const today = new Date(
-      new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
-    );
-    const currentWeek = selectedSubject.weeklyContents.find(
-      ({ startDate, endDate }) => {
-        const start = new Date(endDate);
-        const end = new Date(endDate);
-        end.setDate(end.getDate() + 1);
         end.setHours(23, 59, 59, 999);
         return today >= start && today <= end;
       }
@@ -409,29 +348,14 @@ export default function StudyPost() {
     );
     const currentWeek = selectedSubject.weeklyContents.find(
       ({ startDate, endDate }) => {
-        const start = new Date(endDate);
+        const start = new Date(startDate);
         const end = new Date(endDate);
-        end.setDate(end.getDate() + 7);
+        // end.setDate(end.getDate() + 2);
+        end.setHours(23, 59, 59, 999);
         return today >= start && today <= end;
       }
     );
     return currentWeek ? currentWeek : null;
-  };
-
-  const handleAddImages = (event) => {
-    const imageLists = [...event.target.files];
-    const formData = new FormData();
-
-    // 이미지 배열로 추가
-    imageLists.forEach((file) => {
-      formData.append("image", file); // images 배열 형식으로 전송
-    });
-
-    PostImageAPI(
-      parseInt(searchParams.get("id") || "0", 10),
-      getCurrentWeekForOps(selectedSubject)?.week,
-      formData
-    );
   };
 
   const onValid = async (e) => {
@@ -452,45 +376,7 @@ export default function StudyPost() {
     alert("입력한 정보를 다시 확인해주세요.");
   };
 
-  const onWeeklyBestValid = async (e) => {
-    if (selectedInventory?.writerId === checkedWeeklyBest) {
-      alert("이미 Weekly Best로 지정된 학생입니다.");
-    } else {
-      PostWeeklyBestAPI(
-        parseInt(searchParams.get("id") || "0", 10),
-        getCurrentWeekForOps(selectedSubject).week,
-        checkedWeeklyBest
-      );
-    }
-  };
-  const onWeeklyBestInvalid = (e) => {
-    console.log(e, "onInvalid");
-    alert("입력한 정보를 다시 확인해주세요.");
-  };
-
-  const onImageValid = async (e) => {
-    const formData = new FormData();
-
-    // 이미지 배열로 추가
-    images.forEach((file) => {
-      formData.append("image", file); // images 배열 형식으로 전송
-    });
-
-    PostImageAPI(
-      parseInt(searchParams.get("id") || "0", 10),
-      getCurrentWeekForWeeklyBest(selectedSubject).week,
-      formData
-    );
-  };
-
-  const onImageInvalid = (e) => {
-    console.log(e, "onInvalid");
-    alert("입력한 정보를 다시 확인해주세요.");
-  };
-
-  // 모바일 제한
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 600);
@@ -565,15 +451,13 @@ export default function StudyPost() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{
-            ease: "easeInOut",
-            duration: 1,
-          }}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0 }}
           style={{
             width: "100%",
+            overflow: "visible", // 글이 잘리지 않게 함
+            minHeight: "auto", // 높이 제한 해제
           }}
         >
           <div
@@ -591,7 +475,7 @@ export default function StudyPost() {
             <div
               style={{
                 marginBottom: "50px",
-                fontFamily: "Pretendard-Bold",
+                fontFamily: "Suit-Semibold",
                 fontSize: "30px",
                 color: "#2cc295",
                 textAlign: "left",
@@ -614,7 +498,7 @@ export default function StudyPost() {
               <div
                 style={{
                   marginBottom: "10px",
-                  fontFamily: "Pretendard-SemiBold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "30px",
                   color: "#fff",
                 }}
@@ -624,7 +508,7 @@ export default function StudyPost() {
               <div
                 style={{
                   marginBottom: "20px",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "18px",
                   color: "#fff",
                 }}
@@ -651,7 +535,7 @@ export default function StudyPost() {
               >
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#2cc295",
                     marginBottom: "10px",
@@ -661,29 +545,40 @@ export default function StudyPost() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     marginBottom: "10px",
                     display: "flex",
                   }}
                 >
-                  일시:&emsp;<div>{`매주 화요일 or 목요일`}</div>
+                  일시:&emsp;<div>{`평일 중 대면 진행`}</div>
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     marginBottom: "10px",
                     display: "flex",
                   }}
                 >
-                  장소:&emsp;<div>G303 / G309 / 스터디룸</div>
+                  장소:&emsp;<div>G103 / G303 / G309 / 스터디룸</div>
                 </div>
                 <div
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
+                    fontSize: "clamp(14px, 2vw, 18px)",
+                    color: "#fff",
+                    marginBottom: "10px",
+                    display: "flex",
+                  }}
+                >
+                  교재:&emsp;<div>{selectedSubject.bookName}</div>
+                </div>
+                <div
+                  style={{
+                    fontFamily: "Suit-Light",
                     fontSize: "clamp(14px, 2vw, 18px)",
                     color: "#fff",
                     display: "flex",
@@ -695,10 +590,6 @@ export default function StudyPost() {
                     개별 파트 분배 후 발표 형식의 스터디 진행
                     <br />
                     3회 이상 불참시 퇴출
-                    <br />
-                    출석은 스터디 당일에 가능
-                    <br />
-                    Weekly Best는 스터디 다음날까지 지정
                   </div>
                 </div>
               </div>
@@ -725,7 +616,7 @@ export default function StudyPost() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "clamp(14px, 2vw, 18px)",
                   color: "#2cc295",
                 }}
@@ -767,7 +658,7 @@ export default function StudyPost() {
                   marginTop: "10px",
                   display: "flex",
                   justifyContent: "space-between",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "14px",
                   color: "#2cc295",
                   gap: "5px",
@@ -849,7 +740,7 @@ export default function StudyPost() {
                   marginBottom: "10px",
                   display: "flex",
                   justifyContent: "space-between",
-                  fontFamily: "Pretendard-Light",
+                  fontFamily: "Suit-Light",
                   fontSize: "14px",
                   color: "#fff",
                   gap: "5px",
@@ -917,7 +808,7 @@ export default function StudyPost() {
                       marginBottom: "10px",
                       display: "flex",
                       justifyContent: "space-between",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "14px",
                       color: "#fff",
                       gap: "5px",
@@ -991,7 +882,7 @@ export default function StudyPost() {
                     style={{
                       width: "70px",
                       minWidth: "70px",
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "12px",
                       backgroundColor: "#2CC295",
                       color: "#fff",
@@ -1031,15 +922,13 @@ export default function StudyPost() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: false }}
-              transition={{
-                ease: "easeInOut",
-                duration: 1,
-              }}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0 }}
               style={{
                 width: "100%",
+                overflow: "visible", // 글이 잘리지 않게 함
+                minHeight: "auto", // 높이 제한 해제
               }}
             >
               <div
@@ -1063,31 +952,10 @@ export default function StudyPost() {
                 >
                   <div
                     style={{
-                      fontFamily: "Pretendard-Regular",
+                      fontFamily: "Suit-Regular",
                       fontSize: "18px",
                     }}
                   >
-                    <div
-                      className="side_tabs"
-                      style={
-                        postList === "Weekly Best"
-                          ? {
-                              boxSizing: "border-box",
-                              color: "#2CC295",
-                              borderRight: "1px solid #2cc295",
-                            }
-                          : {}
-                      }
-                      onClick={() => {
-                        setSearchParams({
-                          id: postId.toString(),
-                          member: "Weekly Best",
-                          week: currentPage.toString(),
-                        });
-                      }}
-                    >
-                      Weekly Best
-                    </div>
                     <div
                       className="side_tabs"
                       style={
@@ -1144,7 +1012,7 @@ export default function StudyPost() {
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false }}
+                  viewport={{ once: true }}
                   transition={{
                     ease: "easeInOut",
                     duration: 0.5,
@@ -1154,8 +1022,8 @@ export default function StudyPost() {
                   style={{
                     position: "relative",
                     width: "100%",
-                    maxWidth: "820px",
                     height: "100%",
+                    maxWidth: "820px",
                     textAlign: "left",
                     paddingLeft: "clamp(20px, 4vw, 50px)",
                   }}
@@ -1165,7 +1033,7 @@ export default function StudyPost() {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      fontFamily: "Pretendard-Light",
+                      fontFamily: "Suit-Light",
                       fontSize: "clamp(10px, 1.5vw, 14px)",
                       color: "#fff",
                     }}
@@ -1281,71 +1149,36 @@ export default function StudyPost() {
                             >
                               <div
                                 style={{
-                                  fontFamily: "Pretendard-SemiBold",
+                                  fontFamily: "Suit-Semibold",
                                   fontSize: "clamp(14px, 2vw, 18px)",
                                   color: "#2cc295",
                                 }}
                               >
-                                📖 {curriculum.week}주차 학습내용
+                                📖 {curriculum.week}주차{" "}
+                                <span
+                                  style={{
+                                    fontFamily: "Suit-Semibold",
+                                    fontSize: "clamp(10px, 1.8vw, 16px)",
+                                    color: "#2cc295",
+                                  }}
+                                >
+                                  (
+                                  {curriculum.startDate[0] +
+                                    "/" +
+                                    curriculum.startDate[1] +
+                                    "/" +
+                                    curriculum.startDate[2]}
+                                  ~
+                                  {curriculum.endDate[0] +
+                                    "/" +
+                                    curriculum.endDate[1] +
+                                    "/" +
+                                    curriculum.endDate[2]}
+                                  )
+                                </span>
                               </div>
-                              {postList === "Weekly Best" &&
-                              ((getCurrentWeekForWeeklyBest(selectedSubject)
-                                ?.week === curriculum.week &&
-                                (myData.memberId ===
-                                  postData.studyMaster.memberId ||
-                                  checkAuth >= 2)) ||
-                                (getCurrentWeekForOps(selectedSubject)?.week ===
-                                  curriculum.week &&
-                                  checkAuth === 3)) ? (
-                                <div style={{ display: "flex" }}>
-                                  <label
-                                    htmlFor="fileInput"
-                                    style={{
-                                      height: "25px",
-                                      marginRight: "10px",
-                                      cursor: "pointer",
-                                    }}
-                                    onChange={handleAddImages}
-                                  >
-                                    <input
-                                      type="file"
-                                      id="fileInput"
-                                      style={{
-                                        display: "none",
-                                      }}
-                                      accept="image/*"
-                                    />
-                                    <img
-                                      src="../img/btn/image.png"
-                                      alt="image_btn"
-                                      style={{
-                                        height: "25px",
-                                        opacity: "0.8",
-                                      }}
-                                      onMouseEnter={(e) => {
-                                        e.currentTarget.style.opacity = "1";
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        e.currentTarget.style.opacity = "0.8";
-                                      }}
-                                    />
-                                  </label>
-
-                                  <Button
-                                    type="primary"
-                                    size="xsmall"
-                                    title="선택"
-                                    onClick={() => {
-                                      setIsWeeklyBestPopupOpen(true);
-                                    }}
-                                  />
-                                </div>
-                              ) : (
-                                <></>
-                              )}
                               {(myData.memberId === parseInt(postList) ||
-                                (postList !== "Weekly Best" &&
-                                  checkAuth >= 2)) &&
+                                checkAuth >= 2) &&
                               selectedInventory ? (
                                 <div>
                                   <img
@@ -1445,12 +1278,18 @@ export default function StudyPost() {
                             <div
                               style={{
                                 marginTop: "10px",
-                                fontFamily: "Pretendard-Light",
+                                fontFamily: "Suit-Light",
                                 fontSize: "clamp(14px, 2vw, 18px)",
                                 color: "#fff",
                               }}
                             >
-                              {curriculum.content}
+                              {curriculum.content}&nbsp;
+                              <span
+                                style={{ fontSize: "clamp(10px, 1.5vw, 14px)" }}
+                              >
+                                (p.
+                                {curriculum.startPage} ~ p.{curriculum.endPage})
+                              </span>
                             </div>
                           </div>
                         );
@@ -1460,31 +1299,6 @@ export default function StudyPost() {
                     })}
                   </div>
 
-                  {image && (
-                    <div
-                      style={{
-                        boxSizing: "border-box",
-                        width: "100%",
-                        padding: "20px",
-                        backgroundColor: "rgba(17, 16, 21, 0.5)",
-                        borderRadius: "20px",
-                        marginBottom: "10px",
-                        fontFamily: "Pretendard-Light",
-                        fontSize: "18px",
-                        color: "#fff",
-                      }}
-                    >
-                      <img
-                        src={image}
-                        alt="week_image"
-                        style={{
-                          width: "100%",
-                          height: "300px",
-                          objectFit: "contain",
-                        }}
-                      />
-                    </div>
-                  )}
                   {selectedInventory?.fileUrl && (
                     <>
                       <div
@@ -1495,7 +1309,7 @@ export default function StudyPost() {
                           backgroundColor: "rgba(17, 16, 21, 0.5)",
                           borderRadius: "20px",
                           marginBottom: "10px",
-                          fontFamily: "Pretendard-Light",
+                          fontFamily: "Suit-Light",
                           fontSize: "18px",
                           color: "#fff",
                         }}
@@ -1563,14 +1377,14 @@ export default function StudyPost() {
                           >
                             {selectedInventory && (
                               <div
-                                className="container"
+                                className={styles.container}
                                 dangerouslySetInnerHTML={{
                                   __html: sanitizer(
                                     `${selectedInventory.content}`
                                   ),
                                 }}
                                 style={{
-                                  fontFamily: "Pretendard-Light",
+                                  fontFamily: "Suit-Light",
                                   fontSize: "clamp(14px, 2vw, 18px)",
                                   color: "#fff",
                                   lineHeight: "1.4",
@@ -1622,7 +1436,7 @@ export default function StudyPost() {
                   width: "80%",
                   backgroundColor: "transparent",
                   borderRadius: "10px",
-                  fontFamily: "Pretendard-Bold",
+                  fontFamily: "Suit-Semibold",
                   fontSize: "28px",
                   color: "#2cc295",
                 }}
@@ -1631,12 +1445,17 @@ export default function StudyPost() {
                 <br />
                 <span
                   style={{
-                    fontFamily: "Pretendard-Light",
+                    fontFamily: "Suit-Light",
                     fontSize: "18px",
                     color: "#fff",
                   }}
                 >
-                  스터디 날짜 :{" "}
+                  {getCurrentWeekForOps(selectedSubject).startDate[0] +
+                    "/" +
+                    getCurrentWeekForOps(selectedSubject).startDate[1] +
+                    "/" +
+                    getCurrentWeekForOps(selectedSubject).startDate[2]}
+                  &nbsp;~&nbsp;
                   {getCurrentWeekForOps(selectedSubject).endDate[0] +
                     "/" +
                     getCurrentWeekForOps(selectedSubject).endDate[1] +
@@ -1648,7 +1467,7 @@ export default function StudyPost() {
             <div
               style={{
                 marginBottom: "10px",
-                fontFamily: "Pretendard-Regular",
+                fontFamily: "Suit-Regular",
                 fontSize: "18px",
                 gap: "10px",
               }}
@@ -1801,183 +1620,6 @@ export default function StudyPost() {
           </form>
         )}
         {isAttendancePopupOpen && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              padding: "0 20px",
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              zIndex: 999,
-            }}
-          />
-        )}
-
-        {isWeeklyBestPopupOpen && (
-          <form
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "80%",
-              maxWidth: "400px",
-              maxHeight: "80vh",
-              overflowY: "auto",
-              backgroundColor: "#111015",
-              padding: "30px 30px 20px",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              borderRadius: "10px",
-              textAlign: "left",
-              zIndex: 1000,
-            }}
-          >
-            <div
-              style={{
-                marginBottom: "30px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  width: "80%",
-                  backgroundColor: "transparent",
-                  borderRadius: "10px",
-                  fontFamily: "Pretendard-Bold",
-                  fontSize: "28px",
-                  color: "#2cc295",
-                }}
-              >
-                {getCurrentWeekForOps(selectedSubject).week}주차 주간 베스트
-                지정
-                <br />
-                <span
-                  style={{
-                    fontFamily: "Pretendard-Light",
-                    fontSize: "16px",
-                    color: "#fff",
-                  }}
-                >
-                  (
-                  {getCurrentWeekForOps(selectedSubject).endDate[0] +
-                    "/" +
-                    getCurrentWeekForOps(selectedSubject).endDate[1] +
-                    "/" +
-                    getCurrentWeekForOps(selectedSubject).endDate[2]}
-                  )
-                </span>
-              </div>
-            </div>
-            <div
-              style={{
-                marginBottom: "10px",
-                fontFamily: "Pretendard-Regular",
-                fontSize: "18px",
-                gap: "10px",
-              }}
-            >
-              {[
-                postData.studyMaster,
-                ...postData.studyMembers.filter(
-                  (member) =>
-                    member.studentId !== postData.studyMaster.studentId
-                ),
-              ].map((member) => (
-                <div
-                  key={member.memberId}
-                  style={{
-                    marginTop: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  {member.name}
-                  <label
-                    style={{
-                      marginLeft: "20px",
-                      display: "inline-block",
-                      width: "20px",
-                      height: "20px",
-                      borderRadius: "4px",
-                      border: "2px solid #2cc295",
-                      backgroundColor:
-                        checkedWeeklyBest === member.memberId
-                          ? "#2cc295"
-                          : "transparent",
-                      cursor: "pointer",
-                      position: "relative",
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={checkedWeeklyBest === member.memberId}
-                      onChange={() => handleWeeklyBestChange(member.memberId)}
-                      style={{
-                        opacity: 0,
-                        position: "absolute",
-                        width: "100%",
-                        height: "100%",
-                        cursor: "pointer",
-                      }}
-                    />
-                    {checkedWeeklyBest === member.memberId && (
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%, -50%)",
-                          color: "white",
-                          fontSize: "14px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        ✔
-                      </span>
-                    )}
-                  </label>
-                </div>
-              ))}
-            </div>
-            <div
-              style={{
-                width: "100%",
-                marginTop: "20px",
-                display: "flex",
-                justifyContent: "right",
-                gap: "10px",
-              }}
-            >
-              <Button
-                type="destructive"
-                size="small"
-                title="취소"
-                onClick={() => {
-                  const deleteEnd = window.confirm(
-                    "주간 베스트 지정을 취소하시겠습니까?"
-                  );
-                  if (deleteEnd) {
-                    setIsWeeklyBestPopupOpen(false);
-                  }
-                }}
-              />
-              <Button
-                type="primary"
-                size="small"
-                title="저장"
-                onClick={handleSubmitWeeklyBest(
-                  onWeeklyBestValid,
-                  onWeeklyBestInvalid
-                )}
-              />
-            </div>
-          </form>
-        )}
-        {isWeeklyBestPopupOpen && (
           <div
             style={{
               position: "fixed",

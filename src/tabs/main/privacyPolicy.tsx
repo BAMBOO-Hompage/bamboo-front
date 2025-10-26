@@ -42,7 +42,7 @@ export default function Signup() {
           style={{
             paddingTop: "15vh",
             marginBottom: "25px",
-            fontFamily: "Pretendard-Bold",
+            fontFamily: "Suit-Semibold",
             fontSize: "clamp(24px, 3.8vw, 30px)",
             color: "#2cc295",
           }}
@@ -52,7 +52,7 @@ export default function Signup() {
         <div
           style={{
             marginBottom: "20px",
-            fontFamily: "Pretendard-Light",
+            fontFamily: "Suit-Light",
             fontSize: "clamp(14px, 2vw, 16px)",
             color: "#fff",
             lineHeight: "1.6",
@@ -89,7 +89,7 @@ export default function Signup() {
             >
               <div
                 style={{
-                  fontFamily: "Pretendard-Regular",
+                  fontFamily: "Suit-Regular",
                   fontSize: "clamp(14px, 2vw, 18px)",
                   color: "#fff",
                 }}
@@ -123,7 +123,7 @@ export default function Signup() {
                 borderTopRightRadius: "0px",
                 borderBottomLeftRadius: "15px",
                 borderBottomRightRadius: "15px",
-                fontFamily: "Pretendard-Light",
+                fontFamily: "Suit-Light",
                 fontSize: "clamp(14px, 2vw, 16px)",
                 color: "#fff",
                 lineHeight: "1.5",
