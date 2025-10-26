@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-
 import Button from "../../components/button.tsx";
 import Nav from "../../components/nav.tsx";
 import BottomInfo from "../../components/bottomInfo.tsx";
@@ -59,6 +58,7 @@ export default function PersonalInfo() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
   const [isRePasswordVisible, setIsRePasswordVisible] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false); //프로필 이미지 변경 모달 상태
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
@@ -666,8 +666,7 @@ export default function PersonalInfo() {
                       }}
                     />
 
-                    <label
-                      htmlFor="fileInput"
+                    <div
                       style={{
                         width: "35px",
                         borderRadius: "18px",
@@ -678,10 +677,10 @@ export default function PersonalInfo() {
                       onChange={handleProfileImage}
                     >
                       <img
-                        src="../img/btn/search_disabled.png"
+                        src="../img/btn/photo_camera.png"
                         alt="search"
                         style={{
-                          width: "35px",
+                          width: "40px",
                           opacity: "0.8",
                           cursor: "pointer",
                         }}
@@ -691,6 +690,7 @@ export default function PersonalInfo() {
                         onMouseLeave={(e) => {
                           e.currentTarget.style.opacity = "0.8"; // Hover 해제 시 opacity 복원
                         }}
+                        onClick={() => setShowProfileModal(true)}
                       />
                       <input
                         type="file"
@@ -701,7 +701,150 @@ export default function PersonalInfo() {
                         }}
                         {...register("Image", {})}
                       />
-                    </label>
+                    </div>
+                    {showProfileModal && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: 120,
+                          right: -180,
+                          width: "220px",
+                          backgroundColor: "rgba(0, 0, 0, 0.4)",
+                          backdropFilter: "blur(8px)",
+                          borderRadius: "12px",
+
+                          zIndex: 1000,
+                        }}
+                      >
+                        {/*  팝업 닫기 아이콘 */}
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 6,
+                            right: 10,
+                            cursor: "pointer",
+                            color: "#ccc",
+                            fontSize: "18px",
+                            transition: "0.2s ease",
+                          }}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.color = "#fff")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.color = "#ccc")
+                          }
+                          onClick={() => setShowProfileModal(false)}
+                        >
+                          ✕
+                        </div>
+
+                        {/* 1️ 기본 프로필로 지정 */}
+
+                        <button
+                          style={{
+                            width: "100%",
+                            padding: "12px 16px",
+                            textAlign: "center",
+                            fontSize: "16px",
+                            border: "none",
+                            background: "transparent",
+                            cursor: "pointer",
+                            color: "#e0ddddff",
+                            fontFamily: "Suit-Regular",
+                          }}
+                          onClick={async (event) => {
+                            event.preventDefault();
+
+                            try {
+                              const accessToken = document.cookie
+                                .split("; ")
+                                .find((row) => row.startsWith("accessToken="))
+                                ?.split("=")[1];
+
+                              if (!accessToken) {
+                                alert("로그인이 필요합니다.");
+                                return;
+                              }
+
+                              const formData = new FormData();
+
+                              // 서버에 "기본 이미지로 변경" 의도 전달 (빈 Blob 첨부)..하잘모르겟음
+                              const emptyFile = new File([], "empty.png", {
+                                type: "image/png",
+                              });
+                              formData.append("profileImage", emptyFile);
+                              formData.append("phoneNumber", myData.phone);
+
+                              const res = await fetch(
+                                "https://api.smu-bamboo.com/api/members/myPage/profileImage",
+                                {
+                                  method: "PATCH",
+                                  headers: {
+                                    Authorization: `Bearer ${accessToken}`,
+                                  },
+                                  body: formData,
+                                }
+                              );
+
+                              if (!res.ok) {
+                                const text = await res.text();
+                                console.error("서버 응답 오류:", text);
+                                throw new Error(`서버 오류: ${res.status}`);
+                              }
+
+                              // 최신 데이터 반영
+                              const updated = await MyPageAPI();
+                              setmyData(updated);
+                              setPreviewImage(
+                                updated.profileImageUrl ??
+                                  "../img/icon/base_profile.png"
+                              );
+                              setShowProfileModal(false);
+                              setImage(undefined); //  상태도 초기화 (onValid 시 불필요한 이미지 전송 방지)
+                              alert("기본 프로필로 변경되었습니다.");
+                            } catch (error) {
+                              console.error("기본 프로필 변경 실패:", error);
+                              alert("기본 프로필 변경 중 오류가 발생했습니다.");
+                            }
+                          }}
+                        >
+                          기본 프로필로 지정
+                        </button>
+
+                        <div
+                          style={{
+                            borderTop: "1px  solid rgba(255, 255, 255, 0.08)",
+                          }}
+                        />
+
+                        {/* 2️ 새 프로필 지정 */}
+                        <button
+                          style={{
+                            width: "100%",
+                            padding: "12px 16px",
+                            textAlign: "left",
+                            fontSize: "14px",
+                            border: "none",
+                            background: "transparent",
+                            cursor: "pointer",
+                            color: "#e0ddddff",
+                            fontFamily: "Suit-Regular",
+                            fontSize: "16px",
+                            textAlign: "center",
+                          }}
+                          onClick={() => {
+                            setShowProfileModal(false); // 모달 닫기
+                            setTimeout(() => {
+                              const fileInput =
+                                document.getElementById("fileInput");
+                              if (fileInput) fileInput.click(); //  앨범 열기
+                            }, 100);
+                          }}
+                        >
+                          새 프로필로 지정
+                        </button>
+                      </div>
+                    )}
                   </div>
                   <div style={{ position: "relative" }}>
                     <div

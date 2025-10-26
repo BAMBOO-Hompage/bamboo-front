@@ -635,20 +635,8 @@ export default function AlexandriaPost() {
                     padding: "20px 0",
                     paddingBottom: "100px",
                   }}
-                >
-                  <div
-                    className={styles.container}
-                    dangerouslySetInnerHTML={{
-                      __html: sanitizer(`${paperData.content}`),
-                    }}
-                    style={{
-                      fontFamily: "Suit-Light",
-                      fontSize: "clamp(14px, 2vw, 18px)",
-                      color: "#fff",
-                      lineHeight: "1.4",
-                    }}
-                  />
-                </div>
+                ></div>
+
                 <hr
                   style={{
                     width: "100%",
