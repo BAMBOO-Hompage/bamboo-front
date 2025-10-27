@@ -1,0 +1,44 @@
+.editor h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 16px 0 8px;
+}
+.editor p {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.editor ol,
+ul {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  padding-left: 20px;
+}
+.editor img {
+  max-width: 80%;
+}
+
+.editor li {
+  margin: 8px 0;
+  padding-left: 15px !important;
+}
+.editor .ql-indent-1 {
+  padding-left: 45px !important;
+}
+.editor .ql-indent-1::before {
+  content: "৹  ";
+}
+.editor .ql-indent-2 {
+  padding-left: 75px !important;
+}
+.editor .ql-indent-2::before {
+  content: "▪  ";
+}
+.editor .ql-indent-3 {
+  padding-left: 105px !important;
+}
+.editor .ql-indent-3::before {
+  content: "•  ";
+}
