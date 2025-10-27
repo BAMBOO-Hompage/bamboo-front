@@ -635,7 +635,20 @@ export default function AlexandriaPost() {
                     padding: "20px 0",
                     paddingBottom: "100px",
                   }}
-                ></div>
+                >
+                  <div
+                    className={styles.container}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizer(`${paperData.content}`),
+                    }}
+                    style={{
+                      fontFamily: "Suit-Light",
+                      fontSize: "18px",
+                      color: "#fff",
+                      lineHeight: "1.4",
+                    }}
+                  />
+                </div>
 
                 <hr
                   style={{
@@ -1133,10 +1146,6 @@ export default function AlexandriaPost() {
                                       >
                                         <img
                                           src={
-                                            /* 수정  대댓글 프로필 이미지가 항상 기본 이미지로 보이던 문제 수정
-                                               - 기존: 하드코딩된 "../img/icon/base_profile.png"
-                                               - 변경: 백엔드에서 내려주는 paperReply.writerImageUrl를 우선 사용하고,
-                                                       없으면 기본 이미지를 fallback으로 사용 */
                                             paperReply.writerImageUrl
                                               ? paperReply.writerImageUrl
                                               : "../img/icon/base_profile.png"
