@@ -120,7 +120,18 @@ export default function AlexandriaEdit() {
   }, [paperData, setValue]);
 
   const onValid = async (e: any) => {
-    // ✅ 중복 제출 가드
+    // 주제 글자수 제한 (공백 포함 200자 이내)
+    if (e.Topic.trim().length > 200) {
+      alert(
+        `논문 주제는 공백 포함 200자 이내로 입력해주세요. (현재 ${
+          e.Topic.trim().length
+        }자)`
+      );
+      setIsSubmitting(false);
+      return;
+    }
+
+    //  중복 제출 가드
     if (isSubmitting) return;
     setIsSubmitting(true);
 
