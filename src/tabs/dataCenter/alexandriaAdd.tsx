@@ -125,6 +125,14 @@ export default function AlexandriaAdd() {
       tagList = tags.map((tag) => tag.slice(1));
     }
 
+    // 주제 글자수 제한 (공백 포함 200자 이내)
+    if (e.Topic.trim().length > 200) {
+      alert("논문 주제는 공백 포함 200자 이내로 입력해주세요.");
+      submittingRef.current = false;
+      setIsSubmitting(false);
+      return;
+    }
+
     // 연도 검증
     const yearNum = parseInt(e.Year, 10);
     if (Number.isNaN(yearNum) || yearNum < 0) {

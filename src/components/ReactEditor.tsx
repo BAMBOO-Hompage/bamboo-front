@@ -5,8 +5,80 @@ import { ImageActions } from "@xeger/quill-image-actions";
 import styled from "styled-components";
 import ImageAPI from "../api/imageAPI";
 
+/* ✅ iframe src 및 blob URL sanitize 허용 */
+const sanitize = Quill.import("formats/link").sanitize;
+const Link = Quill.import("formats/link");
+
+Link.sanitize = function (url: string) {
+  if (
+    url.startsWith("https://") ||
+    url.startsWith("http://") ||
+    url.startsWith("data:") ||
+    url.startsWith("blob:")
+  ) {
+    return url;
+  }
+  return sanitize(url);
+};
+
+/* ✅ clipboard 확장: iframe 붙여넣기 허용 */
+const Clipboard = Quill.import("modules/clipboard");
+const Delta = Quill.import("delta");
+
+class IframeClipboard extends Clipboard {
+  onPaste(e: any) {
+    e.preventDefault();
+    const range = this.quill.getSelection();
+    const text = e.clipboardData.getData("text/plain");
+    const html = e.clipboardData.getData("text/html");
+
+    if (html && html.includes("<iframe")) {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = html;
+      const iframes = tempDiv.getElementsByTagName("iframe");
+
+      Array.from(iframes).forEach((iframe) => {
+        const src = iframe.getAttribute("src");
+        if (src) {
+          this.quill.insertEmbed(range.index, "iframe", src, "user");
+        }
+      });
+    } else {
+      const delta = new Delta().insert(text);
+      this.quill.updateContents(delta, "user");
+    }
+
+    this.quill.root.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+}
+Quill.register("modules/clipboard", IframeClipboard, true);
+
+/* ✅ iframe 블롯 정의 */
+const BlockEmbed = Quill.import("blots/block/embed");
+
+class IframeBlot extends BlockEmbed {
+  static create(value: string) {
+    const node = super.create();
+    node.setAttribute("src", value);
+    node.setAttribute("frameborder", "0");
+    node.setAttribute("allowfullscreen", "true");
+    node.setAttribute("width", "100%");
+    node.setAttribute("height", "500");
+    node.setAttribute("style", "display:block; border:none;");
+    return node;
+  }
+  static value(node: HTMLElement) {
+    return node.getAttribute("src");
+  }
+}
+
+IframeBlot.blotName = "iframe";
+IframeBlot.tagName = "iframe";
+
+Quill.register(IframeBlot);
 Quill.register("modules/imageActions", ImageActions);
 
+/* ---------------------- 스타일 ---------------------- */
 const CustomQuillEditorView = styled.div`
   #toolBar {
     box-sizing: border-box;
@@ -54,7 +126,6 @@ const CustomQuillEditorView = styled.div`
       .ql-editor {
         line-height: 1.4;
 
-        /* --- Editor.module.css 내용 통합 --- */
         h1,
         h2,
         h3,
@@ -63,23 +134,37 @@ const CustomQuillEditorView = styled.div`
         h6 {
           margin: 16px 0 8px;
         }
+
         p {
           margin-bottom: 8px;
           line-height: 1.5;
         }
+
         ol,
         ul {
           margin-bottom: 8px;
           line-height: 1.5;
           padding-left: 20px;
         }
+
         img {
           max-width: 80%;
         }
+
+        iframe {
+          width: 100%;
+          height: auto;
+          min-height: 300px;
+          display: block;
+          border: none;
+          background: transparent;
+        }
+
         li {
           margin: 8px 0;
           padding-left: 15px !important;
         }
+
         .ql-indent-1 {
           padding-left: 45px !important;
         }
@@ -102,10 +187,12 @@ const CustomQuillEditorView = styled.div`
         &::-webkit-scrollbar {
           width: 5px;
         }
+
         &::-webkit-scrollbar-thumb {
           background: #777;
           border-radius: 15px;
         }
+
         &::-webkit-scrollbar-track {
           background: rgba(200, 200, 200, 0.1);
         }
@@ -118,6 +205,7 @@ const CustomQuillEditorView = styled.div`
   }
 `;
 
+/* ---------------------- 툴바 ---------------------- */
 function ReactModule() {
   return (
     <>
@@ -152,6 +240,7 @@ function ReactModule() {
   );
 }
 
+/* ---------------------- 에디터 본체 ---------------------- */
 const ReactEditor = ({ content, setContent }) => {
   const quillRef = useRef<ReactQuill | null>(null);
   const [image, setImage] = useState<File | null>(null);
@@ -190,26 +279,25 @@ const ReactEditor = ({ content, setContent }) => {
   useEffect(() => {
     if (quillRef.current && content) {
       const editor = quillRef.current.getEditor();
-      const regex = /https?:\/\/[^\s]+|(?:www\.)[^\s]+/g;
-      const ops = editor.getContents().ops;
+      const notionMatch = content.match(/https:\/\/[^\s"]+/);
+      console.log("🔍 Content:", content);
+      console.log("🔗 Notion match:", notionMatch);
 
-      if (ops) {
-        ops.forEach((op) => {
-          if (typeof op.insert === "string") {
-            const matches = op.insert.match(regex);
-            if (matches) {
-              matches.forEach((match) => {
-                const index = editor.getText().indexOf(match);
-                editor.formatText(index, match.length, "link", match);
-              });
-            }
-          }
-        });
+      if (notionMatch) {
+        const range = editor.getSelection();
+        console.log("🧩 Inserting iframe...");
+        editor.insertEmbed(
+          range ? range.index : editor.getLength() - 1,
+          "iframe",
+          notionMatch[0]
+        );
+        console.log("✅ iframe insert attempted:", notionMatch[0]);
       }
     }
   }, [content]);
 
   const handleTextChange = (value: string) => {
+    console.log("📦 content:", value);
     if (value !== content) setContent(value);
   };
 
@@ -233,8 +321,6 @@ const ReactEditor = ({ content, setContent }) => {
     "script",
     "code-block",
     "clean",
-    "height",
-    "width",
   ];
 
   const modules = useMemo(
@@ -244,16 +330,39 @@ const ReactEditor = ({ content, setContent }) => {
         container: "#toolBar",
         handlers: { image: imageHandler },
       },
-      clipboard: {
-        matchVisual: false,
-      },
+      clipboard: { matchVisual: false },
     }),
     []
   );
 
+  // ✅ Quill 인스턴스 직접 iframe 허용 설정
+  useEffect(() => {
+    if (!quillRef.current || !content) return;
+    const editor = quillRef.current.getEditor();
+    const notionMatch = content.match(/https:\/\/[^\s"]+/);
+    console.log("🔍 Content:", content);
+    console.log("🔗 Notion match:", notionMatch);
+
+    if (notionMatch) {
+      // 💡 0ms 지연으로 렌더 후 실행 (DOM 반영 이후)
+      setTimeout(() => {
+        const range = editor.getSelection();
+        console.log("🧩 Inserting iframe...");
+        editor.insertEmbed(
+          range ? range.index : editor.getLength() - 1,
+          "iframe",
+          notionMatch[0]
+        );
+        console.log("✅ iframe insert attempted:", notionMatch[0]);
+      }, 0);
+    }
+  }, [content]);
+
   return (
     <CustomQuillEditorView>
       <div id="toolBar">{ReactModule()}</div>
+
+      {/* @ts-ignore */}
       <ReactQuill
         ref={quillRef}
         theme="snow"
@@ -264,6 +373,7 @@ const ReactEditor = ({ content, setContent }) => {
         value={content}
         placeholder="내용을 작성해주세요."
         onChange={handleTextChange}
+        dangerouslyPasteHTML={true} // ✅ iframe이 제거되지 않게
       />
     </CustomQuillEditorView>
   );
