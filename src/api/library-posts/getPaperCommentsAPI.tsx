@@ -24,7 +24,7 @@ export default async function GetPaperCommentsAPI(libraryPostId, page) {
   } catch (error) {
     console.error(error);
     alert("서버 오류 발생");
-    window.location.href = "/";
+    // window.location.href = "/";
     return;
   }
 }

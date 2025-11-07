@@ -30,7 +30,6 @@ export default async function DeletePaperCommentsAPI(libraryPostId, commentId) {
       await deletePaperComments(accessToken, libraryPostId, commentId);
 
       alert("삭제 완료");
-      window.location.reload();
     } catch (error) {
       if (refreshToken) {
         try {

@@ -133,7 +133,11 @@ export default function AlexandriaPost() {
           currentPage
         );
         setPaperCommentsToDisplay(paperCommentsResult.content);
-        setTotalPages(paperCommentsResult.totalPages);
+        if (paperCommentsResult.totalPages === 0) {
+          setTotalPages(1);
+        } else {
+          setTotalPages(paperCommentsResult.totalPages);
+        }
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
       }
@@ -170,13 +174,16 @@ export default function AlexandriaPost() {
     try {
       await PostPaperCommentsAPI(paperData.libraryPostId, comment);
 
-      // 댓글 목록 최신화
+      const probe = await GetPaperCommentsAPI(searchParams.get("id"), 1);
+      const newTotalPages = probe.totalPages === 0 ? 1 : probe.totalPages;
+      setTotalPages(newTotalPages);
+
       const last = await GetPaperCommentsAPI(
         searchParams.get("id"),
-        totalPages
+        newTotalPages
       );
       setPaperCommentsToDisplay(last.content);
-      setCurrentPage(totalPages);
+      setCurrentPage(newTotalPages);
 
       //  댓글 개수도 최신화 (useEffect와 동일하게 서버 기준으로)
       const updatedPaper = await GetPaperAPI(searchParams.get("id"));
@@ -250,6 +257,7 @@ export default function AlexandriaPost() {
     setDeletingCommentId(commentId);
     try {
       await DeletePaperCommentsAPI(paperData.libraryPostId, commentId);
+
       const res = await GetPaperCommentsAPI(
         searchParams.get("id"),
         currentPage
