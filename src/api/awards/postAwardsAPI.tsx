@@ -5,7 +5,7 @@ var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
 
 async function postAwards(
   accessToken,
-  week,
+  isMidterm,
   batch,
   inventoryId,
   subjectName,
@@ -19,7 +19,7 @@ async function postAwards(
       Authorization: "Bearer " + accessToken,
     },
     body: JSON.stringify({
-      week: week,
+      isMidterm: isMidterm,
       batch: batch,
       inventoryId: inventoryId,
       subjectName: subjectName,
@@ -35,7 +35,7 @@ async function postAwards(
 }
 
 export default async function PostAwardsAPI(
-  week,
+  isMidterm,
   batch,
   inventoryId,
   subjectName,
@@ -47,10 +47,17 @@ export default async function PostAwardsAPI(
 
   if (accessToken) {
     try {
-      console.log(week, batch, inventoryId, subjectName, section, memberId);
+      console.log(
+        isMidterm,
+        batch,
+        inventoryId,
+        subjectName,
+        section,
+        memberId
+      );
       await postAwards(
         accessToken,
-        week,
+        isMidterm,
         batch,
         inventoryId,
         subjectName,
@@ -71,7 +78,7 @@ export default async function PostAwardsAPI(
           );
           await postAwards(
             newAccessToken,
-            week,
+            isMidterm,
             batch,
             inventoryId,
             subjectName,

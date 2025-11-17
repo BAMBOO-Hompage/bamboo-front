@@ -227,14 +227,16 @@ select {
 
 .nav_text {
   width: 170px;
-  padding: 20px 0;
-  text-align: center;
+  height: 61px;
   font-family: Suit-SemiBold;
   font-size: 18px;
   color: #fff;
   border-bottom: 2px solid transparent;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .nav_text:hover {
   text-shadow: 0 0 0.1em, 0 0 0.3em;

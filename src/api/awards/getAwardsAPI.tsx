@@ -16,7 +16,7 @@ export default async function GetAwardsAPI(batch) {
       if (!response.ok) {
         throw new Error("Failed to get awards");
       }
-      console.log(data.result);
+
       return data.result;
     });
   } catch (error) {

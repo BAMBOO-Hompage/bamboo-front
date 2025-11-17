@@ -12,6 +12,7 @@ import CheckAuthAPI from "../../api/checkAuthAPI.tsx";
 import GetCohortAPI from "../../api/cohorts/GetCohortAPI.tsx";
 import GetCohortLatestAPI from "../../api/cohorts/GetCohortLatestAPI.tsx";
 import GetStudyAPI from "../../api/studies/getStudyAPI.tsx";
+import GetInventoryAPI from "../../api/inventories/getInventoryAPI.tsx";
 import GetWeeklyBestAPI from "../../api/inventories/getWeeklyBestAPI.tsx";
 import PostAwardsAPI from "../../api/awards/postAwardsAPI.tsx";
 import GetAwardsAPI from "../../api/awards/getAwardsAPI.tsx";
@@ -65,7 +66,7 @@ type Award = {
     section: number;
   };
   batch: number;
-  week: number;
+  isMidterm: boolean;
 };
 type Inventory = {
   inventoryId: number;
@@ -113,7 +114,7 @@ export default function HallOfFame() {
   const [curriculumSubjects, setCurriculumSubjects] = useState([]);
   const [isAddPopupOpen, setIsAddPopupOpen] = useState<boolean>(false);
   const [urlInput, setUrlInput] = useState("");
-  const [urlParams, setUrlParams] = useState({ id: "", week: "" });
+  const [urlParams, setUrlParams] = useState({ id: "", member: "", week: "" });
   const [selectedStudy, setSelectedStudy] = useState<Study>({
     studyId: 0,
     teamName: "",
@@ -177,9 +178,10 @@ export default function HallOfFame() {
         section: 0,
       },
       batch: 0,
-      week: 0,
+      isMidterm: true,
     },
   });
+  const [isMidterm, setIsMidterm] = useState(false);
 
   useEffect(() => {
     CheckAuthAPI().then((data) => {
@@ -219,27 +221,18 @@ export default function HallOfFame() {
             )
           );
         }
-        const awardsLatestResult = await GetAwardLatestAPI(selectedCohort);
-        setAwardsLatest(awardsLatestResult);
+        // const awardsLatestResult = await GetAwardLatestAPI(selectedCohort);
+        // setAwardsLatest(awardsLatestResult);
         const awardsResult = await GetAwardsAPI(selectedCohort);
-        // 1. week별로 데이터를 묶는다
-        const grouped = awardsResult.reduce((acc, curr) => {
-          const week = curr.week;
-          if (!acc[week]) {
-            acc[week] = [];
-          }
-          acc[week].push(curr);
-          return acc;
-        }, {});
-        // 2. 전체 주차 범위 구하기
-        const allWeeks = Array.from(
-          { length: Math.max(...awardsResult.map((a) => a.week)) },
-          (_, i) => i + 1
-        );
-        // 3. 빠진 주차도 포함한 리스트로 만들기
-        const sortedGrouped = allWeeks.map((week) => grouped[week] ?? []);
-        setGroupedAwards(sortedGrouped);
-        console.log(groupedAwards);
+        // isMidterm 기준으로 그룹핑
+        console.log(awardsResult);
+        const midtermAwards = awardsResult.filter((a) => a.isMidterm === true);
+        const finalAwards = awardsResult.filter((a) => a.isMidterm === false);
+
+        console.log(midtermAwards);
+        console.log(finalAwards);
+        // 예: [0] = 중간고사, [1] = 기말고사
+        setGroupedAwards([midtermAwards, finalAwards]);
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
       }
@@ -255,24 +248,30 @@ export default function HallOfFame() {
       // 1. 도메인/studyPost 경로인지 확인
       if (!url.pathname.startsWith("/studyPost")) {
         alert("올바른 URL을 입력해주세요.");
-        setUrlParams({ id: "", week: "" });
+        setUrlParams({ id: "", member: "", week: "" });
         return;
       }
       // 2. URL 파라미터에서 id, member, week 추출
       const searchParams = new URLSearchParams(url.search);
       const id = searchParams.get("id") || "";
+      const member = searchParams.get("member") || "";
       const week = searchParams.get("week") || "";
       const studyResult = await GetStudyAPI(id);
       setSelectedStudy(studyResult);
-      const inventoryResult = await GetWeeklyBestAPI(id, week);
+      const inventoryResult = await GetInventoryAPI(id, member, week);
+      // const inventoryResult = await GetWeeklyBestAPI(id, week);
       setSelectedInventory(inventoryResult);
-      setUrlParams({ id, week });
+      if (e.Week === "중간") {
+        setIsMidterm(true);
+      } else {
+        setIsMidterm(false);
+      }
+      setUrlParams({ id, member, week });
     } catch (error) {
       alert("올바른 URL을 입력해주세요.");
-      setUrlParams({ id: "", week: "" });
+      setUrlParams({ id: "", member: "", week: "" });
     }
   };
-
   const onInvalid = (e) => {
     console.log(e, "onInvalid");
     alert("입력한 정보를 다시 확인해주세요.");
@@ -378,121 +377,128 @@ export default function HallOfFame() {
                   justifyContent: "space-between",
                 }}
               >
-                {curriculumSubjects?.map((subject, index) => (
-                  <div
-                    key={subject.subjectId}
-                    style={{
-                      position: "relative",
-                      width: "150px",
-                      height: "150px",
-                      marginTop: index % 2 !== 0 ? "100px" : undefined,
-                    }}
-                  >
-                    {awardsLatest.filter(
-                      (award) => award.study.subjectName === subject.name
-                    ).length > 0 ? (
-                      <>
-                        <div style={{ marginTop: "20px", textAlign: "left" }}>
-                          {awardsLatest
-                            .filter(
-                              (award) =>
-                                award.study.subjectName === subject.name
-                            )
-                            .map((award, index) => (
-                              <div key={index} style={{ position: "relative" }}>
+                {curriculumSubjects.map((subject, index) => {
+                  const midtermAwards = groupedAwards[0] ?? [];
+                  const finalAwards = groupedAwards[1] ?? [];
+                  const finalAward = finalAwards.find(
+                    (award) => award.study.subjectName === subject.name
+                  );
+                  const midtermAward = midtermAwards.find(
+                    (award) => award.study.subjectName === subject.name
+                  );
+                  const latestAward = finalAward ?? midtermAward;
+
+                  return (
+                    <div
+                      key={subject.subjectId}
+                      style={{ textAlign: "center" }}
+                    >
+                      {latestAward ? (
+                        <div
+                          style={{
+                            marginTop: index % 2 !== 0 ? "100px" : undefined,
+                            textAlign: "left",
+                          }}
+                        >
+                          <div style={{ position: "relative" }}>
+                            <div
+                              style={{
+                                position: "absolute",
+                                left: "50%",
+                                marginTop: "30px",
+                                transform: "translateX(-50%)",
+                                width: "80%",
+                                height: "40px",
+                                cursor: "pointer",
+                                background:
+                                  hovered === latestAward.awardId
+                                    ? "#2cc295"
+                                    : "transparent",
+                                filter: "blur(40px)",
+                                zIndex: 1,
+                              }}
+                            ></div>
+
+                            {/* 카드 내용 */}
+                            <Link
+                              to={`/studyPost?id=${latestAward.study.studyId}&member=${latestAward.memberId}&week=1`}
+                              style={{
+                                position: "relative",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "flex-end",
+                                cursor: "pointer",
+                                zIndex: 2,
+                                textDecoration: "none",
+                              }}
+                              onMouseEnter={() =>
+                                setHovered(latestAward.awardId)
+                              }
+                              onMouseLeave={() => setHovered("")}
+                            >
+                              <div
+                                style={{
+                                  paddingBottom: "10px",
+                                  marginRight: "5px",
+                                }}
+                              >
                                 <div
                                   style={{
-                                    position: "absolute",
-                                    left: "50%",
-                                    marginTop: "30px",
-                                    transform: "translateX(-50%)",
-                                    width: "80%",
-                                    height: "40px",
-                                    cursor: "pointer",
-                                    background:
-                                      hovered === award.awardId
-                                        ? "#2cc295"
-                                        : "transparent",
-                                    filter: "blur(40px)",
-                                    zIndex: 1,
-                                  }}
-                                ></div>
-                                <Link
-                                  to={`/studyPost?id=${award.study.studyId}&member=Weekly Best&week=${award.week}`}
-                                  style={{
-                                    position: "relative",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "flex-end",
-                                    cursor: "pointer",
-                                    zIndex: 2,
-                                    textDecoration: "none",
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    setHovered(award.awardId);
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    setHovered("");
+                                    fontFamily: "Suit-Semibold",
+                                    fontSize: "16px",
+                                    color: "#2cc295",
                                   }}
                                 >
-                                  <div style={{ paddingBottom: "10px" }}>
-                                    <div
-                                      style={{
-                                        fontFamily: "Suit-Semibold",
-                                        fontSize: "16px",
-                                        color: "#2cc295",
-                                      }}
-                                    >
-                                      {award.study.subjectName}_
-                                      {award.study.section}
-                                    </div>
-                                    <div
-                                      style={{
-                                        fontFamily: "Suit-Semibold",
-                                        fontSize: "20px",
-                                        color: "#fff",
-                                      }}
-                                    >
-                                      {award.writerName}
-                                    </div>
-                                  </div>
-                                  <div>
-                                    {award.writerImageUrl ? (
-                                      <>
-                                        <img
-                                          src={award.writerImageUrl}
-                                          alt="profileImg"
-                                          style={{
-                                            width: "90px",
-                                            height: "90px",
-                                            borderRadius: "50%",
-                                            fill: "contain",
-                                          }}
-                                        />
-                                      </>
-                                    ) : (
-                                      <>
-                                        <img
-                                          src="../img/icon/base_profile.png"
-                                          alt="profileImg"
-                                          style={{
-                                            width: "80px",
-                                            height: "80px",
-                                            borderRadius: "50%",
-                                            objectFit: "cover",
-                                          }}
-                                        />
-                                      </>
-                                    )}
-                                  </div>
-                                </Link>
+                                  {latestAward.study.subjectName}_
+                                  {latestAward.study.section}
+                                </div>
+
+                                <div
+                                  style={{
+                                    fontFamily: "Suit-Semibold",
+                                    fontSize: "20px",
+                                    color: "#fff",
+                                  }}
+                                >
+                                  {latestAward.writerName}
+                                </div>
                               </div>
-                            ))}
+
+                              <div>
+                                {latestAward.writerImageUrl ? (
+                                  <img
+                                    src={latestAward.writerImageUrl}
+                                    alt="profileImg"
+                                    style={{
+                                      width: "80px",
+                                      height: "80px",
+                                      borderRadius: "50%",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                ) : (
+                                  <img
+                                    src="../img/icon/base_profile.png"
+                                    alt="profileImg"
+                                    style={{
+                                      width: "80px",
+                                      height: "80px",
+                                      borderRadius: "50%",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                )}
+                              </div>
+                            </Link>
+                          </div>
                         </div>
-                      </>
-                    ) : (
-                      <>
-                        <div style={{ marginTop: "60px", textAlign: "left" }}>
+                      ) : (
+                        <div
+                          style={{
+                            marginTop: index % 2 !== 0 ? "100px" : undefined, // 미정에도 marginTop 적용
+                            marginBottom: "50px",
+                          }}
+                        >
                           <div
                             style={{
                               fontFamily: "Suit-Semibold",
@@ -503,10 +509,10 @@ export default function HallOfFame() {
                             {subject.name} 미정
                           </div>
                         </div>
-                      </>
-                    )}
-                  </div>
-                ))}
+                      )}
+                    </div>
+                  );
+                })}
               </div>
               <div
                 style={{
@@ -649,7 +655,7 @@ export default function HallOfFame() {
                     marginTop: "30px",
                     display: "flex",
                     justifyContent: "space-between",
-                    fontFamily: "Suit-Light",
+                    fontFamily: "Suit-Regular",
                     fontSize: "16px",
                     color: "#888",
                     textAlign: "center",
@@ -715,7 +721,8 @@ export default function HallOfFame() {
 
                     {/* 과목별 award 표시 */}
                     {curriculumSubjects.map((subject) => {
-                      const matchedAward = groupedAwards[label]?.find(
+                      const awardsForLabel = groupedAwards[index] ?? []; // ← 여기!
+                      const matchedAward = awardsForLabel.find(
                         (award) => award.study.subjectName === subject.name
                       );
                       return (
@@ -729,7 +736,7 @@ export default function HallOfFame() {
                         >
                           {matchedAward ? (
                             <Link
-                              to={`/studyPost?id=${matchedAward.study.studyId}&member=Weekly Best&week=${matchedAward.week}`}
+                              to={`/studyPost?id=${matchedAward.study.studyId}&member=${matchedAward.memberId}&week=1`}
                               style={{ color: "#fff", textDecoration: "none" }}
                             >
                               <div style={{ color: "#2cc295" }}>
@@ -789,7 +796,7 @@ export default function HallOfFame() {
                 <input
                   type="radio"
                   value="중간"
-                  {...register("week", { required: true })}
+                  {...register("Week", { required: true })}
                   style={{
                     accentColor: "#2cc295", // 체크 색상 (초록색)
                     width: "16px",
@@ -805,7 +812,7 @@ export default function HallOfFame() {
                 <input
                   type="radio"
                   value="기말"
-                  {...register("week", { required: true })}
+                  {...register("Week", { required: true })}
                   style={{
                     accentColor: "#2cc295", // 체크 색상 (초록색)
                     width: "16px",
@@ -899,9 +906,6 @@ export default function HallOfFame() {
                   <strong>🎖️ 분반 :</strong> {selectedStudy.section}
                 </div>
                 <div style={{ marginBottom: "10px" }}>
-                  <strong>📅 주차 :</strong> {urlParams.week}
-                </div>
-                <div style={{ marginBottom: "10px" }}>
                   <strong>👤 회원 :</strong> {selectedInventory?.writerName}
                 </div>
               </div>
@@ -925,7 +929,7 @@ export default function HallOfFame() {
                   );
                   if (deleteEnd) {
                     setUrlInput("");
-                    setUrlParams({ id: "", week: "" });
+                    setUrlParams({ id: "", member: "", week: "" });
                     reset({ URL: "" });
                     setIsAddPopupOpen(false);
                   }
@@ -937,53 +941,53 @@ export default function HallOfFame() {
                 title="저장"
                 onClick={async () => {
                   if (urlInput) {
-                    if (
-                      curriculumSubjects.some(
-                        (subject) => subject.name === selectedStudy.subjectName
-                      )
-                    ) {
-                      if (
-                        !groupedAwards[Number(urlParams.week) - 1] ||
-                        !groupedAwards[Number(urlParams.week) - 1].some(
-                          (award) =>
-                            award.study.subjectName ===
-                            selectedStudy.subjectName
-                        )
-                      ) {
-                        console.log(3);
+                    // 정규 과목인지 확인
+                    const isRegularSubject = curriculumSubjects.some(
+                      (subject) => subject.name === selectedStudy.subjectName
+                    );
+
+                    if (!isRegularSubject) {
+                      alert("정규 스터디만 등록 가능합니다.");
+                      return;
+                    }
+
+                    // 중간/기말에 따라 groupedAwards 인덱스 선택
+                    const awardIndex = isMidterm ? 0 : 1;
+                    const awardGroup = groupedAwards[awardIndex] ?? [];
+
+                    // 현재 중간/기말 그룹에 해당 과목이 이미 등록되어 있는지 확인
+                    const existingAward = awardGroup.find(
+                      (award) =>
+                        award.study.subjectName === selectedStudy.subjectName &&
+                        award.study.section === selectedStudy.section
+                    );
+
+                    if (!existingAward) {
+                      console.log(3);
+                      await PostAwardsAPI(
+                        isMidterm,
+                        selectedStudy.cohort.batch,
+                        selectedInventory?.inventoryId,
+                        selectedStudy.subjectName,
+                        selectedStudy.section,
+                        selectedInventory?.writerId
+                      );
+                    } else {
+                      const patchConfirm = window.confirm(
+                        "해당 시험 구분에 이미 등록된 학생이 있습니다.\n수정하시겠습니까?"
+                      );
+
+                      if (patchConfirm) {
+                        await DeleteAwardsAPI(existingAward.awardId);
                         await PostAwardsAPI(
-                          urlParams.week,
+                          isMidterm,
                           selectedStudy.cohort.batch,
                           selectedInventory?.inventoryId,
                           selectedStudy.subjectName,
                           selectedStudy.section,
                           selectedInventory?.writerId
                         );
-                      } else {
-                        const awardId = groupedAwards[
-                          Number(urlParams.week) - 1
-                        ].find(
-                          (award) =>
-                            award.study.subjectName ===
-                            selectedStudy.subjectName
-                        )?.awardId;
-                        const patchConfirm = window.confirm(
-                          "해당 주차에 이미 등록된 학생이 있습니다.\n수정하시겠습니까?"
-                        );
-                        if (patchConfirm) {
-                          await DeleteAwardsAPI(awardId);
-                          await PostAwardsAPI(
-                            urlParams.week,
-                            selectedStudy.cohort.batch,
-                            selectedInventory?.inventoryId,
-                            selectedStudy.subjectName,
-                            selectedStudy.section,
-                            selectedInventory?.writerId
-                          );
-                        }
                       }
-                    } else {
-                      alert("정규 스터디만 등록 가능합니다.");
                     }
                   } else {
                     alert("정보 확인을 진행해주세요.");
