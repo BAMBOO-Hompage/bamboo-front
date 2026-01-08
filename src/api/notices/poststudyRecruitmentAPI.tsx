@@ -1,8 +1,7 @@
 // 아직 api 연결 안함 확인 필요함
 import { getCookie, removeCookie } from "../cookies.tsx";
 import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.tsx";
-
-const API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
+import API_SERVER_DOMAIN from "../../config/api.config";
 
 async function postStudyRecruit(accessToken: string, formData: FormData) {
   const res = await fetch(`${API_SERVER_DOMAIN}/api/studies-recruitments`, {

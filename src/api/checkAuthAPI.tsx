@@ -1,7 +1,6 @@
 import { getCookie } from "./cookies.tsx";
 import getAccessTokenWithRefreshToken from "./getAccessTokenWithRefreshToken.tsx";
-
-var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
+import API_SERVER_DOMAIN from "../config/api.config";
 
 async function getMyPage(accessToken) {
   return fetch(API_SERVER_DOMAIN + `/api/members/myPage`, {

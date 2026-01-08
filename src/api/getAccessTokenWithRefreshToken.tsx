@@ -1,6 +1,5 @@
 import { setCookie } from "./cookies.tsx";
-
-var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
+import API_SERVER_DOMAIN from "../config/api.config";
 
 export default async function getAccessTokenWithRefreshToken(
   accessToken,

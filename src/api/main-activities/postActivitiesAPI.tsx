@@ -1,7 +1,6 @@
 import { getCookie, removeCookie } from "../cookies.tsx";
 import getAccessTokenWithRefreshToken from "../getAccessTokenWithRefreshToken.tsx";
-
-var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
+import API_SERVER_DOMAIN from "../../config/api.config";
 
 async function postActivities(accessToken, formData) {
   return fetch(API_SERVER_DOMAIN + "/api/main-activities", {

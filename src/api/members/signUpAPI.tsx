@@ -1,4 +1,4 @@
-var API_SERVER_DOMAIN = "https://api.smu-bamboo.com";
+import API_SERVER_DOMAIN from "../../config/api.config";
 
 // signup.tsx
 export default async function SignupAPI(

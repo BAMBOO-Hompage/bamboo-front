@@ -1,6 +1,43 @@
-# Getting Started with Create React App
+# Bamboo Front-end
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## 환경 설정 (Environment Setup)
+
+### 1. 환경 변수 설정
+
+프로젝트 루트 디렉토리에 `.env` 파일을 생성하세요:
+
+```bash
+# .env.example 파일을 복사하여 .env 파일을 생성
+cp .env.example .env
+```
+
+`.env` 파일 내용:
+```bash
+# 로컬 개발 환경 - 로컬 백엔드 서버와 연동
+REACT_APP_API_URL=http://localhost:8080
+```
+
+**중요**: 
+- 로컬 개발시에만 `.env` 파일을 생성하세요.
+- 배포시에는 `.env` 파일이 없어도 자동으로 프로덕션 서버(`https://api.smu-bamboo.com`)를 사용합니다.
+
+### 2. 의존성 설치
+
+```bash
+npm install
+```
+
+### 3. 개발 서버 실행
+
+```bash
+npm start
+```
+
+로컬 개발 서버가 [http://localhost:3000](http://localhost:3000)에서 실행됩니다.
+
+백엔드 API 서버는 `REACT_APP_API_URL`에 설정된 주소로 요청을 보냅니다.
 
 ## Available Scripts
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/scrollToTop.tsx";
+import DomainChangeNotice from "./components/DomainChangeNotice.tsx";
 
 import LogIn from "./tabs/main/logIn.tsx";
 import PrivacyPolicy from "./tabs/main/privacyPolicy.tsx";
@@ -49,6 +50,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <DomainChangeNotice />
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Main />} />
