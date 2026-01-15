@@ -1,4 +1,4 @@
-name: Deploy Frontend to S3 and CloudFront
+name: Deploy Frontend to S3 (Cloudflare CDN)
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      BUCKET: bamboo-front-bucket  # 프론트 배포용 S3 버킷 이름
+      BUCKET: smu-bamboo.uk  # 프론트 배포용 S3 버킷 이름 (신규 도메인)
       REGION: ap-northeast-2  # 서울 리전
       DIST: build  # 빌드 폴더명
 
@@ -38,10 +38,4 @@ jobs:
 
       - name: Deploy to S3
         run: aws s3 sync --delete ${{ env.DIST }} s3://${{ env.BUCKET }}
-
-      - name: Invalidate CloudFront Cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.DIST_ID }} \
-            --paths "/*"
             
