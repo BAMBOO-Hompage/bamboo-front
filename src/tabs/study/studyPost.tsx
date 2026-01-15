@@ -632,7 +632,7 @@ export default function StudyPost() {
                 }}
               >
                 <img
-                  src="../img/btn/upDown_enabled.png"
+                  src="/img/btn/upDown_enabled.png"
                   alt="upDown"
                   style={{ width: "20px", opacity: "0.8" }}
                 />
@@ -677,7 +677,7 @@ export default function StudyPost() {
                   }}
                 >
                   <img
-                    src="../img/btn/pagePrev.png"
+                    src="/img/btn/pagePrev.png"
                     alt="pageNext"
                     style={{
                       height: "15px",
@@ -724,7 +724,7 @@ export default function StudyPost() {
                   }}
                 >
                   <img
-                    src="../img/btn/pageNext.png"
+                    src="/img/btn/pageNext.png"
                     alt="pageNext"
                     style={{
                       height: "15px",
@@ -764,13 +764,13 @@ export default function StudyPost() {
                           att.studentId === postData.studyMaster.studentId
                       )?.status === "출석" ? (
                         <img
-                          src="../img/icon/attendance_enabled.png"
+                          src="/img/icon/attendance_enabled.png"
                           alt="attendance"
                           style={{ width: `100%` }}
                         />
                       ) : (
                         <img
-                          src="../img/icon/attendance_disabled.png"
+                          src="/img/icon/attendance_disabled.png"
                           alt="attendance"
                           style={{ width: `100%` }}
                         />
@@ -832,13 +832,13 @@ export default function StudyPost() {
                               att.studentId === studyMember.studentId
                           )?.status === "출석" ? (
                             <img
-                              src="../img/icon/attendance_enabled.png"
+                              src="/img/icon/attendance_enabled.png"
                               alt="attendance"
                               style={{ width: `100%` }}
                             />
                           ) : (
                             <img
-                              src="../img/icon/attendance_disabled.png"
+                              src="/img/icon/attendance_disabled.png"
                               alt="attendance"
                               style={{ width: `100%` }}
                             />
@@ -1049,7 +1049,7 @@ export default function StudyPost() {
                       }}
                     >
                       <img
-                        src="../img/btn/pagePrev.png"
+                        src="/img/btn/pagePrev.png"
                         alt="pageNext"
                         style={{
                           height: "15px",
@@ -1114,7 +1114,7 @@ export default function StudyPost() {
                       }}
                     >
                       <img
-                        src="../img/btn/pageNext.png"
+                        src="/img/btn/pageNext.png"
                         alt="pageNext"
                         style={{
                           height: "15px",
@@ -1182,7 +1182,7 @@ export default function StudyPost() {
                               selectedInventory ? (
                                 <div>
                                   <img
-                                    src="../../img/btn/trash_disabled.png"
+                                    src="/img/btn/trash_disabled.png"
                                     alt="delete"
                                     style={{
                                       width: "25px",
@@ -1204,11 +1204,11 @@ export default function StudyPost() {
                                     }}
                                     onMouseEnter={(e) => {
                                       (e.target as HTMLImageElement).src =
-                                        "../../img/btn/trash_enabled.png";
+                                        "/img/btn/trash_enabled.png";
                                     }}
                                     onMouseLeave={(e) => {
                                       (e.target as HTMLImageElement).src =
-                                        "../../img/btn/trash_disabled.png";
+                                        "/img/btn/trash_disabled.png";
                                     }}
                                   />
                                   {myData.memberId === parseInt(postList) && (
@@ -1222,7 +1222,7 @@ export default function StudyPost() {
                                         }}
                                       >
                                         <img
-                                          src="../../img/btn/edit_enabled.png"
+                                          src="/img/btn/edit_enabled.png"
                                           alt="edit"
                                           style={{
                                             width: "25px",
@@ -1254,7 +1254,7 @@ export default function StudyPost() {
                                     }}
                                   >
                                     <img
-                                      src="../../img/btn/edit_enabled.png"
+                                      src="/img/btn/edit_enabled.png"
                                       alt="edit"
                                       style={{
                                         width: "25px",
