@@ -430,7 +430,7 @@ export default function Nav(props: NavProps) {
           </div>
           <div
             style={{
-              height: hamburgerMenu === "community" ? "110px" : "0",
+              height: hamburgerMenu === "community" ? "140px" : "0",
               overflow: "hidden",
               transition: "height 0.4s ease-out",
             }}
@@ -449,6 +449,12 @@ export default function Nav(props: NavProps) {
               style={{ textDecoration: "none" }}
             >
               <div className="hamburger_tabs">정보 공유</div>
+            </Link>
+            <Link
+              to="/faq?category=전체"
+              style={{ textDecoration: "none" }}
+            >
+              <div className="hamburger_tabs">FAQ</div>
             </Link>
           </div>
         </div>
@@ -592,6 +598,12 @@ export default function Nav(props: NavProps) {
               style={{ textDecoration: "none" }}
             >
               <div className="nav_tabs">정보 공유</div>
+            </Link>
+            <Link
+              to="/faq?category=전체"
+              style={{ textDecoration: "none" }}
+            >
+              <div className="nav_tabs">FAQ</div>
             </Link>
           </div>
         </div>

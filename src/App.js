@@ -27,6 +27,9 @@ import Knowledge from "./tabs/community/knowledge.tsx";
 import KnowledgeAdd from "./tabs/community/knowledgeAdd.tsx";
 import KnowledgeEdit from "./tabs/community/knowledgeEdit.tsx";
 import KnowledgePost from "./tabs/community/knowledgePost.tsx";
+import Faq from "./tabs/community/faq.tsx";
+import FaqAdd from "./tabs/community/faqAdd.tsx";
+import FaqEdit from "./tabs/community/faqEdit.tsx";
 
 import Alexandria from "./tabs/dataCenter/alexandria.tsx";
 import AlexandriaAdd from "./tabs/dataCenter/alexandriaAdd.tsx";
@@ -83,6 +86,9 @@ function App() {
           <Route path="/knowledgeAdd" element={<KnowledgeAdd />} />
           <Route path="/knowledgeEdit" element={<KnowledgeEdit />} />
           <Route path="/knowledgePost" element={<KnowledgePost />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/faqAdd" element={<FaqAdd />} />
+          <Route path="/faqEdit" element={<FaqEdit />} />
 
           <Route path="/alexandria" element={<Alexandria />} />
           <Route path="/alexandriaAdd" element={<AlexandriaAdd />} />
