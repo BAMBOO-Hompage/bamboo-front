@@ -66,6 +66,16 @@ export default function BottomInfo() {
               color: "#fff",
             }}
           >
+            Ver2.0 Created by 김진석(FS), 김정찬(FS) in 2026
+          </span>
+          <br />
+          <span
+            style={{
+              fontFamily: "Suit-Regular",
+              fontSize: "14px",
+              color: "#fff",
+            }}
+          >
             Ver1.1 Created by 김진석(PM), 김재관(BE), 맹의현(FE), 장희정(FE) in
             2025
           </span>
@@ -91,7 +101,7 @@ export default function BottomInfo() {
           >
             Started at 상명대학교 휴먼지능정보공학전공
             <br />
-            서울시 종로구 홍지문2길 20 상명대학교 휴먼지능정보공학전공(제1공학관
+            서울시 종로구 홍지문2길 20 상명대학교 휴먼AI공학전공(제1공학관
             G101-2호)
             <br />
             smubamboo2025@gmail.com
@@ -104,7 +114,7 @@ export default function BottomInfo() {
             color: "#fff",
           }}
         >
-          6기 회장
+          관리자 1
           <br />
           <span
             style={{
@@ -118,7 +128,7 @@ export default function BottomInfo() {
           </span>
           <br />
           <br />
-          6기 부회장
+          관리자 2
           <br />
           <span
             style={{
@@ -128,21 +138,7 @@ export default function BottomInfo() {
               lineHeight: "1",
             }}
           >
-            맹의현 (카톡 ID: maeng1217)
-          </span>
-          <br />
-          <br />
-          6기 부회장
-          <br />
-          <span
-            style={{
-              fontFamily: "Suit-Regular",
-              fontSize: "14px",
-              color: "#fff",
-              lineHeight: "1",
-            }}
-          >
-            유세리 (카톡 ID: serih0219)
+            김정찬
           </span>
         </div>
       </div>

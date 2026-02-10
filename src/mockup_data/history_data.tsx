@@ -19,6 +19,7 @@ export default function HistoryData() {
       year: "2024",
       events: ["[5기] 커리큘럼 재정비", "동아리명 'bamboo'로 개편"],
     },
-    { year: "2025", events: ["Coming soon"] },
+    { year: "2025", events: ["밤부 1, 2회 캐글대회", "밤부 1회 홈커밍"] },
+    { year: "2026", events: ["김진석, 김정찬 여기 남다.."] },
   ];
 }
